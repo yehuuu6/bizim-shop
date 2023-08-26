@@ -1,3 +1,9 @@
+const modalObject = ConfirmationModal();
+
+const modal = modalObject.modal;
+const modalText = modalObject.text;
+const modalBtn = modalObject.button;
+
 const addImageBtn = document.querySelector('button[name="add-image"]');
 const maxImages = 6;
 let imageCount = 1;
@@ -184,8 +190,8 @@ document.addEventListener("click", function (e) {
     const imageName = clickedButton.getAttribute("data-image");
     if (isEditMode && imageName !== null) {
       document.body.append(modal);
-      delModText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
-      delModCon.onclick = function () {
+      modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
+      modalBtn.onclick = function () {
         productLoad.style.display = "flex";
         $.ajax({
           url: "/api/dashboard/product/delete-image.php",
