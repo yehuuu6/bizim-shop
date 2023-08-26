@@ -1,0 +1,6 @@
+{
+    "require": {
+        "symfony/mailer": "^6.3",
+        "giggsey/libphonenumber-for-php": "^8.13"
+    }
+}
