@@ -1,6 +1,5 @@
-export class PanelClass{
-    constructor(form, logger, loader, url) {
-        this.form = form;
+export default class PanelClass{
+    constructor(logger, loader, url) {
         this.logger = logger;
         this.loader = loader;
         this.url = url;
@@ -14,8 +13,20 @@ export class PanelClass{
         const response = JSON.parse(data);
         const [messageType, message, cause] = response;
 
-        this.logger.className = `logger ${messageType}`;
-        this.logger.innerHTML = message;
+        const iconPath =
+            messageType === "success"
+                ? "success.png"
+                : messageType === "error"
+                ? "error.png"
+                : messageType === "warning"
+                ? "info.png"
+                : "";
+        
+        const className = `logger ${messageType}`;
+        const imageTag = `<span><img src='/assets/imgs/static/content/${iconPath}'/></span>`;
+    
+        this.logger.className = className;
+        this.logger.innerHTML = `${imageTag} ${message}`;
 
         if (cause !== "none") {
             clearTimeout(this.timer2);
@@ -34,19 +45,25 @@ export class PanelClass{
         }, 8000);
     }
 
-    sendApiRequest() {
+    sendApiRequest(formData) {
         this.loader.style.display = "flex";
-
-        $.ajax({
-            url: this.url,
-            type: "POST",
-            data: new FormData(this.form),
-            processData: false,
-            contentType: false,
-            success: (data) => {
-                this.loader.style.display = "none";
-                return data;
-            },
+    
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: this.url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (data) => {
+                    resolve(data);
+                },
+                error: (error) => {
+                    reject(error);
+                },
+            });
+        }).finally(() => {
+            this.loader.style.display = "none";
         });
     }
 }
