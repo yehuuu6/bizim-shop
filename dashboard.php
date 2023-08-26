@@ -444,9 +444,11 @@ while ($row3 = mysqli_fetch_assoc($res)) {
     </footer>
   </div>
   <script>
+    const userLogger = document.getElementById('logger-profile');
     const removeBtn = document.createElement("span");
     removeBtn.classList.add("remove-image");
     removeBtn.title = "Profil resmini kaldır";
+    removeBtn.id = "delete-avatar";
     removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
     const imageContainer = document.querySelector('.image-container');
@@ -521,13 +523,8 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       }
   });
   </script>
-  <script src="/assets/js/dashboard/images.js"></script>
   <script src="/assets/js/dashboard/routing.js"></script>
-  <script src="/assets/js/dashboard/user.js"></script>
-  <?php if ($power > 0) : ?>
-    <script src="/assets/js/dashboard/dev.js"></script>
-    <script src="/assets/js/dashboard/admin.js"></script>
-  <?php endif; ?>
+  <script type="module" src="/assets/js/dashboard/user.js"></script>
 </body>
 <!--       
 
