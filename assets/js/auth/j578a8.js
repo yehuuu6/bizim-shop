@@ -68,6 +68,6 @@ $(document).ready(function () {
   });
   $(document).on("click", "#resend-verification", function (e) {
     e.preventDefault();
-    VerifyAccountPage.sendApiRequest(true);
+    VerifyAccountPage.sendApiRequest();
   });
 });
