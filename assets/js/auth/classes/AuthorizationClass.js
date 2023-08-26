@@ -10,14 +10,8 @@ export class AuthorizationClass {
         this.timer2 = null;
     }
 
-    clearTimer(timer) {
-        if (timer) {
-            clearTimeout(timer);
-        }
-    }
-
     showMessage(message, messageType, cause) {
-        this.clearTimer(this.timer);
+        clearTimeout(this.timer);
         
         const iconPath = messageType === "success" ? "success.png" : "error.png";
         const className = `logger ${messageType}`;
@@ -27,7 +21,7 @@ export class AuthorizationClass {
         this.logger.innerHTML = `${imageTag} ${message}`;
         
         if (cause !== "none") {
-            this.clearTimer(this.timer2);
+            clearTimeout(this.timer2);
             
             let element = document.querySelector(`[name=${cause}]`);
             element.style.border = "1px solid red";
@@ -77,7 +71,7 @@ export class SpecialAuthorizationClass extends AuthorizationClass {
     showMessage(message, messageType, cause) {
         super.showMessage(message, messageType, cause);
 
-        this.clearTimer(this.timer);
+        clearTimeout(this.timer);
 
         this.timer = setTimeout(() => {
             this.logger.className = "logger warning";
