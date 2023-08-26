@@ -273,23 +273,20 @@ while ($row3 = mysqli_fetch_assoc($res)) {
               <tbody>
               </tbody>
             </table>
-            <form id="load-products">
-              <input type="hidden" name="start" value="5" id="start-val-products" />
-              <button class="btn success-btn" name="load-more" id="load-more-products">
+              <button class="btn success-btn" id="load-more-products">
                 Daha fazla yükle
               </button>
-            </form>
           </div>
         </section>
         <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
           <div id="loader-create" class="loader">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-<circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-<circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-    <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-</circle>
-</svg>
+              <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
+              <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
+                  <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
+                  <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
+              </circle>
+            </svg>
           </div>
           <div class="content-header">
             <div class="item">
@@ -388,12 +385,12 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
         <div id="loader-users" class="loader">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-<circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-<circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-    <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-    <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-</circle>
-</svg>
+            <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
+            <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
+                <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
+            </circle>
+          </svg>
         </div>
         <div class="content-header">
           <div class="item">
@@ -525,6 +522,9 @@ while ($row3 = mysqli_fetch_assoc($res)) {
   </script>
   <script src="/assets/js/dashboard/routing.js"></script>
   <script type="module" src="/assets/js/dashboard/user.js"></script>
+  <?php if ($power > 0) : ?>
+    <script type="module" src="/assets/js/dashboard/dev.js"></script>
+  <?php endif; ?>
 </body>
 <!--       
 
