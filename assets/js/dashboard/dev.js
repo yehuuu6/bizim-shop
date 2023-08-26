@@ -1,88 +1,47 @@
+import PanelClass from "./classes/PanelClass.js";
+import ConfirmationModal from "./models/Modal.js";
+import CreateProductTable from "./models/ProductTable.js";
+import { getApiResponse, scrollToElement } from "./utils/functions.js";
+
 const modalObject = ConfirmationModal();
 
 const modal = modalObject.modal;
 const modalText = modalObject.text;
 const modalBtn = modalObject.button;
 
-// VARIABLES START
+export let currentProducts = [];
+let productSearchInterval = null;
+let startVal = 5;
 
-// product storage
-let currentProducts = [];
-
-let isEditMode = false;
-let productSearchInterval;
-
-// Manage product Page
-const productTable = document.querySelector("#products-table tbody");
-const productMore = document.querySelector("#load-more-products");
-const productRefreshBtn = document.querySelector("#refresh-products");
 const cleanProductForm = document.querySelector("#clean-create-form");
-const productLoad = document.querySelector("#loader-products");
-const productLogger = document.querySelector("#logger-products");
 const addNewProduct = document.querySelector("#add-new-product");
+const productRefreshBtn = document.querySelector("#refresh-products");
+const productLogger = document.querySelector("#logger-products");
+const productLoad = document.querySelector("#loader-products");
+const productMore = document.querySelector("#load-more-products");
+const productTable = document.querySelector("#products-table tbody");
 
-// Configure Store Page
-const storeLoader = document.querySelector("#loader-store");
-const storeLogger = document.querySelector("#logger-store");
-
-// Create product Page
-const createLoad = document.querySelector("#loader-create");
 const createLogger = document.querySelector("#logger-create");
+const createLoad = document.querySelector("#loader-create");
+let isEditMode = false;
+let imageCount = 1;
+
+const ManageProductsPage = new PanelClass(
+  productLogger,
+  productLoad,
+  "/api/dashboard/product/load-products.php"
+);
+const CreateProductPage = new PanelClass(
+  createLogger,
+  createLoad,
+  "/api/dashboard/product/upload-product.php"
+);
 
 // VARIABLES END
 
 // FUNCTIONS START
 
-const getCategory = (id) => {
-  let category = "";
-  // Turn id to integer
-  id = parseInt(id);
-  switch (id) {
-    case 1:
-      category = "Müzik Seti";
-      break;
-    case 2:
-      category = "Hoparlör";
-      break;
-    case 3:
-      category = "Plak Çalar";
-      break;
-    case 4:
-      category = "Müzik Çalar";
-      break;
-  }
-  return category;
-};
-
-const getPerm = (id) => {
-  let perm = "";
-  // Turn id to integer
-  id = parseInt(id);
-  switch (id) {
-    case 0:
-      perm = "Üye";
-      break;
-    case 1:
-      perm = "Yönetici";
-      break;
-  }
-  return perm;
-};
-
-function setStatus(status) {
-  let statusText = "";
-  switch (status) {
-    case "1":
-      statusText = "Listeleniyor";
-      break;
-    case "0":
-      statusText = "Listelenmiyor";
-      break;
-  }
-  return statusText;
-}
-
-const deleteProduct = (product) => {
+function deleteProduct(product) {
   document.body.append(modal);
   modalText.innerText = `"${product["name"]}" isimli ürünü silmek üzeresiniz.`;
   modalBtn.onclick = () => {
@@ -151,41 +110,30 @@ function getSearchProduct() {
 }
 
 function loadFirstProducts() {
-  // Set to default
   currentProducts = [];
-
-  productLogger.className = "logger";
-  productLogger.innerHTML = "";
 
   productMore.classList.remove("disabled");
   productMore.disabled = false;
 
   productTable.innerHTML = "";
 
-  productLoad.style.display = "flex";
-  $.ajax({
-    url: "/api/dashboard/product/load-products.php",
-    type: "POST",
-    data: {
-      start: 0,
-    },
-    success: function (data) {
-      let products = JSON.parse(data);
-      if (products.length === 0) {
-        let tr = document.createElement("tr");
-        let td = document.createElement("td");
-        td.innerText = "Hiçbir ürün bulunamadı";
-        td.setAttribute("colspan", "7");
-        tr.append(td);
-        productTable.append(tr);
-      }
-      for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        currentProducts.push(product);
-        productTable.append(CreateProductTable(product));
-      }
-      productLoad.style.display = "none";
-    },
+  let formData = new FormData();
+  formData.append("start", 0);
+  ManageProductsPage.sendApiRequest(formData).then((data) => {
+    let products = JSON.parse(data);
+    if (products.length === 0) {
+      let tr = document.createElement("tr");
+      let td = document.createElement("td");
+      td.innerText = "Hiçbir ürün bulunamadı";
+      td.setAttribute("colspan", "7");
+      tr.append(td);
+      productTable.append(tr);
+    }
+    for (let i = 0; i < products.length; i++) {
+      let product = products[i];
+      currentProducts.push(product);
+      productTable.append(CreateProductTable(product));
+    }
   });
 }
 
@@ -201,22 +149,10 @@ function clearImageInputs(form) {
   addImageBtn.disabled = false;
 }
 
-function cleanForm(form) {
-  form.reset();
-  clearImageInputs(form);
-}
-
-// FUNCTIONS END
-
-cleanProductForm.addEventListener("click", () => {
-  ShowMessage(createLogger, "Form temizlendi.", "success", "none");
-  cleanForm(document.querySelector("#create-form"));
-  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-});
-
 addNewProduct.addEventListener("click", () => {
   setPageContent("hash", createProduct);
 });
+
 // Set interval on focus to search input and clear it when it's not focused
 document.getElementById("search-pr").addEventListener("focus", () => {
   productSearchInterval = setInterval(() => {
@@ -229,86 +165,42 @@ document.getElementById("search-pr").addEventListener("blur", () => {
 
 $(document).ready(function () {
   productRefreshBtn.addEventListener("click", () => {
+    productLogger.innerHTML = "";
+    productLogger.className = "logger";
     loadFirstProducts();
     document.getElementById("search-pr").value = "";
-    document.querySelector("#start-val-products").value = 5;
+    startVal = 5;
   });
 
   loadFirstProducts();
-  $("#load-products").submit(function (e) {
+
+  $("#load-more-products").click(function (e) {
     e.preventDefault();
-    const startVal = document.querySelector("#start-val-products");
-    productLoad.style.display = "flex";
-    const formData = new FormData(this);
-    $.ajax({
-      url: "/api/dashboard/product/load-products.php",
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        productLoad.style.display = "none";
-        let products = JSON.parse(data);
-        for (let i = 0; i < products.length; i++) {
-          let product = products[i];
-          currentProducts.push(product);
-          productTable.append(CreateProductTable(product));
-        }
-        ShowMessage(
-          productLogger,
-          "5 ürün başarıyla yüklendi.",
-          "success",
-          "none"
-        );
-        // Scroll to load-more button
-        $("html, body").animate(
-          {
-            scrollTop: $(productMore).offset().top,
-          },
-          1000
-        );
-        // Disable load-more button if no more products
-        if (products.length < 5) {
-          productMore.disabled = true;
-          productMore.classList.add("disabled");
-          ShowMessage(
-            productLogger,
-            "Daha fazla ürün bulunamadı.",
-            "error",
-            "none"
-          );
-          startVal.value = parseInt(startVal.value) - 5;
-        }
-      },
+    let formData = new FormData();
+    formData.append("start", startVal);
+    ManageProductsPage.sendApiRequest(formData).then((data) => {
+      let products = JSON.parse(data);
+      if (products.length === 0) {
+        productMore.classList.add("disabled");
+        productMore.disabled = true;
+        ManageProductsPage.showMessage(JSON.stringify(["error", "Daha fazla ürün bulunamadı", "none"]));
+      }
+      for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        currentProducts.push(product);
+        productTable.append(CreateProductTable(product));
+        ManageProductsPage.showMessage(JSON.stringify(["success", "5 ürün başarıyla yüklendi", "none"]));
+      }
+      startVal += 5;
+      scrollToElement(productLogger);
     });
-    // Increment start and end values
-    startVal.value = parseInt(startVal.value) + 5;
   });
+
   $("#create-form").submit(function (e) {
     e.preventDefault();
-    createLoad.style.display = "flex";
     let formData = new FormData(this);
     formData.append("image-count", imageCount);
     formData.append("edit-mode", isEditMode ? "true" : "false");
-    $.ajax({
-      url: "/api/dashboard/product/upload-product.php",
-      type: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (data) {
-        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-        try {
-          let phpArray = JSON.parse(data);
-          let status = phpArray[0];
-          let message = phpArray[1];
-          let cause = phpArray[2];
-          ShowMessage(createLogger, message, status, cause);
-        } catch (e) {
-          ShowMessage(createLogger, data, "error", "none");
-        }
-        createLoad.style.display = "none";
-      },
-    });
+    getApiResponse(CreateProductPage, formData, createLogger);
   });
 });
