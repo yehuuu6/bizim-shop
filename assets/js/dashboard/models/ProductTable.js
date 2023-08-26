@@ -1,4 +1,7 @@
-function CreateProductTable(product) {
+import { getCategory, setStatus } from "../utils/functions.js";
+import { currentProducts } from "../dev.js";
+
+export default function CreateProductTable(product) {
     // Create table form
     const tableForm = document.createElement("form");
     tableForm.classList.add("table-form");
