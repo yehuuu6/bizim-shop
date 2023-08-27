@@ -1,8 +1,7 @@
 export default class PanelClass{
-    constructor(logger, loader, url) {
+    constructor(logger, loader) {
         this.logger = logger;
         this.loader = loader;
-        this.url = url;
         this.timer = null;
         this.timer2 = null;
     }
@@ -45,12 +44,12 @@ export default class PanelClass{
         }, 8000);
     }
 
-    sendApiRequest(formData) {
+    async sendApiRequest(url, formData) {
         this.loader.style.display = "flex";
     
         return new Promise((resolve, reject) => {
             $.ajax({
-                url: this.url,
+                url: url,
                 type: "POST",
                 data: formData,
                 processData: false,
