@@ -1,14 +1,23 @@
 import { ProfilePage } from "../user.js";
 
 // Directly gets response and displays the message. Use this if you don't need to do stuff with response.
-export function getApiResponse(panelObject, formData, scrollTo) {
-    panelObject.sendApiRequest(formData).then((data) => {
+export function getApiResponse(panelObject, url, formData, scrollTo) {
+    panelObject.sendApiRequest(url, formData).then((data) => {
         if (JSON.parse(data)[0] === "success" && panelObject == ProfilePage) clearAvatarInput();
         panelObject.showMessage(data);
         scrollToElement(scrollTo);
     });
 
 }
+
+export function instantiateModal(ModalObject) {
+    const modal = ModalObject.modal;
+    const modalText = ModalObject.text;
+    const modalBtn = ModalObject.button;
+
+    return { modal, modalText, modalBtn };
+}
+
 
 export function clearAvatarInput() {
     document.querySelector("#avatar-input").value = "";
@@ -95,3 +104,41 @@ export function setStatus(status) {
     }
     return statusText;
 }
+
+export function addImageInput(addImageBtn, imageCount) {
+    const template = `
+      <div class="form-item" data-type="image-input">
+        <div class="width-100 flex-display gap-10">
+          <button type="button" title="${imageCount}. Resmi Sil" id="remove-pic-${imageCount}" class="btn delete-btn small-btn"><i class="fa-solid fa-minus"></i></button>
+          <label class="btn edit-btn" id="image-label-${imageCount}" for="product-image-${imageCount}">${imageCount}. Resim</label>
+        </div>
+        <p id="image-text-${imageCount}" class="display-file">Dosya seçilmedi.</p>
+        <input type="file" id="product-image-${imageCount}" name="product-image-${imageCount}" accept="image/*" />
+        <img id="image-preview-${imageCount}" src="#" alt="Resim Önizleme" style="width: 100px;height:100px; display: none; object-fit:cover;" />
+      </div>
+    `;
+  
+    addImageBtn.parentElement.insertAdjacentHTML("beforebegin", template);
+
+    imageCount++;
+  
+    const fileInput = document.querySelector(`#product-image-${imageCount}`);
+    const imagePreview = document.querySelector(`#image-preview-${imageCount}`);
+    const imageText = document.querySelector(`#image-text-${imageCount}`);
+  
+    fileInput.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        imagePreview.style.display = "block";
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        imageText.textContent = file.name;
+      } else {
+        imagePreview.style.display = "none";
+        imageText.textContent = "Dosya seçilmedi.";
+      }
+    });
+  }
