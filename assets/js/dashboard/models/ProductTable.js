@@ -1,105 +1,123 @@
-import { getCategory, setStatus, scrollToElement, addImageInput, instantiateModal } from "../utils/functions.js";
-import { currentProducts, CreateProductPage, ManageProductsPage, isEditMode, imageCount } from "../dev.js";
+import {
+  getCategory,
+  setStatus,
+  scrollToElement,
+  addImageInput,
+  instantiateModal,
+  cleanForm,
+} from "../utils/functions.js";
+import {
+  currentProducts,
+  CreateProductPage,
+  ManageProductsPage,
+  isEditMode,
+  imageCount,
+} from "../dev.js";
 import ConfirmationModal from "./Modal.js";
 
-const {modal, modalText, modalBtn} = instantiateModal(ConfirmationModal());
+const { modal, modalText, modalBtn } = instantiateModal(ConfirmationModal());
 
 const productLogger = document.querySelector("#logger-products");
 const createLogger = document.querySelector("#logger-create");
 
 export default function CreateProductTable(product) {
-    // Create table form
-    const tableForm = document.createElement("form");
-    tableForm.classList.add("table-form");
-  
-    const statusBtn = document.createElement("button");
-    statusBtn.setAttribute("data-action", "status");
-  
-    const editBtn = document.createElement("button");
-    editBtn.setAttribute("data-action", "edit");
-    editBtn.classList.add("btn", "edit-btn");
-    editBtn.innerText = "Düzenle";
-  
-    const deleteBtn = document.createElement("button");
-    deleteBtn.setAttribute("data-action", "delete");
-    deleteBtn.classList.add("btn", "delete-btn");
-    deleteBtn.innerText = "Sil";
-  
-    tableForm.append(statusBtn);
-    tableForm.append(editBtn);
-    tableForm.append(deleteBtn);
-    tableForm.setAttribute("data-id", product["id"]);
-  
-    statusBtn.innerText = product["status"] == "1" ? "Listeleme" : "Listele";
-    product["status"] == "1"
-      ? (statusBtn.className = "btn status-btn")
-      : (statusBtn.className = "btn success-btn");
-  
-    tableForm.addEventListener("click", (e) => {
-      e.preventDefault();
-      let id = e.target.parentElement.dataset.id;
-      // Get the product from the currentProducts array
-      let product = currentProducts.find((product) => product["id"] == id);
-      if (e.target.dataset.action == "edit") {
-        editProduct(product);
-      } else if (e.target.dataset.action == "delete") {
-        deleteProduct(product);
-      } else if (e.target.dataset.action == "status") {
-        const formData = new FormData();
-        formData.append("id", product["id"]);
-        formData.append("status", product["status"] == "1" ? "0" : "1");
-        ManageProductsPage.sendApiRequest("/api/dashboard/product/change-status.php", formData).then((data) => {
-          scrollToElement(productLogger);
-          if (JSON.parse(data)[0] == "success") {
-            product["status"] = product["status"] == "1" ? "0" : "1";
-            e.target.innerText =
-              product["status"] == "1" ? "Listeleme" : "Listele";
-            e.target.parentElement.parentElement.parentElement.querySelector(
-              "[data-mission='status']"
-            ).innerText = setStatus(product["status"]);
-            product["status"] == "1"
-              ? (statusBtn.className = "btn status-btn")
-              : (statusBtn.className = "btn success-btn");
-          }
-          ManageProductsPage.showMessage(data);
-        });
-      }
-    });
-  
-    // Create table row
-    const tr = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
-    const td3 = document.createElement("td");
-    const td4 = document.createElement("td");
-    td4.dataset.mission = "status";
-    const td5 = document.createElement("td");
-    const td6 = document.createElement("td");
-    td1.innerText = product["id"];
-    td2.innerText = product["name"];
-    td3.innerText = getCategory(product["category"]);
-    td4.innerText = setStatus(product["status"]);
-    td6.innerText = `₺${product["price"]}`;
-    td5.append(tableForm);
-    td5.classList.add("table-form-td");
-    tr.append(td1, td2, td3, td6, td4, td5);
-  
-    return tr;
+  // Create table form
+  const tableForm = document.createElement("form");
+  tableForm.classList.add("table-form");
+
+  const statusBtn = document.createElement("button");
+  statusBtn.setAttribute("data-action", "status");
+
+  const editBtn = document.createElement("button");
+  editBtn.setAttribute("data-action", "edit");
+  editBtn.classList.add("btn", "edit-btn");
+  editBtn.innerText = "Düzenle";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.setAttribute("data-action", "delete");
+  deleteBtn.classList.add("btn", "delete-btn");
+  deleteBtn.innerText = "Sil";
+
+  tableForm.append(statusBtn);
+  tableForm.append(editBtn);
+  tableForm.append(deleteBtn);
+  tableForm.setAttribute("data-id", product["id"]);
+
+  statusBtn.innerText = product["status"] == "1" ? "Listeleme" : "Listele";
+  product["status"] == "1"
+    ? (statusBtn.className = "btn status-btn")
+    : (statusBtn.className = "btn success-btn");
+
+  tableForm.addEventListener("click", (e) => {
+    e.preventDefault();
+    let id = e.target.parentElement.dataset.id;
+    // Get the product from the currentProducts array
+    let product = currentProducts.find((product) => product["id"] == id);
+    if (e.target.dataset.action == "edit") {
+      editProduct(product);
+    } else if (e.target.dataset.action == "delete") {
+      deleteProduct(product);
+    } else if (e.target.dataset.action == "status") {
+      const formData = new FormData();
+      formData.append("id", product["id"]);
+      formData.append("status", product["status"] == "1" ? "0" : "1");
+      ManageProductsPage.sendApiRequest(
+        "/api/dashboard/product/change-status.php",
+        formData
+      ).then((data) => {
+        scrollToElement(productLogger);
+        if (JSON.parse(data)[0] == "success") {
+          product["status"] = product["status"] == "1" ? "0" : "1";
+          e.target.innerText =
+            product["status"] == "1" ? "Listeleme" : "Listele";
+          e.target.parentElement.parentElement.parentElement.querySelector(
+            "[data-mission='status']"
+          ).innerText = setStatus(product["status"]);
+          product["status"] == "1"
+            ? (statusBtn.className = "btn status-btn")
+            : (statusBtn.className = "btn success-btn");
+        }
+        ManageProductsPage.showMessage(data);
+      });
+    }
+  });
+
+  // Create table row
+  const tr = document.createElement("tr");
+  const td1 = document.createElement("td");
+  const td2 = document.createElement("td");
+  const td3 = document.createElement("td");
+  const td4 = document.createElement("td");
+  td4.dataset.mission = "status";
+  const td5 = document.createElement("td");
+  const td6 = document.createElement("td");
+  td1.innerText = product["id"];
+  td2.innerText = product["name"];
+  td3.innerText = getCategory(product["category"]);
+  td4.innerText = setStatus(product["status"]);
+  td6.innerText = `₺${product["price"]}`;
+  td5.append(tableForm);
+  td5.classList.add("table-form-td");
+  tr.append(td1, td2, td3, td6, td4, td5);
+
+  return tr;
 }
 
 function editProduct(product) {
   setPageContent("hash", createProduct);
-  clearImageInputs(document.querySelector('button[name="add-image"]'), document.querySelector("#create-form"));
-  const idInput = document.createElement("input");
-  idInput.type = "hidden";
-  idInput.name = "product-id";
-  idInput.value = product["id"];
-  document.querySelector("#create-form").appendChild(idInput);
+  clearImageInputs(
+    document.querySelector('button[name="add-image"]'),
+    document.querySelector("#create-form")
+  );
+  const inputId = document.createElement("input");
+  inputId.type = "hidden";
+  inputId.name = "product-id";
+  inputId.value = product["id"];
+  document.querySelector("#create-form").append(inputId);
   isEditMode.value = true;
   CreateProductPage.showMessage(
     JSON.stringify(["warning", "Ürün düzenleme moduna girdiniz.", "none"])
   );
-  scrollToElement(createLogger);
 
   const exitEditMode = document.querySelector("#exit-edit-mode");
   const button = document.querySelector("#create-product");
@@ -141,8 +159,7 @@ function editProduct(product) {
 
   // Create image inputs for each image
   images.forEach(function (image, index) {
-    imageCount.value ++;
-    addImageInput(document.querySelector('button[name="add-image"]'), index + 1);
+    addImageInput(document.querySelector('button[name="add-image"]'));
     const deleteImageBtn = document.querySelector(
       `button[id="remove-pic-${index + 1}"]`
     );
@@ -155,25 +172,21 @@ function editProduct(product) {
   });
 
   exitEditMode.addEventListener("click", () => {
-    ShowMessage(
-      createLogger,
-      "Ürün düzenleme modundan çıktınız.",
-      "warning",
-      "none"
+    CreateProductPage.showMessage(
+      JSON.stringify(["warning", "Ürün düzenleme modundan çıktınız.", "none"])
     );
     cleanForm(form);
-    try {
-      const idInput = document.querySelector("input[name='product-id']");
-      idInput.remove();
-    } catch (e) {
-      // Do nothing
-    }
+    scrollToElement(createLogger);
     isEditMode.value = false;
+    inputId.remove();
     exitEditMode.classList.add("none-display");
     button.innerText = "Ürün Ekle";
     title.innerText = "Markete Ürün Ekle";
     paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
-    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    imageCount.value = 1;
+    document.querySelector('button[name="add-image"]').disabled = false;
+    document.querySelector('button[name="add-image"]').className =
+      "btn primary-btn small-btn block-display";
   });
 }
 
@@ -183,11 +196,15 @@ function deleteProduct(product) {
   modalBtn.onclick = () => {
     const formData = new FormData();
     formData.append("id", product["id"]);
-    CreateProductPage.sendApiRequest("/api/dashboard/product/delete-product.php", formData).then((data) => {
+    CreateProductPage.sendApiRequest(
+      "/api/dashboard/product/delete-product.php",
+      formData
+    ).then((data) => {
       ManageProductsPage.showMessage(data);
       scrollToElement(productLogger);
       if (JSON.parse(data)[0] === "success") {
         // Delete this product from the currentProducts array
+        // ERROR assign to constant variable fix it
         currentProducts = currentProducts.filter(
           (p) => p["id"] !== product["id"]
         );
@@ -197,7 +214,7 @@ function deleteProduct(product) {
     });
     modal.remove();
   };
-};
+}
 
 function clearImageInputs(addImageBtn, form) {
   imageCount.value = 1;
