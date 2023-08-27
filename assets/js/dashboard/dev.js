@@ -1,13 +1,9 @@
 import PanelClass from "./classes/PanelClass.js";
 import ConfirmationModal from "./models/Modal.js";
 import CreateProductTable from "./models/ProductTable.js";
-import { getApiResponse, scrollToElement } from "./utils/functions.js";
+import { getApiResponse, scrollToElement, addImageInput, instantiateModal} from "./utils/functions.js";
 
-const modalObject = ConfirmationModal();
-
-const modal = modalObject.modal;
-const modalText = modalObject.text;
-const modalBtn = modalObject.button;
+const {modal, modalText, modalBtn} = instantiateModal(ConfirmationModal());
 
 export let currentProducts = [];
 let productSearchInterval = null;
@@ -23,61 +19,28 @@ const productTable = document.querySelector("#products-table tbody");
 
 const createLogger = document.querySelector("#logger-create");
 const createLoad = document.querySelector("#loader-create");
-let isEditMode = false;
-let imageCount = 1;
 
-const ManageProductsPage = new PanelClass(
+export const isEditMode = {
+  value: true,
+};
+export const imageCount = {
+  value: 1,
+};
+const addImageBtn = document.querySelector('button[name="add-image"]');
+const maxImages = 6;
+
+export const ManageProductsPage = new PanelClass(
   productLogger,
-  productLoad,
-  "/api/dashboard/product/load-products.php"
+  productLoad
 );
-const CreateProductPage = new PanelClass(
+export const CreateProductPage = new PanelClass(
   createLogger,
-  createLoad,
-  "/api/dashboard/product/upload-product.php"
+  createLoad
 );
 
 // VARIABLES END
 
 // FUNCTIONS START
-
-function deleteProduct(product) {
-  document.body.append(modal);
-  modalText.innerText = `"${product["name"]}" isimli ürünü silmek üzeresiniz.`;
-  modalBtn.onclick = () => {
-    productLoad.style.display = "flex";
-    $.ajax({
-      url: "/api/dashboard/product/delete-product.php",
-      type: "POST",
-      data: {
-        id: product["id"],
-      },
-      success: function (data) {
-        let phpArray = JSON.parse(data);
-        let status = phpArray[0];
-        let message = phpArray[1];
-        // Scroll to logger
-        $("html, body").animate(
-          {
-            scrollTop: $(productLogger).offset().top,
-          },
-          1000
-        );
-        // Delete this product from the currentProducts array
-        currentProducts = currentProducts.filter(
-          (p) => p["id"] !== product["id"]
-        );
-        if (status == "success") {
-          const child = document.querySelector(`[data-id="${product["id"]}"]`);
-          child.parentElement.parentElement.remove();
-        }
-        ShowMessage(productLogger, message, status, "none");
-        productLoad.style.display = "none";
-      },
-    });
-    modal.remove();
-  };
-};
 
 function getSearchProduct() {
   let search = document.querySelector("#search-pr").value;
@@ -119,7 +82,7 @@ function loadFirstProducts() {
 
   let formData = new FormData();
   formData.append("start", 0);
-  ManageProductsPage.sendApiRequest(formData).then((data) => {
+  ManageProductsPage.sendApiRequest("/api/dashboard/product/load-products.php", formData).then((data) => {
     let products = JSON.parse(data);
     if (products.length === 0) {
       let tr = document.createElement("tr");
@@ -137,17 +100,21 @@ function loadFirstProducts() {
   });
 }
 
-function clearImageInputs(form) {
-  imageCount = 1;
-  // Get all the inputs by data-type="image-input"
-  let imageInputs = form.querySelectorAll("[data-type='image-input']");
-  // Remove all the inputs
-  for (let i = 0; i < imageInputs.length; i++) {
-    imageInputs[i].remove();
+addImageBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (imageCount.value > maxImages) {
+    scrollToElement(createLogger);
+    CreateProductPage.showMessage(
+      JSON.stringify(["error", "En fazla 6 resim yükleyebilirsiniz", "none"])
+    );
+    addImageBtn.disabled = true;
+    addImageBtn.className = "btn small-btn disabled";
+    return;
   }
-  addImageBtn.className = "btn primary-btn small-btn block-display";
-  addImageBtn.disabled = false;
-}
+
+  addImageInput(addImageBtn, imageCount.value);
+});
 
 addNewProduct.addEventListener("click", () => {
   setPageContent("hash", createProduct);
@@ -178,18 +145,18 @@ $(document).ready(function () {
     e.preventDefault();
     let formData = new FormData();
     formData.append("start", startVal);
-    ManageProductsPage.sendApiRequest(formData).then((data) => {
+    ManageProductsPage.sendApiRequest("/api/dashboard/product/load-products.php", formData).then((data) => {
       let products = JSON.parse(data);
       if (products.length === 0) {
         productMore.classList.add("disabled");
         productMore.disabled = true;
-        ManageProductsPage.showMessage(JSON.stringify(["error", "Daha fazla ürün bulunamadı", "none"]));
+        ManageProductsPage.showMessage(JSON.stringify(["error", "Daha fazla ürün bulunamadı.", "none"]));
       }
       for (let i = 0; i < products.length; i++) {
         let product = products[i];
         currentProducts.push(product);
         productTable.append(CreateProductTable(product));
-        ManageProductsPage.showMessage(JSON.stringify(["success", "5 ürün başarıyla yüklendi", "none"]));
+        ManageProductsPage.showMessage(JSON.stringify(["success", "5 ürün başarıyla yüklendi.", "none"]));
       }
       startVal += 5;
       scrollToElement(productLogger);
@@ -199,8 +166,74 @@ $(document).ready(function () {
   $("#create-form").submit(function (e) {
     e.preventDefault();
     let formData = new FormData(this);
-    formData.append("image-count", imageCount);
+    formData.append("image-count", imageCount.value);
     formData.append("edit-mode", isEditMode ? "true" : "false");
-    getApiResponse(CreateProductPage, formData, createLogger);
+    getApiResponse(CreateProductPage, "/api/dashboard/product/upload-product.php", formData, createLogger);
   });
+});
+
+function removeAndReorderImages(imageInput) {
+  imageInput.remove();
+  const imageInputs = document.querySelectorAll('[data-type="image-input"]');
+  imageInputs.forEach(function (input, index) {
+    const newIndex = index + 1;
+    input.querySelector("button").id = `remove-pic-${newIndex}`;
+    input.querySelector("button").title = `${newIndex}. Resmi Sil`;
+    input.querySelector("label").id = `image-label-${newIndex}`;
+    input.querySelector("label").title = `${newIndex}. Resmi Sil`;
+    input.querySelector("label").htmlFor = `product-image-${newIndex}`;
+    input.querySelector("label").textContent = `${newIndex}. Resim`;
+    input.querySelector("input").id = `product-image-${newIndex}`;
+    input.querySelector("input").name = `product-image-${newIndex}`;
+    input.querySelector("p").id = `image-text-${newIndex}`;
+    input.querySelector("img").id = `image-preview-${newIndex}`;
+  });
+
+  addImageBtn.disabled = false;
+  addImageBtn.className = "btn primary-btn small-btn";
+  imageCount.value--;
+}
+
+document.addEventListener("click", function (e) {
+  const clickedButton = e.target.closest("button");
+
+  if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
+    e.preventDefault();
+    const imageInput = clickedButton.closest('[data-type="image-input"]');
+    const imageName = clickedButton.getAttribute("data-image");
+    if (isEditMode && imageName !== null) {
+      document.body.append(modal);
+      modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
+      modalBtn.onclick = function () {
+        productLoad.style.display = "flex";
+        $.ajax({
+          url: "/api/dashboard/product/delete-image.php",
+          type: "POST",
+          data: {
+            image: imageName,
+          },
+          success: function (data) {
+            let phpArray = JSON.parse(data);
+            let status = phpArray[0];
+            let message = phpArray[1];
+            // Scroll to logger
+            $("html, body").animate(
+              {
+                scrollTop: $(createLogger).offset().top,
+              },
+              1000
+            );
+            if (status == "success") {
+              removeAndReorderImages(imageInput);
+            }
+            ShowMessage(productLogger, message, status, "none");
+            productLoad.style.display = "none";
+          },
+        });
+        modal.remove();
+      };
+    } else {
+      removeAndReorderImages(imageInput);
+    }
+  }
 });

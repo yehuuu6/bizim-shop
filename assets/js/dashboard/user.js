@@ -13,37 +13,34 @@ const profileLoader = document.querySelector("#loader-profile");
 
 export const ProfilePage = new PanelClass(
   profileLogger,
-  profileLoader,
-  "/api/dashboard/users/edit-profile.php"
+  profileLoader
 );
 
 const ResetPassword = new PanelClass(
   profileLogger,
-  profileLoader,
-  "/api/dashboard/users/reset-password.php"
+  profileLoader
 );
 
 const RemoveAvatar = new PanelClass(
   profileLogger,
-  profileLoader,
-  "/api/dashboard/users/delete-avatar.php"
+  profileLoader
 );
 
 $(document).ready(function () {
   $(document).on("submit", "#profile-form", function (e) {
     e.preventDefault();
-    getApiResponse(ProfilePage, new FormData(this), profileLogger);
+    getApiResponse(ProfilePage, "/api/dashboard/users/edit-profile.php", new FormData(this), profileLogger);
   });
   $(document).on("click", "#password-reset", function (e) {
     e.preventDefault();
-    getApiResponse(ResetPassword, new FormData(), profileLogger);
+    getApiResponse(ResetPassword, "/api/dashboard/users/reset-password.php", new FormData(), profileLogger);
   });
   $(document).on("click", "#delete-avatar", function (e) {
     e.preventDefault();
     document.body.append(modal);
     modalText.innerText = "Profil resminizi silmek istediğinize emin misiniz?";
     modalBtn.addEventListener("click", function () {
-      getApiResponse(RemoveAvatar, new FormData(), profileLogger);
+      getApiResponse(RemoveAvatar, "/api/dashboard/users/delete-avatar.php", new FormData(), profileLogger);
       modalText.innerText = "";
       modalBtn.removeEventListener("click", this);
       modal.remove();
