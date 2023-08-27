@@ -12,7 +12,16 @@ import {
 
 const { modal, modalText, modalBtn } = instantiateModal(ConfirmationModal());
 
-export let currentProducts = [];
+export const currentProducts = {
+  value: [],
+};
+export const isEditMode = {
+  value: false,
+};
+export const imageCount = {
+  value: 1,
+};
+
 let startVal = 5;
 
 const cleanProductForm = document.querySelector("#clean-create-form");
@@ -26,13 +35,6 @@ const productTable = document.querySelector("#products-table tbody");
 const createLogger = document.querySelector("#logger-create");
 const createLoad = document.querySelector("#loader-create");
 
-export const isEditMode = {
-  value: false,
-};
-
-export const imageCount = {
-  value: 1,
-};
 const addImageBtn = document.querySelector('button[name="add-image"]');
 const maxImages = 6;
 
@@ -44,96 +46,63 @@ export const CreateProductPage = new PanelClass(createLogger, createLoad);
 // FUNCTIONS START
 
 export function getSearchProduct() {
-  let search = document.querySelector("#search-pr").value;
+  const searchInput = document.querySelector("#search-pr");
+  const search = searchInput.value.trim().toLowerCase();
+
+  productTable.innerHTML = ""; // Clear the table
+
   if (search.length > 0) {
-    // Search for product inside currentProducts and remove all other products
-    productTable.innerHTML = "";
-    for (let i = 0; i < currentProducts.length; i++) {
-      let product = currentProducts[i];
-      if (product["name"].toLowerCase().includes(search.toLowerCase())) {
-        productTable.append(CreateProductTable(product));
-      }
-    }
-    // If no products are found, display a message
-    if (productTable.innerHTML === "") {
-      let tr = document.createElement("tr");
-      let td = document.createElement("td");
-      td.innerText = "Hiçbir ürün bulunamadı";
-      td.setAttribute("colspan", "7");
-      tr.append(td);
-      productTable.append(tr);
+    const matchingProducts = currentProducts.value.filter((product) =>
+      product["name"].toLowerCase().includes(search)
+    );
+
+    if (matchingProducts.length === 0) {
+      productTable.innerHTML = `
+        <tr>
+          <td colspan="7">Hiçbir ürün bulunamadı</td>
+        </tr>
+      `;
+    } else {
+      matchingProducts.forEach((product) => {
+        productTable.appendChild(CreateProductTable(product));
+      });
     }
   } else {
-    // Load old products back
-    productTable.innerHTML = "";
-    for (let i = 0; i < currentProducts.length; i++) {
-      let product = currentProducts[i];
-      productTable.append(CreateProductTable(product));
-    }
+    currentProducts.value.forEach((product) => {
+      productTable.appendChild(CreateProductTable(product));
+    });
   }
 }
 
-function loadFirstProducts() {
-  currentProducts = [];
-
+async function loadFirstProducts() {
+  currentProducts.value = [];
   productMore.classList.remove("disabled");
   productMore.disabled = false;
-
   productTable.innerHTML = "";
 
-  let formData = new FormData();
+  const formData = new FormData();
   formData.append("start", 0);
-  ManageProductsPage.sendApiRequest(
+  const response = await ManageProductsPage.sendApiRequest(
     "/api/dashboard/product/load-products.php",
     formData
-  ).then((data) => {
-    let products = JSON.parse(data);
-    if (products.length === 0) {
-      let tr = document.createElement("tr");
-      let td = document.createElement("td");
-      td.innerText = "Hiçbir ürün bulunamadı";
-      td.setAttribute("colspan", "7");
-      tr.append(td);
-      productTable.append(tr);
-    }
-    for (let i = 0; i < products.length; i++) {
-      let product = products[i];
-      currentProducts.push(product);
-      productTable.append(CreateProductTable(product));
-    }
-  });
-}
-
-addImageBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  if (imageCount.value > maxImages) {
-    CreateProductPage.showMessage(
-      JSON.stringify(["error", "En fazla 6 resim yükleyebilirsiniz", "none"])
-    );
-    addImageBtn.disabled = true;
-    addImageBtn.className = "btn small-btn disabled";
-    scrollToElement(createLogger);
-    return;
-  }
-
-  addImageInput(addImageBtn);
-});
-
-addNewProduct.addEventListener("click", () => {
-  setPageContent("hash", createProduct);
-});
-
-cleanProductForm.addEventListener("click", () => {
-  cleanForm(document.querySelector("#create-form"));
-  CreateProductPage.showMessage(
-    JSON.stringify(["success", "Form başarıyla temizlendi.", "none"])
   );
-  scrollToElement(createLogger);
-  addImageBtn.disabled = false;
-  addImageBtn.className = "btn primary-btn small-btn";
-  imageCount.value = 1;
-});
+
+  const products = JSON.parse(response);
+
+  if (products.length === 0) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.innerText = "Hiçbir ürün bulunamadı";
+    td.setAttribute("colspan", "7");
+    tr.appendChild(td);
+    productTable.appendChild(tr);
+  } else {
+    products.forEach((product) => {
+      currentProducts.value.push(product);
+      productTable.appendChild(CreateProductTable(product));
+    });
+  }
+}
 
 runSearch();
 
@@ -196,19 +165,27 @@ $(document).ready(function () {
 
 function removeAndReorderImages(imageInput) {
   imageInput.remove();
+
   const imageInputs = document.querySelectorAll('[data-type="image-input"]');
-  imageInputs.forEach(function (input, index) {
+  imageInputs.forEach((input, index) => {
     const newIndex = index + 1;
-    input.querySelector("button").id = `remove-pic-${newIndex}`;
-    input.querySelector("button").title = `${newIndex}. Resmi Sil`;
-    input.querySelector("label").id = `image-label-${newIndex}`;
-    input.querySelector("label").title = `${newIndex}. Resmi Sil`;
-    input.querySelector("label").htmlFor = `product-image-${newIndex}`;
-    input.querySelector("label").textContent = `${newIndex}. Resim`;
-    input.querySelector("input").id = `product-image-${newIndex}`;
-    input.querySelector("input").name = `product-image-${newIndex}`;
-    input.querySelector("p").id = `image-text-${newIndex}`;
-    input.querySelector("img").id = `image-preview-${newIndex}`;
+
+    const button = input.querySelector("button");
+    const label = input.querySelector("label");
+    const image = input.querySelector("input");
+    const imageText = input.querySelector("p");
+    const imagePreview = input.querySelector("img");
+
+    button.id = `remove-pic-${newIndex}`;
+    button.title = `${newIndex}. Resmi Sil`;
+    label.id = `image-label-${newIndex}`;
+    label.title = `${newIndex}. Resmi Sil`;
+    label.htmlFor = `product-image-${newIndex}`;
+    label.textContent = `${newIndex}. Resim`;
+    image.id = `product-image-${newIndex}`;
+    image.name = `product-image-${newIndex}`;
+    imageText.id = `image-text-${newIndex}`;
+    imagePreview.id = `image-preview-${newIndex}`;
   });
 
   addImageBtn.disabled = false;
@@ -217,6 +194,7 @@ function removeAndReorderImages(imageInput) {
 }
 
 // Deleting and reordering image inputs
+// ERROR Removes file from server but not from database!
 document.addEventListener("click", function (e) {
   const clickedButton = e.target.closest("button");
 
@@ -247,3 +225,38 @@ document.addEventListener("click", function (e) {
     }
   }
 });
+
+// CREATE PRODUCT PAGE START
+
+addImageBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (imageCount.value > maxImages) {
+    CreateProductPage.showMessage(
+      JSON.stringify(["error", "En fazla 6 resim yükleyebilirsiniz", "none"])
+    );
+    addImageBtn.disabled = true;
+    addImageBtn.className = "btn small-btn disabled";
+    scrollToElement(createLogger);
+    return;
+  }
+
+  addImageInput(addImageBtn);
+});
+
+addNewProduct.addEventListener("click", () => {
+  setPageContent("hash", createProduct);
+});
+
+cleanProductForm.addEventListener("click", () => {
+  cleanForm(document.querySelector("#create-form"));
+  CreateProductPage.showMessage(
+    JSON.stringify(["success", "Form başarıyla temizlendi.", "none"])
+  );
+  scrollToElement(createLogger);
+  addImageBtn.disabled = false;
+  addImageBtn.className = "btn primary-btn small-btn";
+  imageCount.value = 1;
+});
+
+// CREATE PRODUCT PAGE END
