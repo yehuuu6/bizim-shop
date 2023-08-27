@@ -1,4 +1,7 @@
-import {SpecialAuthorizationClass, AuthorizationClass} from "./classes/AuthorizationClass.js";
+import {
+  SpecialAuthorizationClass,
+  AuthorizationClass,
+} from "./classes/AuthorizationClass.js";
 
 const loader = document.querySelector(".loader");
 
@@ -16,7 +19,9 @@ const RegisterPage = new AuthorizationClass(
   "/api/authorization/register.php",
   "./verify"
 );
-const forgotPasswordLogger = document.querySelector("#forgot-password-form .logger");
+const forgotPasswordLogger = document.querySelector(
+  "#forgot-password-form .logger"
+);
 const ForgotPasswordPage = new SpecialAuthorizationClass(
   document.querySelector("#forgot-password-form"),
   forgotPasswordLogger,
