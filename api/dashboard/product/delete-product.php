@@ -46,7 +46,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         $res = mysqli_query($con, $sql);
         if ($res) {
             deleteFiles($goingto_delete, $root_name);
-            sendSuccessResponse('Ürün başarıyla silindi.');
+            sendSuccessResponse("$name isimli ürün başarıyla silindi.");
         } else {
             sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', 'none');
         }
