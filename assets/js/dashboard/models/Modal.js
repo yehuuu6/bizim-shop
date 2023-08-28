@@ -58,7 +58,7 @@ export default function ConfirmationModal() {
 
   return {
     modal: modal,
-    text: delModText,
-    button: delModCon,
+    modalText: delModText,
+    modalBtn: delModCon,
   };
 }

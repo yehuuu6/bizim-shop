@@ -2,16 +2,12 @@ import PanelClass from "./classes/PanelClass.js";
 import ConfirmationModal from "./models/Modal.js";
 import { getApiResponse, clearAvatarInput } from "./utils/functions.js";
 
-const modalObject = ConfirmationModal();
-
-const modal = modalObject.modal;
-const modalText = modalObject.text;
-const modalBtn = modalObject.button;
+const { modal, modalText, modalBtn } = ConfirmationModal();
 
 const profileLogger = document.querySelector("#logger-profile");
 const profileLoader = document.querySelector("#loader-profile");
 
-export const ProfilePage = new PanelClass(profileLogger, profileLoader);
+const ProfilePage = new PanelClass(profileLogger, profileLoader);
 
 const ResetPassword = new PanelClass(profileLogger, profileLoader);
 
@@ -56,3 +52,7 @@ $(document).ready(function () {
     });
   });
 });
+
+// Exports
+
+export { ProfilePage };

@@ -70,14 +70,6 @@ export function cleanForm(form) {
   paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
 }
 
-export function instantiateModal(ModalObject) {
-  const modal = ModalObject.modal;
-  const modalText = ModalObject.text;
-  const modalBtn = ModalObject.button;
-
-  return { modal, modalText, modalBtn };
-}
-
 export function clearAvatarInput() {
   document.querySelector("#avatar-input").value = "";
   document.querySelector("#avatar-input-displayer").innerText =

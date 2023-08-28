@@ -3,7 +3,6 @@ import {
   setStatus,
   scrollToElement,
   addImageInput,
-  instantiateModal,
   cleanForm,
 } from "../utils/functions.js";
 import {
@@ -15,7 +14,7 @@ import {
 } from "../dev.js";
 import ConfirmationModal from "./Modal.js";
 
-const { modal, modalText, modalBtn } = instantiateModal(ConfirmationModal());
+const { modal, modalText, modalBtn } = ConfirmationModal();
 
 const productLogger = document.querySelector("#logger-products");
 const createLogger = document.querySelector("#logger-create");
