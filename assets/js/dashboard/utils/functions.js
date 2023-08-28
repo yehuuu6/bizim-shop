@@ -4,7 +4,16 @@ import { getSearchProduct, imageCount } from "../dev.js";
 // Directly gets response and displays the message. Use this if you don't need to do stuff with response.
 export function getApiResponse(panelObject, url, formData, scrollTo) {
   panelObject.sendApiRequest(url, formData).then((data) => {
-    if (JSON.parse(data)[0] === "success" && panelObject == ProfilePage)
+    try {
+      var response = JSON.parse(data);
+    } catch (e) {
+      panelObject.showMessage(
+        JSON.stringify[
+          ("error", "Bir hata oluştu. Lütfen tekrar deneyin.", "none")
+        ]
+      );
+    }
+    if (panelObject == ProfilePage && response[0] === "success")
       clearAvatarInput();
     panelObject.showMessage(data);
     scrollToElement(scrollTo);
@@ -47,8 +56,18 @@ export function runSearch() {
 
 export function cleanForm(form) {
   form.reset();
+  const button = document.querySelector("#create-product");
+  const title = document.querySelector("#create-product-title");
+  const paragraph = document.querySelector("#create-product-text");
   const imageInputs = document.querySelectorAll("[data-type='image-input']");
+  const addImageBtn = document.querySelector('button[name="add-image"]');
   imageInputs.forEach((input) => input.remove());
+  addImageBtn.disabled = false;
+  addImageBtn.className = "btn primary-btn small-btn";
+  imageCount.value = 1;
+  button.innerText = "Ürün Ekle";
+  title.innerText = "Markete Ürün Ekle";
+  paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
 }
 
 export function instantiateModal(ModalObject) {
@@ -138,10 +157,10 @@ export function setStatus(status) {
   let statusText = "";
   switch (status) {
     case "1":
-      statusText = "Listeleniyor";
+      statusText = "Satılık";
       break;
     case "0":
-      statusText = "Listelenmiyor";
+      statusText = "Satıldı";
       break;
   }
   return statusText;
