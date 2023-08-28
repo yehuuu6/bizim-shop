@@ -5,20 +5,19 @@ import {
   getApiResponse,
   scrollToElement,
   addImageInput,
-  instantiateModal,
   runSearch,
   cleanForm,
 } from "./utils/functions.js";
 
-const { modal, modalText, modalBtn } = instantiateModal(ConfirmationModal());
+const { modal, modalText, modalBtn } = ConfirmationModal();
 
-export const currentProducts = {
+const currentProducts = {
   value: [],
 };
-export const isEditMode = {
+const isEditMode = {
   value: false,
 };
-export const imageCount = {
+const imageCount = {
   value: 1,
 };
 
@@ -39,14 +38,14 @@ const createLoad = document.querySelector("#loader-create");
 const addImageBtn = document.querySelector('button[name="add-image"]');
 const maxImages = 6;
 
-export const ManageProductsPage = new PanelClass(productLogger, productLoad);
-export const CreateProductPage = new PanelClass(createLogger, createLoad);
+const ManageProductsPage = new PanelClass(productLogger, productLoad);
+const CreateProductPage = new PanelClass(createLogger, createLoad);
 
 // VARIABLES END
 
 // FUNCTIONS START
 
-export function getSearchProduct() {
+function getSearchProduct() {
   const search = searchInput.value.trim().toLowerCase();
 
   productTable.innerHTML = ""; // Clear the table
@@ -290,3 +289,14 @@ cleanProductForm.addEventListener("click", () => {
 });
 
 // CREATE PRODUCT PAGE END
+
+// Exports
+
+export {
+  currentProducts,
+  isEditMode,
+  imageCount,
+  ManageProductsPage,
+  CreateProductPage,
+  getSearchProduct,
+};
