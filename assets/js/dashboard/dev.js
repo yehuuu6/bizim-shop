@@ -31,6 +31,7 @@ const productLogger = document.querySelector("#logger-products");
 const productLoad = document.querySelector("#loader-products");
 const productMore = document.querySelector("#load-more-products");
 const productTable = document.querySelector("#products-table tbody");
+const searchInput = document.querySelector("#search-pr");
 
 const createLogger = document.querySelector("#logger-create");
 const createLoad = document.querySelector("#loader-create");
@@ -46,7 +47,6 @@ export const CreateProductPage = new PanelClass(createLogger, createLoad);
 // FUNCTIONS START
 
 export function getSearchProduct() {
-  const searchInput = document.querySelector("#search-pr");
   const search = searchInput.value.trim().toLowerCase();
 
   productTable.innerHTML = ""; // Clear the table
@@ -106,15 +106,34 @@ async function loadFirstProducts() {
 
 runSearch();
 
+function refreshProducts() {
+  loadFirstProducts();
+  productLogger.innerHTML = "";
+  productLogger.className = "logger";
+  searchInput.value = "";
+  startVal = 5;
+}
+
 $(document).ready(function () {
-  // Refresh manage products page
   productRefreshBtn.addEventListener("click", () => {
-    productLogger.innerHTML = "";
-    productLogger.className = "logger";
-    loadFirstProducts();
-    document.getElementById("search-pr").value = "";
-    startVal = 5;
+    refreshProducts();
   });
+
+  document
+    .querySelector('div[data-name="products"]')
+    .addEventListener("click", () => {
+      refreshProducts();
+    });
+  document
+    .querySelector('div[data-name="add-product"]')
+    .addEventListener("click", () => {
+      cleanForm(document.querySelector("#create-form"));
+      isEditMode.value = false;
+      document.querySelector("#exit-edit-mode").style.display = "none";
+      document.querySelector("#exit-edit-mode").disabled = true;
+      createLogger.innerHTML = "";
+      createLogger.className = "logger";
+    });
 
   loadFirstProducts();
 
@@ -178,6 +197,9 @@ function removeAndReorderImages(imageInput) {
 
     button.id = `remove-pic-${newIndex}`;
     button.title = `${newIndex}. Resmi Sil`;
+    button.hasAttribute("data-image")
+      ? (button.innerText = `${newIndex}. Resmi Kaldır`)
+      : (button.innerHTML = `<i class="fa-solid fa-minus"></i>`);
     label.id = `image-label-${newIndex}`;
     label.title = `${newIndex}. Resmi Sil`;
     label.htmlFor = `product-image-${newIndex}`;
@@ -194,7 +216,6 @@ function removeAndReorderImages(imageInput) {
 }
 
 // Deleting and reordering image inputs
-// ERROR Removes file from server but not from database!
 document.addEventListener("click", function (e) {
   const clickedButton = e.target.closest("button");
 
@@ -202,12 +223,18 @@ document.addEventListener("click", function (e) {
     e.preventDefault();
     const imageInput = clickedButton.closest('[data-type="image-input"]');
     const imageName = clickedButton.getAttribute("data-image");
+    const imageNumber = clickedButton.id.split("-")[2];
     if (isEditMode.value == true && imageName !== null) {
       document.body.append(modal);
       modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
       modalBtn.onclick = function () {
         const formData = new FormData();
         formData.append("image", imageName);
+        formData.append(
+          "product-id",
+          document.querySelector("[name='product-id']").value
+        );
+        formData.append("image-number", imageNumber);
         CreateProductPage.sendApiRequest(
           "/api/dashboard/product/delete-image.php",
           formData
@@ -246,6 +273,12 @@ addImageBtn.addEventListener("click", function (e) {
 
 addNewProduct.addEventListener("click", () => {
   setPageContent("hash", createProduct);
+  cleanForm(document.querySelector("#create-form"));
+  isEditMode.value = false;
+  document.querySelector("#exit-edit-mode").style.display = "none";
+  document.querySelector("#exit-edit-mode").disabled = true;
+  createLogger.innerHTML = "";
+  createLogger.className = "logger";
 });
 
 cleanProductForm.addEventListener("click", () => {
@@ -254,9 +287,6 @@ cleanProductForm.addEventListener("click", () => {
     JSON.stringify(["success", "Form başarıyla temizlendi.", "none"])
   );
   scrollToElement(createLogger);
-  addImageBtn.disabled = false;
-  addImageBtn.className = "btn primary-btn small-btn";
-  imageCount.value = 1;
 });
 
 // CREATE PRODUCT PAGE END
