@@ -9,8 +9,13 @@ export default class PanelClass {
   showMessage(data) {
     clearTimeout(this.timer);
 
-    const response = JSON.parse(data);
-    const [messageType, message, cause] = response;
+    try {
+      var response = JSON.parse(data);
+      var [messageType, message, cause] = response;
+    } catch (e) {
+      // DANGER This is a security risk. Do not use this in production.
+      var [messageType, message, cause] = ["error", data, "none"];
+    }
 
     const iconPath =
       messageType === "success"
