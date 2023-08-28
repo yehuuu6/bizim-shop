@@ -24,14 +24,15 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     function deleteFiles($files, $root_name)
     {
-        // Delete for each file
+        // Delete each image
         foreach ($files as $_file) {
             try {
                 if ($_file != 'noimg.jpg') {
+                    $_file = $root_name . '/' . $_file;
                     unlink(PRODUCT_IMAGE_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu: ' . $e . '.', 'none');
+                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.', 'none');
             }
         }
         try {
