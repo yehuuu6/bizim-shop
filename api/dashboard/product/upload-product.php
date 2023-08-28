@@ -33,25 +33,28 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
 
+    $validations = [
+        ['Ürün adı', $name, 6, 18, 'product-name'],
+        ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
+        ['Ürün açıklaması', $description, 50, 500, 'product-description']
+    ];
+
+    foreach ($validations as list($field, $value, $minLength, $maxLength, $fieldName)) {
+        if (strlen($value) < $minLength) {
+            sendErrorResponse("$field çok kısa. Minimum uzunluk $minLength karakterdir.", $fieldName);
+        } elseif (strlen($value) > $maxLength) {
+            sendErrorResponse("$field çok uzun. Maksimum uzunluk $maxLength karakterdir.", $fieldName);
+        }
+    }
+
     if (mysqli_stmt_num_rows($stmt) > 0 && !$isEditing) {
         sendErrorResponse('Ürün zaten var.', 'name');
-    } elseif (strlen($name) > 18) {
-        sendErrorResponse('Ürün adı çok uzun. Maksimum uzunluk 18 karakterdir.', 'product-name');
-    } elseif (strlen($name) < 6) {
-        sendErrorResponse('Ürün adı çok kısa. Minimum uzunluk 6 karakterdir.', 'product-name');
     } elseif ($price <= 0) {
         sendErrorResponse('Lütfen geçerli bir fiyat giriniz.', 'product-price');
-    } elseif (strlen($tags) < 5) {
-        sendErrorResponse('Ürün etiketi çok kısa. Minimum uzunluk 5 karakterdir.', 'product-tags');
-    } elseif (strlen($tags) > 50) {
-        sendErrorResponse('Ürün etiketi çok uzun. Maksimum uzunluk 50 karakterdir.', 'product-tags');
-    } elseif (strlen($description) < 50) {
-        sendErrorResponse('Ürün açıklaması çok kısa. Minimum uzunluk 50 karakterdir.', 'product-description');
-    } elseif (strlen($description) > 500) {
-        sendErrorResponse('Ürün açıklaması çok uzun. Maksimum uzunluk 500 karakterdir.', 'product-description');
     } else {
         for ($i = 1; $i < $imageCount; $i++) {
-            $image = $_FILES['product-image-' . $i . '']['name'];
+            @$image = $_FILES['product-image-' . $i . '']['name'];
+            if ($image === null) continue;
             $image_tmp = $_FILES['product-image-' . $i . '']['tmp_name'];
             $image_size = $_FILES['product-image-' . $i . '']['size'];
             $image_error = $_FILES['product-image-' . $i . '']['error'];
@@ -61,7 +64,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
             $allowed = array('jpg', 'jpeg', 'png');
 
-            if (empty($image) && $isEditing === 'false') {
+            if (empty($image)) {
                 sendErrorResponse($i . '. Resim boş bırakılamaz.', 'image-label-' . $i . '');
             } else if (in_array($image_ext, $allowed) && $isEditing === 'false') {
                 if ($image_error === 0) {
@@ -106,6 +109,15 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     exit;
 }
 
+function uploadImages($readyToUpload, $max_width, $max_height)
+{
+    foreach ($readyToUpload as $image_tmp => $image_destination) {
+        if (compressAndSaveImage($image_tmp, $image_destination, $max_height, $max_width) === false) {
+            sendErrorResponse('Resim yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'image');
+        }
+    }
+}
+
 function insertProduct($con, $uid, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images)
 {
     global $root_name;
@@ -113,22 +125,14 @@ function insertProduct($con, $uid, $category, $name, $description, $tags, $price
     global $max_height;
     global $max_width;
 
-    $images = array_pad($images, 6, "noimg.jpg");
-    for ($i = 0; $i < count($images); $i++) {
-        if ($images[$i] !== "noimg.jpg") {
-            $images[$i] = $root_name . '/' . $images[$i];
-        }
-    }
-
     if (!file_exists(PRODUCT_IMAGE_SERVER_PATH . $root_name . '')) {
         mkdir(PRODUCT_IMAGE_SERVER_PATH . $root_name . '');
     }
 
-    foreach ($readyToUpload as $image_tmp => $image_destination) {
-        if (compressAndSaveImage($image_tmp, $image_destination, $max_height, $max_width) === false) {
-            sendErrorResponse('Resim yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'image');
-        }
-    }
+    // Replace the null images with noimg.jpg
+    $images = array_pad($images, 6, 'noimg.jpg');
+
+    uploadImages($readyToUpload, $max_width, $max_height);
 
     $sql = "INSERT INTO product (uid, category, name, root_name, description, tags, price, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
     VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -160,13 +164,30 @@ function insertProduct($con, $uid, $category, $name, $description, $tags, $price
 
 function updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality)
 {
-    $sql = "UPDATE product SET category = ?, name = ?, description = ?, tags = ?, price = ?, shipment = ?, featured = ?, quality = ? WHERE id = ?";
+    global $root_name;
+
+    // Get old root name
+    $sql = "SELECT root_name FROM product WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $old_root_name);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // If root name is changed, rename the folder
+    if ($old_root_name !== $root_name) {
+        rename(PRODUCT_IMAGE_SERVER_PATH . $old_root_name, PRODUCT_IMAGE_SERVER_PATH . $root_name);
+    }
+
+    $sql = "UPDATE product SET category = ?, name = ?, root_name = ?, description = ?, tags = ?, price = ?, shipment = ?, featured = ?, quality = ? WHERE id = ?";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "isssdiiii",
+        "issssdiiii",
         $category,
         $name,
+        $root_name,
         $description,
         $tags,
         $price,
