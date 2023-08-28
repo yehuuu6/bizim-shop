@@ -70,10 +70,10 @@ input:read-only {
     letter-spacing: 0;
 }
 .delete-modal-content{
-    width: 400px;
+    max-width: 550px;
+    width: auto;
     background: #fff;
     border-radius: 10px;
-    border:1px solid #dadada;
     gap: 10px;
     border: 2px solid #dadada;
     padding: 20px;
