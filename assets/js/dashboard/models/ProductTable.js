@@ -33,7 +33,7 @@ export default function CreateProductTable(product) {
       <form class="table-form" data-id="${product.id}">
         <button data-action="status" class="btn ${
           product.status === "1" ? "status-btn" : "success-btn"
-        }">${product.status === "1" ? "Listeleme" : "Listele"}</button>
+        }">${product.status === "1" ? "Satıldı" : "Satışta"}</button>
         <button data-action="edit" class="btn edit-btn">Düzenle</button>
         <button data-action="delete" class="btn delete-btn">Sil</button>
       </form>
@@ -68,7 +68,7 @@ export default function CreateProductTable(product) {
 
       if (JSON.parse(response)[0] === "success") {
         product.status = newStatus;
-        e.target.innerText = newStatus === "1" ? "Listeleme" : "Listele";
+        e.target.innerText = newStatus === "1" ? "Satıldı" : "Satışta";
         tr.querySelector("[data-mission='status']").innerText =
           setStatus(newStatus);
         e.target.className = `btn ${
@@ -123,6 +123,7 @@ function deleteProduct(product) {
 }
 
 function editProduct(product) {
+  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
   setPageContent("hash", createProduct);
   clearImageInputs(
     document.querySelector('button[name="add-image"]'),
@@ -143,10 +144,9 @@ function editProduct(product) {
   const exitEditMode = document.querySelector("#exit-edit-mode");
   const button = document.querySelector("#create-product");
   const title = document.querySelector("#create-product-title");
+  const paragraph = document.querySelector("#create-product-text");
   button.innerText = "Değişiklikleri Kaydet";
   title.innerText = `${product.name} Ürününü Düzenliyorsunuz.`;
-
-  const paragraph = document.querySelector("#create-product-text");
   paragraph.innerText = `Düzenleme modundan çıkmak için yanda bulunan X butonuna basabilirsiniz.`;
 
   const form = document.querySelector("#create-form");
@@ -163,8 +163,6 @@ function editProduct(product) {
     { element: document.querySelector("#shipment"), key: "shipment" },
     { element: document.querySelector("#featured"), key: "featured" },
   ];
-
-  const hostname = window.location.origin;
 
   exitEditMode.classList.remove("none-display");
   elements.forEach((item) => (item.element.value = product[item.key]));
@@ -183,11 +181,22 @@ function editProduct(product) {
       `button[id="remove-pic-${index + 1}"]`
     );
     deleteImageBtn.dataset.image = image;
+    deleteImageBtn.classList.remove("small-btn");
+    deleteImageBtn.innerHTML = `${index + 1}. Resmi Kaldır`;
     const imagePreview = document.querySelector(`#image-preview-${index + 1}`);
     const imageText = document.querySelector(`#image-text-${index + 1}`);
-    imageText.textContent = image.replace(product.root_name + "/", "");
+    const imageLabel = document.querySelector(`#image-label-${index + 1}`);
+    const imageInput = document.querySelector(`#product-image-${index + 1}`);
+    const hostname = window.location.origin;
+    // Hide imageLabel and imageInput
+    imageLabel.style.display = "none";
+    imageInput.style.display = "none";
+    imageInput.disabled = true;
     imagePreview.style.display = "block";
-    imagePreview.src = `${hostname}/assets/imgs/dynamic/product/${image}`;
+    imageText.textContent = product[`image${index + 1}`];
+    imagePreview.src = `${hostname}/assets/imgs/dynamic/product/${
+      product["root_name"]
+    }/${image}?timestamp=${Date.now()}`;
   });
 
   exitEditMode.addEventListener("click", () => {
@@ -199,9 +208,6 @@ function editProduct(product) {
     isEditMode.value = false;
     inputId.remove();
     exitEditMode.classList.add("none-display");
-    button.innerText = "Ürün Ekle";
-    title.innerText = "Markete Ürün Ekle";
-    paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
     imageCount.value = 1;
     document.querySelector('button[name="add-image"]').disabled = false;
     document.querySelector('button[name="add-image"]').className =
