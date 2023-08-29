@@ -1,5 +1,5 @@
 export class AuthorizationClass {
-  constructor(form, logger, loader, url, returnUrl, goBackTime = 2000) {
+  constructor(form, logger, loader, url, returnUrl, goBackTime = 3000) {
     this.form = form;
     this.logger = logger;
     this.loader = loader;
@@ -53,6 +53,16 @@ export class AuthorizationClass {
         this.showMessage(message, status, cause);
 
         if (status === "success") {
+          let i = this.goBackTime / 1000;
+          this.logger.innerHTML += ` <span>${i}</span>`;
+
+          const timer = setInterval(() => {
+            i--;
+            this.logger.lastElementChild.textContent = `${i}`; // Update the span's text content
+            if (i === -1) {
+              clearInterval(timer);
+            }
+          }, 1000);
           setTimeout(() => {
             window.location.href = this.returnUrl;
           }, this.goBackTime);
