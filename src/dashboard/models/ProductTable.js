@@ -165,6 +165,8 @@ function editProduct(product) {
   ];
 
   exitEditMode.classList.remove("none-display");
+  exitEditMode.disabled = false;
+
   elements.forEach((item) => (item.element.value = product[item.key]));
 
   const images = [];
@@ -207,7 +209,8 @@ function editProduct(product) {
     scrollToElement(createLogger);
     isEditMode.value = false;
     inputId.remove();
-    exitEditMode.classList.add("none-display");
+    exitEditMode.classList.add("none-dislplay");
+    exitEditMode.disabled = true;
     imageCount.value = 1;
     document.querySelector('button[name="add-image"]').disabled = false;
     document.querySelector('button[name="add-image"]').className =

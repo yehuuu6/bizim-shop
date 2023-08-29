@@ -124,7 +124,7 @@ $(document).ready(function () {
     .addEventListener("click", () => {
       cleanForm(document.querySelector("#create-form"));
       isEditMode.value = false;
-      document.querySelector("#exit-edit-mode").style.display = "none";
+      document.querySelector("#exit-edit-mode").classList.add("none-display");
       document.querySelector("#exit-edit-mode").disabled = true;
       createLogger.innerHTML = "";
       createLogger.className = "logger";
@@ -270,7 +270,7 @@ addNewProduct.addEventListener("click", () => {
   setPageContent("hash", document.getElementById("add-product"));
   cleanForm(document.querySelector("#create-form"));
   isEditMode.value = false;
-  document.querySelector("#exit-edit-mode").style.display = "none";
+  document.querySelector("#exit-edit-mode").classList.add("none-display");
   document.querySelector("#exit-edit-mode").disabled = true;
   createLogger.innerHTML = "";
   createLogger.className = "logger";
