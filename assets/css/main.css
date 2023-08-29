@@ -218,12 +218,12 @@ footer{
     gap: 1rem;
 }
 #home {
-    background: url(../imgs/static/content/mass_bg.jpg) no-repeat center center/cover;
+    background: url(/global/imgs/mass_bg.jpg) no-repeat center center/cover;
 }
 #custom-page{
-    background: url(../imgs/static/content/mass_bg_third.svg) no-repeat center center/cover;
+    background: url(/global/imgs/mass_bg_third.svg) no-repeat center center/cover;
 }
 .secondary-bg{
-    background: url(../imgs/static/content/mass_bg_second.svg) no-repeat center center/cover;
+    background: url(/global/imgs/mass_bg_second.svg) no-repeat center center/cover;
 }
 /* Pages */
