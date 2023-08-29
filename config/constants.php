@@ -15,4 +15,4 @@ define('DEFAULT_PAGE_FAVICON', "/global/imgs/favicon.svg");
 
 // Emailer
 define('EMAIL', 'planetofplugins@gmail.com');
-define('PASSWORD', 'ufoqssuukxbygtda');
+define('PASSWORD', 'kdualiugtgjdzczf');
