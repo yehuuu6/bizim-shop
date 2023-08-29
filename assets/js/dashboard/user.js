@@ -1,6 +1,6 @@
 import PanelClass from "./classes/PanelClass.js";
 import ConfirmationModal from "./models/Modal.js";
-import { getApiResponse, clearAvatarInput } from "./utils/functions.js";
+import { getApiResponse, clearAvatarInput } from "./utils/functions.usr.js";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 

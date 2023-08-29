@@ -1,13 +1,8 @@
 import PanelClass from "./classes/PanelClass.js";
 import ConfirmationModal from "./models/Modal.js";
 import CreateProductTable from "./models/ProductTable.js";
-import {
-  getApiResponse,
-  scrollToElement,
-  addImageInput,
-  runSearch,
-  cleanForm,
-} from "./utils/functions.js";
+import { getApiResponse, scrollToElement } from "./utils/functions.usr.js";
+import { addImageInput, runSearch, cleanForm } from "./utils/functions.dev.js";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 

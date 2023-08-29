@@ -1,10 +1,4 @@
-import {
-  getCategory,
-  setStatus,
-  scrollToElement,
-  addImageInput,
-  cleanForm,
-} from "../utils/functions.js";
+import { scrollToElement } from "../utils/functions.usr.js";
 import {
   currentProducts,
   CreateProductPage,
@@ -13,6 +7,12 @@ import {
   imageCount,
 } from "../dev.js";
 import ConfirmationModal from "./Modal.js";
+import {
+  getCategory,
+  setStatus,
+  addImageInput,
+  cleanForm,
+} from "../utils/functions.dev.js";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
