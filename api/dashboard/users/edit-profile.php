@@ -65,23 +65,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     if (!validatePhoneNumber($telephone)) {
         sendErrorResponse('Lütfen geçerli bir telefon numarası girin.', 'phone');
     }
-    if ($city == '') {
-        sendErrorResponse('Lütfen geçerli bir il seçin.', 'city');
-    }
-    if ($district == '') {
-        sendErrorResponse('Lütfen geçerli bir ilçe seçin.', 'district');
-    }
     if (strlen($apartment) > 50) {
         sendErrorResponse('Apartman adı 50 karakterden uzun olamaz.', 'apartment');
-    }
-    if ($apartment == '') {
-        sendErrorResponse('Lütfen geçerli bir apartman adı girin.', 'apartment');
-    }
-    if ($floor == '') {
-        sendErrorResponse('Lütfen geçerli bir daire numarası girin.', 'floor');
-    }
-    if ($door == '' || $door < 1 || $door > 999) {
-        sendErrorResponse('Lütfen geçerli bir kapı numarası girin.', 'door');
     }
 
     $allowed = array('jpg', 'jpeg', 'png');
