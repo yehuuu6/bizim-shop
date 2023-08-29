@@ -55,9 +55,9 @@ while ($row3 = mysqli_fetch_assoc($res)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
   <link rel="stylesheet" href="/assets/css/utils.css" />
   <link rel="stylesheet" href="/assets/css/dashboard.css" />
-  <script src="/assets/js/plugins/jquery.js"></script>
-  <script src="/assets/js/plugins/icons.js"></script>
-  <link rel="shortcut icon" href="/assets/imgs/static/content/favicon.svg" type="image/x-icon">
+  <script src="/global/plugins/jquery.js"></script>
+  <script src="/global/plugins/icons.js"></script>
+  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <title>Panel - Bizim Shop</title>
 </head>
 
@@ -65,7 +65,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
   <div class="app">
     <nav>
       <div class="header-container">
-        <img class="large-svg" src="/assets/imgs/static/content/favicon.svg" alt="Logo">
+        <img class="large-svg" src="/global/imgs/favicon.svg" alt="Logo">
         <h2 class="header flex-display gap-5">Bizim <div class="blue-text">Shop</div>
         </h2>
         <input id="menu-toggle" type="checkbox">
@@ -460,7 +460,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       }, 1000);
       const file = this.files[0];
       userLogger.className = "logger warning";
-      userLogger.innerHTML = "<span><img src='/assets/imgs/static/content/info.png'/></span> Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.";
+      userLogger.innerHTML = "<span><img src='/global/imgs/info.png'/></span> Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.";
       if (file) {
         document.querySelector("#avatar-input-displayer").innerText = file.name;
         imageContainer.append(removeBtn);
@@ -520,10 +520,12 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       }
   });
   </script>
-  <script src="/assets/js/dashboard/routing.js"></script>
-  <script type="module" src="/assets/js/dashboard/user.js"></script>
+  <script type="module" src="/dist/dr52j2s.js"></script>
+  <?php if ($power === 0) : ?>
+    <script type="module" src="/dist/du48gn1.js"></script>
+  <?php endif; ?>
   <?php if ($power > 0) : ?>
-    <script type="module" src="/assets/js/dashboard/dev.js"></script>
+    <script type="module" src="/dist/da48gn2.js"></script>
   <?php endif; ?>
 </body>
 <!--       

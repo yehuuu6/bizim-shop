@@ -34,21 +34,21 @@ $PAGE_FAVICON = isset($PAGE_FAVICON) ? $PAGE_FAVICON : DEFAULT_PAGE_FAVICON;
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/utils.css">
     <link rel="shortcut icon" href="<?= $PAGE_FAVICON ?>" type="image/x-icon">
-    <script src="/assets/js/plugins/jquery.js"></script>
-    <script src="/assets/js/plugins/icons.js"></script>
+    <script src="/global/plugins/icons.js"></script>
+    <script src="/global/plugins/jquery.js"></script>
     <title><?= $PAGE_TITLE ?></title>
 </head>
 
 <body>
     <nav class="navbar flex-display justify-between align-center">
         <div class="navbar-item flex-display gap-5 align-center">
-            <img class="navbar-svg large-svg no-drag" src="/assets/imgs/static/content/favicon.svg" alt="">
+            <img class="navbar-svg large-svg no-drag" src="/global/imgs/favicon.svg" alt="">
             <h2 class="navbar-logo flex-display gap-5">Bizim <div class="blue-text bold-text">Shop</div>
             </h2>
         </div>
         <div class="navbar-item">
             <ul class="no-list-style flex-display justify-space-around align-center">
-                <img class="navbar-svg medium-svg" src="/assets/imgs/static/content/linksvg.svg" alt="">
+                <img class="navbar-svg medium-svg" src="/global/imgs/linksvg.svg" alt="">
                 <li><a class="no-decoration navbar-btn" href="/">Ana Sayfa</a></li>
                 <li><a class="no-decoration navbar-btn" href="/products">Ürünler</a></li>
                 <li><a class="no-decoration navbar-btn" href="/feedbacks">Yorumlar</a></li>
@@ -56,7 +56,7 @@ $PAGE_FAVICON = isset($PAGE_FAVICON) ? $PAGE_FAVICON : DEFAULT_PAGE_FAVICON;
         </div>
         <div class="navbar-item">
             <ul class="no-list-style flex-display justify-space-around align-center">
-                <img class="navbar-svg small-svg" src="/assets/imgs/static/content/usersvg.svg" alt="">
+                <img class="navbar-svg small-svg" src="/global/imgs/usersvg.svg" alt="">
                 <?php if (!isset($_SESSION['id'])) : ?>
                     <li><a class="no-decoration navbar-btn" href="/auth/login">Giriş Yap</a></li>
                     <li><a class="no-decoration navbar-btn" href="/auth/register">Kayıt Ol</a></li>

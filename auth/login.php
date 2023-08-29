@@ -11,9 +11,9 @@ if (isset($_SESSION['id'])) {
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/assets/css/auth.css">
-  <link rel="shortcut icon" href="/assets/imgs/static/content/favicon.svg" type="image/x-icon">
-  <script src="https://kit.fontawesome.com/7eedcf6ee7.js" crossorigin="anonymous"></script>
-  <script src="/assets/js/plugins/jquery.js"></script>
+  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
+  <script src="/global/plugins/icons.js"></script>
+  <script src="/global/plugins/jquery.js"></script>
   <title>Hesabınıza giriş yapın - Bizim Shop</title>
 </head>
 

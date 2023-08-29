@@ -11,7 +11,7 @@ define('DEFAULT_PAGE_TITLE', "İkinci El Eşyaları Al & Sat - Bizim Shop");
 define('DEFAULT_PAGE_DESCRIPTION', "İkinci el eşyalarınızı alıp satabileceğiniz bir platform.");
 define('DEFAULT_PAGE_KEYWORDS', "ikinci el, eşya, al, sat, ikinci el eşya, ikinci el eşya al, ikinci el eşya sat, ikinci el eşya al sat, ikinci el eşya alım satım, ikinci el eşya alım, ikinci el eşya satım, ikinci el eşya al satım, ikinci el eşya al sat, ikinci el eşya alım sat, ikinci el eşya alım satım");
 define('DEFAULT_PAGE_AUTHOR', "therenaydin");
-define('DEFAULT_PAGE_FAVICON', "/assets/imgs/static/content/favicon.svg");
+define('DEFAULT_PAGE_FAVICON', "/global/imgs/favicon.svg");
 
 // Emailer
 define('EMAIL', 'planetofplugins@gmail.com');

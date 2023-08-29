@@ -32,15 +32,11 @@ if (!defined('FILE_ACCESS')) {
     </div>
     <div class="footer-powered">
         <div class="footer-item gap-10">
-            <img class="no-drag wide-img" src="/assets/imgs/static/content/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
+            <img class="no-drag wide-img" src="/global/imgs/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
             <p>Bazı içerikler ve kod örnekleri, <a class="link purple-text" target="_blank" href="https://openai.com/blog/chatgpt">OpenAI GPT-3</a> tarafından sağlanmıştır.</p>
         </div>
         <div class="footer-item gap-10">
-            <img class="no-drag narrow-img" src="/assets/imgs/static/content/gazi.png" alt="Gazi Logo">
-            <p><a class="link purple-text" target="_blank" href="https://gazi.edu.tr/">Gazili</a> olmak ayrıcalıktır...</p><br>
-        </div>
-        <div class="footer-item gap-10">
-            <img class="no-drag wide-img" src="/assets/imgs/static/content/Discord_Logo.png" alt="Discord Logo">
+            <img class="no-drag wide-img" src="/global/imgs/Discord_Logo.png" alt="Discord Logo">
             <p>Öneri ve istekleriniz için <a class="link purple-text" target="_blank" href="https://discord.gg/4ZyAb3sZVS">Discord</a> sunucumuza katılabilirsiniz!</p>
         </div>
     </div>
@@ -49,7 +45,7 @@ if (!defined('FILE_ACCESS')) {
         <div class="blue-text bold-text">Shop</div> Tüm Hakları Saklıdır.</p>
     </div>
 </footer>
-<script src="/assets/js/interactive.js"></script>
+<script src="/src/interactive.js"></script>
 </body>
 <!--       
 

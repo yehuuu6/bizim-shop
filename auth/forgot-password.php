@@ -11,9 +11,9 @@ if (isset($_SESSION['id'])) {
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/assets/css/auth.css">
-  <link rel="shortcut icon" href="/assets/imgs/static/content/favicon.svg" type="image/x-icon">
-  <script src="https://kit.fontawesome.com/7eedcf6ee7.js" crossorigin="anonymous"></script>
-  <script src="/assets/js/plugins/jquery.js"></script>
+  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
+  <script src="/global/plugins/icons.js"></script>
+  <script src="/global/plugins/jquery.js"></script>
   <title>Şifremi Unuttum - Bizim Shop</title>
 </head>
 
@@ -22,7 +22,7 @@ if (isset($_SESSION['id'])) {
     <form id="forgot-password-form" class="form">
       <div class="header primary-color">Şifremi Unuttum</div>
       <div class="logger warning">
-        <span><img src="/assets/imgs/static/content/info.png" alt=""></span>
+        <span><img src="/global/imgs/info.png" alt=""></span>
         Hesabınızın e-posta adresini girin.
       </div>
       <div class="formGroup">

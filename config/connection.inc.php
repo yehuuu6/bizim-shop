@@ -11,7 +11,7 @@ $con = mysqli_connect("localhost", "root", "", "store") or die("Connection was n
 define('DOMAIN', 'http://localhost/');
 define('SERVER_PATH', $_SERVER['DOCUMENT_ROOT'] . '/assets/imgs/');
 define('SITE_PATH', DOMAIN . 'assets/imgs/');
-define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'dynamic/product/');
-define('PRODUCT_USER_SERVER_PATH', SERVER_PATH . 'dynamic/users/');
-define('PRODUCT_USER_SITE_PATH', SITE_PATH . 'dynamic/users/');
-define('PRODUCT_IMAGE_SITE_PATH', SITE_PATH . 'dynamic/product/');
+define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'product/');
+define('PRODUCT_USER_SERVER_PATH', SERVER_PATH . 'users/');
+define('PRODUCT_USER_SITE_PATH', SITE_PATH . 'users/');
+define('PRODUCT_IMAGE_SITE_PATH', SITE_PATH . 'product/');
