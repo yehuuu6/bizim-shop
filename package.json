@@ -1,13 +1,13 @@
 {
-  "name": "htdocs",
+  "name": "bizim-shop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "E-commerce website for a local shop",
+  "main": "index.php",
   "scripts": {
     "webpack-build": "webpack"
   },
   "keywords": [],
-  "author": "",
+  "author": "therenaydin",
   "license": "ISC",
   "devDependencies": {
     "webpack": "^5.88.2",
