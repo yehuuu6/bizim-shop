@@ -48,8 +48,7 @@ export class AuthorizationClass {
       contentType: false,
       success: (data) => {
         this.loader.css("display", "none");
-        const response = JSON.parse(data);
-        const [status, message, cause] = response;
+        const [status, message, cause] = JSON.parse(data);
         this.showMessage(message, status, cause);
 
         if (status === "success") {
