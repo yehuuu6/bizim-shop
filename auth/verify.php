@@ -50,7 +50,8 @@ if (($_SESSION['verified'] == 1)) {
       </form>
   </div>
   <script>
-    $('#logout-btn').click(function() {
+    $('#logout-btn').click(function(e) {
+      e.preventDefault();
       window.location.href = "/?logout=1";
     });
   </script>
