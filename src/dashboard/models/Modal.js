@@ -1,64 +1,53 @@
 export default function ConfirmationModal() {
-  const modal = document.createElement("div");
-  modal.classList.add("delete-modal");
+  const modal = $('<div class="delete-modal"></div>');
+  const delCon = $('<div class="delete-modal-content"></div>');
+  const modTitle = $('<h1 class="delete-modal-title">Uyarı!</h1>');
+  const lineBreak = $('<hr class="delete-modal-line">');
+  const delModText = $("<p></p>");
+  const delModWarn = $('<strong class="warn">BU EYLEM GERİ ALINAMAZ.</strong>');
+  const delSpan = $("<span>Devam et?</span>");
+  const delModBtns = $('<div class="delete-modal-btns"></div>');
+  const delModCan = $('<button class="btn success-btn">Hayır</button>');
+  const delModCon = $('<button class="btn delete-btn">Evet</button>');
 
-  const delCon = document.createElement("div");
-  delCon.classList.add("delete-modal-content");
+  const modalElement = modal[0];
+  const delConElement = delCon[0];
+  const modTitleElement = modTitle[0];
+  const lineBreakElement = lineBreak[0];
+  const delModTextElement = delModText[0];
+  const delModWarnElement = delModWarn[0];
+  const delSpanElement = delSpan[0];
+  const delModBtnsElement = delModBtns[0];
+  const delModConElement = delModCon[0];
+  const delModCanElement = delModCan[0];
 
-  const modTitle = document.createElement("h1");
-  modTitle.innerText = "Uyarı!";
-  modTitle.classList.add("delete-modal-title");
-
-  const lineBreak = document.createElement("hr");
-  lineBreak.classList.add("delete-modal-line");
-
-  const delModText = document.createElement("p");
-
-  const delModWarn = document.createElement("strong");
-  delModWarn.innerText = "BU EYLEM GERİ ALINAMAZ.";
-  delModWarn.classList.add("warn");
-
-  const delSpan = document.createElement("span");
-  delSpan.innerText = "Devam et?";
-
-  const delModBtns = document.createElement("div");
-  delModBtns.classList.add("delete-modal-btns");
-
-  const delModCan = document.createElement("button");
-  delModCan.classList.add("btn", "success-btn");
-  delModCan.innerText = "Hayır";
-  delModCan.addEventListener("click", () => {
+  delModCanElement.addEventListener("click", () => {
     modal.remove();
   });
 
-  const delModCon = document.createElement("button");
-  delModCon.classList.add("btn", "delete-btn");
-  delModCon.innerText = "Evet";
-
-  // Close delete modal when outside of modal is clicked
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
+  modalElement.addEventListener("click", (e) => {
+    if (e.target === modalElement) {
       modal.remove();
     }
   });
 
   delModBtns.append(delModCon, delModCan);
   delCon.append(
-    modTitle,
-    lineBreak.cloneNode(),
-    delModText,
-    lineBreak.cloneNode(),
-    delModWarn,
-    lineBreak.cloneNode(),
-    delSpan,
-    delModBtns
+    modTitleElement,
+    lineBreakElement.cloneNode(),
+    delModTextElement,
+    lineBreakElement.cloneNode(),
+    delModWarnElement,
+    lineBreakElement.cloneNode(),
+    delSpanElement,
+    delModBtnsElement
   );
 
-  modal.appendChild(delCon);
+  modal.append(delConElement);
 
   return {
-    modal: modal,
-    modalText: delModText,
-    modalBtn: delModCon,
+    modal: modalElement,
+    modalText: delModTextElement,
+    modalBtn: delModConElement,
   };
 }

@@ -17,52 +17,55 @@ export class AuthorizationClass {
     const className = `logger ${messageType}`;
     const imageTag = `<span><img src='/global/imgs/${iconPath}'/></span>`;
 
-    this.logger.className = className;
-    this.logger.innerHTML = `${imageTag} ${message}`;
+    this.logger.attr("class", className);
+    this.logger.html(imageTag + message);
 
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      let element = document.querySelector(`[name=${cause}]`);
-      element.style.border = "1px solid red";
+      let element = $(`[name="${cause}"]`);
+      element.css("border", "1px solid red");
 
       this.timer2 = setTimeout(() => {
-        element.style = "";
+        element.css("border", "1px solid #dadada");
       }, 2000);
     }
 
     this.timer = setTimeout(() => {
-      this.logger.className = "logger";
-      this.logger.innerHTML = "";
+      this.logger.attr("class", "logger");
+      this.logger.html("");
     }, 8000);
   }
 
   sendApiRequest() {
-    this.loader.style.display = "flex";
+    this.loader.css("display", "flex");
 
     $.ajax({
       url: this.url,
       type: "POST",
-      data: new FormData(this.form),
+      data: new FormData(this.form[0]),
       processData: false,
       contentType: false,
       success: (data) => {
-        this.loader.style.display = "none";
+        this.loader.css("display", "none");
         const response = JSON.parse(data);
         const [status, message, cause] = response;
         this.showMessage(message, status, cause);
 
         if (status === "success") {
-          let i = this.goBackTime / 1000;
-          this.logger.innerHTML += `<span> ${i}</span>`;
+          // If not SpecialAuthorizationClass
+          if (this.oldLoggerText === undefined) {
+            let i = this.goBackTime / 1000;
+            this.logger.append(`<span> ${i}</span>`);
 
-          const timer = setInterval(() => {
-            i--;
-            this.logger.lastElementChild.textContent = `${i}`; // Update the span's text content
-            if (i === -1) {
-              clearInterval(timer);
-            }
-          }, 1000);
+            const timer = setInterval(() => {
+              i--;
+              this.logger.children().last().text(i); // Update the span's text content
+              if (i === 0) {
+                clearInterval(timer);
+              }
+            }, 1000);
+          }
           setTimeout(() => {
             window.location.href = this.returnUrl;
           }, this.goBackTime);
@@ -92,8 +95,8 @@ export class SpecialAuthorizationClass extends AuthorizationClass {
     clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
-      this.logger.className = "logger warning";
-      this.logger.innerHTML = this.oldLoggerText;
+      this.logger.attr("class", "logger warning");
+      this.logger.html(this.oldLoggerText);
     }, 8000);
   }
 }
