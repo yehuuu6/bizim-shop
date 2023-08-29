@@ -520,12 +520,12 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       }
   });
   </script>
-  <script type="module" src="/dist/dr52j2s.js"></script>
+  <script type="module" src="/dist/d/dr52j2s.js"></script>
   <?php if ($power === 0) : ?>
-    <script type="module" src="/dist/du48gn1.js"></script>
+    <script type="module" src="/dist/d/du48gn1.js"></script>
   <?php endif; ?>
   <?php if ($power > 0) : ?>
-    <script type="module" src="/dist/da48gn2.js"></script>
+    <script type="module" src="/dist/d/da48gn2.js"></script>
   <?php endif; ?>
 </body>
 <!--       
