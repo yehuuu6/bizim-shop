@@ -4,7 +4,7 @@
 
 ## TO-DOs
 
-- 🔎 Crafting Brand Identity
+- 🌟 Crafting Brand Identity
   - [ ] Design a unique and memorable logo.
   - [ ] Formulate a captivating brand name that resonates.
 - 🖥️ Building a Cutting-Edge Web Application
@@ -35,6 +35,7 @@
 
 ### 🔧 Tools and Libraries
 
+- [jQuery](https://jquery.com/) 🔍
 - [Webpack](https://webpack.js.org/) 📦
 - [Axios](https://axios-http.com/) 🔑
 - [Symfony Mailer](https://symfony.com/doc/current/mailer.html) 📧
