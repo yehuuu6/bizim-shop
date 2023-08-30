@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export class AuthorizationClass {
   constructor(form, logger, loader, url, returnUrl, goBackTime = 3000) {
     this.form = form;
@@ -37,40 +39,46 @@ export class AuthorizationClass {
     }, 8000);
   }
 
+  showCountdown() {
+    let i = this.goBackTime / 1000;
+    this.logger.append(`<span> ${i}</span>`);
+
+    const timer = setInterval(() => {
+      i--;
+      this.logger.children().last().text(i);
+      if (i === 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
+
   sendApiRequest() {
     this.loader.css("display", "flex");
 
-    $.ajax({
+    axios({
       url: this.url,
-      type: "POST",
+      method: "post",
       data: new FormData(this.form[0]),
-      processData: false,
-      contentType: false,
-      success: (data) => {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => {
         this.loader.css("display", "none");
-        const [status, message, cause] = JSON.parse(data);
+        const [status, message, cause] = response.data;
         this.showMessage(message, status, cause);
 
         if (status === "success") {
-          // If not SpecialAuthorizationClass
-          if (this.oldLoggerText === undefined) {
-            let i = this.goBackTime / 1000;
-            this.logger.append(`<span> ${i}</span>`);
-
-            const timer = setInterval(() => {
-              i--;
-              this.logger.children().last().text(i); // Update the span's text content
-              if (i === 0) {
-                clearInterval(timer);
-              }
-            }, 1000);
-          }
+          this.oldLoggerText === undefined ? this.showCountdown() : null;
           setTimeout(() => {
             window.location.href = this.returnUrl;
           }, this.goBackTime);
         }
-      },
-    });
+      })
+      .catch((error) => {
+        // Handle error here DANGER Security issue
+        this.showMessage(error.message, "error", "none");
+      });
   }
 }
 

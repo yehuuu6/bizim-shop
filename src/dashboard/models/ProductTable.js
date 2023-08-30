@@ -66,7 +66,7 @@ export default function CreateProductTable(product) {
       );
       scrollToElement(productLogger);
 
-      if (JSON.parse(response)[0] === "success") {
+      if (response[0] === "success") {
         product.status = newStatus;
         e.target.innerText = newStatus === "1" ? "Satıldı" : "Satışta";
         tr.querySelector("[data-mission='status']").innerText =
@@ -97,11 +97,10 @@ function deleteProduct(product) {
         formData
       );
 
-      const responseData = JSON.parse(response);
       ManageProductsPage.showMessage(response);
       scrollToElement(productLogger);
 
-      if (responseData[0] === "success") {
+      if (response[0] === "success") {
         // Delete the product from the currentProducts array
         currentProducts.value = currentProducts.value.filter(
           (p) => p.id !== product.id
@@ -113,9 +112,7 @@ function deleteProduct(product) {
         }
       }
     } catch (e) {
-      ManageProductsPage.showMessage(
-        JSON.stringify(["error", "Bir hata oluştu.", "none"])
-      );
+      ManageProductsPage.showMessage(["error", "Bir hata oluştu.", "none"]);
     } finally {
       modal.remove();
     }
@@ -137,9 +134,11 @@ function editProduct(product) {
   document.querySelector("#create-form").appendChild(inputId);
 
   isEditMode.value = true;
-  CreateProductPage.showMessage(
-    JSON.stringify(["warning", "Ürün düzenleme moduna girdiniz.", "none"])
-  );
+  CreateProductPage.showMessage([
+    "warning",
+    "Ürün düzenleme moduna girdiniz.",
+    "none",
+  ]);
 
   const exitEditMode = document.querySelector("#exit-edit-mode");
   const button = document.querySelector("#create-product");
@@ -202,9 +201,11 @@ function editProduct(product) {
   });
 
   exitEditMode.addEventListener("click", () => {
-    CreateProductPage.showMessage(
-      JSON.stringify(["warning", "Ürün düzenleme modundan çıktınız.", "none"])
-    );
+    CreateProductPage.showMessage([
+      "warning",
+      "Ürün düzenleme modundan çıktınız.",
+      "none",
+    ]);
     cleanForm(form);
     scrollToElement(createLogger);
     isEditMode.value = false;

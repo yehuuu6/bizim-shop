@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default class PanelClass {
   constructor(logger, loader) {
     this.logger = logger;
@@ -9,13 +11,7 @@ export default class PanelClass {
   showMessage(data) {
     clearTimeout(this.timer);
 
-    try {
-      var response = JSON.parse(data);
-      var [messageType, message, cause] = response;
-    } catch (e) {
-      // DANGER This is a security risk. Do not use this in production.
-      var [messageType, message, cause] = ["error", data, "none"];
-    }
+    const [messageType, message, cause] = data;
 
     const iconPath =
       messageType === "success"
@@ -54,22 +50,22 @@ export default class PanelClass {
   async sendApiRequest(url, formData) {
     this.loader.style.display = "flex";
 
-    return new Promise((resolve, reject) => {
-      $.ajax({
+    try {
+      const response = await axios({
         url: url,
-        type: "POST",
+        method: "post",
         data: formData,
-        processData: false,
-        contentType: false,
-        success: (data) => {
-          resolve(data);
-        },
-        error: (error) => {
-          reject(error);
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "multipart/form-data",
         },
       });
-    }).finally(() => {
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    } finally {
       this.loader.style.display = "none";
-    });
+    }
   }
 }

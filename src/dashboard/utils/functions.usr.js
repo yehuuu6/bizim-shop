@@ -3,16 +3,8 @@ import { ProfilePage } from "../user.js";
 // Directly gets response and displays the message. Use this if you don't need to do stuff with response.
 export function getApiResponse(panelObject, url, formData, scrollTo) {
   panelObject.sendApiRequest(url, formData).then((data) => {
-    try {
-      var response = JSON.parse(data);
-    } catch (e) {
-      panelObject.showMessage(
-        JSON.stringify[
-          ("error", "Bir hata oluştu. Lütfen tekrar deneyin.", "none")
-        ]
-      );
-    }
-    if (panelObject == ProfilePage && response[0] === "success")
+    const response = data[0];
+    if (panelObject == ProfilePage && response === "success")
       clearAvatarInput();
     panelObject.showMessage(data);
     scrollToElement(scrollTo);

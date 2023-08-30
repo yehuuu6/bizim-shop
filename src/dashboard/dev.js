@@ -44,7 +44,7 @@ const CreateProductPage = new PanelClass(createLogger, createLoad);
 function getSearchProduct() {
   const search = searchInput.value.trim().toLowerCase();
 
-  productTable.innerHTML = ""; // Clear the table
+  productTable.innerHTML = "";
 
   if (search.length > 0) {
     const matchingProducts = currentProducts.value.filter((product) =>
@@ -82,16 +82,9 @@ async function loadFirstProducts() {
     formData
   );
 
-  const products = JSON.parse(response);
+  const products = response;
 
-  if (products.length === 0) {
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.innerText = "Hiçbir ürün bulunamadı";
-    td.setAttribute("colspan", "7");
-    tr.appendChild(td);
-    productTable.appendChild(tr);
-  } else {
+  if (products !== undefined || products.length !== 0) {
     products.forEach((product) => {
       currentProducts.value.push(product);
       productTable.appendChild(CreateProductTable(product));
@@ -140,22 +133,27 @@ $(document).ready(function () {
     ManageProductsPage.sendApiRequest(
       "/api/dashboard/product/load-products.php",
       formData
-    ).then((data) => {
-      let products = JSON.parse(data);
-      if (products.length === 0) {
+    ).then((response) => {
+      let products = response.data;
+      if (products === undefined || products.length === 0) {
         productMore.classList.add("disabled");
         productMore.disabled = true;
-        ManageProductsPage.showMessage(
-          JSON.stringify(["error", "Daha fazla ürün bulunamadı.", "none"])
-        );
-      }
-      for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        currentProducts.push(product);
-        productTable.append(CreateProductTable(product));
-        ManageProductsPage.showMessage(
-          JSON.stringify(["success", "5 ürün başarıyla yüklendi.", "none"])
-        );
+        ManageProductsPage.showMessage([
+          "error",
+          "Daha fazla ürün bulunamadı.",
+          "none",
+        ]);
+      } else {
+        for (let i = 0; i < products.length; i++) {
+          let product = products[i];
+          currentProducts.push(product);
+          productTable.append(CreateProductTable(product));
+          ManageProductsPage.showMessage([
+            "success",
+            "5 ürün başarıyla yüklendi.",
+            "none",
+          ]);
+        }
       }
       startVal += 5;
       scrollToElement(productLogger);
@@ -236,7 +234,7 @@ document.addEventListener("click", function (e) {
         ).then((data) => {
           CreateProductPage.showMessage(data);
           scrollToElement(createLogger);
-          if (JSON.parse(data)[0] === "success") {
+          if (data[0] === "success") {
             removeAndReorderImages(imageInput);
           }
         });
@@ -254,9 +252,11 @@ addImageBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
   if (imageCount.value > maxImages) {
-    CreateProductPage.showMessage(
-      JSON.stringify(["error", "En fazla 6 resim yükleyebilirsiniz", "none"])
-    );
+    CreateProductPage.showMessage([
+      "error",
+      "En fazla 6 resim yükleyebilirsiniz",
+      "none",
+    ]);
     addImageBtn.disabled = true;
     addImageBtn.className = "btn small-btn disabled";
     scrollToElement(createLogger);
@@ -278,9 +278,11 @@ addNewProduct.addEventListener("click", () => {
 
 cleanProductForm.addEventListener("click", () => {
   cleanForm(document.querySelector("#create-form"));
-  CreateProductPage.showMessage(
-    JSON.stringify(["success", "Form başarıyla temizlendi.", "none"])
-  );
+  CreateProductPage.showMessage([
+    "success",
+    "Form başarıyla temizlendi.",
+    "none",
+  ]);
   scrollToElement(createLogger);
 });
 
