@@ -6,6 +6,13 @@ if (!defined('FILE_ACCESS')) {
     exit;
 }
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load($_SERVER['DOCUMENT_ROOT'] . '/.env');
+
 // Meta Data
 define('DEFAULT_PAGE_TITLE', "İkinci El Eşyaları Al & Sat - Bizim Shop");
 define('DEFAULT_PAGE_DESCRIPTION', "İkinci el eşyalarınızı alıp satabileceğiniz bir platform.");
@@ -15,4 +22,4 @@ define('DEFAULT_PAGE_FAVICON', "/global/imgs/favicon.svg");
 
 // Emailer
 define('EMAIL', 'planetofplugins@gmail.com');
-define('PASSWORD', 'kdualiugtgjdzczf');
+define('PASSWORD', $_ENV['EMAIL_PASSWORD']);

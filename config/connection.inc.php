@@ -6,9 +6,16 @@ if (!defined('FILE_ACCESS')) {
     exit;
 }
 
-$con = mysqli_connect("localhost", "root", "", "store") or die("Connection was not established");
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
-define('DOMAIN', 'http://localhost/');
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load($_SERVER['DOCUMENT_ROOT'] . '/.env');
+
+$con = mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_NAME']) or die("Connection was not established");
+
+define('DOMAIN', $_ENV['DOMAIN']);
 define('SERVER_PATH', $_SERVER['DOCUMENT_ROOT'] . '/assets/imgs/');
 define('SITE_PATH', DOMAIN . 'assets/imgs/');
 define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'product/');
