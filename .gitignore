@@ -3,6 +3,6 @@ node_modules
 dist
 .env
 assets/imgs/product/*
-assets/imgs/user/*
+assets/imgs/users/*
 !assets/imgs/product/noimg.jpg
 !assets/imgs/users/nopp.png
