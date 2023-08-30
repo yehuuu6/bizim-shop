@@ -130,13 +130,13 @@ input:read-only {
     background: #d2caff;
     border-radius: 10px;
 }
-.header-container input:not(:checked) ~ .burger .line:first-child {
-    transform: translateY(10px) rotate(225deg);
+.header-container :checked~.burger .line:first-child {
+    transform: translateY(10px) rotate(225deg)
 }
-.header-container input:not(:checked) ~ .burger .line:nth-child(3) {
-    transform: translateY(-10px) rotate(-225deg);
+.header-container :checked~.burger .line:nth-child(3) {
+    transform: translateY(-10px) rotate(-225deg)
 }
-.header-container input:not(:checked) ~ .burger .line:nth-child(2) {
+.header-container :checked~.burger .line:nth-child(2) {
     opacity: 0;
 }
 
