@@ -30,7 +30,7 @@ class Navbar extends Component
 
         // Set metadata props
         $metadata = $this->setMetadata($props);
-        list($PAGE_TITLE, $PAGE_DESCRIPTION, $PAGE_KEYWORDS, $PAGE_AUTHOR, $PAGE_FAVICON) = $metadata;
+        list($title, $desc, $keywords, $author, $favi) = $metadata;
 
         $body = <<<HTML
         <!DOCTYPE html>
@@ -39,15 +39,15 @@ class Navbar extends Component
                 <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta name="description" content="{$PAGE_DESCRIPTION}">
-                <meta name="keywords" content="{$PAGE_KEYWORDS}">
-                <meta name="author" content="{$PAGE_AUTHOR}">
+                <meta name="description" content="{$desc}">
+                <meta name="keywords" content="{$keywords}">
+                <meta name="author" content="{$author}">
                 <link rel="stylesheet" href="/assets/css/main.css">
                 <link rel="stylesheet" href="/assets/css/utils.css">
-                <link rel="shortcut icon" href="{$PAGE_FAVICON}" type="image/x-icon">
+                <link rel="shortcut icon" href="{$favi}" type="image/x-icon">
                 <script src="/global/plugins/icons.js"></script>
                 <script src="/global/plugins/jquery.js"></script>
-                <title>$PAGE_TITLE</title>
+                <title>{$title}</title>
             </head>
             <body>
             <nav class="navbar flex-display justify-between align-center">
