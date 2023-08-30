@@ -8,21 +8,20 @@ const menu = document.querySelector(".left-bar");
 const pages = document.querySelectorAll(".page-content");
 const loaders = document.querySelectorAll(".loader");
 
-const menuState = {
-  value: localStorage.getItem("menuState"),
-};
-
-if (menuState.value === "active") {
+// Store menu state in localStorage to keep it after page refresh
+if (localStorage.getItem("menuState") === "active") {
   activateMenu();
-} else if (menuState.value === "hidden") {
+  menuToggle.checked = true;
+} else {
   deactivateMenu();
+  menuToggle.checked = false;
 }
 
 menuToggle.addEventListener("change", () => {
-  if (menuToggle.checked) {
-    deactivateMenu();
-  } else {
+  if (menu.classList.contains("hidden-menu")) {
     activateMenu();
+  } else {
+    deactivateMenu();
   }
 });
 
@@ -54,8 +53,7 @@ let hash = window.location.hash;
 hash = hash.substring(1);
 
 function activateMenu() {
-  menuToggle.checked = false;
-  menuState.value = "active";
+  localStorage.setItem("menuState", "active");
   menu.classList.remove("hidden-menu");
   menu.classList.add("active-menu");
   pages.forEach((page) => {
@@ -65,12 +63,10 @@ function activateMenu() {
   loaders.forEach((loader) => {
     loader.style.paddingLeft = "325px";
   });
-  localStorage.setItem("menuState", "active");
 }
 
 function deactivateMenu() {
-  menuToggle.checked = true;
-  menuState.value = "hidden";
+  localStorage.setItem("menuState", "hidden");
   menu.classList.remove("active-menu");
   menu.classList.add("hidden-menu");
   pages.forEach((page) => {
@@ -80,7 +76,6 @@ function deactivateMenu() {
   loaders.forEach((loader) => {
     loader.style.paddingLeft = "0";
   });
-  localStorage.setItem("menuState", "hidden");
 }
 
 export function setPageContent(type, page) {
