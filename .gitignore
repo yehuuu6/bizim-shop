@@ -5,4 +5,4 @@ dist
 assets/imgs/product/*
 assets/imgs/user/*
 !assets/imgs/product/noimg.jpg
-!assets/imgs/user/nopp.png
+!assets/imgs/users/nopp.png
