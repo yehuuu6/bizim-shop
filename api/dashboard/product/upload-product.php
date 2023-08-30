@@ -22,8 +22,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $featured = get_safe_value($con, $_POST['featured']);
     $quality = get_safe_value($con, $_POST['quality']);
     $imageCount = get_safe_value($con, $_POST['image-count']);
+
+    // If edit mode is true, get the product id
     $isEditing = get_safe_value($con, $_POST['edit-mode']);
-    @$id = get_safe_value($con, $_POST['product-id']);
+    $isEditing === 'true' ? $isEditing = true : $isEditing = false; // Convert string to boolean
+    $isEditing ? $id = get_safe_value($con, $_POST['product-id']) : $id = null;
 
     $root_name = convertName($name);
 
@@ -53,11 +56,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         sendErrorResponse('Lütfen geçerli bir fiyat giriniz.', 'product-price');
     } else {
         for ($i = 1; $i < $imageCount; $i++) {
-            @$image = $_FILES['product-image-' . $i . '']['name'];
+            @$image = $_FILES["product-image-$i"]['name'];
             if ($image === null) continue;
-            $image_tmp = $_FILES['product-image-' . $i . '']['tmp_name'];
-            $image_size = $_FILES['product-image-' . $i . '']['size'];
-            $image_error = $_FILES['product-image-' . $i . '']['error'];
+            $image_tmp = $_FILES["product-image-$i"]['tmp_name'];
+            $image_size = $_FILES["product-image-$i"]['size'];
+            $image_error = $_FILES["product-image-$i"]['error'];
 
             $image_ext = explode('.', $image);
             $image_ext = strtolower(end($image_ext));
@@ -65,11 +68,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             $allowed = array('jpg', 'jpeg', 'png');
 
             if (empty($image)) {
-                sendErrorResponse($i . '. Resim boş bırakılamaz.', 'image-label-' . $i . '');
-            } else if (in_array($image_ext, $allowed) && $isEditing === 'false') {
+                sendErrorResponse("$i. Resim boş bırakılamaz.", "image-label-$i");
+            } else if (in_array($image_ext, $allowed)) {
                 if ($image_error === 0) {
                     if ($image_size <= 18874368) {
-                        $image_name = rand(11111, 99999) . '_' . convertName($image);
+                        $random = rand(11111, 99999);
+                        $convertedName = convertName($name);
+                        $image_name = "{$rand}_{$convertedName}.{$image_ext}";
                         $image_destination = PRODUCT_IMAGE_SERVER_PATH . $root_name . '/' . $image_name;
                         if (!array_key_exists($image_tmp, $readyToUpload)) {
                             $readyToUpload[$image_tmp] = $image_destination;
@@ -86,7 +91,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             }
         }
 
-        if ($isEditing === 'true') {
+        if ($isEditing) {
             $conclusion = updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality);
             if ($conclusion) {
                 $log = 'Değişiklikler başarıyla kaydedildi.';
