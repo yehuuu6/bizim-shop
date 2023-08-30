@@ -5,7 +5,6 @@ module.exports = {
   mode: "development",
   entry: {
     "a/a578a8g": path.resolve(__dirname, "src/auth/auth.js"),
-    "d/dr52j2s": path.resolve(__dirname, "src/dashboard/routing.js"),
     "d/du48gn1": path.resolve(__dirname, "src/dashboard/user.js"),
     "d/da48gn2": path.resolve(__dirname, "src/dashboard/dev.js"),
   },
