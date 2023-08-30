@@ -28,11 +28,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         foreach ($files as $_file) {
             try {
                 if ($_file != 'noimg.jpg') {
-                    $_file = $root_name . '/' . $_file;
+                    $_file = "{$root_name}_{$_file}";
                     unlink(PRODUCT_IMAGE_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.', 'none');
+                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
             }
         }
         try {
@@ -49,10 +49,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             deleteFiles($goingto_delete, $root_name);
             sendSuccessResponse("$name isimli ürün başarıyla silindi.");
         } else {
-            sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', 'none');
+            sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
         }
     } else {
-        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', 'none');
+        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

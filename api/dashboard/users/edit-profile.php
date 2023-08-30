@@ -56,7 +56,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         } else {
             $avatar_name = $avatar_check;
         }
-        $update_avatar = 'UPDATE users SET profile_image = "' . $avatar_name . '" WHERE id = "' . $id . '"';
+        $update_avatar = "UPDATE users SET profile_image='$avatar_name' WHERE id='$id'"; // Update avatar name in database
         $max_width = 800;
         $max_height = 800;
         $source_path = $avatar['tmp_name'];
@@ -94,10 +94,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             mysqli_query($con, $sql);
             sendSuccessResponse("Profil bilgileriniz başarıyla güncellendi.");
         } else {
-            sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.', 'none');
+            sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
         }
     } else {
-        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', 'none');
+        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

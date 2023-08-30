@@ -24,7 +24,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             Login($user);
             sendSuccessResponse('Giriş başarılı, yönlendiriliyorsunuz...');
         } else {
-            sendErrorResponse('Yanlış e-posta veya şifre.', 'none');
+            sendErrorResponse('Yanlış e-posta veya şifre.');
         }
     }
 } else {

@@ -24,10 +24,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             sendVerificationEmail($email, $token);
             sendSuccessResponse('Doğrulama e-postası başarıyla gönderildi.');
         } catch (Exception $e) {
-            sendErrorResponse('Bir hata oluştu: ' . $e . '.', 'none');
+            sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
         }
     } else {
-        sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.', 'none');
+        sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

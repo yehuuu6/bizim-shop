@@ -21,7 +21,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         mysqli_query($con, $sql);
         sendSuccessResponse('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.');
     } else {
-        sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.', 'none');
+        sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

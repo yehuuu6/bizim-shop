@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                     unlink(PRODUCT_USER_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu: ' . $e . '.', 'none');
+                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
             }
         }
     }
@@ -39,13 +39,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                 deleteFiles($goingto_delete);
                 sendSuccessResponse('Profil resmi başarıyla silindi.');
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu: ' . $e . '.', 'none');
+                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
             }
         } else {
-            sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.', 'none');
+            sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
         }
     } else {
-        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.', 'none');
+        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");
