@@ -6,7 +6,10 @@ if (!defined('FILE_ACCESS')) {
     exit;
 }
 
-function get_safe_value($con, $str)
+/**
+ * Sanitizes the given string and returns it.
+ */
+function get_safe_value(mysqli $con, string $str)
 {
     if ($str != '') {
         $str = trim($str);
@@ -14,7 +17,7 @@ function get_safe_value($con, $str)
     }
 }
 
-function get_date($raw)
+function get_date(string $raw)
 {
     [$year, $month_t, $day] = explode('-', $raw);
     $month_names = [
@@ -26,16 +29,20 @@ function get_date($raw)
     return "$month $day_trimmed, $year";
 }
 
-// Authorize function will check if the user is authorized to access the page.
+/**
+ * Checks if the user has the required permission level to access the page.
+ */
 function Authorize()
 {
-    $power = $_SESSION['membership'];
-    if ($power < 1) {
+    if ($_SESSION['membership'] < 1) {
         die();
     }
 }
 
-function compressAndSaveImage($source_path, $target_path, $max_width, $max_height)
+/**
+ * Compresses the given image and saves it to the target path returns true if the image saving is successful, or false otherwise.
+ */
+function compressAndSaveImage(string $source_path, string $target_path, int $max_width, int $max_height)
 {
     $source_image = imagecreatefromstring(file_get_contents($source_path));
     $source_width = imagesx($source_image);
@@ -55,20 +62,19 @@ function compressAndSaveImage($source_path, $target_path, $max_width, $max_heigh
     $target_image = imagecreatetruecolor($new_width, $new_height);
     imagecopyresampled($target_image, $source_image, 0, 0, 0, 0, $new_width, $new_height, $source_width, $source_height);
 
-    // Save the compressed image to the target path
-    $success = imagepng($target_image, $target_path);
-
     // Clean up memory
     imagedestroy($source_image);
     imagedestroy($target_image);
 
     // Return true if the image saving is successful, or false otherwise
-    return $success;
+    return imagepng($target_image, $target_path);
 }
 
 
-// Create a function that will return 10 chars long random string
-function randomString($length = 10)
+/**
+ * Returns a random string of the given length. (Default length is 10)
+ */
+function randomString(int $length = 10)
 {
     // String of all alphanumeric character
     $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -77,6 +83,10 @@ function randomString($length = 10)
     // of specified length
     return substr(str_shuffle($str_result), 0, $length);
 }
+
+/**
+ * Returns the permission level of the user.
+ */
 function getPerm($perm)
 {
     $result = '';
@@ -91,30 +101,41 @@ function getPerm($perm)
     return $result;
 }
 
-function convertName($str)
+/**
+ * Converts name to a valid file name.
+ */
+function convertName(string $str)
 {
-    // Replace Turkish characters with English characters
     $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '-');
     $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '_', '_');
     $str = str_replace($search, $replace, $str);
     return strtolower($str);
 }
 
-function sendErrorResponse($log, $cause)
+/**
+ * Sends an error response to the client and terminates the script.
+ */
+function sendErrorResponse(string $log, string $cause = 'none')
 {
     $result = array('error', $log, $cause);
     echo json_encode($result);
     die();
 }
 
-function sendSuccessResponse($log)
+/**
+ * Sends a success response to the client and terminates the script.
+ */
+function sendSuccessResponse(string $log)
 {
     $result = array('success', $log, 'none');
     echo json_encode($result);
     die();
 }
 
-function resetSubmissionCounts($con, $submissions, $last_sub, $id)
+/**
+ * Resets the submission counts of the user if the last submission was more than 5 minutes ago.
+ */
+function resetSubmissionCounts(mysqli $con, int $submissions, int $last_sub, int $id)
 {
     if (time() - $last_sub > 300) {
         $sql = "UPDATE users SET submissions = 0, last_submission = " . time() . " WHERE id = '$id'";
@@ -124,7 +145,10 @@ function resetSubmissionCounts($con, $submissions, $last_sub, $id)
     return $submissions;
 }
 
-function fixStrings($row)
+/**
+ * Converts sql escaped strings to normal strings.
+ */
+function fixStrings(array $row)
 {
     $row['name'] = str_replace("\\'", "'", $row['name']);
     $row['tags'] = str_replace("\\'", "'", $row['tags']);
