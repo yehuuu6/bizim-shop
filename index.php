@@ -1,8 +1,14 @@
 <?php
 define('FILE_ACCESS', TRUE);
-$PAGE_TITLE = "İkinci El Eşyaları Al & Sat - Bizim Shop";
-require_once("{$_SERVER['DOCUMENT_ROOT']}/components/Navbar/Navbar.php");
+
+require 'vendor/autoload.php';
+
+use Components\Navbar\Navbar;
+use Components\Footer\Footer;
+
+$Navbar = new Navbar();
 ?>
+
 <section id="home" class="page-content">
     <div class="content white-text light-text">
         <h1 class="flex-display gap-10 header-title bold-text">Bizim <div class="blue-text">Shop</div>
@@ -12,4 +18,5 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/components/Navbar/Navbar.php");
         <a class="no-decoration btn white-text primary-btn m-t-10" href="custom-page">Hemen Başla</a>
     </div>
 </section>
-<?php require_once("{$_SERVER['DOCUMENT_ROOT']}/components/Footer/Footer.php"); ?>
+
+<?php $Footer = new Footer(); ?>
