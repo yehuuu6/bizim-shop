@@ -520,7 +520,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       }
   });
   </script>
-  <script type="module" src="/dist/d/dr52j2s.js"></script>
   <?php if ($power === 0) : ?>
     <script type="module" src="/dist/d/du48gn1.js"></script>
   <?php endif; ?>
