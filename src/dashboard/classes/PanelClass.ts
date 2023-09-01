@@ -75,7 +75,6 @@ export default class PanelClass implements PanelClassInterface {
         },
       });
 
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
