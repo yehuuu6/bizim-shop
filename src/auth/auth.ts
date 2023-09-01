@@ -3,7 +3,9 @@ import {
   AuthorizationClass,
 } from "./classes/AuthorizationClass";
 
-const loader: JQuery<HTMLDivElement> = $(".loader");
+import $ from "jquery";
+
+const loader = $(".loader") as JQuery<HTMLDivElement>;
 const defaultLoggerText = ""
 
 const LoginPage = new AuthorizationClass(

@@ -19,6 +19,7 @@ const { modal, modalText, modalBtn } = ConfirmationModal();
 
 const productLogger= document.querySelector("#logger-products") as HTMLParagraphElement;
 const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
+const addImageBtn =  document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 
 export interface Product {
   id: string;
@@ -61,7 +62,7 @@ export function CreateProductTable(product: Product) {
     </td>
   `;
 
-  const tableForm: HTMLElement = tr.querySelector(".table-form")!;
+  const tableForm = tr.querySelector(".table-form") as HTMLElement;
 
   tableForm.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -89,7 +90,7 @@ export function CreateProductTable(product: Product) {
       if (response[0] === "success") {
         product.status = newStatus;
         (e.target as HTMLElement).innerText = newStatus === "1" ? "Satıldı" : "Satışta";
-        (tr.querySelector("[data-mission='status']") as HTMLElement)!.innerText =
+        (tr.querySelector("[data-mission='status']") as HTMLElement).innerText =
           setStatus(newStatus);
         (e.target as HTMLElement).className = `btn ${
           newStatus === "1" ? "status-btn" : "success-btn"
@@ -140,9 +141,8 @@ function deleteProduct(product: Product) {
 }
 
 function editProduct(product: Product) {
-  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
-  const addImageBtn: HTMLButtonElement =  document.querySelector('button[name="add-image"]')!;
-  const form = document.querySelector("#create-form")! as HTMLFormElement;
+  scrollToElement(createLogger);
+  const form = document.querySelector("#create-form") as HTMLFormElement;
   setPageContent("hash", document.getElementById("add-product") as HTMLElement);
   clearImageInputs(
     addImageBtn,
@@ -153,7 +153,7 @@ function editProduct(product: Product) {
   inputId.type = "hidden";
   inputId.name = "product-id";
   inputId.value = product.id;
-  document.querySelector("#create-form")!.appendChild(inputId);
+  form.appendChild(inputId);
 
   isEditMode.value = true;
   CreateProductPage.showMessage([
@@ -162,10 +162,10 @@ function editProduct(product: Product) {
     "none",
   ]);
 
-  const exitEditMode: HTMLButtonElement = document.querySelector("#exit-edit-mode")!;
-  const button: HTMLButtonElement = document.querySelector("#create-product")!;
-  const title: HTMLElement = document.querySelector("#create-product-title")!;
-  const paragraph: HTMLParagraphElement = document.querySelector("#create-product-text")!;
+  const exitEditMode = document.querySelector("#exit-edit-mode") as HTMLButtonElement;
+  const button = document.querySelector("#create-product") as HTMLButtonElement;
+  const title = document.querySelector("#create-product-title") as HTMLElement;
+  const paragraph = document.querySelector("#create-product-text") as HTMLParagraphElement;
   button.innerText = "Değişiklikleri Kaydet";
   title.innerText = `${product.name} Ürününü Düzenliyorsunuz.`;
   paragraph.innerText = `Düzenleme modundan çıkmak için yanda bulunan X butonuna basabilirsiniz.`;
@@ -198,17 +198,17 @@ function editProduct(product: Product) {
   }
 
   images.forEach((image, index) => {
-    addImageInput(document.querySelector('button[name="add-image"]')!);
-    const deleteImageBtn: HTMLButtonElement = document.querySelector(
+    addImageInput(addImageBtn);
+    const deleteImageBtn = document.querySelector(
       `button[id="remove-pic-${index + 1}"]`
-    )!;
+    ) as HTMLButtonElement;
     deleteImageBtn.dataset.image = image;
     deleteImageBtn.classList.remove("small-btn");
     deleteImageBtn.innerHTML = `${index + 1}. Resmi Kaldır`;
-    const imagePreview: HTMLImageElement = document.querySelector(`#image-preview-${index + 1}`)!;
-    const imageText: HTMLParagraphElement = document.querySelector(`#image-text-${index + 1}`)!;
-    const imageLabel: HTMLLabelElement = document.querySelector(`#image-label-${index + 1}`)!;
-    const imageInput: HTMLInputElement = document.querySelector(`#product-image-${index + 1}`)!;
+    const imagePreview = document.querySelector(`#image-preview-${index + 1}`) as HTMLImageElement;
+    const imageText = document.querySelector(`#image-text-${index + 1}`) as HTMLParagraphElement;
+    const imageLabel = document.querySelector(`#image-label-${index + 1}`) as HTMLLabelElement;
+    const imageInput = document.querySelector(`#product-image-${index + 1}`) as HTMLInputElement;
     const hostname = window.location.origin;
     // Hide imageLabel and imageInput
     imageLabel.style.display = "none";

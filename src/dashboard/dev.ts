@@ -19,20 +19,20 @@ const imageCount = {
 
 let startVal = 5;
 
-const cleanProductForm: HTMLFormElement = document.querySelector("#clean-create-form")!;
-const addNewProduct: HTMLButtonElement = document.querySelector("#add-new-product")!;
-const productRefreshBtn: HTMLButtonElement = document.querySelector("#refresh-products")!;
-const productLogger: HTMLParagraphElement = document.querySelector("#logger-products")!;
-const productLoad: HTMLDivElement = document.querySelector("#loader-products")!;
-const productMore: HTMLButtonElement = document.querySelector("#load-more-products")!;
-const productTable: HTMLTableSectionElement = document.querySelector("#products-table tbody")!;
-const searchInput: HTMLInputElement = document.querySelector("#search-pr")!;
-const exitEditModeBtn: HTMLButtonElement = document.querySelector("#exit-edit-mode")!;
+const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
+const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
+const productRefreshBtn = document.querySelector("#refresh-products") as HTMLButtonElement;
+const productLogger = document.querySelector("#logger-products") as HTMLParagraphElement;
+const productLoad = document.querySelector("#loader-products") as HTMLDivElement;
+const productMore = document.querySelector("#load-more-products") as HTMLButtonElement;
+const productTable = document.querySelector("#products-table tbody") as HTMLTableSectionElement;
+const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
+const exitEditModeBtn = document.querySelector("#exit-edit-mode") as  HTMLButtonElement;
 
-const createLogger: HTMLParagraphElement = document.querySelector("#logger-create")!;
-const createLoad: HTMLDivElement = document.querySelector("#loader-create")!;
+const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
+const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
 
-const addImageBtn: HTMLButtonElement = document.querySelector('button[name="add-image"]')!;
+const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 const maxImages = 6;
 
 const ManageProductsPage = new PanelClass(productLogger, productLoad);
@@ -103,66 +103,65 @@ function refreshProducts() {
   startVal = 5;
 }
 
-$(document).ready(function () {
-  productRefreshBtn.addEventListener("click", () => {
+productRefreshBtn.addEventListener("click", () => {
+  refreshProducts();
+});
+
+(document
+  .querySelector('div[data-name="products"]') as HTMLDivElement)
+  .addEventListener("click", () => {
     refreshProducts();
   });
-
-  (document
-    .querySelector('div[data-name="products"]') as HTMLDivElement)
-    .addEventListener("click", () => {
-      refreshProducts();
-    });
-  (document
-    .querySelector('div[data-name="add-product"]') as HTMLDivElement)
-    .addEventListener("click", () => {
-      cleanForm((document.querySelector("#create-form") as HTMLFormElement));
-      isEditMode.value = false;
-      exitEditModeBtn.classList.add("none-display");
-      exitEditModeBtn.disabled = true;
-      createLogger.innerHTML = "";
-      createLogger.className = "logger";
-    });
-
-  loadFirstProducts();
-
-  // Load 5 more products on click
-  $("#load-more-products").click(function (e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("start", startVal.toString());
-    ManageProductsPage.sendApiRequest(
-      "/api/dashboard/product/load-products.php",
-      formData
-    ).then((response) => {
-      let products = response.data;
-      if (products === undefined || products.length === 0) {
-        productMore.classList.add("disabled");
-        productMore.disabled = true;
-        ManageProductsPage.showMessage([
-          "error",
-          "Daha fazla ürün bulunamadı.",
-          "none",
-        ]);
-      } else {
-        for (let i = 0; i < products.length; i++) {
-          let product = products[i];
-          currentProducts.value.push(product);
-          productTable.append(CreateProductTable(product));
-          ManageProductsPage.showMessage([
-            "success",
-            "5 ürün başarıyla yüklendi.",
-            "none",
-          ]);
-        }
-      }
-      startVal += 5;
-      scrollToElement(productLogger);
-    });
+(document
+  .querySelector('div[data-name="add-product"]') as HTMLDivElement)
+  .addEventListener("click", () => {
+    cleanForm((document.querySelector("#create-form") as HTMLFormElement));
+    isEditMode.value = false;
+    exitEditModeBtn.classList.add("none-display");
+    exitEditModeBtn.disabled = true;
+    createLogger.innerHTML = "";
+    createLogger.className = "logger";
   });
 
+loadFirstProducts();
+
+// Load 5 more products on click
+productMore.addEventListener("click", function (e) {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("start", startVal.toString());
+  ManageProductsPage.sendApiRequest(
+    "/api/dashboard/product/load-products.php",
+    formData
+  ).then((response) => {
+    let products = response.data;
+    if (products === undefined || products.length === 0) {
+      productMore.classList.add("disabled");
+      productMore.disabled = true;
+      ManageProductsPage.showMessage([
+        "error",
+        "Daha fazla ürün bulunamadı.",
+        "none",
+      ]);
+    } else {
+      for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        currentProducts.value.push(product);
+        productTable.append(CreateProductTable(product));
+        ManageProductsPage.showMessage([
+          "success",
+          "5 ürün başarıyla yüklendi.",
+          "none",
+        ]);
+      }
+    }
+    startVal += 5;
+    scrollToElement(productLogger);
+  });
+});
+
   // Save product to database
-  (document.getElementById("create-form") as HTMLFormElement)!.addEventListener("submit", function (e) {
+  (document.getElementById("create-form") as HTMLFormElement).addEventListener("submit", function (e) {
     e.preventDefault();
     let formData = new FormData(this);
     formData.append("image-count", imageCount.value.toString());
@@ -174,7 +173,6 @@ $(document).ready(function () {
       createLogger
     );
   });
-});
 
 function removeAndReorderImages(imageInput: HTMLInputElement) {
   imageInput.remove();
@@ -183,11 +181,11 @@ function removeAndReorderImages(imageInput: HTMLInputElement) {
   imageInputs.forEach((input, index) => {
     const newIndex = index + 1;
 
-    const button: HTMLButtonElement = input.querySelector("button")!;
-    const label: HTMLLabelElement = input.querySelector("label")!;
-    const image: HTMLInputElement = input.querySelector("input")!;
-    const imageText: HTMLParagraphElement = input.querySelector("p")!;
-    const imagePreview: HTMLImageElement = input.querySelector("img")!;
+    const button = input.querySelector("button") as HTMLButtonElement;
+    const label = input.querySelector("label") as HTMLLabelElement;
+    const image = input.querySelector("input") as HTMLInputElement;
+    const imageText = input.querySelector("p") as HTMLParagraphElement;
+    const imagePreview = input.querySelector("img") as HTMLImageElement;
 
     button.id = `remove-pic-${newIndex}`;
     button.title = `${newIndex}. Resmi Sil`;
@@ -215,7 +213,7 @@ document.addEventListener("click", function (e) {
 
   if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
     e.preventDefault();
-    const imageInput: HTMLInputElement = clickedButton.closest('[data-type="image-input"]')!;
+    const imageInput = clickedButton.closest('[data-type="image-input"]') as HTMLInputElement;
     const imageName: string = clickedButton.getAttribute("data-image")!;
     const imageNumber: string = clickedButton.id.split("-")[2];
     if (isEditMode.value == true && imageName !== null) {

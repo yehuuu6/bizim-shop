@@ -1,10 +1,10 @@
 const menuBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".menu-btn");
-const homePage: HTMLElement = document.getElementById("home")!;
-const profilePage: HTMLElement = document.getElementById("change-user-info")!;
+const homePage = document.getElementById("home") as HTMLElement;
+const profilePage = document.getElementById("change-user-info") as HTMLElement;
 
 // Menubar animations
-const menuToggle: HTMLInputElement = document.querySelector("#menu-toggle")!;
-const menu: HTMLDivElement = document.querySelector(".left-bar")!;
+const menuToggle = document.querySelector("#menu-toggle") as HTMLInputElement;
+const menu = document.querySelector(".left-bar") as HTMLDivElement;
 const pages: NodeListOf<HTMLDivElement> = document.querySelectorAll(".page-content");
 const loaders: NodeListOf<HTMLDivElement> = document.querySelectorAll(".loader");
 
@@ -26,9 +26,9 @@ menuToggle.addEventListener("change", () => {
 });
 
 
-var productPage: HTMLElement = document.getElementById("manage-products")!;
-var createProduct: HTMLElement = document.getElementById("add-product")!;
-var userPage: HTMLElement = document.getElementById("manage-users")!;
+var productPage = document.getElementById("manage-products") as HTMLElement;
+var createProduct = document.getElementById("add-product") as HTMLElement;
+var userPage = document.getElementById("manage-users") as HTMLElement;
 
 let sections = [homePage, profilePage];
 
@@ -77,12 +77,7 @@ function deactivateMenu() {
 
 export function setPageContent(type: string, page: HTMLElement) {
   // Scroll to top of the page
-  $("html, body").animate(
-    {
-      scrollTop: 0,
-    },
-    "slow"
-  );
+  window.scrollTo(0, 0);
 
   if (page !== homePage) {
     const url = page.dataset.url;

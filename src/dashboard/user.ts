@@ -2,10 +2,12 @@ import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
 import { getApiResponse, clearAvatarInput } from "./utils/functions.usr";
 
+import $ from "jquery";
+
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const profileLogger: HTMLParagraphElement = document.querySelector("#logger-profile")!;
-const profileLoader: HTMLDivElement = document.querySelector("#loader-profile")!;
+const profileLogger = document.querySelector("#logger-profile") as HTMLParagraphElement;
+const profileLoader = document.querySelector("#loader-profile") as HTMLParagraphElement;
 
 const ProfilePage = new PanelClass(profileLogger, profileLoader);
 

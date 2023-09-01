@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 export default function ConfirmationModal() {
   const modal = $('<div class="delete-modal"></div>');
   const delCon = $('<div class="delete-modal-content"></div>');
