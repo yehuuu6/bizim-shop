@@ -17,8 +17,8 @@ import { setPageContent } from "../routing";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const productLogger: HTMLParagraphElement = document.querySelector("#logger-products")!;
-const createLogger: HTMLParagraphElement = document.querySelector("#logger-create")!;
+const productLogger= document.querySelector("#logger-products") as HTMLParagraphElement;
+const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
 
 export interface Product {
   id: string;
