@@ -20,7 +20,7 @@ export default class PanelClass implements PanelClassInterface {
     this.timer2 = null;
   }
 
-  showMessage(data: Array<any>) {
+  showMessage(data: Array<string>) {
     clearTimeout(this.timer);
 
     const [messageType, message, cause] = data;
@@ -75,6 +75,7 @@ export default class PanelClass implements PanelClassInterface {
         },
       });
 
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
