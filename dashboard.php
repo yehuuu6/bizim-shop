@@ -454,9 +454,11 @@ while ($row3 = mysqli_fetch_assoc($res)) {
     const imageInput = document.getElementById('avatar-input');
     const displayFile = document.querySelector('.profile-image');
     imageInput.addEventListener('change', function() {
-      $('html, body').animate({
-        scrollTop: $(document).height()
-      }, 1000);
+      // Scroll to bottom smoothly
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
       const file = this.files[0];
       userLogger.className = "logger warning";
       userLogger.innerHTML = "<span><img src='/global/imgs/info.png'/></span> Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.";
