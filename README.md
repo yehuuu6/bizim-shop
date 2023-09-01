@@ -8,7 +8,7 @@
   - [ ] Design a unique and memorable logo.
   - [ ] Formulate a captivating brand name that resonates.
 - 🖥️ Building a Cutting-Edge Web Application
-  - [x] Build a modular and adaptable website using component based classes.
+  - [x] Build a modular and adaptable code-base using component based classes.
   - 📉 Dashboard Development
     - [x] Front-end Interface
     - [x] User Profile Page APIs
