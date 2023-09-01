@@ -55,7 +55,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
   <link rel="stylesheet" href="/assets/css/utils.css" />
   <link rel="stylesheet" href="/assets/css/dashboard.css" />
-  <script src="/global/plugins/jquery.js"></script>
   <script src="/global/plugins/icons.js"></script>
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <title>Panel - Bizim Shop</title>
