@@ -31,7 +31,7 @@
 ### 📚 Programming Languages
 
 - [PHP](https://www.php.net/)
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ### 🔧 Tools and Libraries
 
