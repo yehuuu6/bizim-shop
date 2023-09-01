@@ -52,28 +52,26 @@ const VerifyAccountPage = new SpecialAuthorizationClass(
   verifyLogger ? verifyLogger.html() : defaultLoggerText
 );
 
-$(document).ready(function () {
-  $(document).on("submit", "#login-form", function (e) {
-    e.preventDefault();
-    LoginPage.sendApiRequest();
-  });
+$(document).on("submit", "#login-form", function (e) {
+  e.preventDefault();
+  LoginPage.sendApiRequest();
+});
 
-  $(document).on("submit", "#register-form", function (e) {
-    e.preventDefault();
-    RegisterPage.sendApiRequest();
-  });
+$(document).on("submit", "#register-form", function (e) {
+  e.preventDefault();
+  RegisterPage.sendApiRequest();
+});
 
-  $(document).on("submit", "#forgot-password-form", function (e) {
-    e.preventDefault();
-    ForgotPasswordPage.sendApiRequest();
-  });
+$(document).on("submit", "#forgot-password-form", function (e) {
+  e.preventDefault();
+  ForgotPasswordPage.sendApiRequest();
+});
 
-  $(document).on("submit", "#reset-form", function (e) {
-    e.preventDefault();
-    ResetPasswordPage.sendApiRequest();
-  });
-  $(document).on("click", "#resend-verification", function (e) {
-    e.preventDefault();
-    VerifyAccountPage.sendApiRequest();
-  });
+$(document).on("submit", "#reset-form", function (e) {
+  e.preventDefault();
+  ResetPasswordPage.sendApiRequest();
+});
+$(document).on("click", "#resend-verification", function (e) {
+  e.preventDefault();
+  VerifyAccountPage.sendApiRequest();
 });
