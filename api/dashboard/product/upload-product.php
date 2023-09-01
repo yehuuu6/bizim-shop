@@ -74,7 +74,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                     if ($image_size <= 18874368) {
                         $random = rand(11111, 99999);
                         $convertedName = convertName($name);
-                        $image_name = "{$rand}_{$convertedName}.{$image_ext}";
+                        $image_name = "{$random}_{$convertedName}.{$image_ext}";
                         $image_destination = PRODUCT_IMAGE_SERVER_PATH . $root_name . '/' . $image_name;
                         if (!array_key_exists($image_tmp, $readyToUpload)) {
                             $readyToUpload[$image_tmp] = $image_destination;

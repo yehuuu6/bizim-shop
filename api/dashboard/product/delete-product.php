@@ -28,7 +28,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         foreach ($files as $_file) {
             try {
                 if ($_file != 'noimg.jpg') {
-                    $_file = "{$root_name}_{$_file}";
+                    $_file = "{$root_name}/{$_file}";
                     unlink(PRODUCT_IMAGE_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
