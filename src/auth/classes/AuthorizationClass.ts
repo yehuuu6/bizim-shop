@@ -1,7 +1,30 @@
 import axios from "axios";
+import $ from "jquery";
 
-export class AuthorizationClass {
-  constructor(form, logger, loader, url, returnUrl, goBackTime = 3000) {
+interface AuthorizationClassInterface {
+  form: JQuery<HTMLFormElement>;
+  logger: JQuery<HTMLParagraphElement>;
+  loader: JQuery<HTMLDivElement>;
+  url: string;
+  returnUrl: string;
+  goBackTime: number;
+  timer: any;
+  timer2: any;
+}
+
+export class AuthorizationClass implements AuthorizationClassInterface {
+  form: JQuery<HTMLFormElement>;
+  logger: JQuery<HTMLParagraphElement>;
+  loader: JQuery<HTMLDivElement>;
+  url: string;
+  returnUrl: string;
+  goBackTime: number;
+  timer: any;
+  timer2: any;
+  oldLoggerText: string | undefined;
+
+  constructor(form: JQuery<HTMLFormElement>, logger: JQuery<HTMLParagraphElement>, loader: JQuery<HTMLDivElement>,
+    url: string, returnUrl: string, goBackTime = 3000) {
     this.form = form;
     this.logger = logger;
     this.loader = loader;
@@ -12,7 +35,7 @@ export class AuthorizationClass {
     this.timer2 = null;
   }
 
-  showMessage(message, messageType, cause) {
+  showMessage(message: string, messageType: string, cause: string) {
     clearTimeout(this.timer);
 
     const iconPath = messageType === "success" ? "success.png" : "error.png";
@@ -84,26 +107,26 @@ export class AuthorizationClass {
 
 export class SpecialAuthorizationClass extends AuthorizationClass {
   constructor(
-    form,
-    logger,
-    loader,
-    url,
-    returnUrl,
+    form: JQuery<HTMLFormElement>,
+    logger: JQuery<HTMLParagraphElement>,
+    loader: JQuery<HTMLDivElement>,
+    url: string,
+    returnUrl: string,
     goBackTime = 2000,
-    oldLoggerText
+    oldLoggerText: string
   ) {
     super(form, logger, loader, url, returnUrl, goBackTime);
     this.oldLoggerText = oldLoggerText;
   }
 
-  showMessage(message, messageType, cause) {
+  showMessage(message: string, messageType: string, cause: string) {
     super.showMessage(message, messageType, cause);
 
     clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
       this.logger.attr("class", "logger warning");
-      this.logger.html(this.oldLoggerText);
+      this.logger.html(this.oldLoggerText!);
     }, 8000);
   }
 }

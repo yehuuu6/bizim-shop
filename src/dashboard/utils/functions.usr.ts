@@ -1,7 +1,8 @@
-import { ProfilePage } from "../user.js";
+import { ProfilePage } from "../user";
+import PanelClass from "../classes/PanelClass";
 
 // Directly gets response and displays the message. Use this if you don't need to do stuff with response.
-export function getApiResponse(panelObject, url, formData, scrollTo) {
+export function getApiResponse(panelObject: PanelClass, url: string, formData: FormData, scrollTo: HTMLElement) {
   panelObject.sendApiRequest(url, formData).then((data) => {
     const response = data[0];
     if (panelObject == ProfilePage && response === "success")
@@ -12,26 +13,28 @@ export function getApiResponse(panelObject, url, formData, scrollTo) {
 }
 
 export function clearAvatarInput() {
-  document.querySelector("#avatar-input").value = "";
-  document.querySelector("#avatar-input-displayer").innerText =
+  const avatarInput: HTMLInputElement = document.querySelector("#avatar-input")!;
+  avatarInput.value = "";
+  const avatarInputDisplayer: HTMLParagraphElement = document.querySelector("#avatar-input-displayer")!;
+  avatarInputDisplayer.innerText =
     "Dosya seçilmedi.";
 }
 
-export function scrollToElement(element) {
+export function scrollToElement(element: HTMLElement) {
   window.scrollTo({
     top: element.offsetTop,
     behavior: "smooth",
   });
 }
 
-export function trimSentence(sentence, maxLength) {
+export function trimSentence(sentence: string, maxLength: number) {
   if (sentence.length > maxLength) {
     sentence = sentence.substring(0, maxLength - 3) + "...";
   }
   return sentence;
 }
 
-export function getDate(raw) {
+export function getDate(raw: string) {
   const [year, month_t, day] = raw.split("-");
   const month_names = [
     "Jan",
@@ -52,9 +55,9 @@ export function getDate(raw) {
   return `${month} ${day_trimmed}, ${year}`;
 }
 
-export function getPerm(id) {
+export function getPerm(_id: string) {
   let perm = "";
-  id = parseInt(id);
+  let id:number = parseInt(_id);
   switch (id) {
     case 0:
       perm = "Üye";

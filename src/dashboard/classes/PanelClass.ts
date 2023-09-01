@@ -1,14 +1,26 @@
 import axios from "axios";
 
-export default class PanelClass {
-  constructor(logger, loader) {
+interface PanelClassInterface {
+  logger: HTMLParagraphElement;
+  loader: HTMLDivElement;
+  timer: any;
+  timer2: any;
+}
+
+export default class PanelClass implements PanelClassInterface {
+  logger: HTMLParagraphElement;
+  loader: HTMLDivElement;
+  timer: any;
+  timer2: any;
+
+  constructor(logger: HTMLParagraphElement, loader: HTMLDivElement) {
     this.logger = logger;
     this.loader = loader;
     this.timer = null;
     this.timer2 = null;
   }
 
-  showMessage(data) {
+  showMessage(data: Array<string>) {
     clearTimeout(this.timer);
 
     const [messageType, message, cause] = data;
@@ -31,14 +43,16 @@ export default class PanelClass {
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      let element = document.querySelector(`[name=${cause}]`)
-        ? document.querySelector(`[name=${cause}]`)
-        : document.querySelector(`[id=${cause}]`);
-      element.style.border = "1px solid red";
+      const element = document.querySelector(`[name=${cause}]`) as HTMLElement ||
+               document.querySelector(`[id=${cause}]`) as HTMLElement;
 
-      this.timer2 = setTimeout(() => {
-        element.style = "";
-      }, 2000);
+      if (element) {
+        element.style.border = "1px solid red";
+
+        this.timer2 = setTimeout(() => {
+          element.style.removeProperty('border'); // Remove the "border" property
+        }, 2000);
+      }
     }
 
     this.timer = setTimeout(() => {
@@ -47,7 +61,7 @@ export default class PanelClass {
     }, 8000);
   }
 
-  async sendApiRequest(url, formData) {
+  async sendApiRequest(url: string, formData: FormData) {
     this.loader.style.display = "flex";
 
     try {
@@ -61,6 +75,7 @@ export default class PanelClass {
         },
       });
 
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;

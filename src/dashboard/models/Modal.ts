@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 export default function ConfirmationModal() {
   const modal = $('<div class="delete-modal"></div>');
   const delCon = $('<div class="delete-modal-content"></div>');
@@ -34,11 +36,11 @@ export default function ConfirmationModal() {
   delModBtns.append(delModCon, delModCan);
   delCon.append(
     modTitleElement,
-    lineBreakElement.cloneNode(),
+    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
     delModTextElement,
-    lineBreakElement.cloneNode(),
+    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
     delModWarnElement,
-    lineBreakElement.cloneNode(),
+    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
     delSpanElement,
     delModBtnsElement
   );

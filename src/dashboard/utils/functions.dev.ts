@@ -1,8 +1,8 @@
-import { getSearchProduct, imageCount } from "../dev.js";
+import { getSearchProduct, imageCount } from "../dev";
 
 export function runSearch() {
-  let productSearchInterval = null;
-  const searchProductInput = document.querySelector("#search-pr");
+  let productSearchInterval: any = null;
+  const searchProductInput = document.querySelector("#search-pr") as HTMLInputElement;
   // Set interval on focus to search input and clear it when it's not focused
   searchProductInput.addEventListener("focus", () => {
     if (!productSearchInterval) {
@@ -25,8 +25,8 @@ export function runSearch() {
   ); // Debounce the input event to trigger after the user stops typing
 
   // Debounce function to delay execution
-  function debounce(callback, delay) {
-    let timer;
+  function debounce(callback: any, delay: number) {
+    let timer: any;
     return function () {
       clearTimeout(timer);
       timer = setTimeout(callback, delay);
@@ -34,7 +34,7 @@ export function runSearch() {
   }
 }
 
-export function setStatus(status) {
+export function setStatus(status: string) {
   let statusText = "";
   switch (status) {
     case "1":
@@ -47,9 +47,9 @@ export function setStatus(status) {
   return statusText;
 }
 
-export function getCategory(id) {
+export function getCategory(_id: string) {
   let category = "";
-  id = parseInt(id);
+  let id: number = parseInt(_id);
   switch (id) {
     case 1:
       category = "Müzik Seti";
@@ -67,14 +67,14 @@ export function getCategory(id) {
   return category;
 }
 
-export function cleanForm(form) {
+export function cleanForm(form: HTMLFormElement) {
   form.reset();
-  const button = document.querySelector("#create-product");
-  const title = document.querySelector("#create-product-title");
-  const paragraph = document.querySelector("#create-product-text");
-  const imageInputs = document.querySelectorAll("[data-type='image-input']");
-  const addImageBtn = document.querySelector('button[name="add-image"]');
-  imageInputs.forEach((input) => input.remove());
+  const button: HTMLButtonElement = document.querySelector("#create-product")!;
+  const title: any = document.querySelector("#create-product-title");
+  const paragraph: HTMLParagraphElement = document.querySelector("#create-product-text")!;
+  const imageInputs: HTMLInputElement[] = Array.from(document.querySelectorAll("[data-type='image-input']")) as HTMLInputElement[];
+  const addImageBtn: HTMLButtonElement = document.querySelector('button[name="add-image"]')!;
+  imageInputs.forEach((input:HTMLInputElement) => input.remove());
   addImageBtn.disabled = false;
   addImageBtn.className = "btn primary-btn small-btn";
   imageCount.value = 1;
@@ -83,7 +83,7 @@ export function cleanForm(form) {
   paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
 }
 
-export function addImageInput(addImageBtn) {
+export function addImageInput(addImageBtn: HTMLButtonElement) {
   const template = `
         <div class="form-item" data-type="image-input">
           <div class="width-100 flex-display gap-10">
@@ -96,26 +96,30 @@ export function addImageInput(addImageBtn) {
         </div>
       `;
 
-  addImageBtn.parentElement.insertAdjacentHTML("beforebegin", template);
+  addImageBtn?.parentElement?.insertAdjacentHTML("beforebegin", template);
 
-  const fileInput = document.querySelector(
+  const fileInput: HTMLInputElement = document.querySelector(
     `#product-image-${imageCount.value}`
-  );
-  const imagePreview = document.querySelector(
+  )!;
+  const imagePreview: HTMLImageElement = document.querySelector(
     `#image-preview-${imageCount.value}`
-  );
-  const imageText = document.querySelector(`#image-text-${imageCount.value}`);
+  )!;
+  const imageText: HTMLParagraphElement = document.querySelector(`#image-text-${imageCount.value}`)!;
 
   fileInput.addEventListener("change", function () {
-    const file = this.files[0];
-    if (file) {
-      imagePreview.style.display = "block";
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        imagePreview.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-      imageText.textContent = file.name;
+    if (this.files && this.files.length > 0) {
+      const file = this.files[0];
+      if (file) {
+        imagePreview.style.display = "block";
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          if (e.target && e.target.result) {
+            imagePreview.src = e.target.result.toString();
+          }
+        };
+        reader.readAsDataURL(file);
+        imageText.textContent = file.name;
+      }
     } else {
       imagePreview.style.display = "none";
       imageText.textContent = "Dosya seçilmedi.";

@@ -1,12 +1,12 @@
-const menuBtns = document.querySelectorAll(".menu-btn");
-const homePage = document.getElementById("home");
-const profilePage = document.getElementById("change-user-info");
+const menuBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".menu-btn");
+const homePage = document.getElementById("home") as HTMLElement;
+const profilePage = document.getElementById("change-user-info") as HTMLElement;
 
 // Menubar animations
-const menuToggle = document.querySelector("#menu-toggle");
-const menu = document.querySelector(".left-bar");
-const pages = document.querySelectorAll(".page-content");
-const loaders = document.querySelectorAll(".loader");
+const menuToggle = document.querySelector("#menu-toggle") as HTMLInputElement;
+const menu = document.querySelector(".left-bar") as HTMLDivElement;
+const pages: NodeListOf<HTMLDivElement> = document.querySelectorAll(".page-content");
+const loaders: NodeListOf<HTMLDivElement> = document.querySelectorAll(".loader");
 
 // Store menu state in localStorage to keep it after page refresh
 if (localStorage.getItem("menuState") === "active") {
@@ -25,13 +25,10 @@ menuToggle.addEventListener("change", () => {
   }
 });
 
-try {
-  var productPage = document.getElementById("manage-products");
-  var createProduct = document.getElementById("add-product");
-  var userPage = document.getElementById("manage-users");
-} catch (e) {
-  // Do nothing
-}
+
+var productPage = document.getElementById("manage-products") as HTMLElement;
+var createProduct = document.getElementById("add-product") as HTMLElement;
+var userPage = document.getElementById("manage-users") as HTMLElement;
 
 let sections = [homePage, profilePage];
 
@@ -78,17 +75,15 @@ function deactivateMenu() {
   });
 }
 
-export function setPageContent(type, page) {
+export function setPageContent(type: string, page: HTMLElement) {
   // Scroll to top of the page
-  $("html, body").animate(
-    {
-      scrollTop: 0,
-    },
-    "slow"
-  );
+  window.scrollTo(0, 0);
 
   if (page !== homePage) {
-    window.location.hash = page.dataset.url;
+    const url = page.dataset.url;
+    if (typeof url === 'string') { // Check if url is defined and is a string
+      window.location.hash = url;
+    }
   } else {
     window.location.hash = "";
   }
@@ -140,9 +135,6 @@ menuBtns.forEach((btn) => {
         break;
       case "profile":
         setPageContent("btn", profilePage);
-        break;
-      case "store":
-        setPageContent("btn", storePage);
         break;
       case "products":
         setPageContent("btn", productPage);

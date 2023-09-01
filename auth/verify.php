@@ -23,7 +23,6 @@ if (($_SESSION['verified'] == 1)) {
   <link rel="stylesheet" href="/assets/css/auth.css">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
-  <script src="/global/plugins/jquery.js"></script>
   <title>E-posta Onayı - Bizim Shop</title>
 </head>
 
@@ -50,7 +49,7 @@ if (($_SESSION['verified'] == 1)) {
       </form>
   </div>
   <script>
-    $('#logout-btn').click(function(e) {
+    document.querySelector("#logout-btn").addEventListener("click", (e) => {
       e.preventDefault();
       window.location.href = "/?logout=1";
     });

@@ -1,13 +1,13 @@
-import PanelClass from "./classes/PanelClass.js";
-import ConfirmationModal from "./models/Modal.js";
-import CreateProductTable from "./models/ProductTable.js";
-import { getApiResponse, scrollToElement } from "./utils/functions.usr.js";
-import { addImageInput, runSearch, cleanForm } from "./utils/functions.dev.js";
-import { setPageContent } from "./routing.js";
+import PanelClass from "./classes/PanelClass";
+import ConfirmationModal from "./models/Modal";
+import {Product, CreateProductTable} from "./models/ProductTable";
+import { getApiResponse, scrollToElement } from "./utils/functions.usr";
+import { addImageInput, runSearch, cleanForm } from "./utils/functions.dev";
+import { setPageContent } from "./routing";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const currentProducts = {
+const currentProducts: { value: Product[] } = {
   value: [],
 };
 const isEditMode = {
@@ -19,19 +19,20 @@ const imageCount = {
 
 let startVal = 5;
 
-const cleanProductForm = document.querySelector("#clean-create-form");
-const addNewProduct = document.querySelector("#add-new-product");
-const productRefreshBtn = document.querySelector("#refresh-products");
-const productLogger = document.querySelector("#logger-products");
-const productLoad = document.querySelector("#loader-products");
-const productMore = document.querySelector("#load-more-products");
-const productTable = document.querySelector("#products-table tbody");
-const searchInput = document.querySelector("#search-pr");
+const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
+const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
+const productRefreshBtn = document.querySelector("#refresh-products") as HTMLButtonElement;
+const productLogger = document.querySelector("#logger-products") as HTMLParagraphElement;
+const productLoad = document.querySelector("#loader-products") as HTMLDivElement;
+const productMore = document.querySelector("#load-more-products") as HTMLButtonElement;
+const productTable = document.querySelector("#products-table tbody") as HTMLTableSectionElement;
+const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
+const exitEditModeBtn = document.querySelector("#exit-edit-mode") as  HTMLButtonElement;
 
-const createLogger = document.querySelector("#logger-create");
-const createLoad = document.querySelector("#loader-create");
+const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
+const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
 
-const addImageBtn = document.querySelector('button[name="add-image"]');
+const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 const maxImages = 6;
 
 const ManageProductsPage = new PanelClass(productLogger, productLoad);
@@ -47,7 +48,7 @@ function getSearchProduct() {
   productTable.innerHTML = "";
 
   if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter((product) =>
+    const matchingProducts = currentProducts.value.filter((product: Product) =>
       product["name"].toLowerCase().includes(search)
     );
 
@@ -76,7 +77,7 @@ async function loadFirstProducts() {
   productTable.innerHTML = "";
 
   const formData = new FormData();
-  formData.append("start", 0);
+  formData.append("start", "0");
   const response = await ManageProductsPage.sendApiRequest(
     "/api/dashboard/product/load-products.php",
     formData
@@ -85,7 +86,7 @@ async function loadFirstProducts() {
   const products = response;
 
   if (products !== undefined || products.length !== 0) {
-    products.forEach((product) => {
+    products.forEach((product: Product) => {
       currentProducts.value.push(product);
       productTable.appendChild(CreateProductTable(product));
     });
@@ -102,69 +103,68 @@ function refreshProducts() {
   startVal = 5;
 }
 
-$(document).ready(function () {
-  productRefreshBtn.addEventListener("click", () => {
+productRefreshBtn.addEventListener("click", () => {
+  refreshProducts();
+});
+
+(document
+  .querySelector('div[data-name="products"]') as HTMLDivElement)
+  .addEventListener("click", () => {
     refreshProducts();
   });
-
-  document
-    .querySelector('div[data-name="products"]')
-    .addEventListener("click", () => {
-      refreshProducts();
-    });
-  document
-    .querySelector('div[data-name="add-product"]')
-    .addEventListener("click", () => {
-      cleanForm(document.querySelector("#create-form"));
-      isEditMode.value = false;
-      document.querySelector("#exit-edit-mode").classList.add("none-display");
-      document.querySelector("#exit-edit-mode").disabled = true;
-      createLogger.innerHTML = "";
-      createLogger.className = "logger";
-    });
-
-  loadFirstProducts();
-
-  // Load 5 more products on click
-  $("#load-more-products").click(function (e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("start", startVal);
-    ManageProductsPage.sendApiRequest(
-      "/api/dashboard/product/load-products.php",
-      formData
-    ).then((response) => {
-      let products = response.data;
-      if (products === undefined || products.length === 0) {
-        productMore.classList.add("disabled");
-        productMore.disabled = true;
-        ManageProductsPage.showMessage([
-          "error",
-          "Daha fazla ürün bulunamadı.",
-          "none",
-        ]);
-      } else {
-        for (let i = 0; i < products.length; i++) {
-          let product = products[i];
-          currentProducts.push(product);
-          productTable.append(CreateProductTable(product));
-          ManageProductsPage.showMessage([
-            "success",
-            "5 ürün başarıyla yüklendi.",
-            "none",
-          ]);
-        }
-      }
-      startVal += 5;
-      scrollToElement(productLogger);
-    });
+(document
+  .querySelector('div[data-name="add-product"]') as HTMLDivElement)
+  .addEventListener("click", () => {
+    cleanForm((document.querySelector("#create-form") as HTMLFormElement));
+    isEditMode.value = false;
+    exitEditModeBtn.classList.add("none-display");
+    exitEditModeBtn.disabled = true;
+    createLogger.innerHTML = "";
+    createLogger.className = "logger";
   });
 
+loadFirstProducts();
+
+// Load 5 more products on click
+productMore.addEventListener("click", function (e) {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("start", startVal.toString());
+  ManageProductsPage.sendApiRequest(
+    "/api/dashboard/product/load-products.php",
+    formData
+  ).then((response) => {
+    let products = response.data;
+    if (products === undefined || products.length === 0) {
+      productMore.classList.add("disabled");
+      productMore.disabled = true;
+      ManageProductsPage.showMessage([
+        "error",
+        "Daha fazla ürün bulunamadı.",
+        "none",
+      ]);
+    } else {
+      for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        currentProducts.value.push(product);
+        productTable.append(CreateProductTable(product));
+        ManageProductsPage.showMessage([
+          "success",
+          "5 ürün başarıyla yüklendi.",
+          "none",
+        ]);
+      }
+    }
+    startVal += 5;
+    scrollToElement(productLogger);
+  });
+});
+
   // Save product to database
-  $("#create-form").submit(function (e) {
+  (document.getElementById("create-form") as HTMLFormElement).addEventListener("submit", function (e) {
     e.preventDefault();
     let formData = new FormData(this);
-    formData.append("image-count", imageCount.value);
+    formData.append("image-count", imageCount.value.toString());
     formData.append("edit-mode", isEditMode.value ? "true" : "false");
     getApiResponse(
       CreateProductPage,
@@ -173,20 +173,19 @@ $(document).ready(function () {
       createLogger
     );
   });
-});
 
-function removeAndReorderImages(imageInput) {
+function removeAndReorderImages(imageInput: HTMLInputElement) {
   imageInput.remove();
 
   const imageInputs = document.querySelectorAll('[data-type="image-input"]');
   imageInputs.forEach((input, index) => {
     const newIndex = index + 1;
 
-    const button = input.querySelector("button");
-    const label = input.querySelector("label");
-    const image = input.querySelector("input");
-    const imageText = input.querySelector("p");
-    const imagePreview = input.querySelector("img");
+    const button = input.querySelector("button") as HTMLButtonElement;
+    const label = input.querySelector("label") as HTMLLabelElement;
+    const image = input.querySelector("input") as HTMLInputElement;
+    const imageText = input.querySelector("p") as HTMLParagraphElement;
+    const imagePreview = input.querySelector("img") as HTMLImageElement;
 
     button.id = `remove-pic-${newIndex}`;
     button.title = `${newIndex}. Resmi Sil`;
@@ -210,13 +209,13 @@ function removeAndReorderImages(imageInput) {
 
 // Deleting and reordering image inputs
 document.addEventListener("click", function (e) {
-  const clickedButton = e.target.closest("button");
+  const clickedButton = (e.target as HTMLElement).closest("button");
 
   if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
     e.preventDefault();
-    const imageInput = clickedButton.closest('[data-type="image-input"]');
-    const imageName = clickedButton.getAttribute("data-image");
-    const imageNumber = clickedButton.id.split("-")[2];
+    const imageInput = clickedButton.closest('[data-type="image-input"]') as HTMLInputElement;
+    const imageName: string = clickedButton.getAttribute("data-image")!;
+    const imageNumber: string = clickedButton.id.split("-")[2];
     if (isEditMode.value == true && imageName !== null) {
       document.body.append(modal);
       modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
@@ -225,7 +224,7 @@ document.addEventListener("click", function (e) {
         formData.append("image", imageName);
         formData.append(
           "product-id",
-          document.querySelector("[name='product-id']").value
+          (document.querySelector("[name='product-id']") as HTMLInputElement).value
         );
         formData.append("image-number", imageNumber);
         CreateProductPage.sendApiRequest(
@@ -267,17 +266,17 @@ addImageBtn.addEventListener("click", function (e) {
 });
 
 addNewProduct.addEventListener("click", () => {
-  setPageContent("hash", document.getElementById("add-product"));
-  cleanForm(document.querySelector("#create-form"));
+  setPageContent("hash", document.getElementById("add-product") as HTMLElement);
+  cleanForm((document.querySelector("#create-form") as HTMLFormElement));
   isEditMode.value = false;
-  document.querySelector("#exit-edit-mode").classList.add("none-display");
-  document.querySelector("#exit-edit-mode").disabled = true;
+  exitEditModeBtn.classList.add("none-display");
+  exitEditModeBtn.disabled = true;
   createLogger.innerHTML = "";
   createLogger.className = "logger";
 });
 
 cleanProductForm.addEventListener("click", () => {
-  cleanForm(document.querySelector("#create-form"));
+  cleanForm((document.querySelector("#create-form") as HTMLFormElement));
   CreateProductPage.showMessage([
     "success",
     "Form başarıyla temizlendi.",

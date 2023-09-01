@@ -1,11 +1,13 @@
-import PanelClass from "./classes/PanelClass.js";
-import ConfirmationModal from "./models/Modal.js";
-import { getApiResponse, clearAvatarInput } from "./utils/functions.usr.js";
+import PanelClass from "./classes/PanelClass";
+import ConfirmationModal from "./models/Modal";
+import { getApiResponse, clearAvatarInput } from "./utils/functions.usr";
+
+import $ from "jquery";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const profileLogger = document.querySelector("#logger-profile");
-const profileLoader = document.querySelector("#loader-profile");
+const profileLogger = document.querySelector("#logger-profile") as HTMLParagraphElement;
+const profileLoader = document.querySelector("#loader-profile") as HTMLParagraphElement;
 
 const ProfilePage = new PanelClass(profileLogger, profileLoader);
 
@@ -13,7 +15,6 @@ const ResetPassword = new PanelClass(profileLogger, profileLoader);
 
 const RemoveAvatar = new PanelClass(profileLogger, profileLoader);
 
-$(document).ready(function () {
   $(document).on("submit", "#profile-form", function (e) {
     e.preventDefault();
     getApiResponse(
@@ -44,14 +45,12 @@ $(document).ready(function () {
         profileLogger
       );
       modalText.innerText = "";
-      modalBtn.removeEventListener("click", this);
       modal.remove();
       clearAvatarInput();
-      document.querySelector(".profile-image").src = "/global/imgs/nopp.png";
+      (document.querySelector(".profile-image") as HTMLImageElement).src = "/global/imgs/nopp.png";
       $("#delete-avatar").remove();
     });
   });
-});
 
 // Exports
 
