@@ -23,15 +23,6 @@ export function runSearchProducts(searchProductInput: HTMLInputElement) {
       getSearchProduct();
     }, 300)
   ); // Debounce the input event to trigger after the user stops typing
-
-  // Debounce function to delay execution
-  function debounce(callback: any, delay: number) {
-    let timer: any;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(callback, delay);
-    };
-  }
 }
 
 export function runSearchUsers(searchUserInput: HTMLInputElement) {
@@ -56,15 +47,14 @@ export function runSearchUsers(searchUserInput: HTMLInputElement) {
       getSearchUser();
     }, 300)
   ); // Debounce the input event to trigger after the user stops typing
+}
 
-  // Debounce function to delay execution
-  function debounce(callback: any, delay: number) {
-    let timer: any;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(callback, delay);
-    };
-  }
+function debounce(callback: any, delay: number) {
+  let timer: any;
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(callback, delay);
+  };
 }
 
 export function setStatus(status: string) {
