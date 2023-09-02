@@ -1,8 +1,8 @@
 import { getSearchProduct, imageCount } from "../dev";
+import { getSearchUser } from "../admin";
 
-export function runSearch() {
+export function runSearchProducts(searchProductInput: HTMLInputElement) {
   let productSearchInterval: any = null;
-  const searchProductInput = document.querySelector("#search-pr") as HTMLInputElement;
   // Set interval on focus to search input and clear it when it's not focused
   searchProductInput.addEventListener("focus", () => {
     if (!productSearchInterval) {
@@ -21,6 +21,39 @@ export function runSearch() {
     "input",
     debounce(() => {
       getSearchProduct();
+    }, 300)
+  ); // Debounce the input event to trigger after the user stops typing
+
+  // Debounce function to delay execution
+  function debounce(callback: any, delay: number) {
+    let timer: any;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(callback, delay);
+    };
+  }
+}
+
+export function runSearchUsers(searchUserInput: HTMLInputElement) {
+  let userSearchInterval: any = null;
+  // Set interval on focus to search input and clear it when it's not focused
+  searchUserInput.addEventListener("focus", () => {
+    if (!userSearchInterval) {
+      userSearchInterval = setInterval(() => {
+        getSearchUser();
+      }, 300); // Throttle the calls to every 300 milliseconds
+    }
+  });
+
+  searchUserInput.addEventListener("blur", () => {
+    clearInterval(userSearchInterval);
+    userSearchInterval = null; // Reset the interval variable
+  });
+
+  searchUserInput.addEventListener(
+    "input",
+    debounce(() => {
+      getSearchUser();
     }, 300)
   ); // Debounce the input event to trigger after the user stops typing
 
