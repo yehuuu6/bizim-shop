@@ -12,15 +12,15 @@ export default function ConfirmationModal() {
   const delModCan = $('<button class="btn success-btn">Hayır</button>');
   const delModCon = $('<button class="btn delete-btn">Evet</button>');
 
-  const modalElement = modal[0];
+  const modalElement = modal[0] as HTMLDivElement;
   const delConElement = delCon[0];
   const modTitleElement = modTitle[0];
   const lineBreakElement = lineBreak[0];
-  const delModTextElement = delModText[0];
+  const delModTextElement = delModText[0] as HTMLParagraphElement;
   const delModWarnElement = delModWarn[0];
   const delSpanElement = delSpan[0];
   const delModBtnsElement = delModBtns[0];
-  const delModConElement = delModCon[0];
+  const delModConElement = delModCon[0] as HTMLButtonElement;
   const delModCanElement = delModCan[0];
 
   delModCanElement.addEventListener("click", () => {
