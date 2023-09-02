@@ -2,6 +2,10 @@
 define('FILE_ACCESS', TRUE);
 require_once "config/authenticator.php";
 
+require 'vendor/autoload.php';
+
+use Components\Loader\Loader;
+
 if (!isset($_SESSION['id'])) {
   header('location: ' . DOMAIN . 'auth/login');
   exit();
@@ -15,34 +19,14 @@ if ($_SESSION['verified'] == 0) {
 $power = $_SESSION['membership'];
 $perm_content = getPerm($power);
 
-$sql = "SELECT name,surname,email,profile_image,telephone,address,city, door, district,apartment,floor FROM users WHERE id = '" . $_SESSION['id'] . "'";
+$sql = "SELECT name, surname, email, profile_image, telephone, address, door, apartment, floor FROM users WHERE id = {$_SESSION['id']}";
 $res = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($res);
-
-$myCity = $row['city'];
-$myDistrict = $row['district'];
 
 $address = $row['address'];
 $apartment = $row['apartment'];
 $floor = $row['floor'];
 $door = $row['door'];
-
-$sql = "SELECT * FROM cities";
-$res = mysqli_query($con, $sql);
-$cities = array();
-
-while ($row2 = mysqli_fetch_assoc($res)) {
-  $cities[] = $row2;
-}
-
-// Pull districts from database
-$sql = "SELECT * FROM districts";
-$res = mysqli_query($con, $sql);
-$districts = array();
-
-while ($row3 = mysqli_fetch_assoc($res)) {
-  $districts[] = $row3;
-}
 
 ?>
 
@@ -140,13 +124,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       </section>
       <section id="change-user-info" data-url="profile" data-title="Profili Düzenle" class="page-content narrow-page">
         <div id="loader-profile" class="loader">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-            <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-              <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-              <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-            </circle>
-          </svg>
+          <?php $loader1 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -189,10 +167,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
                   <label for="city">Şehir</label>
                   <select id="city" name="city">
                     <option value="">Şehir Seçiniz</option>
-                    <?php foreach ($cities as $city) : ?>
-                      <option value="<?php echo $city['id']; ?>" <?php if ($myCity == $city['id']) echo 'selected'; ?>>
-                        <?php echo $city['city_name']; ?></option>
-                    <?php endforeach; ?>
                   </select>
                 </div>
                 <div class="form-item">
@@ -228,13 +202,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       <?php if ($power > 0) : ?>
         <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
           <div id="loader-products" class="loader">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-              <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-              <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-                <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-              </circle>
-            </svg>
+            <?php $loader2 = new Loader(); ?>
           </div>
           <div class="content-header">
             <div class="item">
@@ -277,13 +245,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
         </section>
         <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
           <div id="loader-create" class="loader">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-              <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-              <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-                <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-              </circle>
-            </svg>
+            <?php $loader3 = new Loader(); ?>
           </div>
           <div class="content-header">
             <div class="item">
@@ -380,13 +342,7 @@ while ($row3 = mysqli_fetch_assoc($res)) {
       </section>
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
         <div id="loader-users" class="loader">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin:auto;background:transparent;display:block;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-            <circle cx="50" cy="50" r="30" stroke="#a1a1a1" stroke-width="10" fill="none"></circle>
-            <circle cx="50" cy="50" r="30" stroke="#6200ff" stroke-width="8" stroke-linecap="round" fill="none">
-                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;180 50 50;720 50 50" keyTimes="0;0.5;1"></animateTransform>
-                <animate attributeName="stroke-dasharray" repeatCount="indefinite" dur="1s" values="18.84955592153876 169.64600329384882;94.2477796076938 94.24777960769377;18.84955592153876 169.64600329384882" keyTimes="0;0.5;1"></animate>
-            </circle>
-          </svg>
+        <?php $loader4 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -433,96 +389,21 @@ while ($row3 = mysqli_fetch_assoc($res)) {
     </footer>
     <div class="logger">
       <div class="logger-header">
-        <span class="flex-display justify-center align-center">
-          <img src="/global/imgs/info.png" />
-        </span>
-        <h3>Uyarı</h3>
+        <div class="header-item">
+          <span class="flex-display justify-center align-center">
+            <img src="/global/imgs/info.png" alt="Status"/>
+          </span>
+        <h3>{title}</h3>
+        </div>
+        <div class="header-item">
+          <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
       </div>
-      <p>Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.</p>
+      <p>{message}</p>
     </div>
   </div>
-  <script>
-    const userLogger = document.querySelector('.logger');
-    const removeBtn = document.createElement("span");
-    removeBtn.classList.add("remove-image");
-    removeBtn.title = "Profil resmini kaldır";
-    removeBtn.id = "delete-avatar";
-    removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-
-    const imageContainer = document.querySelector('.image-container');
-    <?php if ($row['profile_image'] != "nopp.png") : ?>
-      imageContainer.append(removeBtn);
-    <?php endif; ?>
-    const imageInput = document.getElementById('avatar-input');
-    const displayFile = document.querySelector('.profile-image');
-    imageInput.addEventListener('change', function() {
-      // Scroll to bottom smoothly
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth'
-      });
-      const file = this.files[0];
-      userLogger.className = "logger warning";
-      userLogger.innerHTML = "<span><img src='/global/imgs/info.png'/></span> Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.";
-      if (file) {
-        document.querySelector("#avatar-input-displayer").innerText = file.name;
-        imageContainer.append(removeBtn);
-        const reader = new FileReader();
-        reader.addEventListener("load", function () {
-          displayFile.setAttribute("src", this.result);
-        });
-        reader.readAsDataURL(file);
-      }
-    });
-  </script>
-  <script>
-    const citySelector = document.getElementById('city');
-    const districtSelector = document.getElementById('district');
-
-    var sehirId = citySelector.value;
-
-    var ilceler = <?php echo json_encode($districts); ?>;
-
-    // Check if citySelector has a city selected
-    if (sehirId !== "") {
-      // Enable district selector
-      districtSelector.disabled = false;
-      // Get district from php and add them to district selector
-      var myDistrict = "<?= $myDistrict ?>";
-      // Select districts of selected city
-
-      ilceler.forEach(function(ilce) {
-        if (ilce.city_id === sehirId) {
-          var option = document.createElement('option');
-          option.value = ilce.id;
-          option.textContent = ilce.district_name;
-          if (myDistrict == ilce.id) {
-            option.selected = true;
-          }
-          districtSelector.appendChild(option);
-        }
-      });
-    }
-
-    citySelector.addEventListener('change', function() {
-      var sehirId = citySelector.value;
-      // İlçe seçimini temizle ve devre dışı bırak
-      districtSelector.innerHTML = '<option value="">İlçe Seçiniz</option>';
-      districtSelector.disabled = true;
-      
-      if (sehirId !== "") {
-        ilceler.forEach(function(ilce) {
-          if (ilce.city_id === sehirId) {
-            var option = document.createElement('option');
-            option.value = ilce.id;
-            option.textContent = ilce.district_name;
-            districtSelector.appendChild(option);
-          }
-        });
-        districtSelector.disabled = false;
-      }
-  });
-  </script>
   <?php if ($power === 0) : ?>
     <script type="module" src="/dist/d/du48gn1.js"></script>
   <?php endif; ?>
