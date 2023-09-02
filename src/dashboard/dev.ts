@@ -19,24 +19,24 @@ const imageCount = {
 
 let startVal = 5;
 
+const logger = document.querySelector(".logger") as HTMLDivElement;
+
 const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
 const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
 const productRefreshBtn = document.querySelector("#refresh-products") as HTMLButtonElement;
-const productLogger = document.querySelector("#logger-products") as HTMLParagraphElement;
 const productLoad = document.querySelector("#loader-products") as HTMLDivElement;
 const productMore = document.querySelector("#load-more-products") as HTMLButtonElement;
 const productTable = document.querySelector("#products-table tbody") as HTMLTableSectionElement;
 const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
 const exitEditModeBtn = document.querySelector("#exit-edit-mode") as  HTMLButtonElement;
 
-const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
 const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
 
 const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 const maxImages = 6;
 
-const ManageProductsPage = new PanelClass(productLogger, productLoad);
-const CreateProductPage = new PanelClass(createLogger, createLoad);
+const ManageProductsPage = new PanelClass(productLoad);
+const CreateProductPage = new PanelClass(createLoad);
 
 // VARIABLES END
 
@@ -97,8 +97,7 @@ runSearchProducts(searchInput);
 
 function refreshProducts() {
   loadFirstProducts();
-  productLogger.innerHTML = "";
-  productLogger.className = "logger";
+  ManageProductsPage.clearLogger();
   searchInput.value = "";
   startVal = 5;
 }
@@ -119,8 +118,7 @@ productRefreshBtn.addEventListener("click", () => {
     isEditMode.value = false;
     exitEditModeBtn.classList.add("none-display");
     exitEditModeBtn.disabled = true;
-    createLogger.innerHTML = "";
-    createLogger.className = "logger";
+    ManageProductsPage.clearLogger();
   });
 
 loadFirstProducts();
@@ -156,7 +154,6 @@ productMore.addEventListener("click", function (e) {
       }
     }
     startVal += 5;
-    scrollToElement(productLogger);
   });
 });
 
@@ -169,8 +166,7 @@ productMore.addEventListener("click", function (e) {
     getApiResponse(
       CreateProductPage,
       "/api/dashboard/product/upload-product.php",
-      formData,
-      createLogger
+      formData
     );
   });
 
@@ -232,7 +228,6 @@ document.addEventListener("click", function (e) {
           formData
         ).then((data) => {
           CreateProductPage.showMessage(data);
-          scrollToElement(createLogger);
           if (data[0] === "success") {
             removeAndReorderImages(imageInput);
           }
@@ -258,7 +253,6 @@ addImageBtn.addEventListener("click", function (e) {
     ]);
     addImageBtn.disabled = true;
     addImageBtn.className = "btn small-btn disabled";
-    scrollToElement(createLogger);
     return;
   }
 
@@ -271,8 +265,7 @@ addNewProduct.addEventListener("click", () => {
   isEditMode.value = false;
   exitEditModeBtn.classList.add("none-display");
   exitEditModeBtn.disabled = true;
-  createLogger.innerHTML = "";
-  createLogger.className = "logger";
+  ManageProductsPage.clearLogger();
 });
 
 cleanProductForm.addEventListener("click", () => {
@@ -282,7 +275,6 @@ cleanProductForm.addEventListener("click", () => {
     "Form başarıyla temizlendi.",
     "none",
   ]);
-  scrollToElement(createLogger);
 });
 
 // CREATE PRODUCT PAGE END

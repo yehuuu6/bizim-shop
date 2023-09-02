@@ -1,23 +1,27 @@
 import axios from "axios";
 
 interface PanelClassInterface {
-  logger: HTMLParagraphElement;
+  logger: HTMLDivElement;
   loader: HTMLDivElement;
   timer: any;
   timer2: any;
 }
 
 export default class PanelClass implements PanelClassInterface {
-  logger: HTMLParagraphElement;
+  logger: HTMLDivElement;
   loader: HTMLDivElement;
   timer: any;
   timer2: any;
 
-  constructor(logger: HTMLParagraphElement, loader: HTMLDivElement) {
-    this.logger = logger;
+  constructor(loader: HTMLDivElement) {
     this.loader = loader;
     this.timer = null;
     this.timer2 = null;
+    this.logger = document.querySelector(".logger") as HTMLDivElement;
+  }
+
+  clearLogger() {
+      this.logger.className = "logger";
   }
 
   showMessage(data: Array<string>) {
@@ -25,20 +29,21 @@ export default class PanelClass implements PanelClassInterface {
 
     const [messageType, message, cause] = data;
 
-    const iconPath =
+    this.logger.className = `logger ${messageType}`;
+    const logTitle = this.logger.querySelector("h3") as HTMLHeadingElement;
+    const logImage = this.logger.querySelector("img") as HTMLImageElement;
+    const logMessage = this.logger.querySelector("p") as HTMLParagraphElement;
+
+    const imageSrc =
       messageType === "success"
-        ? "success.png"
-        : messageType === "error"
-        ? "error.png"
+        ? "/global/imgs/success.png"
         : messageType === "warning"
-        ? "info.png"
-        : "";
+        ? "/global/imgs/info.png"
+        : "/global/imgs/error.png";
 
-    const className = `logger ${messageType}`;
-    const imageTag = `<span><img src='/global/imgs/${iconPath}'/></span>`;
-
-    this.logger.className = className;
-    this.logger.innerHTML = `${imageTag} ${message}`;
+    logTitle.innerText = messageType === "success" ? "Başarılı" : messageType === "warning" ? "Uyarı" : "Hata";
+    logImage.src = imageSrc;
+    logMessage.innerText = message;
 
     if (cause !== "none") {
       clearTimeout(this.timer2);
@@ -56,9 +61,8 @@ export default class PanelClass implements PanelClassInterface {
     }
 
     this.timer = setTimeout(() => {
-      this.logger.className = "logger";
-      this.logger.innerHTML = "";
-    }, 8000);
+      this.clearLogger();
+    }, 6000);
   }
 
   async sendApiRequest(url: string, formData: FormData) {

@@ -2,13 +2,12 @@ import { ProfilePage } from "../user";
 import PanelClass from "../classes/PanelClass";
 
 // Directly gets response and displays the message. Use this if you don't need to do stuff with response.
-export function getApiResponse(panelObject: PanelClass, url: string, formData: FormData, scrollTo: HTMLElement) {
+export function getApiResponse(panelObject: PanelClass, url: string, formData: FormData) {
   panelObject.sendApiRequest(url, formData).then((data) => {
     const response = data[0];
     if (panelObject == ProfilePage && response === "success")
       clearAvatarInput();
     panelObject.showMessage(data);
-    scrollToElement(scrollTo);
   });
 }
 

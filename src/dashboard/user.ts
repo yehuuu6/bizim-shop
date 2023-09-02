@@ -6,22 +6,21 @@ import $ from "jquery";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const profileLogger = document.querySelector("#logger-profile") as HTMLParagraphElement;
+const logger = document.querySelector(".logger") as HTMLParagraphElement;
 const profileLoader = document.querySelector("#loader-profile") as HTMLParagraphElement;
 
-const ProfilePage = new PanelClass(profileLogger, profileLoader);
+const ProfilePage = new PanelClass(profileLoader);
 
-const ResetPassword = new PanelClass(profileLogger, profileLoader);
+const ResetPassword = new PanelClass(profileLoader);
 
-const RemoveAvatar = new PanelClass(profileLogger, profileLoader);
+const RemoveAvatar = new PanelClass(profileLoader);
 
   $(document).on("submit", "#profile-form", function (e) {
     e.preventDefault();
     getApiResponse(
       ProfilePage,
       "/api/dashboard/users/edit-profile.php",
-      new FormData(this),
-      profileLogger
+      new FormData(this)
     );
   });
   $(document).on("click", "#password-reset", function (e) {
@@ -29,8 +28,7 @@ const RemoveAvatar = new PanelClass(profileLogger, profileLoader);
     getApiResponse(
       ResetPassword,
       "/api/dashboard/users/reset-password.php",
-      new FormData(),
-      profileLogger
+      new FormData()
     );
   });
   $(document).on("click", "#delete-avatar", function (e) {
@@ -41,8 +39,7 @@ const RemoveAvatar = new PanelClass(profileLogger, profileLoader);
       getApiResponse(
         RemoveAvatar,
         "/api/dashboard/users/delete-avatar.php",
-        new FormData(),
-        profileLogger
+        new FormData()
       );
       modalText.innerText = "";
       modal.remove();

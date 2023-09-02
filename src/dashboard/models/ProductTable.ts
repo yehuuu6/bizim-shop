@@ -17,8 +17,6 @@ import { setPageContent } from "../routing";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const productLogger= document.querySelector("#logger-products") as HTMLParagraphElement;
-const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
 const addImageBtn =  document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 
 export interface ProductInterface {
@@ -85,7 +83,6 @@ export function createProductTable(product: ProductInterface) {
         "/api/dashboard/product/change-status.php",
         formData
       );
-      scrollToElement(productLogger);
 
       if (response[0] === "success") {
         product.status = newStatus;
@@ -119,7 +116,6 @@ function deleteProduct(product: ProductInterface) {
       );
 
       ManageProductsPage.showMessage(response);
-      scrollToElement(productLogger);
 
       if (response[0] === "success") {
         // Delete the product from the currentProducts array
@@ -141,7 +137,6 @@ function deleteProduct(product: ProductInterface) {
 }
 
 function editProduct(product: ProductInterface) {
-  scrollToElement(createLogger);
   const form = document.querySelector("#create-form") as HTMLFormElement;
   setPageContent("hash", document.getElementById("add-product") as HTMLElement);
   clearImageInputs(
@@ -228,7 +223,6 @@ function editProduct(product: ProductInterface) {
       "none",
     ]);
     cleanForm(form);
-    scrollToElement(createLogger);
     isEditMode.value = false;
     inputId.remove();
     exitEditMode.classList.add("none-dislplay");

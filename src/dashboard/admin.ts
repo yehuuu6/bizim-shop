@@ -13,14 +13,16 @@ const currentUsers: { value: UserInterface[] } = {
 let startVal = 5;
 
 // Manage Users Page
+
+const logger = document.querySelector(".logger") as HTMLDivElement;
+
 const userMore = document.querySelector("#load-more-users") as HTMLButtonElement;
 const userTable = document.querySelector("#users-table tbody") as HTMLTableSectionElement;
 const userLoader = document.querySelector("#loader-users") as HTMLDivElement;
 const userRefresh = document.querySelector("#refresh-users") as HTMLButtonElement;
-const usersLogger = document.querySelector("#logger-users") as HTMLParagraphElement;
 const searchInput = document.querySelector("#search-user") as HTMLInputElement;
 
-const ManageUsersPage = new PanelClass(usersLogger, userLoader);
+const ManageUsersPage = new PanelClass(userLoader);
 
 // VARIABLES END
 
@@ -83,8 +85,7 @@ runSearchUsers(searchInput);
 
 function refreshUsers() {
   loadFirstUsers();
-  usersLogger.innerHTML = "";
-  usersLogger.className = "logger";
+  ManageUsersPage.clearLogger();
   searchInput.value = "";
   startVal = 5;
 }
@@ -131,7 +132,6 @@ userMore.addEventListener("click", function (e) {
       }
     }
     startVal += 5;
-    scrollToElement(usersLogger);
   });
 });
 
