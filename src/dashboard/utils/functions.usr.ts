@@ -19,13 +19,6 @@ export function clearAvatarInput() {
     "Dosya seçilmedi.";
 }
 
-export function scrollToElement(element: HTMLElement) {
-  window.scrollTo({
-    top: element.offsetTop,
-    behavior: "smooth",
-  });
-}
-
 export function trimSentence(sentence: string, maxLength: number) {
   if (sentence.length > maxLength) {
     sentence = sentence.substring(0, maxLength - 3) + "...";

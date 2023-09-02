@@ -1,7 +1,6 @@
 import createUserTable, { UserInterface } from "./models/UserTable";
 import PanelClass from "./classes/PanelClass";
 import { runSearchUsers } from "./utils/functions.dev";
-import { scrollToElement } from "./utils/functions.usr";
 
 // VARIABLES START
 
@@ -13,8 +12,6 @@ const currentUsers: { value: UserInterface[] } = {
 let startVal = 5;
 
 // Manage Users Page
-
-const logger = document.querySelector(".logger") as HTMLDivElement;
 
 const userMore = document.querySelector("#load-more-users") as HTMLButtonElement;
 const userTable = document.querySelector("#users-table tbody") as HTMLTableSectionElement;

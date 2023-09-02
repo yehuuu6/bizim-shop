@@ -1,4 +1,3 @@
-import { scrollToElement } from "../utils/functions.usr";
 import {
   currentProducts,
   CreateProductPage,

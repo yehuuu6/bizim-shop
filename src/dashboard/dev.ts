@@ -1,7 +1,7 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
 import {ProductInterface, createProductTable} from "./models/ProductTable";
-import { getApiResponse, scrollToElement } from "./utils/functions.usr";
+import { getApiResponse } from "./utils/functions.usr";
 import { addImageInput, runSearchProducts, cleanForm } from "./utils/functions.dev";
 import { setPageContent } from "./routing";
 
