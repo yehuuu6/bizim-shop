@@ -422,12 +422,9 @@ while ($row3 = mysqli_fetch_assoc($res)) {
             <tbody>
             </tbody>
           </table>
-          <form id="load-users">
-            <input type="hidden" name="start" value="5" id="start-val-users" />
-            <button class="btn success-btn" name="load-more" id="load-more-users">
-              Daha fazla yükle
-            </button>
-          </form>
+          <button class="btn success-btn" name="load-more" id="load-more-users">
+            Daha fazla yükle
+          </button>
         </div>
       </section>
     <?php endif; ?>
