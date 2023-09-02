@@ -223,7 +223,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
               </button>
             </div>
           </form>
-          <p id="logger-profile" class="logger"></p>
         </div>
       </section>
       <?php if ($power > 0) : ?>
@@ -257,7 +256,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
             </div>
           </div>
           <div class="container">
-            <p id="logger-products" class="logger"></p>
             <table id="products-table">
               <thead>
                 <tr>
@@ -378,7 +376,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
               </button>
             </div>
           </form>
-          <p id="logger-create" class="logger"></p>
         </div>
       </section>
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
@@ -408,7 +405,6 @@ while ($row3 = mysqli_fetch_assoc($res)) {
           </div>
         </div>
         <div class="container">
-          <p id="logger-users" class="logger"></p>
           <table id="users-table">
             <thead>
               <tr>
@@ -435,9 +431,18 @@ while ($row3 = mysqli_fetch_assoc($res)) {
         <p>© 2023 Bizim Shop</p>
       </div>
     </footer>
+    <div class="logger">
+      <div class="logger-header">
+        <span class="flex-display justify-center align-center">
+          <img src="/global/imgs/info.png" />
+        </span>
+        <h3>Uyarı</h3>
+      </div>
+      <p>Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.</p>
+    </div>
   </div>
   <script>
-    const userLogger = document.getElementById('logger-profile');
+    const userLogger = document.querySelector('.logger');
     const removeBtn = document.createElement("span");
     removeBtn.classList.add("remove-image");
     removeBtn.title = "Profil resmini kaldır";
