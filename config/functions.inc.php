@@ -104,7 +104,7 @@ function getPerm($perm)
 /**
  * Converts name to a valid file name.
  */
-function convertName(string $str)
+function convertName($str)
 {
     $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '-');
     $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '_', '_');
