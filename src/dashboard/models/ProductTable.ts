@@ -21,7 +21,7 @@ const productLogger= document.querySelector("#logger-products") as HTMLParagraph
 const createLogger = document.querySelector("#logger-create") as HTMLParagraphElement;
 const addImageBtn =  document.querySelector('button[name="add-image"]') as HTMLButtonElement;
 
-export interface Product {
+export interface ProductInterface {
   id: string;
   name: string;
   category: string;
@@ -42,7 +42,7 @@ export interface Product {
   [key: string]: string;
 }
 
-export function CreateProductTable(product: Product) {
+export function createProductTable(product: ProductInterface) {
   // Create table row
   const tr = document.createElement("tr");
   tr.innerHTML = `
@@ -69,7 +69,7 @@ export function CreateProductTable(product: Product) {
     const id = (e.currentTarget as HTMLElement).dataset.id!;
     const clickedAction = (e.target as HTMLElement).dataset.action;
 
-    const selectedProduct: Product = currentProducts.value.find((p: Product) => p.id === id)!;
+    const selectedProduct: ProductInterface = currentProducts.value.find((p: ProductInterface) => p.id === id)!;
     if (clickedAction === "edit") {
       editProduct(selectedProduct);
     } else if (clickedAction === "delete") {
@@ -104,7 +104,7 @@ export function CreateProductTable(product: Product) {
   return tr;
 }
 
-function deleteProduct(product: Product) {
+function deleteProduct(product: ProductInterface) {
   document.body.appendChild(modal);
   modalText.innerText = `"${product.name}" isimli ürünü silmek üzeresiniz.`;
 
@@ -124,7 +124,7 @@ function deleteProduct(product: Product) {
       if (response[0] === "success") {
         // Delete the product from the currentProducts array
         currentProducts.value = currentProducts.value.filter(
-          (p: Product) => p.id !== product.id
+          (p: ProductInterface) => p.id !== product.id
         );
 
         const child = document.querySelector(`[data-id="${product.id}"]`);
@@ -140,7 +140,7 @@ function deleteProduct(product: Product) {
   };
 }
 
-function editProduct(product: Product) {
+function editProduct(product: ProductInterface) {
   scrollToElement(createLogger);
   const form = document.querySelector("#create-form") as HTMLFormElement;
   setPageContent("hash", document.getElementById("add-product") as HTMLElement);

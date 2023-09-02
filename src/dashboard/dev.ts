@@ -1,13 +1,13 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
-import {Product, CreateProductTable} from "./models/ProductTable";
+import {ProductInterface, createProductTable} from "./models/ProductTable";
 import { getApiResponse, scrollToElement } from "./utils/functions.usr";
-import { addImageInput, runSearch, cleanForm } from "./utils/functions.dev";
+import { addImageInput, runSearchProducts, cleanForm } from "./utils/functions.dev";
 import { setPageContent } from "./routing";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const currentProducts: { value: Product[] } = {
+const currentProducts: { value: ProductInterface[] } = {
   value: [],
 };
 const isEditMode = {
@@ -48,7 +48,7 @@ function getSearchProduct() {
   productTable.innerHTML = "";
 
   if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter((product: Product) =>
+    const matchingProducts = currentProducts.value.filter((product: ProductInterface) =>
       product["name"].toLowerCase().includes(search)
     );
 
@@ -60,12 +60,12 @@ function getSearchProduct() {
       `;
     } else {
       matchingProducts.forEach((product) => {
-        productTable.appendChild(CreateProductTable(product));
+        productTable.appendChild(createProductTable(product));
       });
     }
   } else {
     currentProducts.value.forEach((product) => {
-      productTable.appendChild(CreateProductTable(product));
+      productTable.appendChild(createProductTable(product));
     });
   }
 }
@@ -86,14 +86,14 @@ async function loadFirstProducts() {
   const products = response;
 
   if (products !== undefined || products.length !== 0) {
-    products.forEach((product: Product) => {
+    products.forEach((product: ProductInterface) => {
       currentProducts.value.push(product);
-      productTable.appendChild(CreateProductTable(product));
+      productTable.appendChild(createProductTable(product));
     });
   }
 }
 
-runSearch();
+runSearchProducts(searchInput);
 
 function refreshProducts() {
   loadFirstProducts();
@@ -147,7 +147,7 @@ productMore.addEventListener("click", function (e) {
       for (let i = 0; i < products.length; i++) {
         let product = products[i];
         currentProducts.value.push(product);
-        productTable.append(CreateProductTable(product));
+        productTable.append(createProductTable(product));
         ManageProductsPage.showMessage([
           "success",
           "5 ürün başarıyla yüklendi.",
