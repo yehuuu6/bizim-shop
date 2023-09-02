@@ -62,7 +62,7 @@ export default class PanelClass implements PanelClassInterface {
 
     this.timer = setTimeout(() => {
       this.clearLogger();
-    }, 6000);
+    }, 8000);
   }
 
   async sendApiRequest(url: string, formData: FormData) {
