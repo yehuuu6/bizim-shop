@@ -155,3 +155,7 @@ menuBtns.forEach((btn) => {
     btn.classList.add("active");
   });
 });
+
+export const Router = {
+  status: "dead"
+}

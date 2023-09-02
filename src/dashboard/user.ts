@@ -1,12 +1,14 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
 import { getApiResponse, clearAvatarInput } from "./utils/functions.usr";
+import { Router } from "./routing";
+
+Router.status = "live";
 
 import $ from "jquery";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const logger = document.querySelector(".logger") as HTMLParagraphElement;
 const profileLoader = document.querySelector("#loader-profile") as HTMLParagraphElement;
 
 const ProfilePage = new PanelClass(profileLoader);
