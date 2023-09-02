@@ -1,11 +1,11 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
 import { getApiResponse, clearAvatarInput } from "./utils/functions.usr";
-import { Router } from "./routing";
-
-Router.status = "live";
+import { Router } from "./Router";
 
 import $ from "jquery";
+
+Router.initialize();
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 

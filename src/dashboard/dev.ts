@@ -3,7 +3,7 @@ import ConfirmationModal from "./models/Modal";
 import {ProductInterface, createProductTable} from "./models/ProductTable";
 import { getApiResponse } from "./utils/functions.usr";
 import { addImageInput, runSearchProducts, cleanForm } from "./utils/functions.dev";
-import { setPageContent } from "./routing";
+import router from "./Router";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
@@ -18,8 +18,6 @@ const imageCount = {
 };
 
 let startVal = 5;
-
-const logger = document.querySelector(".logger") as HTMLDivElement;
 
 const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
 const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
@@ -260,7 +258,8 @@ addImageBtn.addEventListener("click", function (e) {
 });
 
 addNewProduct.addEventListener("click", () => {
-  setPageContent("hash", document.getElementById("add-product") as HTMLElement);
+  const destination = document.querySelector("#add-product") as HTMLElement;
+  router.loadPage("hash", destination.dataset.url!);
   cleanForm((document.querySelector("#create-form") as HTMLFormElement));
   isEditMode.value = false;
   exitEditModeBtn.classList.add("none-display");

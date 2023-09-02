@@ -12,7 +12,7 @@ import {
   addImageInput,
   cleanForm,
 } from "../utils/functions.dev";
-import { setPageContent } from "../routing";
+import router from "../Router";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
@@ -137,7 +137,8 @@ function deleteProduct(product: ProductInterface) {
 
 function editProduct(product: ProductInterface) {
   const form = document.querySelector("#create-form") as HTMLFormElement;
-  setPageContent("hash", document.getElementById("add-product") as HTMLElement);
+  const destination = document.querySelector("#add-product") as HTMLElement;
+  router.loadPage("hash", destination.dataset.url!);
   clearImageInputs(
     addImageBtn,
     form
