@@ -404,6 +404,7 @@ $door = $row['door'];
       <p>{message}</p>
     </div>
   </div>
+  <script src="/dist/d/dm48gfz.js"></script>
   <?php if ($power === 0) : ?>
     <script type="module" src="/dist/d/du48gn1.js"></script>
   <?php endif; ?>
