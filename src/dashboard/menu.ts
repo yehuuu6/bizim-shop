@@ -22,7 +22,6 @@ menuToggle.addEventListener("change", () => {
 });
 
 function activateMenu() {
-  console.log("Menu activated");
   localStorage.setItem("menuState", "active");
   menu.classList.remove("hidden-menu");
   menu.classList.add("active-menu");
@@ -36,7 +35,6 @@ function activateMenu() {
 }
 
 function deactivateMenu() {
-  console.log("Menu deactivated");
   localStorage.setItem("menuState", "hidden");
   menu.classList.remove("active-menu");
   menu.classList.add("hidden-menu");
