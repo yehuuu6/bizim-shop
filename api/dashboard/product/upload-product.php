@@ -64,7 +64,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     }
 
     $validations = [
-        ['Ürün adı', $name, 6, 18, 'product-name'],
+        ['Ürün adı', $name, 6, 40, 'product-name'],
         ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
         ['Ürün açıklaması', $description, 50, 500, 'product-description']
     ];
@@ -78,7 +78,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     }
 
     if (mysqli_stmt_num_rows($stmt) > 0 && !$isEditing) {
-        sendErrorResponse('Ürün zaten var.', 'name');
+        sendErrorResponse('Ürün zaten var.', 'product-name');
     } elseif ($price <= 0) {
         sendErrorResponse('Lütfen geçerli bir fiyat giriniz.', 'product-price');
     } else {
