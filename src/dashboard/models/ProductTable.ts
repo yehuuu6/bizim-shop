@@ -136,6 +136,9 @@ function deleteProduct(product: ProductInterface) {
 }
 
 function editProduct(product: ProductInterface) {
+  if (document.querySelector("[name='product-id']")){
+    (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
+  }
   const form = document.querySelector("#create-form") as HTMLFormElement;
   const destination = document.querySelector("#add-product") as HTMLElement;
   router.loadPage("hash", destination.dataset.url!);
