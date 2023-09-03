@@ -22,6 +22,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     if (file_exists($image)) {
         unlink($image);
+    } else {
+        sendErrorResponse("Dosya bulunamadı!");
     }
 
     // Reorder the images (if image is different than noimg.jpg, then shift the images to the left and replace other images with noimg.jpg)
