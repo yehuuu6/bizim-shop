@@ -228,6 +228,7 @@ $door = $row['door'];
               <thead>
                 <tr>
                   <th width="1%">#</th>
+                  <th width="1%">ID</th>
                   <th width="7%">Ad</th>
                   <th width="5%">Kategori</th>
                   <th width="5%">Fiyat</th>
@@ -365,6 +366,7 @@ $door = $row['door'];
             <thead>
               <tr>
                 <th width="1%">#</th>
+                <th width="1%">ID</th>
                 <th width="3%">Kullanıcı</th>
                 <th width="5%">E Posta</th>
                 <th width="5%">Telefon</th>
