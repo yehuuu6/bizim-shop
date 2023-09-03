@@ -36,6 +36,33 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
 
+    if ($isEditing) {
+        $sql = "SELECT image1, image2, image3, image4, image5, image6 FROM product WHERE id = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+
+        $filterImages = array();
+
+        $image1 = $row['image1'];
+        $image2 = $row['image2'];
+        $image3 = $row['image3'];
+        $image4 = $row['image4'];
+        $image5 = $row['image5'];
+        $image6 = $row['image6'];
+
+        $filterImages = array($image1, $image2, $image3, $image4, $image5, $image6);
+
+        // If image is not null, add it to the array
+        foreach ($filterImages as $image) {
+            if ($image !== "noimg.jpg") {
+                array_push($images, $image);
+            }
+        }
+    }
+
     $validations = [
         ['Ürün adı', $name, 6, 18, 'product-name'],
         ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
@@ -92,9 +119,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         }
 
         if ($isEditing) {
-            $conclusion = updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality);
+            $conclusion = updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images);
             if ($conclusion) {
-                $log = 'Değişiklikler başarıyla kaydedildi.';
+                $log = "Değişiklikler başarıyla kaydedildi.";
             } else {
                 $log = 'Değişiklikler kaydedilirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.';
             }
@@ -163,13 +190,24 @@ function insertProduct($con, $uid, $category, $name, $description, $tags, $price
         $images[5]
     );
 
-
-    return mysqli_stmt_execute($stmt);
+    try {
+        return mysqli_stmt_execute($stmt);
+    } catch (Exception $e) {
+        sendErrorResponse("{$e->getMessage()}, $images[0], $images[1], $images[2], $images[3], $images[4], $images[5]");
+    } finally {
+        mysqli_stmt_close($stmt);
+    }
 }
 
-function updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality)
+function updateProduct($con, $id, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images)
 {
     global $root_name;
+    global $readyToUpload;
+    global $max_height;
+    global $max_width;
+
+    // Replace the null images with noimg.jpg
+    $images = array_pad($images, 6, 'noimg.jpg');
 
     // Get old root name
     $sql = "SELECT root_name FROM product WHERE id = ?";
@@ -185,11 +223,14 @@ function updateProduct($con, $id, $category, $name, $description, $tags, $price,
         rename(PRODUCT_IMAGE_SERVER_PATH . $old_root_name, PRODUCT_IMAGE_SERVER_PATH . $root_name);
     }
 
-    $sql = "UPDATE product SET category = ?, name = ?, root_name = ?, description = ?, tags = ?, price = ?, shipment = ?, featured = ?, quality = ? WHERE id = ?";
+    uploadImages($readyToUpload, $max_width, $max_height);
+
+    $sql = "UPDATE product SET category = ?, name = ?, root_name = ?, description = ?, tags = ?, price = ?, shipment = ?, featured = ?,
+    quality = ?, image1 = ?, image2 = ?, image3 = ?, image4 = ?, image5 = ?, image6 = ? WHERE id = ?";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "issssdiiii",
+        "issssdiiissssssi",
         $category,
         $name,
         $root_name,
@@ -199,8 +240,18 @@ function updateProduct($con, $id, $category, $name, $description, $tags, $price,
         $shipment,
         $featured,
         $quality,
-        $id,
+        $images[0],
+        $images[1],
+        $images[2],
+        $images[3],
+        $images[4],
+        $images[5],
+        $id
     );
 
-    return mysqli_stmt_execute($stmt);
+    try {
+        return mysqli_stmt_execute($stmt);
+    } catch (Exception $e) {
+        sendErrorResponse("{$e->getMessage()}, $images[0], $images[1], $images[2], $images[3], $images[4], $images[5]");
+    }
 }
