@@ -10,13 +10,18 @@ import {
   getCategory,
   setStatus,
   addImageInput,
-  cleanForm,
+  quitEditMode,
 } from "../utils/functions.dev";
 import router from "../Router";
+import { trimSentence } from "../utils/functions.usr";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
 const addImageBtn =  document.querySelector('button[name="add-image"]') as HTMLButtonElement;
+
+export const rowNumberProducts = {
+  value: 0,
+}
 
 export interface ProductInterface {
   id: string;
@@ -43,6 +48,7 @@ export function createProductTable(product: ProductInterface) {
   // Create table row
   const tr = document.createElement("tr");
   tr.innerHTML = `
+    <td>${++rowNumberProducts.value}</td>
     <td>${product.id}</td>
     <td>${product.name}</td>
     <td>${getCategory(product.category)}</td>
@@ -136,16 +142,15 @@ function deleteProduct(product: ProductInterface) {
 }
 
 function editProduct(product: ProductInterface) {
+  isEditMode.value = true;
+
   if (document.querySelector("[name='product-id']")){
     (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
   }
   const form = document.querySelector("#create-form") as HTMLFormElement;
   const destination = document.querySelector("#add-product") as HTMLElement;
   router.loadPage("hash", destination.dataset.url!);
-  clearImageInputs(
-    addImageBtn,
-    form
-  );
+  clearImageInputs();
 
   const inputId = document.createElement("input");
   inputId.type = "hidden";
@@ -153,10 +158,9 @@ function editProduct(product: ProductInterface) {
   inputId.value = product.id;
   form.appendChild(inputId);
 
-  isEditMode.value = true;
   CreateProductPage.showMessage([
     "warning",
-    "Ürün düzenleme moduna girdiniz.",
+    `${product.name} isimli ürünü düzenliyorsunuz.`,
     "none",
   ]);
 
@@ -202,7 +206,7 @@ function editProduct(product: ProductInterface) {
     ) as HTMLButtonElement;
     deleteImageBtn.dataset.image = image;
     deleteImageBtn.classList.remove("small-btn");
-    deleteImageBtn.innerHTML = `${index + 1}. Resmi Kaldır`;
+    deleteImageBtn.innerHTML = `${index + 1}. Resmi Sil`;
     const imagePreview = document.querySelector(`#image-preview-${index + 1}`) as HTMLImageElement;
     const imageText = document.querySelector(`#image-text-${index + 1}`) as HTMLParagraphElement;
     const imageLabel = document.querySelector(`#image-label-${index + 1}`) as HTMLLabelElement;
@@ -213,7 +217,8 @@ function editProduct(product: ProductInterface) {
     imageInput.style.display = "none";
     imageInput.disabled = true;
     imagePreview.style.display = "block";
-    imageText.textContent = product[`image${index + 1}`];
+    imageText.textContent = trimSentence(product[`image${index + 1}`], 20);
+    imageText.title = product[`image${index + 1}`];
     imagePreview.src = `${hostname}/assets/imgs/product/${
       product["root_name"]
     }/${image}?timestamp=${Date.now()}`;
@@ -225,24 +230,19 @@ function editProduct(product: ProductInterface) {
       "Ürün düzenleme modundan çıktınız.",
       "none",
     ]);
-    cleanForm(form);
-    isEditMode.value = false;
-    inputId.remove();
-    exitEditMode.classList.add("none-dislplay");
-    exitEditMode.disabled = true;
-    imageCount.value = 1;
-    addImageBtn.disabled = false;
-    addImageBtn.className =
-      "btn primary-btn small-btn block-display";
+    clearImageInputs();
+    title.innerText = "Markete Ürün Ekle";
+    paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
+    button.innerText = "Ürünü Ekle";
+    quitEditMode();
   });
 }
 
-function clearImageInputs(addImageBtn: HTMLButtonElement, form: HTMLFormElement) {
+export function clearImageInputs() {
   imageCount.value = 1;
-
-  const imageInputs = form.querySelectorAll("[data-type='image-input']");
+  const imageInputs = (document.querySelector("#create-form") as HTMLFormElement).querySelectorAll("[data-type='image-input']");
   imageInputs.forEach((input) => input.remove());
-
+  const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
   addImageBtn.className = "btn primary-btn small-btn block-display";
   addImageBtn.disabled = false;
 }

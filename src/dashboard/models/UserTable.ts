@@ -1,4 +1,9 @@
 import { currentUsers } from "../admin";
+import { ManageUsersPage } from "../admin";
+
+export const rowNumberUsers = {
+  value: 0,
+}
 
 export interface UserInterface {
     id: string;
@@ -16,6 +21,7 @@ export default function createUserTable(user: UserInterface) {
     // Create table row
     const tr = document.createElement("tr");
     tr.innerHTML = `
+        <td>${++rowNumberUsers.value}</td>
         <td>${user.id}</td>
         <td>${user.userName}</td>
         <td>${user.email}</td>
@@ -35,13 +41,13 @@ export default function createUserTable(user: UserInterface) {
         let id = ((e.target as HTMLElement).parentElement  as HTMLElement).dataset.id;
         // Get the user from the currentUsers array
         let user = currentUsers.value.find((user: UserInterface) => user["id"] == id);
-        console.log(`Upgrading ${user?.userName}`);
+        ManageUsersPage.showMessage(["success", `${user?.userName} isimli kullanıcı yetkisi yükseltildi. (TODO)`, "none"]);
       } else if ((e.target as HTMLElement).dataset.action == "ban") {
         // Get the id of the user
         let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset.id;
         // Get the plugin from the currentUsers array
         let user = currentUsers.value.find((user: UserInterface) => user["id"] == id);
-        console.log(`Banning ${user?.userName}`);
+        ManageUsersPage.showMessage(["success", `${user?.userName} isimli kullanıcı yasaklandı. (TODO)`, "none"]);
       }
     });
   

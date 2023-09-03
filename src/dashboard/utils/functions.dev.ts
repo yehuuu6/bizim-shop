@@ -1,5 +1,7 @@
 import { getSearchProduct, imageCount } from "../dev";
 import { getSearchUser } from "../admin";
+import { trimSentence } from "./functions.usr";
+import { isEditMode } from "../dev";
 
 export function runSearchProducts(searchProductInput: HTMLInputElement) {
   let productSearchInterval: any = null;
@@ -92,18 +94,41 @@ export function getCategory(_id: string) {
 
 export function cleanForm(form: HTMLFormElement) {
   form.reset();
-  const button: HTMLButtonElement = document.querySelector("#create-product")!;
-  const title: any = document.querySelector("#create-product-title");
-  const paragraph: HTMLParagraphElement = document.querySelector("#create-product-text")!;
   const imageInputs: HTMLInputElement[] = Array.from(document.querySelectorAll("[data-type='image-input']")) as HTMLInputElement[];
   const addImageBtn: HTMLButtonElement = document.querySelector('button[name="add-image"]')!;
-  imageInputs.forEach((input:HTMLInputElement) => input.remove());
-  addImageBtn.disabled = false;
-  addImageBtn.className = "btn primary-btn small-btn";
-  imageCount.value = 1;
-  button.innerText = "Ürün Ekle";
+  imageInputs.forEach((input) => {
+    const button = input.querySelector("button") as HTMLButtonElement;
+    if (!button.hasAttribute("data-image")) {
+      imageCount.value--;
+      input.remove();
+    }
+  });
+  if (imageCount.value <= 6) {
+    addImageBtn.disabled = false;
+    addImageBtn.className = "btn primary-btn small-btn";
+  }
+}
+
+/**
+ * This function is used to exit edit mode and clean the form
+ */
+export function quitEditMode(){
+  cleanForm((document.querySelector("#create-form") as HTMLFormElement));
+  const button = document.querySelector("#create-product") as HTMLButtonElement;
+  const title = document.querySelector("#create-product-title") as HTMLElement;
+  const paragraph = document.querySelector("#create-product-text") as HTMLParagraphElement;
+  isEditMode.value = false;
   title.innerText = "Markete Ürün Ekle";
   paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
+  button.innerText = "Ürünü Ekle";
+  if (document.querySelector("[name='product-id']")){
+    (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
+  }
+  (document.querySelector("#exit-edit-mode") as HTMLButtonElement).classList.add("none-display");
+  (document.querySelector("#exit-edit-mode") as HTMLButtonElement).disabled = true;
+  (document.querySelector('button[name="add-image"]') as HTMLButtonElement).disabled = false;
+    (document.querySelector('button[name="add-image"]') as HTMLButtonElement).className =
+      "btn primary-btn small-btn block-display";
 }
 
 export function addImageInput(addImageBtn: HTMLButtonElement) {
@@ -141,7 +166,8 @@ export function addImageInput(addImageBtn: HTMLButtonElement) {
           }
         };
         reader.readAsDataURL(file);
-        imageText.textContent = file.name;
+        imageText.title = file.name;
+        imageText.textContent = trimSentence(file.name, 20);
       }
     } else {
       imagePreview.style.display = "none";

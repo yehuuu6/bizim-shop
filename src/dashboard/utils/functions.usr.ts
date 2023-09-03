@@ -1,7 +1,13 @@
 import { ProfilePage } from "../user";
 import PanelClass from "../classes/PanelClass";
 
-// Directly gets response and displays the message. Use this if you don't need to do stuff with response.
+/**
+ * Directly gets response and displays the message. Use this if you don't need to do stuff with response.
+ * @param panelObject The panel object
+ * @param url The url to send the request
+ * @param formData The form data to send
+ * @returns void
+ */
 export function getApiResponse(panelObject: PanelClass, url: string, formData: FormData) {
   panelObject.sendApiRequest(url, formData).then((data) => {
     const response = data[0];
