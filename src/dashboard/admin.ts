@@ -1,4 +1,4 @@
-import createUserTable, { UserInterface } from "./models/UserTable";
+import createUserTable, { UserInterface, rowNumberUsers } from "./models/UserTable";
 import PanelClass from "./classes/PanelClass";
 import { runSearchUsers } from "./utils/functions.dev";
 
@@ -85,6 +85,7 @@ function refreshUsers() {
   ManageUsersPage.clearLogger();
   searchInput.value = "";
   startVal = 5;
+  rowNumberUsers.value = 0;
 }
 
 userRefresh.addEventListener("click", () => {
@@ -107,7 +108,7 @@ userMore.addEventListener("click", function (e) {
     "/api/dashboard/users/load-users.php",
     formData
   ).then((response) => {
-    let users = response.data;
+    let users = response;
     if (users === undefined || users.length === 0) {
       userMore.classList.add("disabled");
       userMore.disabled = true;
@@ -137,5 +138,6 @@ userMore.addEventListener("click", function (e) {
 export {
   currentUsers,
   getSearchUser,
+  ManageUsersPage,
 };
 
