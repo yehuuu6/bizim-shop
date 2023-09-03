@@ -1,4 +1,4 @@
-# Bizim Shop: Empowering Small Businesses
+# Bizim Shop
 
 🛍️ An exciting e-commerce project aimed at supporting my father's business venture.
 
@@ -14,6 +14,7 @@
     - [x] User Profile Page APIs
     - [ ] Admin Product Management APIs
     - [ ] Admin User Management APIs
+    - [ ] Admin Order Management APIs
   - 😊 Elevating User Experience
     - [ ] Design an aesthetically pleasing landing page that engages visitors.
     - [ ] Develop captivating shop listings for seamless exploration.
