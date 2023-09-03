@@ -114,6 +114,9 @@ productRefreshBtn.addEventListener("click", () => {
   .addEventListener("click", () => {
     cleanForm((document.querySelector("#create-form") as HTMLFormElement));
     isEditMode.value = false;
+    if (document.querySelector("[name='product-id']")){
+      (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
+    }
     exitEditModeBtn.classList.add("none-display");
     exitEditModeBtn.disabled = true;
     ManageProductsPage.clearLogger();
@@ -262,6 +265,9 @@ addNewProduct.addEventListener("click", () => {
   router.loadPage("hash", destination.dataset.url!);
   cleanForm((document.querySelector("#create-form") as HTMLFormElement));
   isEditMode.value = false;
+  if (document.querySelector("[name='product-id']")){
+    (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
+  }
   exitEditModeBtn.classList.add("none-display");
   exitEditModeBtn.disabled = true;
   ManageProductsPage.clearLogger();
