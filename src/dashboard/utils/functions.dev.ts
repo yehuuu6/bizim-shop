@@ -105,7 +105,7 @@ export function cleanForm(form: HTMLFormElement) {
   });
   if (imageCount.value <= 6) {
     addImageBtn.disabled = false;
-    addImageBtn.className = "btn primary-btn small-btn";
+    addImageBtn.className = "btn small-btn";
   }
 }
 
@@ -128,7 +128,7 @@ export function quitEditMode(){
   (document.querySelector("#exit-edit-mode") as HTMLButtonElement).disabled = true;
   (document.querySelector('button[name="add-image"]') as HTMLButtonElement).disabled = false;
     (document.querySelector('button[name="add-image"]') as HTMLButtonElement).className =
-      "btn primary-btn small-btn block-display";
+      "btn small-btn block-display";
 }
 
 export function addImageInput(addImageBtn: HTMLButtonElement) {
