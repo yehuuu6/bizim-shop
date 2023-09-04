@@ -26,6 +26,7 @@ const ManageUsersPage = new PanelClass(userLoader);
 // FUNCTIONS START
 
 function getSearchUser() {
+  rowNumberUsers.value = 0;
   const search = searchInput.value.trim().toLowerCase();
 
   userTable.innerHTML = "";
