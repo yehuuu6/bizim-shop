@@ -32,13 +32,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                     unlink(PRODUCT_IMAGE_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
+                sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
             }
         }
         try {
-            rmdir(PRODUCT_IMAGE_SERVER_PATH . $root_name);
+            @rmdir(PRODUCT_IMAGE_SERVER_PATH . $root_name);
         } catch (Exception $e) {
-            // Do nothing
+            sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
         }
     }
 
@@ -49,10 +49,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             deleteFiles($goingto_delete, $root_name);
             sendSuccessResponse("$name isimli ürün başarıyla silindi.");
         } else {
-            sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+            $errorMessage = mysqli_error($con);
+            sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$errorMessage}");
         }
     } else {
-        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        sendErrorResponse("Bu ürünü silme yetkiniz bulunmamaktadır.");
     }
 } else {
     header("HTTP/1.1 403 Forbidden");
