@@ -243,6 +243,6 @@ export function clearImageInputs() {
   const imageInputs = (document.querySelector("#create-form") as HTMLFormElement).querySelectorAll("[data-type='image-input']");
   imageInputs.forEach((input) => input.remove());
   const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
-  addImageBtn.className = "btn primary-btn small-btn block-display";
+  addImageBtn.className = "btn small-btn block-display";
   addImageBtn.disabled = false;
 }
