@@ -559,7 +559,7 @@ nav .header{
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 15px;
     opacity: 0.8;
     transition: all .3s ease-in-out;
@@ -704,7 +704,6 @@ table tr:hover td a i.active:hover{
     opacity: 1;
     color: aliceblue;
     background: #5a44ff;
-    border-radius: 15px;
 }
 .item-wrapper{
     display: flex;
