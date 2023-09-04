@@ -68,7 +68,7 @@ $door = $row['door'];
       <div class="left-bar hidden-menu">
         <ul>
           <div class="list-title">
-            <h3>Giriş</h3>
+            <h3>Kontrol Paneli</h3>
           </div>
           <li>
             <div class="menu-btn active" data-name="home">
@@ -329,7 +329,7 @@ $door = $row['door'];
               <hr style="margin: 0;">
               <div class="item-wrapper">
                 <div class="form-item">
-                  <button name="add-image" title="Resim Ekle" class="btn primary-btn small-btn block-display">
+                  <button name="add-image" title="Resim Ekle" class="btn small-btn block-display">
                     <i class="fa-solid fa-plus"></i>
                   </button>
                 </div>
