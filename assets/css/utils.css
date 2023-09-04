@@ -50,10 +50,11 @@
 .gap-30{
     gap: 30px;
 }
-.small-btn{
-    width: 35px !important;
-    background: #5a44ff;
+.small-btn {
     color: aliceblue;
+    background-color: #6b58ff; /* Background color close to #5a44ff */
+    border: 1px solid #6879be; 
+    width: 35px !important;
     opacity: 0.95;
 }
 .small-btn:hover{
