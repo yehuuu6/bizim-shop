@@ -52,7 +52,12 @@
 }
 .small-btn{
     width: 35px !important;
+    background: #5a44ff;
     color: aliceblue;
+    opacity: 0.95;
+}
+.small-btn:hover{
+    opacity: 1;
 }
 .no-drag{
     -webkit-user-drag: none;
