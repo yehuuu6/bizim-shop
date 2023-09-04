@@ -39,6 +39,7 @@ const CreateProductPage = new PanelClass(createLoad);
 // FUNCTIONS START
 
 function getSearchProduct() {
+  rowNumberProducts.value = 0;
   const search = searchInput.value.trim().toLowerCase();
   productTable.innerHTML = "";
   if (search.length > 0) {
@@ -200,7 +201,7 @@ function removeAndReorderImages(imageInput: HTMLInputElement) {
   });
 
   addImageBtn.disabled = false;
-  addImageBtn.className = "btn primary-btn small-btn";
+  addImageBtn.className = "btn small-btn";
   imageCount.value--;
 }
 
