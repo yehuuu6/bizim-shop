@@ -57,17 +57,30 @@ $door = $row['door'];
         </label>
       </div>
       <div class="header-user">
-        <div class="user-image-container">
-          <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
-        </div>
-        <div class="user-info">
-          <h3 class="username"><?= $row['name'] . " " . $row['surname'] ?></h3>
-          <p class="user-role"><?= $perm_content ?></p>
-        </div>
-        <div class="user-return">
-          <a href="/" class="user-home" title="Ana sayfaya dön">
+        <div class="user-btn">
+          <a href="/" class="user-btn-item" title="Ana sayfaya dön">
             <i class="fa-solid fa-home"></i>
           </a>
+        </div>
+        <div class="user-btn">
+          <a href="/" class="user-btn-item" title="Ayarlar" style="font-size: 20px;">
+            <i class="fa-solid fa-gear"></i>
+          </a>
+        </div>
+        <div class="user-btn">
+          <a href="/?logout=1" class="user-btn-item" title="Çıkış Yap" style="font-size: 20px;">
+            <i class="fa-solid fa-door-open"></i>
+          </a>
+        </div>
+        <hr>
+        <div class="user-info-container">
+          <div class="user-info">
+            <h3 class="username"><?= $row['name'] . " " . $row['surname'] ?></h3>
+            <p class="user-role"><?= $perm_content ?></p>
+          </div>
+          <div class="user-image-container">
+            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
+          </div>
         </div>
       </div>
     </nav>
@@ -219,10 +232,10 @@ $door = $row['door'];
             <div class="item">
               <div class="controls">
                 <div class="c-container">
-                  <button title="Ürün Ekle" class="dashboard-btn edit-btn refresh" id="add-new-product">
+                  <button title="Ürün Ekle" class="dashboard-btn edit-btn small-btn" id="add-new-product">
                     <i class="fa-solid fa-plus"></i>
                   </button>
-                  <button title="Yenile" class="dashboard-btn success-btn refresh" id="refresh-products">
+                  <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-products">
                     <i class="fa-solid fa-rotate-right"></i>
                   </button>
                 </div>
@@ -263,10 +276,10 @@ $door = $row['door'];
             <div class="item">
               <div class="controls">
                 <div class="c-container">
-                  <button title="Düzenleme Modundan Çık" class="dashboard-btn delete-btn refreshd none-display" id="exit-edit-mode">
+                  <button title="Düzenleme Modundan Çık" class="dashboard-btn delete-btn small-btn none-display" id="exit-edit-mode">
                     <i class="fa-solid fa-times"></i>
                   </button>
-                  <button title="Temizle" class="dashboard-btn edit-btn refresh" id="clean-create-form">
+                  <button title="Temizle" class="dashboard-btn edit-btn small-btn" id="clean-create-form">
                     <i class="fa-solid fa-broom"></i>
                   </button>
                 </div>
@@ -360,7 +373,7 @@ $door = $row['door'];
           <div class="item">
             <div class="controls">
               <div class="c-container">
-              <button title="Yenile" class="dashboard-btn success-btn refresh" id="refresh-users">
+              <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-users">
                 <i class="fa-solid fa-rotate-right"></i>
               </button>
               </div>
@@ -402,7 +415,7 @@ $door = $row['door'];
           <img src="/global/imgs/info.png" alt="Status"/>
         </span>
         <p>{message}</p>
-        <button class="dashboard-btn small-btn" title="Bildirimi sil" id="close-logger">
+        <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
           <i class="fa-solid fa-times"></i>
         </button>
     </div>
