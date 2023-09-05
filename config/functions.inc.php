@@ -87,7 +87,7 @@ function randomString(int $length = 10)
 /**
  * Returns the permission level of the user.
  */
-function getPerm($perm)
+function getPerm(int $perm)
 {
     $result = '';
     switch ($perm) {
