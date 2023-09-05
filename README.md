@@ -36,7 +36,6 @@
 
 ### 🔧 Tools and Libraries
 
-- [jQuery](https://jquery.com/) 🔍
 - [Webpack](https://webpack.js.org/) 📦
 - [Axios](https://axios-http.com/) 🔑
 - [Symfony Mailer](https://symfony.com/doc/current/mailer.html) 📧
