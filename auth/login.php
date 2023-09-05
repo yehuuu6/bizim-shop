@@ -10,9 +10,9 @@ if (isset($_SESSION['id'])) {
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/assets/css/auth.css">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
+  <link rel="stylesheet" href="/dist/auth/a578a8g.css">
   <title>Hesabınıza giriş yapın - Bizim Shop</title>
 </head>
 

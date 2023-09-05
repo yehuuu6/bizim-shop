@@ -10,7 +10,7 @@ if (isset($_GET['password-token'])) {
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/assets/css/auth.css">
+  <link rel="stylesheet" href="/dist/auth/a578a8g.css">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
   <title>Şifremi Unuttum - Bizim Shop</title>
