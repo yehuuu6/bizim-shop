@@ -37,8 +37,7 @@ $door = $row['door'];
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
-  <link rel="stylesheet" href="/assets/css/utils.css" />
-  <link rel="stylesheet" href="/assets/css/dashboard.css" />
+  <link rel="stylesheet" href="/dist/dashboard/du48gn1.css" />
   <script src="/global/plugins/icons.js"></script>
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <title>Panel - Bizim Shop</title>
@@ -48,21 +47,29 @@ $door = $row['door'];
   <div class="app">
     <nav>
       <div class="header-container">
-        <img class="large-svg" src="/global/imgs/favicon.svg" alt="Logo">
         <h2 class="header flex-display gap-5">Bizim <div class="blue-text">Shop</div>
         </h2>
         <input id="menu-toggle" type="checkbox">
-        <label for="menu-toggle" class="burger" title="Toggle Menu">
+        <label for="menu-toggle" class="burger" title="Menü">
           <div class="line"></div>
           <div class="line"></div>
           <div class="line"></div>
         </label>
       </div>
-      <ul>
-        <li>
-          <a class="nav-link" href="/">Ana Sayfa</a>
-        </li>
-      </ul>
+      <div class="header-user">
+        <div class="user-image-container">
+          <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
+        </div>
+        <div class="user-info">
+          <h3 class="username"><?= $row['name'] . " " . $row['surname'] ?></h3>
+          <p class="user-role"><?= $perm_content ?></p>
+        </div>
+        <div class="user-return">
+          <a href="/" class="user-home" title="Ana sayfaya dön">
+            <i class="fa-solid fa-home"></i>
+          </a>
+        </div>
+      </div>
     </nav>
     <div class="main-page">
       <div class="left-bar hidden-menu">
@@ -132,7 +139,7 @@ $door = $row['door'];
             <p>Burada hesap bilgilerinizi düzenleyebilirsiniz.</p>
           </div>
           <div class="item">
-            <button id="password-reset" class="btn edit-btn">Şifre Sıfırlama Maili Gönder</button>
+            <button id="password-reset" class="dashboard-btn edit-btn">Şifre Sıfırlama Maili Gönder</button>
           </div>
         </div>
         <div class="container">
@@ -144,7 +151,7 @@ $door = $row['door'];
                   <div class="image-container">
                     <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
                   </div>
-                  <label id="avatar-label" class="btn edit-btn" for="avatar-input">Profil Resmi Yükle</label>
+                  <label id="avatar-label" class="dashboard-btn edit-btn" for="avatar-input">Profil Resmi Yükle</label>
                   <p id="avatar-input-displayer" class="display-file">Dosya seçilmedi.</p>
                   <input type="file" id="avatar-input" name="avatar-input" />
                 </div>
@@ -192,7 +199,7 @@ $door = $row['door'];
               </div>
               <label for="address">Adres Tarifi</label>
               <textarea spellcheck="false" name="address" id="address" cols="30" rows="10" placeholder="Mahalle, sokak vb."><?php echo $address ?></textarea>
-              <button class="btn success-btn" type="submit" name="save-user" id="save-user">
+              <button class="dashboard-btn success-btn" type="submit" name="save-user" id="save-user">
                 Değişiklikleri Kaydet
               </button>
             </div>
@@ -212,10 +219,10 @@ $door = $row['door'];
             <div class="item">
               <div class="controls">
                 <div class="c-container">
-                  <button title="Ürün Ekle" class="btn edit-btn refresh" id="add-new-product">
+                  <button title="Ürün Ekle" class="dashboard-btn edit-btn refresh" id="add-new-product">
                     <i class="fa-solid fa-plus"></i>
                   </button>
-                  <button title="Yenile" class="btn success-btn refresh" id="refresh-products">
+                  <button title="Yenile" class="dashboard-btn success-btn refresh" id="refresh-products">
                     <i class="fa-solid fa-rotate-right"></i>
                   </button>
                 </div>
@@ -239,7 +246,7 @@ $door = $row['door'];
               <tbody>
               </tbody>
             </table>
-            <button class="btn success-btn" id="load-more-products">
+            <button class="dashboard-btn success-btn" id="load-more-products">
               Daha fazla yükle
             </button>
           </div>
@@ -256,10 +263,10 @@ $door = $row['door'];
             <div class="item">
               <div class="controls">
                 <div class="c-container">
-                  <button title="Düzenleme Modundan Çık" class="btn delete-btn refreshd none-display" id="exit-edit-mode">
+                  <button title="Düzenleme Modundan Çık" class="dashboard-btn delete-btn refreshd none-display" id="exit-edit-mode">
                     <i class="fa-solid fa-times"></i>
                   </button>
-                  <button title="Temizle" class="btn edit-btn refresh" id="clean-create-form">
+                  <button title="Temizle" class="dashboard-btn edit-btn refresh" id="clean-create-form">
                     <i class="fa-solid fa-broom"></i>
                   </button>
                 </div>
@@ -329,12 +336,12 @@ $door = $row['door'];
               <hr style="margin: 0;">
               <div class="item-wrapper">
                 <div class="form-item">
-                  <button name="add-image" title="Resim Ekle" class="btn small-btn block-display">
+                  <button name="add-image" title="Resim Ekle" class="dashboard-btn small-btn add-image-btn">
                     <i class="fa-solid fa-plus"></i>
                   </button>
                 </div>
               </div>
-              <button class="btn success-btn" type="submit" name="create-product" id="create-product">
+              <button class="dashboard-btn success-btn" type="submit" name="create-product" id="create-product">
                 Ürünü Ekle
               </button>
             </div>
@@ -353,7 +360,7 @@ $door = $row['door'];
           <div class="item">
             <div class="controls">
               <div class="c-container">
-              <button title="Yenile" class="btn success-btn refresh" id="refresh-users">
+              <button title="Yenile" class="dashboard-btn success-btn refresh" id="refresh-users">
                 <i class="fa-solid fa-rotate-right"></i>
               </button>
               </div>
@@ -376,7 +383,7 @@ $door = $row['door'];
             <tbody>
             </tbody>
           </table>
-          <button class="btn success-btn" name="load-more" id="load-more-users">
+          <button class="dashboard-btn success-btn" name="load-more" id="load-more-users">
             Daha fazla yükle
           </button>
         </div>
@@ -384,35 +391,26 @@ $door = $row['door'];
     <?php endif; ?>
     </div>
     <footer>
-      <span class="perm-indicator"><?php echo $perm_content ?> | <?php echo $_SESSION['username'] ?></span>
       <div class="copyright-section">
+      <span>Tüm hakları saklıdır
+      </span>
         <p>© 2023 Bizim Shop</p>
       </div>
     </footer>
     <div class="logger">
-      <div class="logger-header">
-        <div class="header-item">
-          <span class="flex-display justify-center align-center">
-            <img src="/global/imgs/info.png" alt="Status"/>
-          </span>
-        <h3>{title}</h3>
-        </div>
-        <div class="header-item">
-          <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <p>{message}</p>
+        <span class="flex-display justify-center align-center">
+          <img src="/global/imgs/info.png" alt="Status"/>
+        </span>
+        <p>{message}</p>
+        <button class="dashboard-btn small-btn" title="Bildirimi sil" id="close-logger">
+          <i class="fa-solid fa-times"></i>
+        </button>
     </div>
   </div>
-  <script src="/dist/d/dm48gfz.js"></script>
-  <?php if ($power === 0) : ?>
-    <script type="module" src="/dist/d/du48gn1.js"></script>
-  <?php endif; ?>
-  <?php if ($power > 0) : ?>
-    <script type="module" src="/dist/d/da48gn2.js"></script>
-  <?php endif; ?>
+  <div id="main-dashboard-loader" class="loader" style="display:flex;">
+    <?php $loader5 = new Loader(); ?>
+  </div>
+  <script type="module" src="/dist/dashboard/du48gn1.js"></script>
 </body>
 <!--       
 
