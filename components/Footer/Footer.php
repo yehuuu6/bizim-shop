@@ -52,7 +52,7 @@ class Footer extends Component
                     <div class="blue-text bold-text">Shop</div> Tüm Hakları Saklıdır.</p>
                 </div>
             </footer>
-            <script src="/src/interactive.js"></script>
+            <script src="/dist/main/dr50hzx.js"></script>
             </body>
             <!--       
 
