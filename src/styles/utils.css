@@ -51,7 +51,8 @@
     gap: 30px;
 }
 .small-btn{
-    width: 45px !important;
+    width: 45px;
+    height: 45px;
 }
 .no-drag{
     -webkit-user-drag: none;
