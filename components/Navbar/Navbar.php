@@ -42,11 +42,9 @@ class Navbar extends Component
                 <meta name="description" content="{$desc}">
                 <meta name="keywords" content="{$keywords}">
                 <meta name="author" content="{$author}">
-                <link rel="stylesheet" href="/assets/css/main.css">
-                <link rel="stylesheet" href="/assets/css/utils.css">
+                <link rel="stylesheet" href="/dist/main/dr50hzx.css" />
                 <link rel="shortcut icon" href="{$favi}" type="image/x-icon">
                 <script src="/global/plugins/icons.js"></script>
-                <script src="/global/plugins/jquery.js"></script>
                 <title>{$title}</title>
             </head>
             <body>
