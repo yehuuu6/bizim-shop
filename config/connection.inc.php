@@ -16,8 +16,8 @@ $dotenv->load($_SERVER['DOCUMENT_ROOT'] . '/.env');
 $con = mysqli_connect($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DB_NAME']) or die("Connection was not established");
 
 define('DOMAIN', $_ENV['DOMAIN']);
-define('SERVER_PATH', $_SERVER['DOCUMENT_ROOT'] . '/assets/imgs/');
-define('SITE_PATH', DOMAIN . 'assets/imgs/');
+define('SERVER_PATH', $_SERVER['DOCUMENT_ROOT'] . '/images/');
+define('SITE_PATH', DOMAIN . '/images/');
 define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'product/');
 define('PRODUCT_USER_SERVER_PATH', SERVER_PATH . 'users/');
 define('PRODUCT_USER_SITE_PATH', SITE_PATH . 'users/');
