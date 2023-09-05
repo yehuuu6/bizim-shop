@@ -3,7 +3,7 @@ vendor
 node_modules
 dist
 .env
-assets/imgs/product/*
-assets/imgs/users/*
-!assets/imgs/product/noimg.jpg
-!assets/imgs/users/nopp.png
+images/product/*
+images/users/*
+!images/product/noimg.jpg
+!images/users/nopp.png
