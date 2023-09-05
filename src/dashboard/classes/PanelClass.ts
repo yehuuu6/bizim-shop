@@ -30,7 +30,6 @@ export default class PanelClass implements PanelClassInterface {
     const [messageType, message, cause] = data;
 
     this.logger.className = `logger ${messageType}`;
-    const logTitle = this.logger.querySelector("h3") as HTMLHeadingElement;
     const logImage = this.logger.querySelector("img") as HTMLImageElement;
     const logMessage = this.logger.querySelector("p") as HTMLParagraphElement;
 
@@ -40,8 +39,6 @@ export default class PanelClass implements PanelClassInterface {
         : messageType === "warning"
         ? "/global/imgs/info.png"
         : "/global/imgs/error.png";
-
-    logTitle.innerText = messageType === "success" ? "Başarılı" : messageType === "warning" ? "Uyarı" : "Hata";
     logImage.src = imageSrc;
     logMessage.innerText = message;
 
@@ -78,7 +75,6 @@ export default class PanelClass implements PanelClassInterface {
           "Content-Type": "multipart/form-data",
         },
       });
-
       return response.data;
     } catch (error) {
       throw error;

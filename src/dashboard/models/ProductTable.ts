@@ -56,11 +56,11 @@ export function createProductTable(product: ProductInterface) {
     <td data-mission="status">${setStatus(product.status)}</td>
     <td class="table-form-td">
       <form class="table-form" data-id="${product.id}">
-        <button data-action="status" class="btn ${
+        <button data-action="status" class="dashboard-btn ${
           product.status === "1" ? "status-btn" : "success-btn"
         }">${product.status === "1" ? "Satıldı" : "Satışta"}</button>
-        <button data-action="edit" class="btn edit-btn">Düzenle</button>
-        <button data-action="delete" class="btn delete-btn">Sil</button>
+        <button data-action="edit" class="dashboard-btn edit-btn">Düzenle</button>
+        <button data-action="delete" class="dashboard-btn delete-btn">Sil</button>
       </form>
     </td>
   `;
@@ -94,7 +94,7 @@ export function createProductTable(product: ProductInterface) {
         (e.target as HTMLElement).innerText = newStatus === "1" ? "Satıldı" : "Satışta";
         (tr.querySelector("[data-mission='status']") as HTMLElement).innerText =
           setStatus(newStatus);
-        (e.target as HTMLElement).className = `btn ${
+        (e.target as HTMLElement).className = `dashboard-btn ${
           newStatus === "1" ? "status-btn" : "success-btn"
         }`;
       }
@@ -219,7 +219,7 @@ function editProduct(product: ProductInterface) {
     imagePreview.style.display = "block";
     imageText.textContent = trimSentence(product[`image${index + 1}`], 20);
     imageText.title = product[`image${index + 1}`];
-    imagePreview.src = `${hostname}/assets/imgs/product/${
+    imagePreview.src = `${hostname}/images/product/${
       product["root_name"]
     }/${image}?timestamp=${Date.now()}`;
   });
@@ -243,6 +243,6 @@ export function clearImageInputs() {
   const imageInputs = (document.querySelector("#create-form") as HTMLFormElement).querySelectorAll("[data-type='image-input']");
   imageInputs.forEach((input) => input.remove());
   const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
-  addImageBtn.className = "btn small-btn block-display";
+  addImageBtn.className = "dashboard-btn small-btn add-image-btn";
   addImageBtn.disabled = false;
 }

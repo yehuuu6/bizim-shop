@@ -1,55 +1,55 @@
-import $ from "jquery";
-
 export default function ConfirmationModal() {
-  const modal = $('<div class="delete-modal"></div>');
-  const delCon = $('<div class="delete-modal-content"></div>');
-  const modTitle = $('<h1 class="delete-modal-title">Uyarı!</h1>');
-  const lineBreak = $('<hr class="delete-modal-line">');
-  const delModText = $("<p></p>");
-  const delModWarn = $('<strong class="warn">BU EYLEM GERİ ALINAMAZ.</strong>');
-  const delSpan = $("<span>Devam et?</span>");
-  const delModBtns = $('<div class="delete-modal-btns"></div>');
-  const delModCan = $('<button class="btn success-btn">Hayır</button>');
-  const delModCon = $('<button class="btn delete-btn">Evet</button>');
+  const modal = document.createElement("div");
+  modal.classList.add("delete-modal");
+  const delCon = document.createElement("div");
+  delCon.classList.add("delete-modal-content");
+  const modTitle = document.createElement("h1");
+  modTitle.innerText = "Uyarı!";
+  modTitle.classList.add("delete-modal-title");
+  const lineBreak = document.createElement("hr");
+  lineBreak.classList.add("delete-modal-line");
+  const delModText = document.createElement("p");
+  const delModWarn = document.createElement("strong");
+  delModWarn.innerText = "BU EYLEM GERİ ALINAMAZ.";
+  delModWarn.classList.add("warn");
+  const delSpan = document.createElement("span");
+  delSpan.innerText = "Devam et?";
+  const delModBtns = document.createElement("div");
+  delModBtns.classList.add("delete-modal-btns");
+  const delModCan = document.createElement("button");
+  delModCan.classList.add("dashboard-btn", "success-btn");
+  delModCan.innerText = "Hayır";
+  const delModCon = document.createElement("button");
+  delModCon.classList.add("dashboard-btn", "delete-btn");
+  delModCon.innerText = "Evet";
 
-  const modalElement = modal[0] as HTMLDivElement;
-  const delConElement = delCon[0];
-  const modTitleElement = modTitle[0];
-  const lineBreakElement = lineBreak[0];
-  const delModTextElement = delModText[0] as HTMLParagraphElement;
-  const delModWarnElement = delModWarn[0];
-  const delSpanElement = delSpan[0];
-  const delModBtnsElement = delModBtns[0];
-  const delModConElement = delModCon[0] as HTMLButtonElement;
-  const delModCanElement = delModCan[0];
-
-  delModCanElement.addEventListener("click", () => {
+  delModCan.addEventListener("click", () => {
     modal.remove();
   });
 
-  modalElement.addEventListener("click", (e) => {
-    if (e.target === modalElement) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
       modal.remove();
     }
   });
 
   delModBtns.append(delModCon, delModCan);
   delCon.append(
-    modTitleElement,
-    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
-    delModTextElement,
-    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
-    delModWarnElement,
-    (lineBreakElement.cloneNode() as HTMLElement), // Cast the cloneNode result
-    delSpanElement,
-    delModBtnsElement
+    modTitle,
+    lineBreak.cloneNode(),
+    delModText,
+    lineBreak.cloneNode(),
+    delModWarn,
+    lineBreak.cloneNode(),
+    delSpan,
+    delModBtns
   );
 
-  modal.append(delConElement);
+  modal.append(delCon);
 
   return {
-    modal: modalElement,
-    modalText: delModTextElement,
-    modalBtn: delModConElement,
+    modal: modal,
+    modalText: delModText,
+    modalBtn: delModCon,
   };
 }

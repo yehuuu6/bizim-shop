@@ -1,10 +1,9 @@
 import axios from "axios";
-import $ from "jquery";
 
 interface AuthorizationClassInterface {
-  form: JQuery<HTMLFormElement>;
-  logger: JQuery<HTMLParagraphElement>;
-  loader: JQuery<HTMLDivElement>;
+  form: HTMLFormElement
+  logger: HTMLParagraphElement;
+  loader: HTMLDivElement;
   url: string;
   returnUrl: string;
   goBackTime: number;
@@ -13,9 +12,9 @@ interface AuthorizationClassInterface {
 }
 
 export class AuthorizationClass implements AuthorizationClassInterface {
-  form: JQuery<HTMLFormElement>;
-  logger: JQuery<HTMLParagraphElement>;
-  loader: JQuery<HTMLDivElement>;
+  form: HTMLFormElement;
+  logger: HTMLParagraphElement;
+  loader: HTMLDivElement;
   url: string;
   returnUrl: string;
   goBackTime: number;
@@ -23,7 +22,7 @@ export class AuthorizationClass implements AuthorizationClassInterface {
   timer2: any;
   oldLoggerText: string | undefined;
 
-  constructor(form: JQuery<HTMLFormElement>, logger: JQuery<HTMLParagraphElement>, loader: JQuery<HTMLDivElement>,
+  constructor(form: HTMLFormElement, logger: HTMLParagraphElement, loader: HTMLDivElement,
     url: string, returnUrl: string, goBackTime = 3000) {
     this.form = form;
     this.logger = logger;
@@ -42,52 +41,51 @@ export class AuthorizationClass implements AuthorizationClassInterface {
     const className = `logger ${messageType}`;
     const imageTag = `<span><img src='/global/imgs/${iconPath}'/></span>`;
 
-    this.logger.attr("class", className);
-    this.logger.html(imageTag + message);
+    this.logger.className = className;
+    this.logger.innerHTML = `${imageTag} ${message}`;
 
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      let element = $(`[name="${cause}"]`);
-      element.css("border", "1px solid red");
+      let element = document.querySelector(`[name="${cause}"]`) as HTMLInputElement;
+      element.style.border = "1px solid red";
 
       this.timer2 = setTimeout(() => {
-        element.css("border", "1px solid #dadada");
+        element.style.border = "1px solid #dadada";
       }, 2000);
     }
 
     this.timer = setTimeout(() => {
-      this.logger.attr("class", "logger");
-      this.logger.html("");
+      this.logger.className = "logger";
+      this.logger.innerHTML = "";
     }, 8000);
   }
 
   showCountdown() {
     let i = this.goBackTime / 1000;
-    this.logger.append(`<span> ${i}</span>`);
-
+    this.logger.innerHTML += `<span> ${i}</span>`;
     const timer = setInterval(() => {
       i--;
-      this.logger.children().last().text(i);
-      if (i === 0) {
+      (this.logger.lastElementChild as HTMLSpanElement).textContent = String(i); // Update the span's text content
+      if (i === -1) {
         clearInterval(timer);
       }
     }, 1000);
   }
 
   sendApiRequest() {
-    this.loader.css("display", "flex");
+    this.loader.style.display = "flex";
 
     axios({
       url: this.url,
       method: "post",
-      data: new FormData(this.form[0]),
+      data: new FormData(this.form),
       headers: {
         "X-Requested-With": "XMLHttpRequest",
       },
     })
       .then((response) => {
-        this.loader.css("display", "none");
+        this.loader.style.display = "none";
         const [status, message, cause] = response.data;
         this.showMessage(message, status, cause);
 
@@ -107,9 +105,9 @@ export class AuthorizationClass implements AuthorizationClassInterface {
 
 export class SpecialAuthorizationClass extends AuthorizationClass {
   constructor(
-    form: JQuery<HTMLFormElement>,
-    logger: JQuery<HTMLParagraphElement>,
-    loader: JQuery<HTMLDivElement>,
+    form: HTMLFormElement,
+    logger: HTMLParagraphElement,
+    loader: HTMLDivElement,
     url: string,
     returnUrl: string,
     goBackTime = 2000,
@@ -125,8 +123,8 @@ export class SpecialAuthorizationClass extends AuthorizationClass {
     clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
-      this.logger.attr("class", "logger warning");
-      this.logger.html(this.oldLoggerText!);
+      this.logger.className = "logger warning";
+      this.logger.innerHTML = this.oldLoggerText!;
     }, 8000);
   }
 }

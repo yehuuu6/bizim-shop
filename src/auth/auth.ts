@@ -3,75 +3,93 @@ import {
   AuthorizationClass,
 } from "./classes/AuthorizationClass";
 
-import $ from "jquery";
+import "../styles/auth.css";
 
-const loader = $(".loader") as JQuery<HTMLDivElement>;
+const loader = document.querySelector(".loader") as HTMLDivElement;
 const defaultLoggerText = ""
 
 const LoginPage = new AuthorizationClass(
-  $("#login-form"),
-  $("#login-form .logger"),
+  document.querySelector("#login-form") as HTMLFormElement,
+  document.querySelector("#login-form .logger") as HTMLParagraphElement,
   loader,
   "/api/authorization/login.php",
   "/" // return url and default go back time
 );
 const RegisterPage = new AuthorizationClass(
-  $("#register-form"),
-  $("#register-form .logger"),
+  document.querySelector("#register-form") as HTMLFormElement,
+  document.querySelector("#register-form .logger") as HTMLParagraphElement,
   loader,
   "/api/authorization/register.php",
   "./verify"
 );
-const forgotPasswordLogger = $("#forgot-password-form .logger") as JQuery<HTMLParagraphElement>;
+const forgotPasswordLogger = document.querySelector("#forgot-password-form .logger") as HTMLParagraphElement;
 const ForgotPasswordPage = new SpecialAuthorizationClass(
-  $("#forgot-password-form"),
+  document.querySelector("#forgot-password-form") as HTMLFormElement,
   forgotPasswordLogger,
   loader,
   "/api/authorization/forgot-password.php",
   "./login",
   6000,
-  forgotPasswordLogger ? forgotPasswordLogger.html() : defaultLoggerText
+  forgotPasswordLogger ? forgotPasswordLogger.innerHTML : defaultLoggerText
 );
 const ResetPasswordPage = new AuthorizationClass(
-  $("#reset-form"),
-  $("#reset-form .logger"),
+  document.querySelector("#reset-form") as HTMLFormElement,
+  document.querySelector("#reset-form .logger") as HTMLParagraphElement,
   loader,
   "/api/authorization/reset-password.php",
   "./login",
   6000
 );
 
-const verifyLogger = $("#verify-account-form .logger") as JQuery<HTMLParagraphElement>;
+const verifyLogger = document.querySelector("#verify-account-form .logger") as HTMLParagraphElement;
 const VerifyAccountPage = new SpecialAuthorizationClass(
-  $("#verify-account-form"),
+  document.querySelector("#verify-account-form") as HTMLFormElement,
   verifyLogger,
   loader,
   "/api/authorization/resend-verify.php",
   "#",
   3000,
-  verifyLogger ? verifyLogger.html() : defaultLoggerText
+  verifyLogger ? verifyLogger.innerHTML : defaultLoggerText
 );
 
-$(document).on("submit", "#login-form", function (e) {
-  e.preventDefault();
-  LoginPage.sendApiRequest();
-});
+const registerForm = document.querySelector("#register-form") as HTMLFormElement;
+const loginForm = document.querySelector("#login-form") as HTMLFormElement;
+const forgotPasswordForm = document.querySelector("#forgot-password-form") as HTMLFormElement;
+const resetForm = document.querySelector("#reset-form") as HTMLFormElement;
+const resendVerification = document.querySelector("#resend-verification") as HTMLAnchorElement;
 
-$(document).on("submit", "#register-form", function (e) {
-  e.preventDefault();
-  RegisterPage.sendApiRequest();
-});
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    LoginPage.sendApiRequest();
+  });
+}
 
-$(document).on("submit", "#forgot-password-form", function (e) {
-  e.preventDefault();
-  ForgotPasswordPage.sendApiRequest();
-});
+if (registerForm) {
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    RegisterPage.sendApiRequest();
+  });
+}
 
-$(document).on("submit", "#reset-form", function (e) {
-  e.preventDefault();
-  ResetPasswordPage.sendApiRequest();
-});
-$(document).on("click", "#resend-verification", function (e) {
-  e.preventDefault();
-  VerifyAccountPage.sendApiRequest();
-});
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    ForgotPasswordPage.sendApiRequest();
+  });
+}
+
+if (resetForm) {
+  resetForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    ResetPasswordPage.sendApiRequest();
+  });
+}
+
+if (resendVerification) {
+  resendVerification.addEventListener("click", (e) => {
+    e.preventDefault();
+    VerifyAccountPage.sendApiRequest();
+  });
+}
+

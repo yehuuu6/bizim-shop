@@ -1,7 +1,7 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
 import { ProductInterface, createProductTable, clearImageInputs, rowNumberProducts } from "./models/ProductTable";
-import { addImageInput, runSearchProducts, cleanForm, quitEditMode } from "./utils/functions.dev";
+import { addImageInput, runSearchProducts, quitEditMode, cleanForm } from "./utils/functions.dev";
 import router from "./Router";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
@@ -17,6 +17,13 @@ const imageCount = {
 };
 
 let startVal = 0;
+
+/**
+ * Initialize dev tools (does nothing just an empty function to include in the bundle)
+ */
+export function initializeDevTools(){
+  // do nothing
+}
 
 const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
 const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
@@ -201,7 +208,7 @@ function removeAndReorderImages(imageInput: HTMLInputElement) {
   });
 
   addImageBtn.disabled = false;
-  addImageBtn.className = "btn small-btn";
+  addImageBtn.className = "dashboard-btn small-btn add-image-btn";
   imageCount.value--;
 }
 
@@ -254,7 +261,7 @@ addImageBtn.addEventListener("click", function (e) {
       "none",
     ]);
     addImageBtn.disabled = true;
-    addImageBtn.className = "btn small-btn disabled";
+    addImageBtn.className = "dashboard-btn small-btn disabled";
     return;
   }
 

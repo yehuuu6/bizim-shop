@@ -1,4 +1,4 @@
-import { ProfilePage } from "../user";
+import { ProfilePage } from "..";
 import PanelClass from "../classes/PanelClass";
 
 /**
@@ -51,18 +51,4 @@ export function getDate(raw: string) {
   const month = month_names[Number(month_t) - 1];
   const day_trimmed = Number(day).toString();
   return `${month} ${day_trimmed}, ${year}`;
-}
-
-export function getPerm(_id: string) {
-  let perm = "";
-  let id:number = parseInt(_id);
-  switch (id) {
-    case 0:
-      perm = "Üye";
-      break;
-    case 1:
-      perm = "Yönetici";
-      break;
-  }
-  return perm;
 }

@@ -28,8 +28,8 @@ export default function createUserTable(user: UserInterface) {
         <td>${user.telephone}</td>
         <td class="table-form-td">
             <form class="table-form" data-id="${user.id}">
-                <button data-action="upgrade" class="btn edit-btn">Yükselt</button>
-                <button data-action="ban" class="btn delete-btn">Yasakla</button>
+                <button data-action="upgrade" class="dashboard-btn edit-btn">Yükselt</button>
+                <button data-action="ban" class="dashboard-btn delete-btn">Yasakla</button>
             </form>
         </td>
     `;
