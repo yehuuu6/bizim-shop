@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES6",                   /* Specify ECMAScript target version */
-    "module": "ES6",                   /* Specify module code generation */
-    "outDir": "./dist",                /* Redirect output structure to the directory */
-    "strict": true,                    /* Enable strict type checking */
-    "esModuleInterop": true,            /* Enables interoperability between CommonJS and ES Modules */
-    "forceConsistentCasingInFileNames": true, /* Ensure consistent casing in file names */
-    "moduleResolution": "node",        /* Use Node.js-style module resolution */
-    "baseUrl": "./src",                /* Base directory to resolve non-relative module names */
+    "target": "ES6",
+    "module": "ES2020",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
     "paths": {
-      "*": ["*", "src/*"]         /* Custom module paths */
+      "*": ["*", "src/*"]
     }
   }
 }
