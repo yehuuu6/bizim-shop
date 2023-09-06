@@ -46,16 +46,6 @@ $door = $row['door'];
 <body>
   <div class="app">
     <nav>
-      <div class="header-container">
-        <h2 class="header flex-display gap-5">Bizim <div class="blue-text">Shop</div>
-        </h2>
-        <input id="menu-toggle" type="checkbox">
-        <label for="menu-toggle" class="burger" title="Menü">
-          <div class="line"></div>
-          <div class="line"></div>
-          <div class="line"></div>
-        </label>
-      </div>
       <div class="header-user">
         <div class="user-btn">
           <a href="/" class="user-btn-item" title="Ana sayfaya dön">
@@ -84,52 +74,62 @@ $door = $row['door'];
         </div>
       </div>
     </nav>
+    <div class="left-bar hidden-menu">
+      <ul>
+        <li>
+          <div class="menu-controller">
+            <h3><span class="purple-text">Bizim <span class="blue-text">Shop</span></span> Panel</h3>
+            <input id="menu-toggle" type="checkbox">
+            <label for="menu-toggle" class="burger" title="Menü">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </label>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <div class="menu-btn active" data-name="home">
+            Hoş Geldin <i class="fa-solid fa-hand"></i>
+          </div>
+        </li>
+        <div class="list-title">
+          <h3>Kullanıcı İşlemleri</h3>
+        </div>
+        <li>
+          <div class="menu-btn" data-name="profile">
+            Hesap Ayarları <i class="fa-solid fa-user"></i>
+          </div>
+        </li>
+        <?php if ($power > 0) : ?>
+          <div class="list-title">
+            <h3>Yönetici İşlemleri</h3>
+          </div>
+          <li>
+            <div class="menu-btn" data-name="add-product">
+              Ürün Ekle <i class="fa-solid fa-plus"></i>
+            </div>
+          </li>
+          <li>
+            <div class="menu-btn" data-name="products">
+              Ürünler <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+          </li>
+          <li>
+            <div class="menu-btn" data-name="users">
+              Kullanıcılar <i class="fa-solid fa-users"></i>
+            </div>
+          </li>
+          <li>
+            <div class="menu-btn" data-name="orders">
+              Siparişler <i class="fa-solid fa-truck"></i>
+            </div>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
     <div class="main-page">
-      <div class="left-bar hidden-menu">
-        <ul>
-          <div class="list-title">
-            <h3>Kontrol Paneli</h3>
-          </div>
-          <li>
-            <div class="menu-btn active" data-name="home">
-              Hoş Geldin <i class="fa-solid fa-hand"></i>
-            </div>
-          </li>
-          <div class="list-title">
-            <h3>Kullanıcı İşlemleri</h3>
-          </div>
-          <li>
-            <div class="menu-btn" data-name="profile">
-              Hesap Ayarları <i class="fa-solid fa-user"></i>
-            </div>
-          </li>
-          <?php if ($power > 0) : ?>
-            <div class="list-title">
-              <h3>Yönetici İşlemleri</h3>
-            </div>
-            <li>
-              <div class="menu-btn" data-name="add-product">
-                Ürün Ekle <i class="fa-solid fa-plus"></i>
-              </div>
-            </li>
-            <li>
-              <div class="menu-btn" data-name="products">
-                Ürünler <i class="fa-solid fa-boxes-stacked"></i>
-              </div>
-            </li>
-            <li>
-              <div class="menu-btn" data-name="users">
-                Kullanıcılar <i class="fa-solid fa-users"></i>
-              </div>
-            </li>
-            <li>
-              <div class="menu-btn" data-name="orders">
-                Siparişler <i class="fa-solid fa-truck"></i>
-              </div>
-            </li>
-          <?php endif; ?>
-        </ul>
-      </div>
       <section id="home" data-url="home" data-title="Hoş Geldin" class="page-content narrow-page" style="display: block">
         <div class="container">
           <div class="subcontainer">
@@ -415,9 +415,11 @@ $door = $row['door'];
           <img src="/global/imgs/info.png" alt="Status"/>
         </span>
         <p>{message}</p>
-        <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
-          <i class="fa-solid fa-times"></i>
-        </button>
+        <div class="logger-btn">
+          <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
+            <i class="fa-solid fa-times"></i>
+          </button>
+        </div>
     </div>
   </div>
   <div id="main-dashboard-loader" class="loader" style="display:flex;">
