@@ -95,14 +95,6 @@ input:read-only {
 #menu-toggle {
     display: none;
 }
-.header-container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 5px;
-    gap: 7px;
-    width: 300px;
-}
 .burger {
     padding: 2px 0;
     cursor: pointer;
@@ -126,13 +118,13 @@ input:read-only {
 .burger:hover .line{
     background: aliceblue;
 }
-.header-container :checked~.burger .line:first-child {
+:checked~.burger .line:first-child {
     transform: translateY(10px) rotate(225deg)
 }
-.header-container :checked~.burger .line:nth-child(3) {
+:checked~.burger .line:nth-child(3) {
     transform: translateY(-10px) rotate(-225deg)
 }
-.header-container :checked~.burger .line:nth-child(2) {
+:checked~.burger .line:nth-child(2) {
     opacity: 0;
 }
 
@@ -150,7 +142,7 @@ input:read-only {
 }
 
 .hidden-menu {
-    transform: translateX(-100%);
+    transform: translateX(-75%);
 }
 
 .delete-modal-content p{
@@ -172,10 +164,10 @@ input:read-only {
     width: 300px;
     height: 100%;
     transition: .5s ease-in-out;
-    padding: 25px 15px;
+    padding: 0 15px 25px 15px;
     position: fixed;
-    box-shadow: 7px 0 60px rgba(0,0,0,0.05);
-    z-index: 1000;
+    box-shadow: 50px 0 60px rgba(0,0,0,0.05);
+    z-index: 12;
     background: #fff;
 }
 .subcontainer {
@@ -232,7 +224,7 @@ nav{
     box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03),0 0.9375rem 1.40625rem rgba(4,9,20,0.03),0 0.25rem 0.53125rem rgba(4,9,20,0.05),0 0.125rem 0.1875rem rgba(4,9,20,0.03);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: right;
 }
 .header-user{
     display: flex;
@@ -313,7 +305,7 @@ section{
     padding: 20px 50px 20px 350px;
 }
 .narrow-page{
-    padding: 20px 50px 20px 50px;
+    padding: 20px 50px 20px 120px;
 }
 .logger {
     position: fixed;
@@ -343,6 +335,12 @@ section{
     align-items: center;
     justify-content: center;
 }
+.logger-btn{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #close-logger{
     color: #ff2b59;
     background: transparent;
@@ -350,7 +348,6 @@ section{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
     opacity: 0.8;
 }
 #close-logger:hover{
@@ -540,20 +537,8 @@ input[type=file]{
 .page-content p{
     color: #7a7a7a;
 }
-nav .header{
-    font-size: 20px;
-    color: #5a44ff;
-    padding: 5px 7px;
-    font-family: 'Luckiest Guy', cursive;
-    letter-spacing: 1px;
-    font-weight: 500;
-}
-.header div{
-    font-family: 'Luckiest Guy', cursive;
-}
 .left-bar ul{
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -571,18 +556,31 @@ nav .header{
     font-weight: 700;
     margin-bottom: 5px;
 }
-.menu-btn{
-    padding: 5px 25px;
+.menu-btn, .menu-controller{
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     border-radius: 10px;
     font-size: 15px;
+    height: 50px;
+}
+.menu-btn{
+    padding: 5px 25px;
+    cursor: pointer;
     opacity: 0.8;
     transition: padding .3s ease-in-out;
-    cursor: pointer;
-    height: 50px;
+}
+.menu-controller{
+    margin: 15px 0;
+    font-style: italic;
+}
+.menu-controller h3{
+    color: #5a44ff;
+}
+.menu-controller span{
+    font-weight: 900;
+    letter-spacing: 1px;
 }
 .table-form{
     display: flex;
@@ -661,9 +659,18 @@ nav .header{
     background: #28a745;
     color: aliceblue;
 }
+.hidden-menu .menu-btn{
+    padding: 5px 20px;
+}
+.active-menu .menu-btn{
+    padding: 5px 25px;
+}
+.loader svg{
+    color: #000;
+}
 .menu-btn:hover{
     opacity: 1;
-    padding: 0 20px;
+    padding: 0 15px;
 }
 table{
     width: 100%;
@@ -760,12 +767,13 @@ table tr:hover td a i.active:hover{
 }
 footer{
     width: 100%;
-    border-top: 1px solid #ddd;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(4,9,20,0.03), 0 0.9375rem 1.40625rem rgba(4,9,20,0.03), 0 0.25rem 0.53125rem rgba(4,9,20,0.05), 0 0.125rem 0.1875rem rgba(4,9,20,0.03);
     background: #fff;
     position: fixed;
     bottom: 0;
-    z-index: 11;
+    z-index: 12;
     padding: 10px 15px;
+    user-select: none;
 }
 .copyright-section{
     display: flex;
@@ -779,9 +787,6 @@ footer{
         font-size: 14px;
     }
     .left-bar{
-        width: 250px;
-    }
-    .header-container{
         width: 250px;
     }
     .bottom-header{
@@ -818,9 +823,6 @@ footer{
     nav{
         padding: 8px 13px;
     }
-    nav .header{
-        font-size: 18px;
-    }
     .list-title h3{
         font-size: 0.7rem;
     }
@@ -841,7 +843,6 @@ footer{
 
 @media (max-width: 768px) {
     .left-bar{
-        position: fixed;
         width: 100%;
         border-right: 1px solid #dadada;
     }
@@ -859,14 +860,14 @@ footer{
         width: 170px;
     }
     .wide-page{
-        padding: 20px 50px 20px 50px;
+        padding: 20px 20px 20px 95px;
     }
-    .header-container{
-        justify-content: flex-start;
+    .hidden-menu{
+        transform: translateX(-85%);
     }
     .menu-btn{
         font-size: 13px;
-        height: 70px;
+        height: 50px;
         padding: 15px 40px;
         border-bottom: 1px solid #cecece;
     }
@@ -893,17 +894,22 @@ footer{
     }
     .content-header .item .controls button{
         width: 100%;
-        padding: 15px 0;
+        padding: 10px 0;
+        font-size: 14px;
+    }
+    .content-header .item .controls .small-btn{
+        height: auto;
     }
     .content-header .item .controls input{
         font-size: 14px;
         width: 170px;
     }
     .narrow-page {
-        padding: 20px;
+        padding: 20px 20px 20px 95px;
     }
     .content-header .item p{
         width: 50%;
+        font-size: 14px;
     }
     .item-wrapper{
         flex-direction: column;
@@ -925,5 +931,9 @@ footer{
         align-items: center;
         justify-content: center;
         font-size: 13px;
+    }
+    .page-content .header{
+        font-size: 14px;
+        width: 50%;
     }
   }
