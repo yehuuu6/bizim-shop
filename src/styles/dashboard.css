@@ -179,13 +179,13 @@ input:read-only {
     border-radius: 10px;
   }
   
-  .title {
+  .subcontainer .title {
     font-size: 48px;
     margin-bottom: 20px;
     color: aliceblue;
   }
   
-  .subtitle {
+  .subcontainer .subtitle {
     font-size: 24px;
     color: aliceblue !important;
     margin-bottom: 40px;
@@ -401,7 +401,88 @@ section{
     color: #383d41 !important;
     cursor: not-allowed !important;
 }
-
+.settings-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    backdrop-filter: blur(5px);
+    height: 100%;
+    background: #00000048;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.settings{
+    width: 550px;
+    background: #efefef;
+    border-radius: 10px;
+    gap: 10px;
+    border: 2px solid #dadada;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    animation: delete-modal 0.3s ease-in-out;
+}
+.settings .main-title{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #5a44ff;
+}
+.settings .content{
+    width: 100%;
+}
+.settings .theme-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.settings .theme-item{
+    border: 1px solid #dadada;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.settings .theme-item:hover{
+    border: 1px solid #5a44ff;
+}
+.settings .theme-item:hover .theme-info{
+    color: #5a44ff;
+}
+.settings .theme-item .theme-img img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-bottom: 2px solid #dadada;
+}
+.settings .active-theme{
+    border: 1px solid #5a44ff;
+}
+.settings .active-theme .theme-info .theme-title{
+    color: #5a44ff;
+}
+.settings .theme-item .theme-info{
+    padding: 5px;
+    color: #444444;
+    font-weight: 400;
+}
+.settings .content .title{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #131313;
+}
+.settings .content .description{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #7a7a7a;
+    margin-bottom: 1rem;
+}
 .loader{
     position: fixed;
     top: 0;

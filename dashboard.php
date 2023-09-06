@@ -53,7 +53,7 @@ $door = $row['door'];
           </a>
         </div>
         <div class="user-btn">
-          <a href="/" class="user-btn-item" title="Ayarlar" style="font-size: 20px;">
+          <a class="user-btn-item" id="settings" title="Ayarlar" style="font-size: 20px;">
             <i class="fa-solid fa-gear"></i>
           </a>
         </div>
@@ -420,6 +420,43 @@ $door = $row['door'];
             <i class="fa-solid fa-times"></i>
           </button>
         </div>
+    </div>
+  </div>
+  <div class="settings-container" style="display:none;">
+    <div class="settings">
+      <div class="header">
+          <h2 class="main-title">Ayarlar</h2>
+      </div>
+      <div class="content">
+          <h3 class="title">Tema</h3>
+          <p class="description">Panelin nasıl görüneceğini seçin.</p>
+          <div class="theme-container">
+            <div class="theme-item active-theme">
+              <div class="theme-img">
+                <img src="/global/imgs/light_preview.svg" alt="">
+              </div>
+              <div class="theme-info">
+                <p class="theme-title"><i class="fa-solid fa-sun"></i> Varsayılan</p>
+              </div>
+            </div>
+            <div class="theme-item">
+              <div class="theme-img">
+                <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
+              </div>
+              <div class="theme-info">
+                <p class="theme-title"><i class="fa-solid fa-sun"></i> Açık</p>
+              </div>
+            </div>
+            <div class="theme-item">
+              <div class="theme-img">
+                <img src="/global/imgs/dark_preview.svg" alt="">
+              </div>
+              <div class="theme-info">
+                <p class="theme-title"><i class="fa-solid fa-moon"></i> Koyu</p>
+              </div>
+            </div>
+          </div>
+      </div>
     </div>
   </div>
   <div id="main-dashboard-loader" class="loader" style="display:flex;">
