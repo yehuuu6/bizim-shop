@@ -2,10 +2,11 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   watch: true,
-  mode: "development",
+  mode: "production",
   entry: {
     "auth/a578a8g": path.resolve(__dirname, "src/auth/auth.ts"),
     "dashboard/du48gn1": path.resolve(__dirname, "src/dashboard/index.ts"),
@@ -40,6 +41,7 @@ module.exports = {
   },
   optimization: {
     minimizer: [
+      new TerserPlugin(),
       new CssMinimizerPlugin(),
       new ImageMinimizerPlugin({
         minimizer: {
