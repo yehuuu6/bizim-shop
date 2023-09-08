@@ -114,10 +114,6 @@ const displayFile = document.querySelector(
 ) as HTMLImageElement;
 
 imageInput.addEventListener("change", function () {
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
   const file = this.files![0];
   ProfilePage.showMessage([
     "warning",

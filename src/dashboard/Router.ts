@@ -1,8 +1,10 @@
 // Menubar animations
 const menuToggle = document.querySelector("#menu-toggle") as HTMLInputElement;
 const menu = document.querySelector(".left-bar") as HTMLDivElement;
-const pages: NodeListOf<HTMLDivElement> = document.querySelectorAll(".page-content");
-const loaders: NodeListOf<HTMLDivElement> = document.querySelectorAll(".loader");
+const pages: NodeListOf<HTMLDivElement> =
+  document.querySelectorAll(".page-content");
+const loaders: NodeListOf<HTMLDivElement> =
+  document.querySelectorAll(".loader");
 
 // Store menu state in localStorage to keep it after page refresh
 if (localStorage.getItem("menuState") === "active") {
@@ -30,7 +32,7 @@ function activateMenu() {
     page.classList.remove("narrow-page");
   });
   loaders.forEach((loader) => {
-    if (loader.id !== "main-dashboard-loader"){
+    if (loader.id !== "main-dashboard-loader") {
       loader.style.paddingLeft = "325px";
     }
   });
@@ -45,14 +47,15 @@ function deactivateMenu() {
     page.classList.add("narrow-page");
   });
   loaders.forEach((loader) => {
-    if (loader.id !== "main-dashboard-loader"){
+    if (loader.id !== "main-dashboard-loader") {
       loader.style.paddingLeft = "0";
     }
   });
 }
 
 // Router
-const menuBtns: NodeListOf<HTMLButtonElement> = document.querySelectorAll(".menu-btn");
+const menuBtns: NodeListOf<HTMLButtonElement> =
+  document.querySelectorAll(".menu-btn");
 const homePage = document.getElementById("home") as HTMLElement;
 const profilePage = document.getElementById("change-user-info") as HTMLElement;
 
@@ -64,96 +67,101 @@ let sections = [homePage, profilePage];
 
 // Push userPage and productPage to sections array if they exist
 if (userPage) {
-sections.push(userPage);
+  sections.push(userPage);
 }
 if (productPage) {
-sections.push(productPage);
+  sections.push(productPage);
 }
 if (createProduct) {
-sections.push(createProduct);
+  sections.push(createProduct);
 }
 
-interface RouterInterface{
+interface RouterInterface {
   loadType: PageType;
   setPageContent(type: string, page: HTMLElement): void;
-  loadPage(type:PageType, target: string): void;
+  loadPage(type: PageType, target: string): void;
 }
 
 type PageType = "hash" | "btn";
 
-export class Router implements RouterInterface{
-    loadType: PageType;
-    constructor(){
-        this.loadType = "hash";
-        this.loadPage(this.loadType, Router.getHash());
-        setTimeout(() => {
-          (document.querySelector("#main-dashboard-loader") as HTMLDivElement).remove();
-        }, 250);
+const mainLoader = document.querySelector(
+  "#main-dashboard-loader"
+) as HTMLDivElement;
+
+export class Router implements RouterInterface {
+  loadType: PageType;
+  constructor() {
+    setTimeout(() => {
+      mainLoader.style.display = "none";
+    }, 450);
+    this.loadType = "hash";
+    this.loadPage(this.loadType, Router.getHash());
+  }
+
+  static getHash(): string {
+    return window.location.hash.substring(1);
+  }
+
+  /**
+   * Just makes sure that the router is included in the bundle doesn't do anything
+   */
+  static initialize() {
+    // do nothing
+  }
+
+  loadPage(type: PageType, target: string) {
+    switch (target) {
+      case "home":
+        this.setPageContent(type, homePage);
+        break;
+      case "profile":
+        this.setPageContent(type, profilePage);
+        break;
+      case "products":
+        this.setPageContent(type, productPage);
+        break;
+      case "users":
+        this.setPageContent(type, userPage);
+        break;
+      case "add-product":
+        this.setPageContent(type, createProduct);
+        break;
+    }
+  }
+
+  setPageContent(type: PageType, page: HTMLElement) {
+    // Scroll to top of the page
+    window.scrollTo(0, 0);
+
+    if (page !== homePage) {
+      const url = page.dataset.url;
+      if (typeof url === "string") {
+        // Check if url is defined and is a string
+        window.location.hash = url;
+      }
+    } else {
+      window.location.hash = "";
     }
 
-    static getHash(): string {
-        return window.location.hash.substring(1);
-    }
+    document.title = `${page.dataset.title} - Bizim Shop Panel`;
 
-    /**
-     * Just makes sure that the router is included in the bundle doesn't do anything
-     */
-    static initialize(){
-      // do nothing
-    }
+    page.style.display = "flex";
+    sections.forEach((section) => {
+      if (section !== page) {
+        section.style.display = "none";
+      }
+    });
 
-    loadPage(type: PageType, target: string){
-        switch (target) {
-            case "home":
-              this.setPageContent(type, homePage);
-              break;
-            case "profile":
-              this.setPageContent(type, profilePage);
-              break;
-            case "products":
-              this.setPageContent(type, productPage);
-              break;
-            case "users":
-              this.setPageContent(type, userPage);
-              break;
-            case "add-product":
-              this.setPageContent(type, createProduct);
-              break;
-          }
-    }
-
-    setPageContent(type: PageType, page: HTMLElement) {
-        // Scroll to top of the page
-        window.scrollTo(0, 0);
-      
-        if (page !== homePage) {
-          const url = page.dataset.url;
-          if (typeof url === 'string') { // Check if url is defined and is a string
-            window.location.hash = url;
-          }
+    if (type == "hash") {
+      menuBtns.forEach((btn) => {
+        if (btn.dataset.name === Router.getHash()) {
+          btn.classList.add("active");
         } else {
-          window.location.hash = "";
+          btn.classList.remove("active");
         }
-      
-        document.title = `${page.dataset.title} - Bizim Shop Panel`;
-      
-        page.style.display = "flex";
-        sections.forEach((section) => {
-          if (section !== page) {
-            section.style.display = "none";
-          }
-        });
-      
-        if (type == "hash") {
-          menuBtns.forEach((btn) => {
-            if (btn.dataset.name === Router.getHash()) {
-              btn.classList.add("active");
-            } else {
-              btn.classList.remove("active");
-            }
-          });
-        }
+      });
     }
+  }
 }
 
 const router = new Router();
@@ -172,3 +180,39 @@ menuBtns.forEach((btn) => {
 });
 
 export default router;
+// Theme selector
+const themeItems = document.querySelectorAll(
+  ".theme-item"
+) as NodeListOf<HTMLDivElement>;
+
+themeItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    mainLoader.style.display = "flex";
+    // Remove active class from all theme items and add it to clicked item
+    themeItems.forEach((item) => {
+      item.classList.remove("active-theme");
+      item.querySelector("input")!.checked = false;
+    });
+    item.classList.add("active-theme");
+    item.querySelector("input")!.checked = true;
+    localStorage.setItem("theme", item.dataset.theme as string);
+    setTimeout(() => {
+      mainLoader.style.display = "none";
+    }, 450);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Remove active class from all theme items
+  themeItems.forEach((item) => {
+    item.classList.remove("active-theme");
+    item.querySelector("input")!.checked = false;
+  });
+  // Add active class to theme item that matches with localStorage theme
+  themeItems.forEach((item) => {
+    if (item.dataset.theme === localStorage.getItem("theme")) {
+      item.classList.add("active-theme");
+      item.querySelector("input")!.checked = true;
+    }
+  });
+});

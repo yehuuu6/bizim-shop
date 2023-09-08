@@ -1,6 +1,6 @@
 <?php
 define('FILE_ACCESS', TRUE);
-require_once "config/authenticator.php";
+require_once "includes/auth.inc.php";
 
 require 'vendor/autoload.php';
 
@@ -17,7 +17,7 @@ if ($_SESSION['verified'] == 0) {
 }
 
 $power = $_SESSION['membership'];
-$perm_content = getPerm($power);
+$perm_content = get_permission($power);
 
 $sql = "SELECT name, surname, email, profile_image, telephone, address, door, apartment, floor FROM users WHERE id = {$_SESSION['id']}";
 $res = mysqli_query($con, $sql);
@@ -42,6 +42,20 @@ $door = $row['door'];
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <title>Panel - Bizim Shop</title>
 </head>
+<noscript>
+  <style>
+    .no-js {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .app {
+      display: none;
+    }
+  </style>
+  <div class="no-js">
+    <h1>JavaScript Devre Dışı</h1>
+    <p>JavaScript devre dışı bırakılmış. Lütfen tarayıcınızın JavaScript desteğini etkinleştirin.</p>
+</noscript>
 
 <body>
   <div class="app">
@@ -96,6 +110,7 @@ $door = $row['door'];
         </li>
         <div class="list-title">
           <h3>Kullanıcı İşlemleri</h3>
+          <hr>
         </div>
         <li>
           <div class="menu-btn" data-name="profile">
@@ -105,6 +120,7 @@ $door = $row['door'];
         <?php if ($power > 0) : ?>
           <div class="list-title">
             <h3>Yönetici İşlemleri</h3>
+            <hr>
           </div>
           <li>
             <div class="menu-btn" data-name="add-product">
@@ -421,46 +437,40 @@ $door = $row['door'];
           </button>
         </div>
     </div>
-  </div>
-  <div class="settings-container" style="display:none;">
+    <div id="main-dashboard-loader" class="loader" style="display:flex;">
+      <?php $loader5 = new Loader(); ?>
+    </div>
+    <div class="settings-container" style="display:none;">
     <div class="settings">
       <div class="header">
           <h2 class="main-title">Ayarlar</h2>
       </div>
       <div class="content">
-          <h3 class="title">Tema</h3>
-          <p class="description">Panelin nasıl görüneceğini seçin.</p>
+          <h3 class="title">Kişiselleştirme</h3>
+          <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
           <div class="theme-container">
-            <div class="theme-item active-theme">
-              <div class="theme-img">
-                <img src="/global/imgs/light_preview.svg" alt="">
-              </div>
-              <div class="theme-info">
-                <p class="theme-title"><i class="fa-solid fa-sun"></i> Varsayılan</p>
-              </div>
-            </div>
-            <div class="theme-item">
+            <div class="theme-item active-theme" data-theme="light">
               <div class="theme-img">
                 <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
               </div>
               <div class="theme-info">
-                <p class="theme-title"><i class="fa-solid fa-sun"></i> Açık</p>
+              <input type="radio" id="light-theme">
+                <label class="theme-title">Açık Tema</label>
               </div>
             </div>
-            <div class="theme-item">
+            <div class="theme-item" data-theme="dark">
               <div class="theme-img">
                 <img src="/global/imgs/dark_preview.svg" alt="">
               </div>
               <div class="theme-info">
-                <p class="theme-title"><i class="fa-solid fa-moon"></i> Koyu</p>
+              <input type="radio" id="dark-theme">
+                <label class="theme-title">Koyu Tema</label>
               </div>
             </div>
           </div>
       </div>
     </div>
   </div>
-  <div id="main-dashboard-loader" class="loader" style="display:flex;">
-    <?php $loader5 = new Loader(); ?>
   </div>
   <script type="module" src="/dist/dashboard/du48gn1.js"></script>
 </body>
