@@ -56,14 +56,14 @@ function deactivateMenu() {
 // Router
 const menuBtns: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll(".menu-btn");
-const homePage = document.getElementById("home") as HTMLElement;
+const statPage = document.getElementById("statistics") as HTMLElement;
 const profilePage = document.getElementById("change-user-info") as HTMLElement;
 
 const productPage = document.getElementById("manage-products") as HTMLElement;
 const createProduct = document.getElementById("add-product") as HTMLElement;
 const userPage = document.getElementById("manage-users") as HTMLElement;
 
-let sections = [homePage, profilePage];
+let sections = [statPage, profilePage];
 
 // Push userPage and productPage to sections array if they exist
 if (userPage) {
@@ -111,8 +111,8 @@ export class Router implements RouterInterface {
 
   loadPage(type: PageType, target: string) {
     switch (target) {
-      case "home":
-        this.setPageContent(type, homePage);
+      case "statistics":
+        this.setPageContent(type, statPage);
         break;
       case "profile":
         this.setPageContent(type, profilePage);
@@ -133,7 +133,7 @@ export class Router implements RouterInterface {
     // Scroll to top of the page
     window.scrollTo(0, 0);
 
-    if (page !== homePage) {
+    if (page !== statPage) {
       const url = page.dataset.url;
       if (typeof url === "string") {
         // Check if url is defined and is a string
