@@ -2,17 +2,17 @@
 define('FILE_ACCESS', TRUE);
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
     $email = get_safe_value($con, $_POST['email']);
     $password = get_safe_value($con, $_POST['password']);
 
     if (empty($email)) {
-        sendErrorResponse('E-posta alanı boş bırakılamaz.', 'email');
+        send_error_response('E-posta alanı boş bırakılamaz.', 'email');
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        sendErrorResponse('Lütfen geçerli bir e-posta adresi giriniz.', 'email');
+        send_error_response('Lütfen geçerli bir e-posta adresi giriniz.', 'email');
     } elseif (empty($password)) {
-        sendErrorResponse('Şifre alanı boş bırakılamaz.', 'password');
+        send_error_response('Şifre alanı boş bırakılamaz.', 'password');
     } else {
         $sql = "SELECT * FROM users WHERE email=? LIMIT 1";
         $stmt = $con->prepare($sql);
@@ -21,10 +21,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
         if (!empty($user) && password_verify($password, $user['password'])) {
-            Login($user);
-            sendSuccessResponse('Giriş başarılı, yönlendiriliyorsunuz...');
+            login($user);
+            send_success_response('Giriş başarılı, yönlendiriliyorsunuz...');
         } else {
-            sendErrorResponse('Yanlış e-posta veya şifre.');
+            send_error_response('Yanlış e-posta veya şifre.');
         }
     }
 } else {

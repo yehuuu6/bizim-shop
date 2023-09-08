@@ -1,9 +1,9 @@
 <?php
 define('FILE_ACCESS', TRUE);
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-    Authorize();
+    authorize_user();
 
     $result = array();
     $id = $_SESSION['id'];
@@ -19,7 +19,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     // Send plugin list to client
     if ($product_count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            $row = fixStrings($row);
+            $row = fix_strings($row);
             $result[] = $row;
         }
     }

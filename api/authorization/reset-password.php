@@ -2,17 +2,17 @@
 define('FILE_ACCESS', TRUE);
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
     $password = get_safe_value($con, $_POST['password']);
-    $passwordConf = get_safe_value($con, $_POST['passwordConf']);
+    $password_confirm = get_safe_value($con, $_POST['passwordConf']);
 
-    if (empty($password) || empty($passwordConf)) {
-        sendErrorResponse('Lütfen tüm alanları doldurunuz.', 'password');
-    } elseif ($password !== $passwordConf) {
-        sendErrorResponse('Şifreler eşleşmiyor.', 'passwordConf');
+    if (empty($password) || empty($password_confirm)) {
+        send_error_response('Lütfen tüm alanları doldurunuz.', 'password');
+    } elseif ($password !== $password_confirm) {
+        send_error_response('Şifreler eşleşmiyor.', 'password_confirm');
     } elseif (strlen($password) < 8) {
-        sendErrorResponse('Şifre minimum 8 karakter olmalıdır.', 'password');
+        send_error_response('Şifre minimum 8 karakter olmalıdır.', 'password');
     } else {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $email = $_SESSION['email'];
@@ -20,9 +20,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         $sql = "UPDATE users SET password='$password', token='$token1' WHERE email = '$email'";
         $result = mysqli_query($con, $sql);
         if ($result) {
-            sendSuccessResponse("Şifreniz başarıyla güncellendi, yönlendiriliyorsunuz...");
+            send_success_response("Şifreniz başarıyla güncellendi, yönlendiriliyorsunuz...");
         } else {
-            sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'password');
+            send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'password');
         }
         die();
     }

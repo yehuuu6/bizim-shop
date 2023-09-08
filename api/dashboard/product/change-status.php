@@ -1,9 +1,9 @@
 <?php
 define('FILE_ACCESS', TRUE);
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-    Authorize();
+    authorize_user();
 
     $id = get_safe_value($con, $_POST['id']);
     $status = get_safe_value($con, $_POST['status']);
@@ -16,9 +16,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     // If the product status is updated successfully, send a success response
     try {
         mysqli_stmt_execute($stmt);
-        sendSuccessResponse('Ürün durumu başarıyla güncellendi.');
+        send_success_response('Ürün durumu başarıyla güncellendi.');
     } catch (Exception $e) {
-        sendErrorResponse("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+        send_error_response("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

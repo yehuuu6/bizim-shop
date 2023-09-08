@@ -2,7 +2,7 @@
 require_once './header.php';
 if (isset($_GET['password-token'])) {
   $passwordToken = get_safe_value($con, $_GET['password-token']);
-  resetPassword($passwordToken);
+  reset_password($passwordToken);
 }
 ?>
 <!DOCTYPE html>

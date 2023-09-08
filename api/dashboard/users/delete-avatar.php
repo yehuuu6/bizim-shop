@@ -1,7 +1,7 @@
 <?php
 define('FILE_ACCESS', TRUE);
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
     $id = $_SESSION['id'];
 
@@ -12,11 +12,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $submissions = $row['submissions'];
     $last_sub = $row['last_submission'];
 
-    $submissions = resetSubmissionCounts($con, $submissions, $last_sub, $id);
+    $submissions = reset_submission_counts($con, $submissions, $last_sub, $id);
 
-    $goingto_delete = array($image);
+    $going_to_delete = array($image);
 
-    function deleteFiles($files)
+    function delete_files($files)
     {
         // Delete for each file
         foreach ($files as $_file) {
@@ -25,7 +25,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                     unlink(PRODUCT_USER_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
+                send_error_response('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
             }
         }
     }
@@ -36,16 +36,16 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             $sql = "UPDATE users SET profile_image = 'nopp.png', submissions ='$submissions' WHERE id = '" . $id . "'";
             try {
                 mysqli_query($con, $sql);
-                deleteFiles($goingto_delete);
-                sendSuccessResponse('Profil resmi başarıyla silindi.');
+                delete_files($going_to_delete);
+                send_success_response('Profil resmi başarıyla silindi.');
             } catch (Exception $e) {
-                sendErrorResponse('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
+                send_error_response('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
             }
         } else {
-            sendErrorResponse('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
+            send_error_response('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
         }
     } else {
-        sendErrorResponse('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

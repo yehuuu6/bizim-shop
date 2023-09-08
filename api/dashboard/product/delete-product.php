@@ -1,9 +1,9 @@
 <?php
 define('FILE_ACCESS', TRUE);
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-    Authorize();
+    authorize_user();
 
     $product_id = get_safe_value($con, $_POST['id']);
 
@@ -20,9 +20,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $image6 = $row['image6'];
     $root_name = $row['root_name'];
 
-    $goingto_delete = array($image1, $image2, $image3, $image4, $image5, $image6);
+    $going_to_delete = array($image1, $image2, $image3, $image4, $image5, $image6);
 
-    function deleteFiles($files, $root_name)
+    function delete_files($files, $root_name)
     {
         // Delete each image
         foreach ($files as $_file) {
@@ -32,13 +32,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                     unlink(PRODUCT_IMAGE_SERVER_PATH . $_file);
                 }
             } catch (Exception $e) {
-                sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
+                send_error_response("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
             }
         }
         try {
             @rmdir(PRODUCT_IMAGE_SERVER_PATH . $root_name);
         } catch (Exception $e) {
-            sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
+            send_error_response("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$e->getMessage()}");
         }
     }
 
@@ -46,14 +46,14 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         $sql = "DELETE FROM product WHERE id = '$product_id'";
         $res = mysqli_query($con, $sql);
         if ($res) {
-            deleteFiles($goingto_delete, $root_name);
-            sendSuccessResponse("$name isimli ürün başarıyla silindi.");
+            delete_files($going_to_delete, $root_name);
+            send_success_response("$name isimli ürün başarıyla silindi.");
         } else {
-            $errorMessage = mysqli_error($con);
-            sendErrorResponse("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$errorMessage}");
+            $error_message = mysqli_error($con);
+            send_error_response("Bir hata oluştu, lütfen daha sonra tekrar deneyin: {$error_message}");
         }
     } else {
-        sendErrorResponse("Bu ürünü silme yetkiniz bulunmamaktadır.");
+        send_error_response("Bu ürünü silme yetkiniz bulunmamaktadır.");
     }
 } else {
     header("HTTP/1.1 403 Forbidden");

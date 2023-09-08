@@ -8,8 +8,8 @@ if (!defined('FILE_ACCESS')) {
     exit;
 }
 
-require_once("{$_SERVER['DOCUMENT_ROOT']}/config/authenticator.php");
-require_once("{$_SERVER['DOCUMENT_ROOT']}/config/constants.php");
+require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
+require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/consts.inc.php");
 
 if (isset($_SESSION['id']) && $_SESSION['verified'] == 0) {
     header("location: /auth/verify");
@@ -26,10 +26,10 @@ class Navbar extends Component
     public function __construct(array $props = [])
     {
         // Check if metadata props are valid
-        $this->checkMetadata($props);
+        $this->check_metadata($props);
 
         // Set metadata props
-        $metadata = $this->setMetadata($props);
+        $metadata = $this->set_metadata($props);
         list($title, $desc, $keywords, $author, $favi) = $metadata;
 
         $body = <<<HTML
@@ -65,7 +65,7 @@ class Navbar extends Component
                 <div class="navbar-item">
                 <ul class="no-list-style flex-display justify-space-around align-center">
                     <img class="navbar-svg small-svg" src="/global/imgs/usersvg.svg" alt="">
-                    {$this->renderAuthElements()}
+                    {$this->render_auth_elements()}
                     <li>
                         <button class="interactive" id="cart-btn">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -87,7 +87,7 @@ class Navbar extends Component
      * Checks if metadata props are valid.
      * @throws Exception If one or more metadata props are invalid & has more than 5 props.
      */
-    private function checkMetadata(array $props = [])
+    private function check_metadata(array $props = [])
     {
         $allowed = [
             "title",
@@ -113,7 +113,7 @@ class Navbar extends Component
     /**
      * Sets page metadata based on props given to the component.
      */
-    private function setMetadata(array $props = [])
+    private function set_metadata(array $props = [])
     {
         $PAGE_TITLE = $props["title"] ?? DEFAULT_PAGE_TITLE;
         $PAGE_DESCRIPTION = $props["description"] ?? DEFAULT_PAGE_DESCRIPTION;
@@ -128,7 +128,7 @@ class Navbar extends Component
      * Renders authentication buttons based on permissions.
      * @return Html
      */
-    private function renderAuthElements()
+    private function render_auth_elements()
     {
         if (!isset($_SESSION['id'])) {
             $body = <<<HTML
