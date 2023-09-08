@@ -57,8 +57,6 @@ module.exports = {
               avif: {
                 lossless: true,
               },
-              png: {},
-              gif: {},
             },
           },
         },
