@@ -103,11 +103,6 @@ $door = $row['door'];
         </li>
       </ul>
       <ul>
-        <li>
-          <div class="menu-btn active" data-name="home">
-            Hoş Geldin <i class="fa-solid fa-hand"></i>
-          </div>
-        </li>
         <div class="list-title">
           <h3>Kullanıcı İşlemleri</h3>
           <hr>
@@ -122,6 +117,11 @@ $door = $row['door'];
             <h3>Yönetici İşlemleri</h3>
             <hr>
           </div>
+          <li>
+            <div class="menu-btn active" data-name="statistics">
+              İstatistikler <i class="fa-solid fa-chart-line"></i>
+            </div>
+          </li>
           <li>
             <div class="menu-btn" data-name="add-product">
               Ürün Ekle <i class="fa-solid fa-plus"></i>
@@ -146,16 +146,45 @@ $door = $row['door'];
       </ul>
     </div>
     <div class="main-page">
-      <section id="home" data-url="home" data-title="Hoş Geldin" class="page-content narrow-page" style="display: block">
-        <div class="container">
-          <div class="subcontainer">
-            <h1 class="title">Hoş Geldin <?php echo $_SESSION['name'] ?></h1>
-            <p class="subtitle">
-              Burada etkinlik oluşturabilir, düzenleyebilir veya eski etkinliklerinizi
-              görüntüleyebilirsiniz.
-            </p>
-            <button class="cta-button">Başlayalım</button>
+      <section id="statistics" data-url="statistics" data-title="İstatistikler" class="page-content narrow-page" style="display:block;">
+        <div class="content-header">
+          <div class="item">
+            <h2 class="header">İstatistikler</h2>
+            <p>Burada sitenizin verilerini görebilirsiniz.</p>
           </div>
+        </div>
+        <div class="container">
+          <div class="statistics-monitors">
+            <div class="monitor">
+              <div class="icon">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <p class="value" id="total-users">17.8k</p>
+              <h3 class="title">Kullanıcı</h3>
+            </div>
+            <div class="monitor">
+              <div class="icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </div>
+              <p class="value" id="total-products">5.3k</p>
+              <h3 class="title">Ürün</h3>
+            </div>
+            <div class="monitor">
+              <div class="icon">
+                <i class="fa-solid fa-truck"></i>
+              </div>
+              <p class="value" id="total-orders">2.5k</p>
+              <h3 class="title">Sipariş</h3>
+            </div>
+            <div class="monitor">
+              <div class="icon">
+                <i class="fa-solid fa-money-bill-trend-up"></i>
+              </div>
+              <p class="value" id="total-earnings">3578 TL</p>
+              <h3 class="title">Kazanç</h3>
+            </div>
+          </div>
+          <div class="intro"></div>
         </div>
       </section>
       <section id="change-user-info" data-url="profile" data-title="Profili Düzenle" class="page-content narrow-page">

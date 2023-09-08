@@ -14,6 +14,12 @@
   --small-text-color: #7a7a7a;
   --loader-bg-color: #ffffff9d;
   --loader-bg-circle: #a1a1a1;
+  --monitor-bg-color: radial-gradient(
+    circle 369px at -2.9% 12.9%,
+    rgba(247, 234, 163, 1) 0%,
+    rgba(236, 180, 238, 0.56) 46.4%,
+    rgba(163, 203, 247, 1) 100.7%
+  );
   /* Buttons text colors */
   --success-btn-color: #0d6d23;
   --delete-btn-color: #721c24;
@@ -66,6 +72,7 @@
   --small-text-color: #adadad;
   --loader-bg-color: #131313fa;
   --loader-bg-circle: #333333;
+  --monitor-bg-color: linear-gradient(315deg, #140e3d 0%, #000000 74%);
   /* Buttons text colors */
   --success-btn-color: #0ea500;
   --delete-btn-color: #db2e3f;
@@ -281,36 +288,6 @@ input:read-only {
   z-index: 12;
   background: var(--main-theme-color);
 }
-.subcontainer {
-  width: 80%;
-  margin: 150px auto;
-  text-align: center;
-  background-color: #7b1fa2;
-  padding: 100px 50px;
-  border-radius: 10px;
-}
-
-.subcontainer .title {
-  font-size: 48px;
-  margin-bottom: 20px;
-  color: aliceblue;
-}
-
-.subcontainer .subtitle {
-  font-size: 24px;
-  color: aliceblue !important;
-  margin-bottom: 40px;
-}
-
-.cta-button {
-  background-color: aliceblue;
-  color: #7b1fa2;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 20px;
-  cursor: pointer;
-}
 .list-title {
   display: flex;
   align-items: center;
@@ -371,6 +348,54 @@ nav {
   width: 50px;
   height: 50px;
   object-fit: cover;
+}
+.statistics-monitors {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 35%;
+}
+.intro {
+  width: 65%;
+}
+.monitor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 220px;
+  border-radius: 5px;
+  box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
+    0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
+    0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
+    0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+  background: #141e30;
+  background: var(--monitor-bg-color);
+}
+.monitor .value {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.monitor .title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--small-text-color);
+}
+.monitor .icon {
+  height: 65px;
+  width: 65px;
+  border-radius: 9999px;
+  border: 1px solid var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: aliceblue;
+  color: #533cff;
+}
+.monitor .icon i {
+  font-size: 30px;
 }
 .user-btn .user-btn-item {
   display: flex;
