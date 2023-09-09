@@ -1,26 +1,24 @@
-// Other imports
 import PanelClass from "./classes/PanelClass";
-import ConfirmationModal from "./models/Modal";
-import { getApiResponse, clearAvatarInput } from "./utils/functions.usr";
-import { Router } from "./Router";
-import getPerm from "./utils/authorize";
+import ConfirmationModal from "../common/Modal";
+import {
+  ProductInterface,
+  createProductTable,
+  clearImageInputs,
+  rowNumberProducts,
+} from "./models/ProductTable";
+import {
+  addImageInput,
+  runSearchProducts,
+  quitEditMode,
+  cleanForm,
+} from "../utils/functions.dev";
+import router from "./Router";
 
 // CSS
-import "../styles/dashboard.css";
-import "../styles/utils.css";
+import "./dashboard.css";
+import "../utils/utils.css";
 
-// Activate dev tools if user is admin
-getPerm().then((permLevel) => {
-  if (permLevel === 1) {
-    import("./dev")
-      .then((module) => {
-        const { initializeDevTools } = module;
-        initializeDevTools();
-      })
-      .catch((err) => console.error(err));
-  }
-});
-
+// Settings panel
 const settingsBtn = document.querySelector("#settings") as HTMLButtonElement;
 // Settings container
 const settingsContainer = document.querySelector(
@@ -39,196 +37,321 @@ settingsBtn.addEventListener("click", () => {
   settingsContainer.style.display = "flex";
 });
 
-Router.initialize();
-
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const profileLoader = document.querySelector(
-  "#loader-profile"
-) as HTMLParagraphElement;
+const currentProducts: { value: ProductInterface[] } = {
+  value: [],
+};
+const isEditMode = {
+  value: false,
+};
+const imageCount = {
+  value: 1,
+};
 
-const ProfilePage = new PanelClass(profileLoader);
+let startVal = 0;
 
-document.querySelector("#profile-form")!.addEventListener("submit", (e) => {
-  e.preventDefault();
-  getApiResponse(
-    ProfilePage,
-    "/api/dashboard/users/edit-profile.php",
-    new FormData(document.querySelector("#profile-form") as HTMLFormElement)
-  );
-});
-
-document.querySelector("#password-reset")!.addEventListener("click", (e) => {
-  e.preventDefault();
-  getApiResponse(
-    ProfilePage,
-    "/api/dashboard/users/reset-password.php",
-    new FormData()
-  );
-});
-
-// User avatar settings
-
-const removeBtn = document.createElement("span");
-removeBtn.classList.add("remove-image");
-removeBtn.title = "Profil resmini kaldır";
-removeBtn.id = "delete-avatar";
-removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-
-interface DistrictInterface {
-  id: string;
-  district_name: string;
-  city_id: string;
-}
-
-interface CityInterface {
-  id: string;
-  city_name: string;
-}
-
-interface ProfileInfoInterface {
-  profile_image: string;
-  district: string;
-  city: string;
-}
-
-let myDistrict: string;
-let myCity: string;
-
-ProfilePage.sendApiRequest(
-  "/api/dashboard/users/get-profile.php",
-  new FormData()
-).then((profile: ProfileInfoInterface) => {
-  const profileImage = profile.profile_image;
-  myDistrict = profile.district;
-  myCity = profile.city;
-  if (profileImage !== "nopp.png") imageContainer.append(removeBtn);
-});
-
-const imageContainer = document.querySelector(
-  ".image-container"
+const cleanProductForm = document.querySelector(
+  "#clean-create-form"
+) as HTMLFormElement;
+const addNewProduct = document.querySelector(
+  "#add-new-product"
+) as HTMLButtonElement;
+const productRefreshBtn = document.querySelector(
+  "#refresh-products"
+) as HTMLButtonElement;
+const productLoad = document.querySelector(
+  "#loader-products"
 ) as HTMLDivElement;
-const imageInput = document.getElementById("avatar-input") as HTMLInputElement;
-const displayFile = document.querySelector(
-  ".profile-image"
-) as HTMLImageElement;
+const productMore = document.querySelector(
+  "#load-more-products"
+) as HTMLButtonElement;
+const productTable = document.querySelector(
+  "#products-table tbody"
+) as HTMLTableSectionElement;
+const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
 
-imageInput.addEventListener("change", function () {
-  const file = this.files![0];
-  ProfilePage.showMessage([
-    "warning",
-    "Profil resminiz kaydedilmedi. Değişiklikleri kaydetmeden çıkarsanız profil resminiz değişmeyecektir.",
-    "none",
-  ]);
-  if (file) {
-    (
-      document.querySelector("#avatar-input-displayer") as HTMLParagraphElement
-    ).innerText = file.name;
-    imageContainer.append(removeBtn);
-    const reader = new FileReader();
-    reader.addEventListener("load", function () {
-      displayFile.setAttribute("src", this.result as string);
-    });
-    reader.readAsDataURL(file);
-  }
-});
+const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
 
-removeBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  document.body.append(modal);
-  modalText.innerText = "Profil resminizi silmek istediğinize emin misiniz?";
-  modalBtn.addEventListener("click", function () {
-    getApiResponse(
-      ProfilePage,
-      "/api/dashboard/users/delete-avatar.php",
-      new FormData()
-    );
-    modalText.innerText = "";
-    modal.remove();
-    clearAvatarInput();
-    (document.querySelector(".profile-image") as HTMLImageElement).src =
-      "/global/imgs/nopp.png";
-    removeBtn.remove();
-  });
-});
+const addImageBtn = document.querySelector(
+  'button[name="add-image"]'
+) as HTMLButtonElement;
+const maxImages = 6;
 
-// Pull cities and districts from database
+const ManageProductsPage = new PanelClass(productLoad);
+const CreateProductPage = new PanelClass(createLoad);
 
-const citySelector = document.getElementById("city") as HTMLSelectElement;
-const districtSelector = document.getElementById(
-  "district"
-) as HTMLSelectElement;
-
-let cities: Array<CityInterface> = [];
-let districts: Array<DistrictInterface> = [];
-
-ProfilePage.sendApiRequest(
-  "/api/dashboard/users/get-cities.php",
-  new FormData()
-).then((_cities: Array<CityInterface>) => {
-  cities = _cities;
-  cities.forEach(function (city) {
-    var option = document.createElement("option");
-    option.value = city.id;
-    option.textContent = city.city_name;
-    if (myCity == city.id) {
-      option.selected = true;
-    }
-    citySelector.appendChild(option);
-  });
-});
-
-ProfilePage.sendApiRequest(
-  "/api/dashboard/users/get-districts.php",
-  new FormData()
-).then((_districts: Array<DistrictInterface>) => {
-  districts = _districts;
-  const cityId = citySelector.value;
-  // Check if citySelector has a city selected
-  if (cityId !== "") {
-    // Enable district selector
-    districtSelector.disabled = false;
-    districts.forEach(function (district: DistrictInterface) {
-      if (district.city_id === cityId) {
-        var option = document.createElement("option");
-        option.value = district.id;
-        option.textContent = district.district_name;
-        if (myDistrict == district.id) {
-          option.selected = true;
-        }
-        districtSelector.appendChild(option);
-      }
-    });
-  }
-});
-
-citySelector.addEventListener("change", function () {
-  const cityId = citySelector.value;
-  // İlçe seçimini temizle ve devre dışı bırak
-  districtSelector.innerHTML = '<option value="">İlçe Seçiniz</option>';
-  districtSelector.disabled = true;
-
-  if (cityId !== "") {
-    districts.forEach(function (district: DistrictInterface) {
-      if (district.city_id === cityId) {
-        var option = document.createElement("option");
-        option.value = district.id;
-        option.textContent = district.district_name;
-        districtSelector.appendChild(option);
-      }
-    });
-    districtSelector.disabled = false;
-  }
-});
+// Delete notification
 
 const deleteNotificationBtn = document.querySelector(
   "#close-logger"
 ) as HTMLButtonElement;
 
 deleteNotificationBtn.addEventListener("click", () => {
-  ProfilePage.clearLogger();
+  ManageProductsPage.clearLogger();
 });
+
+// VARIABLES END
+
+// FUNCTIONS START
+
+function getSearchProduct() {
+  rowNumberProducts.value = 0;
+  const search = searchInput.value.trim().toLowerCase();
+  productTable.innerHTML = "";
+  if (search.length > 0) {
+    const matchingProducts = currentProducts.value.filter(
+      (product: ProductInterface) =>
+        product["name"].toLowerCase().includes(search)
+    );
+    if (matchingProducts.length === 0) {
+      productTable.innerHTML = `
+        <tr>
+          <td colspan="7">Hiçbir ürün bulunamadı</td>
+        </tr>
+      `;
+    } else {
+      matchingProducts.forEach((product) => {
+        productTable.appendChild(createProductTable(product));
+      });
+    }
+  } else {
+    currentProducts.value.forEach((product) => {
+      productTable.appendChild(createProductTable(product));
+    });
+  }
+}
+
+async function loadFirstProducts() {
+  currentProducts.value = [];
+  productMore.classList.remove("disabled");
+  productMore.disabled = false;
+  productTable.innerHTML = "";
+
+  const formData = new FormData();
+  formData.append("start", "0");
+  const response = await ManageProductsPage.sendApiRequest(
+    "/api/dashboard/product/load-products.php",
+    formData
+  );
+
+  const products = response;
+
+  if (products !== undefined || products.length !== 0) {
+    products.forEach((product: ProductInterface) => {
+      currentProducts.value.push(product);
+      productTable.appendChild(createProductTable(product));
+    });
+  }
+}
+
+runSearchProducts(searchInput);
+
+function refreshProducts() {
+  loadFirstProducts();
+  searchInput.value = "";
+  startVal = 0;
+  rowNumberProducts.value = 0;
+}
+
+productRefreshBtn.addEventListener("click", () => {
+  refreshProducts();
+});
+
+(
+  document.querySelector('div[data-name="products"]') as HTMLDivElement
+).addEventListener("click", () => {
+  refreshProducts();
+});
+(
+  document.querySelector('div[data-name="add-product"]') as HTMLDivElement
+).addEventListener("click", () => {
+  quitEditMode();
+  clearImageInputs();
+});
+
+loadFirstProducts();
+
+// Load 5 more products on click
+productMore.addEventListener("click", function (e) {
+  e.preventDefault();
+  startVal += 5;
+  const formData = new FormData();
+  formData.append("start", startVal.toString());
+  ManageProductsPage.sendApiRequest(
+    "/api/dashboard/product/load-products.php",
+    formData
+  ).then((response) => {
+    let products = response;
+    if (products === undefined || products.length === 0) {
+      productMore.classList.add("disabled");
+      productMore.disabled = true;
+      startVal -= 5;
+      ManageProductsPage.showMessage([
+        "error",
+        "Daha fazla ürün bulunamadı.",
+        "none",
+      ]);
+    } else {
+      for (let i = 0; i < products.length; i++) {
+        let product = products[i];
+        currentProducts.value.push(product);
+        productTable.append(createProductTable(product));
+        ManageProductsPage.showMessage([
+          "success",
+          "5 ürün başarıyla yüklendi.",
+          "none",
+        ]);
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    }
+  });
+});
+
+// Save product to database
+(document.getElementById("create-form") as HTMLFormElement).addEventListener(
+  "submit",
+  function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+    formData.append("image-count", imageCount.value.toString());
+    formData.append("edit-mode", isEditMode.value ? "true" : "false");
+    CreateProductPage.sendApiRequest(
+      "/api/dashboard/product/upload-product.php",
+      formData
+    ).then((data) => {
+      CreateProductPage.showMessage(data);
+      if (data[0] === "success") {
+        quitEditMode();
+        router.setPageContent(
+          "hash",
+          document.querySelector("#manage-products") as HTMLElement
+        );
+        refreshProducts();
+      }
+    });
+  }
+);
+
+function removeAndReorderImages(imageInput: HTMLInputElement) {
+  imageInput.remove();
+
+  const imageInputs = document.querySelectorAll('[data-type="image-input"]');
+  imageInputs.forEach((input, index) => {
+    const newIndex = index + 1;
+
+    const button = input.querySelector("button") as HTMLButtonElement;
+    const label = input.querySelector("label") as HTMLLabelElement;
+    const image = input.querySelector("input") as HTMLInputElement;
+    const imageText = input.querySelector("p") as HTMLParagraphElement;
+    const imagePreview = input.querySelector("img") as HTMLImageElement;
+
+    button.id = `remove-pic-${newIndex}`;
+    button.title = `${newIndex}. Resmi Sil`;
+    button.hasAttribute("data-image")
+      ? (button.innerText = `${newIndex}. Resmi Sil`)
+      : (button.innerHTML = `<i class="fa-solid fa-minus"></i>`);
+    label.id = `image-label-${newIndex}`;
+    label.title = `${newIndex}. Resmi Sil`;
+    label.htmlFor = `product-image-${newIndex}`;
+    label.textContent = `${newIndex}. Resim`;
+    image.id = `product-image-${newIndex}`;
+    image.name = `product-image-${newIndex}`;
+    imageText.id = `image-text-${newIndex}`;
+    imagePreview.id = `image-preview-${newIndex}`;
+  });
+
+  addImageBtn.disabled = false;
+  addImageBtn.className = "dashboard-btn small-btn add-image-btn";
+  imageCount.value--;
+}
+
+// Deleting and reordering image inputs
+document.addEventListener("click", function (e) {
+  const clickedButton = (e.target as HTMLElement).closest("button");
+
+  if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
+    e.preventDefault();
+    const imageInput = clickedButton.closest(
+      '[data-type="image-input"]'
+    ) as HTMLInputElement;
+    const imageName: string = clickedButton.getAttribute("data-image")!;
+    const imageNumber: string = clickedButton.id.split("-")[2];
+    if (isEditMode.value == true && imageName !== null) {
+      document.body.append(modal);
+      modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
+      modalBtn.onclick = function () {
+        const formData = new FormData();
+        formData.append("image", imageName);
+        formData.append(
+          "product-id",
+          (document.querySelector("[name='product-id']") as HTMLInputElement)
+            .value
+        );
+        formData.append("image-number", imageNumber);
+        CreateProductPage.sendApiRequest(
+          "/api/dashboard/product/delete-image.php",
+          formData
+        ).then((data) => {
+          CreateProductPage.showMessage(data);
+          if (data[0] === "success") {
+            removeAndReorderImages(imageInput);
+          }
+        });
+        modal.remove();
+      };
+    } else {
+      removeAndReorderImages(imageInput);
+    }
+  }
+});
+
+// CREATE PRODUCT PAGE START
+
+addImageBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  if (imageCount.value > maxImages) {
+    CreateProductPage.showMessage([
+      "error",
+      "En fazla 6 resim yükleyebilirsiniz",
+      "none",
+    ]);
+    addImageBtn.disabled = true;
+    addImageBtn.className = "dashboard-btn small-btn disabled";
+    return;
+  }
+
+  addImageInput(addImageBtn);
+});
+
+addNewProduct.addEventListener("click", () => {
+  const destination = document.querySelector("#add-product") as HTMLElement;
+  router.loadPage("hash", destination.dataset.url!);
+  quitEditMode();
+});
+
+cleanProductForm.addEventListener("click", () => {
+  cleanForm(document.querySelector("#create-form") as HTMLFormElement);
+  CreateProductPage.showMessage([
+    "success",
+    "Form başarıyla temizlendi.",
+    "none",
+  ]);
+});
+
+// CREATE PRODUCT PAGE END
 
 // Exports
 
-export { ProfilePage };
+export {
+  currentProducts,
+  isEditMode,
+  imageCount,
+  ManageProductsPage,
+  CreateProductPage,
+  getSearchProduct,
+};
