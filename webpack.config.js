@@ -5,8 +5,6 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
-  watch: true,
-  mode: "production",
   entry: {
     "auth/a578a8g": path.resolve(__dirname, "src/auth/auth.ts"),
     "dashboard/du48gn1": path.resolve(__dirname, "src/dashboard/index.ts"),
