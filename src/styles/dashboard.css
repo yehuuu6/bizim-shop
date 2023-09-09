@@ -72,7 +72,7 @@
   --small-text-color: #adadad;
   --loader-bg-color: #131313fa;
   --loader-bg-circle: #333333;
-  --monitor-bg-color: linear-gradient(315deg, #140e3d 0%, #000000 74%);
+  --monitor-bg-color: linear-gradient(0deg, #201b42 0%, #000000 74%);
   /* Buttons text colors */
   --success-btn-color: #0ea500;
   --delete-btn-color: #db2e3f;
