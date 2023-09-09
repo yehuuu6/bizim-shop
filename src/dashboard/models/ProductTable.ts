@@ -4,24 +4,26 @@ import {
   ManageProductsPage,
   isEditMode,
   imageCount,
-} from "../dev";
-import ConfirmationModal from "./Modal";
+} from "..";
+import ConfirmationModal from "../../common/Modal";
 import {
   getCategory,
   setStatus,
   addImageInput,
   quitEditMode,
-} from "../utils/functions.dev";
+} from "../../utils/functions.dev";
 import router from "../Router";
-import { trimSentence } from "../utils/functions.usr";
+import { trimSentence } from "../../utils/functions.usr";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const addImageBtn =  document.querySelector('button[name="add-image"]') as HTMLButtonElement;
+const addImageBtn = document.querySelector(
+  'button[name="add-image"]'
+) as HTMLButtonElement;
 
 export const rowNumberProducts = {
   value: 0,
-}
+};
 
 export interface ProductInterface {
   id: string;
@@ -72,7 +74,9 @@ export function createProductTable(product: ProductInterface) {
     const id = (e.currentTarget as HTMLElement).dataset.id!;
     const clickedAction = (e.target as HTMLElement).dataset.action;
 
-    const selectedProduct: ProductInterface = currentProducts.value.find((p: ProductInterface) => p.id === id)!;
+    const selectedProduct: ProductInterface = currentProducts.value.find(
+      (p: ProductInterface) => p.id === id
+    )!;
     if (clickedAction === "edit") {
       editProduct(selectedProduct);
     } else if (clickedAction === "delete") {
@@ -91,7 +95,8 @@ export function createProductTable(product: ProductInterface) {
 
       if (response[0] === "success") {
         product.status = newStatus;
-        (e.target as HTMLElement).innerText = newStatus === "1" ? "Satıldı" : "Satışta";
+        (e.target as HTMLElement).innerText =
+          newStatus === "1" ? "Satıldı" : "Satışta";
         (tr.querySelector("[data-mission='status']") as HTMLElement).innerText =
           setStatus(newStatus);
         (e.target as HTMLElement).className = `dashboard-btn ${
@@ -130,7 +135,9 @@ function deleteProduct(product: ProductInterface) {
 
         const child = document.querySelector(`[data-id="${product.id}"]`);
         if (child) {
-          ((child.parentElement as HTMLElement).parentElement as HTMLElement).remove();
+          (
+            (child.parentElement as HTMLElement).parentElement as HTMLElement
+          ).remove();
         }
       }
     } catch (e) {
@@ -144,8 +151,10 @@ function deleteProduct(product: ProductInterface) {
 function editProduct(product: ProductInterface) {
   isEditMode.value = true;
 
-  if (document.querySelector("[name='product-id']")){
-    (document.querySelector("[name='product-id']") as HTMLInputElement).remove();
+  if (document.querySelector("[name='product-id']")) {
+    (
+      document.querySelector("[name='product-id']") as HTMLInputElement
+    ).remove();
   }
   const form = document.querySelector("#create-form") as HTMLFormElement;
   const destination = document.querySelector("#add-product") as HTMLElement;
@@ -164,10 +173,14 @@ function editProduct(product: ProductInterface) {
     "none",
   ]);
 
-  const exitEditMode = document.querySelector("#exit-edit-mode") as HTMLButtonElement;
+  const exitEditMode = document.querySelector(
+    "#exit-edit-mode"
+  ) as HTMLButtonElement;
   const button = document.querySelector("#create-product") as HTMLButtonElement;
   const title = document.querySelector("#create-product-title") as HTMLElement;
-  const paragraph = document.querySelector("#create-product-text") as HTMLParagraphElement;
+  const paragraph = document.querySelector(
+    "#create-product-text"
+  ) as HTMLParagraphElement;
   button.innerText = "Değişiklikleri Kaydet";
   title.innerText = `${product.name} Ürününü Düzenliyorsunuz.`;
   paragraph.innerText = `Düzenleme modundan çıkmak için yanda bulunan X butonuna basabilirsiniz.`;
@@ -189,7 +202,9 @@ function editProduct(product: ProductInterface) {
   exitEditMode.classList.remove("none-display");
   exitEditMode.disabled = false;
 
-  elements.forEach((item) => ((item.element as HTMLInputElement).value = product[item.key]));
+  elements.forEach(
+    (item) => ((item.element as HTMLInputElement).value = product[item.key])
+  );
 
   const images: string[] = [];
   for (let i = 1; i <= 6; i++) {
@@ -207,10 +222,18 @@ function editProduct(product: ProductInterface) {
     deleteImageBtn.dataset.image = image;
     deleteImageBtn.classList.remove("small-btn");
     deleteImageBtn.innerHTML = `${index + 1}. Resmi Sil`;
-    const imagePreview = document.querySelector(`#image-preview-${index + 1}`) as HTMLImageElement;
-    const imageText = document.querySelector(`#image-text-${index + 1}`) as HTMLParagraphElement;
-    const imageLabel = document.querySelector(`#image-label-${index + 1}`) as HTMLLabelElement;
-    const imageInput = document.querySelector(`#product-image-${index + 1}`) as HTMLInputElement;
+    const imagePreview = document.querySelector(
+      `#image-preview-${index + 1}`
+    ) as HTMLImageElement;
+    const imageText = document.querySelector(
+      `#image-text-${index + 1}`
+    ) as HTMLParagraphElement;
+    const imageLabel = document.querySelector(
+      `#image-label-${index + 1}`
+    ) as HTMLLabelElement;
+    const imageInput = document.querySelector(
+      `#product-image-${index + 1}`
+    ) as HTMLInputElement;
     const hostname = window.location.origin;
     // Hide imageLabel and imageInput
     imageLabel.style.display = "none";
@@ -240,9 +263,13 @@ function editProduct(product: ProductInterface) {
 
 export function clearImageInputs() {
   imageCount.value = 1;
-  const imageInputs = (document.querySelector("#create-form") as HTMLFormElement).querySelectorAll("[data-type='image-input']");
+  const imageInputs = (
+    document.querySelector("#create-form") as HTMLFormElement
+  ).querySelectorAll("[data-type='image-input']");
   imageInputs.forEach((input) => input.remove());
-  const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
+  const addImageBtn = document.querySelector(
+    'button[name="add-image"]'
+  ) as HTMLButtonElement;
   addImageBtn.className = "dashboard-btn small-btn add-image-btn";
   addImageBtn.disabled = false;
 }
