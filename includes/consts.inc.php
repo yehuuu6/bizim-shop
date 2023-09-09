@@ -23,3 +23,13 @@ define('DEFAULT_PAGE_FAVICON', "/global/imgs/favicon.svg");
 // Emailer
 define('EMAIL', 'planetofplugins@gmail.com');
 define('PASSWORD', $_ENV['EMAIL_PASSWORD']);
+
+// Site
+
+define('DOMAIN', $_ENV['DOMAIN']);
+define('SERVER_PATH', $_SERVER['DOCUMENT_ROOT'] . '/images/');
+define('SITE_PATH', DOMAIN . '/images/');
+define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'product/');
+define('PRODUCT_USER_SERVER_PATH', SERVER_PATH . 'users/');
+define('PRODUCT_USER_SITE_PATH', SITE_PATH . 'users/');
+define('PRODUCT_IMAGE_SITE_PATH', SITE_PATH . 'product/');
