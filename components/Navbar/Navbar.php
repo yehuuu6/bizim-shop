@@ -137,7 +137,8 @@ class Navbar extends Component
             HTML;
         } else {
             $body = <<<HTML
-                <li><a class="no-decoration navbar-btn" href="/dashboard">Hoşgeldin {$_SESSION['name']}</a></li>
+                <li><a class="no-decoration navbar-btn" href="/edit-profile">Profili Düzenle</a></li>
+                <li><a class="no-decoration navbar-btn" href="/dashboard">Panel</a></li>
                 <li><a class="no-decoration navbar-btn" href="/?logout=1">Çıkış</a></li>
             HTML;
         }
