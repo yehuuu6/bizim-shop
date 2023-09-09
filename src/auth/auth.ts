@@ -3,10 +3,10 @@ import {
   AuthorizationClass,
 } from "./classes/AuthorizationClass";
 
-import "../styles/auth.css";
+import "./auth.css";
 
 const loader = document.querySelector(".loader") as HTMLDivElement;
-const defaultLoggerText = ""
+const defaultLoggerText = "";
 
 const LoginPage = new AuthorizationClass(
   document.querySelector("#login-form") as HTMLFormElement,
@@ -22,7 +22,9 @@ const RegisterPage = new AuthorizationClass(
   "/api/authorization/register.php",
   "./verify"
 );
-const forgotPasswordLogger = document.querySelector("#forgot-password-form .logger") as HTMLParagraphElement;
+const forgotPasswordLogger = document.querySelector(
+  "#forgot-password-form .logger"
+) as HTMLParagraphElement;
 const ForgotPasswordPage = new SpecialAuthorizationClass(
   document.querySelector("#forgot-password-form") as HTMLFormElement,
   forgotPasswordLogger,
@@ -41,7 +43,9 @@ const ResetPasswordPage = new AuthorizationClass(
   6000
 );
 
-const verifyLogger = document.querySelector("#verify-account-form .logger") as HTMLParagraphElement;
+const verifyLogger = document.querySelector(
+  "#verify-account-form .logger"
+) as HTMLParagraphElement;
 const VerifyAccountPage = new SpecialAuthorizationClass(
   document.querySelector("#verify-account-form") as HTMLFormElement,
   verifyLogger,
@@ -52,11 +56,17 @@ const VerifyAccountPage = new SpecialAuthorizationClass(
   verifyLogger ? verifyLogger.innerHTML : defaultLoggerText
 );
 
-const registerForm = document.querySelector("#register-form") as HTMLFormElement;
+const registerForm = document.querySelector(
+  "#register-form"
+) as HTMLFormElement;
 const loginForm = document.querySelector("#login-form") as HTMLFormElement;
-const forgotPasswordForm = document.querySelector("#forgot-password-form") as HTMLFormElement;
+const forgotPasswordForm = document.querySelector(
+  "#forgot-password-form"
+) as HTMLFormElement;
 const resetForm = document.querySelector("#reset-form") as HTMLFormElement;
-const resendVerification = document.querySelector("#resend-verification") as HTMLAnchorElement;
+const resendVerification = document.querySelector(
+  "#resend-verification"
+) as HTMLAnchorElement;
 
 if (loginForm) {
   loginForm.addEventListener("submit", (e) => {
@@ -92,4 +102,3 @@ if (resendVerification) {
     VerifyAccountPage.sendApiRequest();
   });
 }
-
