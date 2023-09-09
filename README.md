@@ -1,6 +1,6 @@
 # Bizim Shop
 
-🛍️ An exciting e-commerce project aimed at supporting my father's business venture.
+🛍️ An e-commerce project aimed at supporting my father's business venture.
 
 ## TO-DOs
 
