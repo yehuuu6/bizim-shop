@@ -1,8 +1,19 @@
 import PanelClass from "./classes/PanelClass";
 import ConfirmationModal from "./models/Modal";
-import { ProductInterface, createProductTable, clearImageInputs, rowNumberProducts } from "./models/ProductTable";
-import { addImageInput, runSearchProducts, quitEditMode, cleanForm } from "./utils/functions.dev";
+import {
+  ProductInterface,
+  createProductTable,
+  clearImageInputs,
+  rowNumberProducts,
+} from "./models/ProductTable";
+import {
+  addImageInput,
+  runSearchProducts,
+  quitEditMode,
+  cleanForm,
+} from "./utils/functions.dev";
 import router from "./Router";
+import initStats from "./initStats";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
@@ -21,21 +32,37 @@ let startVal = 0;
 /**
  * Initialize dev tools (does nothing just an empty function to include in the bundle)
  */
-export function initializeDevTools(){
+export function initializeDevTools() {
   // do nothing
 }
 
-const cleanProductForm = document.querySelector("#clean-create-form") as HTMLFormElement;
-const addNewProduct = document.querySelector("#add-new-product") as HTMLButtonElement;
-const productRefreshBtn = document.querySelector("#refresh-products") as HTMLButtonElement;
-const productLoad = document.querySelector("#loader-products") as HTMLDivElement;
-const productMore = document.querySelector("#load-more-products") as HTMLButtonElement;
-const productTable = document.querySelector("#products-table tbody") as HTMLTableSectionElement;
+initStats();
+
+const cleanProductForm = document.querySelector(
+  "#clean-create-form"
+) as HTMLFormElement;
+const addNewProduct = document.querySelector(
+  "#add-new-product"
+) as HTMLButtonElement;
+const productRefreshBtn = document.querySelector(
+  "#refresh-products"
+) as HTMLButtonElement;
+const productLoad = document.querySelector(
+  "#loader-products"
+) as HTMLDivElement;
+const productMore = document.querySelector(
+  "#load-more-products"
+) as HTMLButtonElement;
+const productTable = document.querySelector(
+  "#products-table tbody"
+) as HTMLTableSectionElement;
 const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
 
 const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
 
-const addImageBtn = document.querySelector('button[name="add-image"]') as HTMLButtonElement;
+const addImageBtn = document.querySelector(
+  'button[name="add-image"]'
+) as HTMLButtonElement;
 const maxImages = 6;
 
 const ManageProductsPage = new PanelClass(productLoad);
@@ -50,8 +77,9 @@ function getSearchProduct() {
   const search = searchInput.value.trim().toLowerCase();
   productTable.innerHTML = "";
   if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter((product: ProductInterface) =>
-      product["name"].toLowerCase().includes(search)
+    const matchingProducts = currentProducts.value.filter(
+      (product: ProductInterface) =>
+        product["name"].toLowerCase().includes(search)
     );
     if (matchingProducts.length === 0) {
       productTable.innerHTML = `
@@ -107,16 +135,16 @@ productRefreshBtn.addEventListener("click", () => {
   refreshProducts();
 });
 
-(document
-  .querySelector('div[data-name="products"]') as HTMLDivElement)
-  .addEventListener("click", () => {
-    refreshProducts();
+(
+  document.querySelector('div[data-name="products"]') as HTMLDivElement
+).addEventListener("click", () => {
+  refreshProducts();
 });
-(document
-  .querySelector('div[data-name="add-product"]') as HTMLDivElement)
-  .addEventListener("click", () => {
-    quitEditMode();
-    clearImageInputs();
+(
+  document.querySelector('div[data-name="add-product"]') as HTMLDivElement
+).addEventListener("click", () => {
+  quitEditMode();
+  clearImageInputs();
 });
 
 loadFirstProducts();
@@ -153,7 +181,7 @@ productMore.addEventListener("click", function (e) {
         ]);
         window.scrollTo({
           top: document.body.scrollHeight,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -161,23 +189,29 @@ productMore.addEventListener("click", function (e) {
 });
 
 // Save product to database
-(document.getElementById("create-form") as HTMLFormElement).addEventListener("submit", function (e) {
-  e.preventDefault();
-  let formData = new FormData(this);
-  formData.append("image-count", imageCount.value.toString());
-  formData.append("edit-mode", isEditMode.value ? "true" : "false");
-  CreateProductPage.sendApiRequest(
-    "/api/dashboard/product/upload-product.php",
-    formData
-  ).then((data) => {
-    CreateProductPage.showMessage(data);
-    if (data[0] === "success"){
-      quitEditMode();
-      router.setPageContent("hash", (document.querySelector("#manage-products") as HTMLElement));
-      refreshProducts();
-    }
-  });
-});
+(document.getElementById("create-form") as HTMLFormElement).addEventListener(
+  "submit",
+  function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+    formData.append("image-count", imageCount.value.toString());
+    formData.append("edit-mode", isEditMode.value ? "true" : "false");
+    CreateProductPage.sendApiRequest(
+      "/api/dashboard/product/upload-product.php",
+      formData
+    ).then((data) => {
+      CreateProductPage.showMessage(data);
+      if (data[0] === "success") {
+        quitEditMode();
+        router.setPageContent(
+          "hash",
+          document.querySelector("#manage-products") as HTMLElement
+        );
+        refreshProducts();
+      }
+    });
+  }
+);
 
 function removeAndReorderImages(imageInput: HTMLInputElement) {
   imageInput.remove();
@@ -218,7 +252,9 @@ document.addEventListener("click", function (e) {
 
   if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
     e.preventDefault();
-    const imageInput = clickedButton.closest('[data-type="image-input"]') as HTMLInputElement;
+    const imageInput = clickedButton.closest(
+      '[data-type="image-input"]'
+    ) as HTMLInputElement;
     const imageName: string = clickedButton.getAttribute("data-image")!;
     const imageNumber: string = clickedButton.id.split("-")[2];
     if (isEditMode.value == true && imageName !== null) {
@@ -229,7 +265,8 @@ document.addEventListener("click", function (e) {
         formData.append("image", imageName);
         formData.append(
           "product-id",
-          (document.querySelector("[name='product-id']") as HTMLInputElement).value
+          (document.querySelector("[name='product-id']") as HTMLInputElement)
+            .value
         );
         formData.append("image-number", imageNumber);
         CreateProductPage.sendApiRequest(
@@ -275,7 +312,7 @@ addNewProduct.addEventListener("click", () => {
 });
 
 cleanProductForm.addEventListener("click", () => {
-  cleanForm((document.querySelector("#create-form") as HTMLFormElement));
+  cleanForm(document.querySelector("#create-form") as HTMLFormElement);
   CreateProductPage.showMessage([
     "success",
     "Form başarıyla temizlendi.",
