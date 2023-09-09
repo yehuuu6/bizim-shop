@@ -1,3 +1,5 @@
+import initStats from "./models/InitStats";
+
 // Menubar animations
 const menuToggle = document.querySelector("#menu-toggle") as HTMLInputElement;
 const menu = document.querySelector(".left-bar") as HTMLDivElement;
@@ -57,24 +59,12 @@ function deactivateMenu() {
 const menuBtns: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll(".menu-btn");
 const statPage = document.getElementById("statistics") as HTMLElement;
-const profilePage = document.getElementById("change-user-info") as HTMLElement;
 
 const productPage = document.getElementById("manage-products") as HTMLElement;
 const createProduct = document.getElementById("add-product") as HTMLElement;
 const userPage = document.getElementById("manage-users") as HTMLElement;
 
-let sections = [statPage, profilePage];
-
-// Push userPage and productPage to sections array if they exist
-if (userPage) {
-  sections.push(userPage);
-}
-if (productPage) {
-  sections.push(productPage);
-}
-if (createProduct) {
-  sections.push(createProduct);
-}
+let sections = [statPage, productPage, userPage, createProduct];
 
 interface RouterInterface {
   loadType: PageType;
@@ -113,9 +103,7 @@ export class Router implements RouterInterface {
     switch (target) {
       case "statistics":
         this.setPageContent(type, statPage);
-        break;
-      case "profile":
-        this.setPageContent(type, profilePage);
+        initStats();
         break;
       case "products":
         this.setPageContent(type, productPage);
@@ -203,6 +191,7 @@ themeItems.forEach((item) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  initStats();
   // Remove active class from all theme items
   themeItems.forEach((item) => {
     item.classList.remove("active-theme");
