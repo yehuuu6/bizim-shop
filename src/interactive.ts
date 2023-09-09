@@ -1,7 +1,9 @@
-import "./styles/main.css";
-import "./styles/utils.css";
+import "./main.css";
+import "./utils/utils.css";
 
-const wishlistBtn = document.querySelector("#wishlist-btn") as HTMLButtonElement;
+const wishlistBtn = document.querySelector(
+  "#wishlist-btn"
+) as HTMLButtonElement;
 const cartBtn = document.querySelector("#cart-btn") as HTMLButtonElement;
 
 wishlistBtn.addEventListener("click", () => {
