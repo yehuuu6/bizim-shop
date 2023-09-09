@@ -159,28 +159,28 @@ $door = $row['door'];
               <div class="icon">
                 <i class="fa-solid fa-users"></i>
               </div>
-              <p class="value" id="total-users">17.8k</p>
+              <span class="value" id="total-users">17.8k</span>
               <h3 class="title">Kullanıcı</h3>
             </div>
             <div class="monitor">
               <div class="icon">
                 <i class="fa-solid fa-boxes-stacked"></i>
               </div>
-              <p class="value" id="total-products">5.3k</p>
+              <span class="value" id="total-products">5.3k</span>
               <h3 class="title">Ürün</h3>
             </div>
             <div class="monitor">
               <div class="icon">
                 <i class="fa-solid fa-truck"></i>
               </div>
-              <p class="value" id="total-orders">2.5k</p>
+              <span class="value" id="total-orders">2.5k</span>
               <h3 class="title">Sipariş</h3>
             </div>
             <div class="monitor">
               <div class="icon">
                 <i class="fa-solid fa-money-bill-trend-up"></i>
               </div>
-              <p class="value" id="total-earnings">3578 TL</p>
+              <span class="value" id="total-earnings">3578 TL</span>
               <h3 class="title">Kazanç</h3>
             </div>
           </div>
