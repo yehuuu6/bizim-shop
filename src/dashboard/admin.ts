@@ -1,6 +1,9 @@
-import createUserTable, { UserInterface, rowNumberUsers } from "./models/UserTable";
+import createUserTable, {
+  UserInterface,
+  rowNumberUsers,
+} from "./models/UserTable";
 import PanelClass from "./classes/PanelClass";
-import { runSearchUsers } from "./utils/functions.dev";
+import { runSearchUsers } from "../utils/functions.dev";
 
 // VARIABLES START
 
@@ -13,10 +16,16 @@ let startVal = 5;
 
 // Manage Users Page
 
-const userMore = document.querySelector("#load-more-users") as HTMLButtonElement;
-const userTable = document.querySelector("#users-table tbody") as HTMLTableSectionElement;
+const userMore = document.querySelector(
+  "#load-more-users"
+) as HTMLButtonElement;
+const userTable = document.querySelector(
+  "#users-table tbody"
+) as HTMLTableSectionElement;
 const userLoader = document.querySelector("#loader-users") as HTMLDivElement;
-const userRefresh = document.querySelector("#refresh-users") as HTMLButtonElement;
+const userRefresh = document.querySelector(
+  "#refresh-users"
+) as HTMLButtonElement;
 const searchInput = document.querySelector("#search-user") as HTMLInputElement;
 
 const ManageUsersPage = new PanelClass(userLoader);
@@ -93,11 +102,11 @@ userRefresh.addEventListener("click", () => {
   refreshUsers();
 });
 
-(document
-  .querySelector('div[data-name="users"]') as HTMLDivElement)
-  .addEventListener("click", () => {
-    refreshUsers();
-  });
+(
+  document.querySelector('div[data-name="users"]') as HTMLDivElement
+).addEventListener("click", () => {
+  refreshUsers();
+});
 // Load first 5 users on page load
 loadFirstUsers();
 
@@ -136,9 +145,4 @@ userMore.addEventListener("click", function (e) {
 
 // Exports
 
-export {
-  currentUsers,
-  getSearchUser,
-  ManageUsersPage,
-};
-
+export { currentUsers, getSearchUser, ManageUsersPage };
