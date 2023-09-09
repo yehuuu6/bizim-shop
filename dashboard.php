@@ -16,17 +16,14 @@ if ($_SESSION['verified'] == 0) {
   die();
 }
 
+authorize_user();
+
 $power = $_SESSION['membership'];
 $perm_content = get_permission($power);
 
-$sql = "SELECT name, surname, email, profile_image, telephone, address, door, apartment, floor FROM users WHERE id = {$_SESSION['id']}";
+$sql = "SELECT name, surname, profile_image FROM users WHERE id = {$_SESSION['id']}";
 $res = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($res);
-
-$address = $row['address'];
-$apartment = $row['apartment'];
-$floor = $row['floor'];
-$door = $row['door'];
 
 ?>
 
@@ -40,7 +37,7 @@ $door = $row['door'];
   <link rel="stylesheet" href="/dist/dashboard/du48gn1.css" />
   <script src="/global/plugins/icons.js"></script>
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
-  <title>Panel - Bizim Shop</title>
+  <title>İstatistikler - Bizim Shop Panel</title>
 </head>
 <noscript>
   <style>
@@ -104,45 +101,34 @@ $door = $row['door'];
       </ul>
       <ul>
         <div class="list-title">
-          <h3>Kullanıcı İşlemleri</h3>
+          <h3>Yönetici İşlemleri</h3>
           <hr>
         </div>
         <li>
-          <div class="menu-btn" data-name="profile">
-            Hesap Ayarları <i class="fa-solid fa-user"></i>
+          <div class="menu-btn active" data-name="statistics">
+            İstatistikler <i class="fa-solid fa-chart-line"></i>
           </div>
         </li>
-        <?php if ($power > 0) : ?>
-          <div class="list-title">
-            <h3>Yönetici İşlemleri</h3>
-            <hr>
+        <li>
+          <div class="menu-btn" data-name="add-product">
+            Ürün Ekle <i class="fa-solid fa-plus"></i>
           </div>
-          <li>
-            <div class="menu-btn active" data-name="statistics">
-              İstatistikler <i class="fa-solid fa-chart-line"></i>
-            </div>
-          </li>
-          <li>
-            <div class="menu-btn" data-name="add-product">
-              Ürün Ekle <i class="fa-solid fa-plus"></i>
-            </div>
-          </li>
-          <li>
-            <div class="menu-btn" data-name="products">
-              Ürünler <i class="fa-solid fa-boxes-stacked"></i>
-            </div>
-          </li>
-          <li>
-            <div class="menu-btn" data-name="users">
-              Kullanıcılar <i class="fa-solid fa-users"></i>
-            </div>
-          </li>
-          <li>
-            <div class="menu-btn" data-name="orders">
-              Siparişler <i class="fa-solid fa-truck"></i>
-            </div>
-          </li>
-        <?php endif; ?>
+        </li>
+        <li>
+          <div class="menu-btn" data-name="products">
+            Ürünler <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+        </li>
+        <li>
+          <div class="menu-btn" data-name="users">
+            Kullanıcılar <i class="fa-solid fa-users"></i>
+          </div>
+        </li>
+        <li>
+          <div class="menu-btn" data-name="orders">
+            Siparişler <i class="fa-solid fa-truck"></i>
+          </div>
+        </li>
       </ul>
     </div>
     <div class="main-page">
@@ -187,182 +173,104 @@ $door = $row['door'];
           <div class="intro"></div>
         </div>
       </section>
-      <section id="change-user-info" data-url="profile" data-title="Profili Düzenle" class="page-content narrow-page">
-        <div id="loader-profile" class="loader">
-          <?php $loader1 = new Loader(); ?>
+      <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
+        <div id="loader-products" class="loader">
+          <?php $loader2 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
-            <h2 class="header">Hesap Ayarları</h2>
-            <p>Burada hesap bilgilerinizi düzenleyebilirsiniz.</p>
+            <h2 class="header">Ürünleri Yönet</h2>
+            <p>Burada ürünleri düzenleyebilir veya silebilirsiniz.</p>
           </div>
           <div class="item">
-            <button id="password-reset" class="dashboard-btn edit-btn">Şifre Sıfırlama Maili Gönder</button>
+            <div class="controls">
+              <div class="c-container">
+                <button title="Ürün Ekle" class="dashboard-btn edit-btn small-btn" id="add-new-product">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-products">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </button>
+              </div>
+              <input autocomplete="off" type="text" placeholder="Ürün ara" name="search-pr" id="search-pr" spellcheck="false" />
+            </div>
           </div>
         </div>
         <div class="container">
-          <form id="profile-form">
-            <h3 class="bottom-header">Genel Bilgiler</h3>
-            <div class="second">
-              <div class="item-wrapper">
-                <div class="first-item">
-                  <div class="image-container">
-                    <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
-                  </div>
-                  <label id="avatar-label" class="dashboard-btn edit-btn" for="avatar-input">Profil Resmi Yükle</label>
-                  <p id="avatar-input-displayer" class="display-file">Dosya seçilmedi.</p>
-                  <input type="file" id="avatar-input" name="avatar-input" />
-                </div>
-                <hr>
-                <div class="form-item">
-                  <label for="name">Adı</label>
-                  <input name="name" required type="text" id="name" spellcheck="false" value="<?php echo $row['name'] ?>" />
-                  <label for="surname">Soyadı</label>
-                  <input name="surname" required type="text" id="surname" spellcheck="false" value="<?php echo $row['surname'] ?>" />
-                  <label for="phone">Telefon</label>
-                  <input name="phone" required type="tel" id="phone" placeholder="5001112233" pattern="[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}" spellcheck="false" value="<?php echo $row['telephone'] ?>" />
-                  <label for="email">E-posta</label>
-                  <input name="email" id="email" readonly spellcheck="false" value="<?php echo $row['email'] ?>" />
-                </div>
-              </div>
-              <br>
-              <h3 class="bottom-header">Adres Bilgileri</h3>
-              <div class="item-wrapper">
-                <div class="form-item">
-                  <label for="city">Şehir</label>
-                  <select id="city" name="city">
-                    <option value="">Şehir Seçiniz</option>
-                  </select>
-                </div>
-                <div class="form-item">
-                  <label for="district">İlçe</label>
-                  <select id="district" name="district" disabled>
-                    <option value="">İlçe Seçiniz</option>
-                  </select>
-                </div>
-              </div>
-              <div class="item-wrapper">
-                <div class="form-item">
-                  <label for="apartment">Apartman</label>
-                  <input name="apartment" type="text" id="apartment" spellcheck="false" value="<?php echo $apartment ?>" />
-                </div>
-                <div class="form-item">
-                  <label for="floor">Kat</label>
-                  <input name="floor" type="number" id="floor" spellcheck="false" value="<?php echo $floor ?>" />
-                </div>
-                <div class="form-item">
-                  <label for="door">Daire</label>
-                  <input name="door" type="number" id="door" spellcheck="false" value="<?php echo $door ?>" />
-                </div>
-              </div>
-              <label for="address">Adres Tarifi</label>
-              <textarea spellcheck="false" name="address" id="address" cols="30" rows="10" placeholder="Mahalle, sokak vb."><?php echo $address ?></textarea>
-              <button class="dashboard-btn success-btn" type="submit" name="save-user" id="save-user">
-                Değişiklikleri Kaydet
-              </button>
-            </div>
-          </form>
+          <table id="products-table">
+            <thead>
+              <tr>
+                <th width="1%">#</th>
+                <th width="1%">ID</th>
+                <th width="7%">Ad</th>
+                <th width="5%">Kategori</th>
+                <th width="5%">Fiyat</th>
+                <th width="5%">Durum</th>
+                <th width="5%">Eylemler</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <button class="dashboard-btn success-btn" id="load-more-products">
+            Daha fazla yükle
+          </button>
         </div>
       </section>
-      <?php if ($power > 0) : ?>
-        <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
-          <div id="loader-products" class="loader">
-            <?php $loader2 = new Loader(); ?>
+      <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
+        <div id="loader-create" class="loader">
+          <?php $loader3 = new Loader(); ?>
+        </div>
+        <div class="content-header">
+          <div class="item">
+            <h2 id="create-product-title" class="header">Markete Ürün Ekle</h2>
+            <p id="create-product-text">Yanında (*) olan alanlar zorunludur.</p>
           </div>
-          <div class="content-header">
-            <div class="item">
-              <h2 class="header">Ürünleri Yönet</h2>
-              <p>Burada ürünleri düzenleyebilir veya silebilirsiniz.</p>
-            </div>
-            <div class="item">
-              <div class="controls">
-                <div class="c-container">
-                  <button title="Ürün Ekle" class="dashboard-btn edit-btn small-btn" id="add-new-product">
-                    <i class="fa-solid fa-plus"></i>
-                  </button>
-                  <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-products">
-                    <i class="fa-solid fa-rotate-right"></i>
-                  </button>
-                </div>
-                <input autocomplete="off" type="text" placeholder="Ürün ara" name="search-pr" id="search-pr" spellcheck="false" />
+          <div class="item">
+            <div class="controls">
+              <div class="c-container">
+                <button title="Düzenleme Modundan Çık" class="dashboard-btn delete-btn small-btn none-display" id="exit-edit-mode">
+                  <i class="fa-solid fa-times"></i>
+                </button>
+                <button title="Temizle" class="dashboard-btn edit-btn small-btn" id="clean-create-form">
+                  <i class="fa-solid fa-broom"></i>
+                </button>
               </div>
             </div>
           </div>
-          <div class="container">
-            <table id="products-table">
-              <thead>
-                <tr>
-                  <th width="1%">#</th>
-                  <th width="1%">ID</th>
-                  <th width="7%">Ad</th>
-                  <th width="5%">Kategori</th>
-                  <th width="5%">Fiyat</th>
-                  <th width="5%">Durum</th>
-                  <th width="5%">Eylemler</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-            <button class="dashboard-btn success-btn" id="load-more-products">
-              Daha fazla yükle
-            </button>
-          </div>
-        </section>
-        <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
-          <div id="loader-create" class="loader">
-            <?php $loader3 = new Loader(); ?>
-          </div>
-          <div class="content-header">
-            <div class="item">
-              <h2 id="create-product-title" class="header">Markete Ürün Ekle</h2>
-              <p id="create-product-text">Yanında (*) olan alanlar zorunludur.</p>
-            </div>
-            <div class="item">
-              <div class="controls">
-                <div class="c-container">
-                  <button title="Düzenleme Modundan Çık" class="dashboard-btn delete-btn small-btn none-display" id="exit-edit-mode">
-                    <i class="fa-solid fa-times"></i>
-                  </button>
-                  <button title="Temizle" class="dashboard-btn edit-btn small-btn" id="clean-create-form">
-                    <i class="fa-solid fa-broom"></i>
-                  </button>
+        </div>
+        <div class="container">
+          <form id="create-form">
+            <div class="second">
+              <h3 class="bottom-header" style="margin: 0;">Genel Bilgiler</h3>
+              <hr style="margin: 0;">
+              <div class="item-wrapper">
+                <div class="form-item">
+                  <label for="product-name">Ürün Adı *</label>
+                  <input name="product-name" type="text" id="product-name" spellcheck="false" />
+                </div>
+                <div class="form-item">
+                  <label for="product-price">Ürün Fiyatı *</label>
+                  <input name="product-price" type="number" id="product-price" spellcheck="false" />
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="container">
-            <form id="create-form">
-              <div class="second">
-                <h3 class="bottom-header" style="margin: 0;">Genel Bilgiler</h3>
-                <hr style="margin: 0;">
-                <div class="item-wrapper">
-                  <div class="form-item">
-                    <label for="product-name">Ürün Adı *</label>
-                    <input name="product-name" type="text" id="product-name" spellcheck="false" />
-                  </div>
-                  <div class="form-item">
-                    <label for="product-price">Ürün Fiyatı *</label>
-                    <input name="product-price" type="number" id="product-price" spellcheck="false" />
-                  </div>
+              <div class="item-wrapper">
+                <div class="form-item">
+                  <label for="product-category">Ürün Kategorisi *</label>
+                  <select name="product-category" id="product-category">
+                    <option value="1">Müzik Seti</option>
+                    <option value="2">Hoparlör</option>
+                    <option value="3">Plak Çalar</option>
+                    <option value="4">Müzik Çalar</option>
+                  </select>
                 </div>
-                <div class="item-wrapper">
-                  <div class="form-item">
-                    <label for="product-category">Ürün Kategorisi *</label>
-                    <select name="product-category" id="product-category">
-                      <option value="1">Müzik Seti</option>
-                      <option value="2">Hoparlör</option>
-                      <option value="3">Plak Çalar</option>
-                      <option value="4">Müzik Çalar</option>
-                    </select>
-                  </div>
-                  <div class="form-item">
-                    <label for="product-tags">Ürün Etiketleri *</label>
-                    <input name="product-tags" type="text" id="product-tags" spellcheck="false" />
-                  </div>
+                <div class="form-item">
+                  <label for="product-tags">Ürün Etiketleri *</label>
+                  <input name="product-tags" type="text" id="product-tags" spellcheck="false" />
                 </div>
-                <label for="product-description">Ürün Açıklaması *</label>
-                <textarea name="product-description" type="text" id="product-description" spellcheck="false""></textarea>
+              </div>
+              <label for="product-description">Ürün Açıklaması *</label>
+              <textarea name="product-description" type="text" id="product-description" spellcheck="false""></textarea>
               <h3 class=" bottom-header" style="margin: 0;">Diğer Bilgiler</h3>
               <hr style="margin: 0;">
               <div class="item-wrapper">
@@ -446,7 +354,6 @@ $door = $row['door'];
           </button>
         </div>
       </section>
-    <?php endif; ?>
     </div>
     <footer>
       <div class="copyright-section">
@@ -470,36 +377,36 @@ $door = $row['door'];
       <?php $loader5 = new Loader(); ?>
     </div>
     <div class="settings-container" style="display:none;">
-    <div class="settings">
-      <div class="header">
-          <h2 class="main-title">Ayarlar</h2>
-      </div>
-      <div class="content">
-          <h3 class="title">Kişiselleştirme</h3>
-          <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
-          <div class="theme-container">
-            <div class="theme-item active-theme" data-theme="light">
-              <div class="theme-img">
-                <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
+      <div class="settings">
+        <div class="header">
+            <h2 class="main-title">Ayarlar</h2>
+        </div>
+        <div class="content">
+            <h3 class="title">Kişiselleştirme</h3>
+            <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
+            <div class="theme-container">
+              <div class="theme-item active-theme" data-theme="light">
+                <div class="theme-img">
+                  <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
+                </div>
+                <div class="theme-info">
+                <input type="radio" id="light-theme">
+                  <label class="theme-title">Açık Tema</label>
+                </div>
               </div>
-              <div class="theme-info">
-              <input type="radio" id="light-theme">
-                <label class="theme-title">Açık Tema</label>
+              <div class="theme-item" data-theme="dark">
+                <div class="theme-img">
+                  <img src="/global/imgs/dark_preview.svg" alt="">
+                </div>
+                <div class="theme-info">
+                <input type="radio" id="dark-theme">
+                  <label class="theme-title">Koyu Tema</label>
+                </div>
               </div>
             </div>
-            <div class="theme-item" data-theme="dark">
-              <div class="theme-img">
-                <img src="/global/imgs/dark_preview.svg" alt="">
-              </div>
-              <div class="theme-info">
-              <input type="radio" id="dark-theme">
-                <label class="theme-title">Koyu Tema</label>
-              </div>
-            </div>
-          </div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   <script type="module" src="/dist/dashboard/du48gn1.js"></script>
 </body>
