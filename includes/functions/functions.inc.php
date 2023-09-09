@@ -158,3 +158,63 @@ function fix_strings(array $row)
     $row['description'] = str_replace("\\'", "'", $row['description']);
     return $row;
 }
+
+
+/**
+ * Gets products from the database based on the given parameters.
+ * @param mysqli $con The mysqli connection object.
+ * @param array $props The properties to filter the products.
+ * @param string $props['search'] The search query.
+ * @param string $props['category'] The category of the product.
+ * @param string $props['tag'] The tag of the product.
+ * @param string $props['status'] The status of the product.
+ * @param string $props['order'] The order of the products.
+ * @param string $props['order_type'] The order type of the products.
+ * @param string $props['limit'] The limit of the products.
+ * @param string $props['offset'] The offset of the products.
+ * 
+ * @return array
+ */
+
+function get_products(
+    mysqli $con,
+    $props = [],
+) {
+    $search = $props['search'] ?? '';
+    $category = $props['category'] ?? '';
+    $tag = $props['tag'] ?? '';
+    $status = $props['status'] ?? '';
+    $order = $props['order'] ?? 'id';
+    $order_type = $props['order_type'] ?? 'DESC';
+    $limit = $props['limit'] ?? 1;
+    $offset = $props['offset'] ?? 0;
+    $desc_cut_val = $props['desc_cut_val'] ?? 100;
+    $featured = $props['featured'] ?? '';
+    $shipment = $props['shipping'] ?? '';
+
+    $sql = "SELECT * FROM product WHERE ";
+    $sql .= "name LIKE '%$search%' AND ";
+    $sql .= "category LIKE '%$category%' AND ";
+    $sql .= "tags LIKE '%$tag%' AND ";
+    $sql .= "status LIKE '%$status%' AND ";
+    $sql .= "featured LIKE '%$featured%' AND ";
+    $sql .= "shipment LIKE '%$shipment%' ";
+    $sql .= "ORDER BY $order $order_type ";
+    $sql .= "LIMIT $limit OFFSET $offset";
+    $result = mysqli_query($con, $sql);
+    $products = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $row = fix_strings($row);
+        $row['description'] = shorten_string($row['description'], $desc_cut_val);
+        array_push($products, $row);
+    }
+    return $products;
+}
+
+function shorten_string(string $str, int $length)
+{
+    if (strlen($str) > $length) {
+        $str = substr($str, 0, $length) . '...';
+    }
+    return $str;
+}
