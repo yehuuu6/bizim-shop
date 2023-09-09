@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     "auth/a578a8g": path.resolve(__dirname, "src/auth/auth.ts"),
     "dashboard/du48gn1": path.resolve(__dirname, "src/dashboard/index.ts"),
+    "profile/eb23ax4": path.resolve(__dirname, "src/profile/index.ts"),
     "main/dr50hzx": path.resolve(__dirname, "src/interactive.ts"),
   },
   output: {
