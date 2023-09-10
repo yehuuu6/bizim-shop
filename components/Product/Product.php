@@ -48,6 +48,8 @@ class Product extends Component
     }
     /**
      * Renders 'Free Shipment' element if the product has free shipment.
+     * @param array $product The product to check if it has free shipment.
+     * @return html $body
      */
     private function render_shipment_element(array $product)
     {
@@ -65,6 +67,8 @@ class Product extends Component
     }
     /**
      * Renders 'Add to wishlist' element and 'Remove from wishlist' element based on if the user has added the product to wishlist.
+     * @param bool $condition The condition to check if the user has added the product to wishlist.
+     * @return html $body
      */
     private function render_wishlist_element(bool $condition)
     {
