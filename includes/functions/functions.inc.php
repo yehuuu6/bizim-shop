@@ -183,12 +183,11 @@ function get_products(
     $search = $props['search'] ?? '';
     $category = $props['category'] ?? '';
     $tag = $props['tag'] ?? '';
-    $status = $props['status'] ?? '';
+    $status = $props['status'] ?? '1';
     $order = $props['order'] ?? 'id';
     $order_type = $props['order_type'] ?? 'DESC';
     $limit = $props['limit'] ?? 1;
     $offset = $props['offset'] ?? 0;
-    $desc_cut_val = $props['desc_cut_val'] ?? 100;
     $featured = $props['featured'] ?? '';
     $shipment = $props['shipping'] ?? '';
 
@@ -205,16 +204,7 @@ function get_products(
     $products = array();
     while ($row = mysqli_fetch_assoc($result)) {
         $row = fix_strings($row);
-        $row['description'] = shorten_string($row['description'], $desc_cut_val);
         array_push($products, $row);
     }
     return $products;
-}
-
-function shorten_string(string $str, int $length)
-{
-    if (strlen($str) > $length) {
-        $str = substr($str, 0, $length) . '...';
-    }
-    return $str;
 }
