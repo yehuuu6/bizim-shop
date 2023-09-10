@@ -79,6 +79,6 @@ class Footer extends Component
         HTML;
 
         // Render the component on the page
-        $this->render($body);
+        parent::render($body);
     }
 }
