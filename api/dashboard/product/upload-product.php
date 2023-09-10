@@ -126,7 +126,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
                 $log = 'Değişiklikler kaydedilirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.';
             }
         } else {
-            $conclusion = inser_product($con, $uid, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images);
+            $conclusion = insert_product($con, $uid, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images);
             if ($conclusion) {
                 $log = 'Ürün başarıyla eklendi.';
             } else {
@@ -150,7 +150,7 @@ function upload_images($ready_to_upload, $max_width, $max_height)
     }
 }
 
-function inser_product($con, $uid, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images)
+function insert_product($con, $uid, $category, $name, $description, $tags, $price, $shipment, $featured, $quality, $images)
 {
     global $root_name;
     global $ready_to_upload;
