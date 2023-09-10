@@ -7,3 +7,4 @@ images/product/*
 images/users/*
 !images/product/noimg.jpg
 !images/users/nopp.png
+test
