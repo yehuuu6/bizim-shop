@@ -12,7 +12,7 @@ const currentUsers: { value: UserInterface[] } = {
   value: [],
 };
 
-let startVal = 5;
+let sqlOffset = 5;
 
 // Manage Users Page
 
@@ -94,7 +94,7 @@ function refreshUsers() {
   loadFirstUsers();
   ManageUsersPage.clearLogger();
   searchInput.value = "";
-  startVal = 5;
+  sqlOffset = 5;
   rowNumberUsers.value = 0;
 }
 
@@ -113,7 +113,7 @@ loadFirstUsers();
 userMore.addEventListener("click", function (e) {
   e.preventDefault();
   const formData = new FormData();
-  formData.append("start", startVal.toString());
+  formData.append("start", sqlOffset.toString());
   ManageUsersPage.sendApiRequest(
     "/api/dashboard/users/load-users.php",
     formData
@@ -139,7 +139,7 @@ userMore.addEventListener("click", function (e) {
         ]);
       }
     }
-    startVal += 5;
+    sqlOffset += 5;
   });
 });
 
