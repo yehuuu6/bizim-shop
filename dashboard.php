@@ -175,7 +175,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
         <div id="loader-products" class="loader">
-          <?php $loader2 = new Loader(); ?>
+          <?php $loader_1 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -219,7 +219,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
         <div id="loader-create" class="loader">
-          <?php $loader3 = new Loader(); ?>
+          <?php $loader_2 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -316,7 +316,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
         <div id="loader-users" class="loader">
-        <?php $loader4 = new Loader(); ?>
+        <?php $loader_3 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -374,7 +374,7 @@ $row = mysqli_fetch_assoc($res);
         </div>
     </div>
     <div id="main-dashboard-loader" class="loader" style="display:flex;">
-      <?php $loader5 = new Loader(); ?>
+      <?php $loader_4 = new Loader(); ?>
     </div>
     <div class="settings-container" style="display:none;">
       <div class="settings">
