@@ -5,7 +5,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     authorize_user();
 
-    $result = array();
     $id = $_SESSION['id'];
 
     // Get post data
