@@ -186,10 +186,12 @@ function get_products(
     $status = $props['status'] ?? '1';
     $order = $props['order'] ?? 'id';
     $order_type = $props['order_type'] ?? 'DESC';
-    $limit = $props['limit'] ?? 1;
+    $limit = $props['limit'] ?? PHP_INT_MAX;
     $offset = $props['offset'] ?? 0;
     $featured = $props['featured'] ?? '';
     $shipment = $props['shipping'] ?? '';
+    $min_price = $props['min_price'] ?? '0';
+    $max_price = $props['max_price'] ?? PHP_INT_MAX;
 
     $sql = "SELECT * FROM product WHERE ";
     $sql .= "name LIKE '%$search%' AND ";
@@ -197,6 +199,7 @@ function get_products(
     $sql .= "tags LIKE '%$tag%' AND ";
     $sql .= "status LIKE '%$status%' AND ";
     $sql .= "featured LIKE '%$featured%' AND ";
+    $sql .= "price BETWEEN $min_price AND $max_price AND ";
     $sql .= "shipment LIKE '%$shipment%' ";
     $sql .= "ORDER BY $order $order_type ";
     $sql .= "LIMIT $limit OFFSET $offset";
