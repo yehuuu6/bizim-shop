@@ -49,7 +49,8 @@ const imageCount = {
   value: 1,
 };
 
-let startVal = 0;
+let sqlOffset = 0;
+let productLimit = 5;
 
 const cleanProductForm = document.querySelector(
   "#clean-create-form"
@@ -129,7 +130,8 @@ async function loadFirstProducts() {
   productTable.innerHTML = "";
 
   const formData = new FormData();
-  formData.append("start", "0");
+  formData.append("offset", "0");
+  formData.append("limit", productLimit.toString());
   const response = await ManageProductsPage.sendApiRequest(
     "/api/dashboard/product/load-products.php",
     formData
@@ -150,7 +152,7 @@ runSearchProducts(searchInput);
 function refreshProducts() {
   loadFirstProducts();
   searchInput.value = "";
-  startVal = 0;
+  sqlOffset = 0;
   rowNumberProducts.value = 0;
 }
 
@@ -175,9 +177,10 @@ loadFirstProducts();
 // Load 5 more products on click
 productMore.addEventListener("click", function (e) {
   e.preventDefault();
-  startVal += 5;
+  sqlOffset += productLimit;
   const formData = new FormData();
-  formData.append("start", startVal.toString());
+  formData.append("offset", sqlOffset.toString());
+  formData.append("limit", productLimit.toString());
   ManageProductsPage.sendApiRequest(
     "/api/dashboard/product/load-products.php",
     formData
@@ -186,7 +189,7 @@ productMore.addEventListener("click", function (e) {
     if (products === undefined || products.length === 0) {
       productMore.classList.add("disabled");
       productMore.disabled = true;
-      startVal -= 5;
+      sqlOffset -= productLimit;
       ManageProductsPage.showMessage([
         "error",
         "Daha fazla ürün bulunamadı.",
