@@ -94,10 +94,14 @@ class Product extends Component
         return $body;
     }
 
-    private function render_featured_badge(bool $condition)
+    /**
+     * Renders 'Featured' badge if the product is featured.
+     * @param bool $is_featured The condition to check if the product is featured.
+     * @return html $body
+     */
+    private function render_featured_badge(bool $is_featured)
     {
-        // TODO Get if the product is featured and set $condition based on that.
-        if ($condition) {
+        if ($is_featured) {
             $body = <<<HTML
             <span class="featured-product" title="Öne Çıkan Ürün">
                 <i class="fa-solid fa-star"></i>
