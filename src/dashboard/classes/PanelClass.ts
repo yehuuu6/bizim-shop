@@ -21,7 +21,7 @@ export default class PanelClass implements PanelClassInterface {
   }
 
   clearLogger() {
-      this.logger.className = "logger";
+    this.logger.className = "logger";
   }
 
   showMessage(data: Array<string>) {
@@ -45,14 +45,15 @@ export default class PanelClass implements PanelClassInterface {
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      const element = document.querySelector(`[name=${cause}]`) as HTMLElement ||
-               document.querySelector(`[id=${cause}]`) as HTMLElement;
+      const element =
+        (document.querySelector(`[name=${cause}]`) as HTMLElement) ||
+        (document.querySelector(`[id=${cause}]`) as HTMLElement);
 
       if (element) {
         element.style.border = "1px solid red";
 
         this.timer2 = setTimeout(() => {
-          element.style.removeProperty('border'); // Remove the "border" property
+          element.style.removeProperty("border"); // Remove the "border" property
         }, 2000);
       }
     }
