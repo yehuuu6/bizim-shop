@@ -13,9 +13,11 @@ class Product extends Component
 {
     public function __construct(array $product)
     {
-        $product_title = parent::shorten_string($product['name'], 15);
+        $product_title = parent::shorten_string($product['name'], 18);
+        $is_featured = $product['featured'] == '1' ? true : false;
         $body = <<<HTML
         <div class="product" data-id="{$product['id']}">
+        {$this->render_featured_badge($is_featured)}
             <div class="product-image">
                 {$this->render_wishlist_element(false)}
                 <img src="{$this->get_image_src($product)}" alt="Resim">
@@ -25,7 +27,9 @@ class Product extends Component
                 <a title="{$product['name']}" href="#" class="product-title">{$product_title}</a>
                 <span class="product-price">₺{$product['price']}</span>
             </div>
-            <button class="add-cart">Sepete Ekle</button>
+            <div class="product-btns">
+                {$this->render_add_to_cart_element(false)}
+            </div>
         </div>
         HTML;
 
@@ -76,7 +80,7 @@ class Product extends Component
         if (!$condition) {
             $body = <<<HTML
             <span class="add-wishlist" title="Favorilere Ekle">
-                <i class="fa-solid fa-heart"></i>
+                <i class="fa-regular fa-heart"></i>
             </span>
         HTML;
         } else {
@@ -84,6 +88,45 @@ class Product extends Component
             <span class="add-wishlist" title="Favorilerden Çıkar">
                 <i class="fa-solid fa-heart-broken"></i>
             </span>
+        HTML;
+        }
+
+        return $body;
+    }
+
+    private function render_featured_badge(bool $condition)
+    {
+        // TODO Get if the product is featured and set $condition based on that.
+        if ($condition) {
+            $body = <<<HTML
+            <span class="featured-product" title="Öne Çıkan Ürün">
+                <i class="fa-solid fa-star"></i>
+            </span>
+        HTML;
+        } else {
+            $body = '';
+        }
+
+        return $body;
+    }
+
+    /**
+     * Renders 'Add to cart' element and 'Remove from cart' element based on if the user has added the product to cart.
+     * @param bool $condition The condition to check if the user has added the product to cart.
+     * @return html $body
+     */
+
+    private function render_add_to_cart_element(bool $condition)
+    {
+
+        // TODO Get if user has added the product to the cart and set $condition based on that.
+        if (!$condition) {
+            $body = <<<HTML
+            <button class="add-cart">Sepete Ekle</button>
+        HTML;
+        } else {
+            $body = <<<HTML
+            <button class="in-cart">Sepette</button>
         HTML;
         }
 
