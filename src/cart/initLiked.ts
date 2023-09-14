@@ -1,6 +1,6 @@
 import { getProductsById } from "../products/getProducts";
-import { setWishlistBtns } from "../common/wishlistBtns";
-import { setAddToCartBtns } from "../common/cartBtns";
+import { setWishlistBtns } from "../common/controllers/wishlistBtns";
+import { setAddToCartBtns } from "../common/controllers/cartBtns";
 import initShoppingCart from "./cartManager";
 
 import "../products/products.css";
