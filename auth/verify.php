@@ -2,7 +2,7 @@
 require_once './header.php';
 if (isset($_GET['token'])) {
   $token = get_safe_value($con, $_GET['token']);
-  verifyUser($token);
+  verify_user($token);
 }
 if (!isset($_SESSION['id'])) {
   header('location: /');
@@ -20,7 +20,7 @@ if (($_SESSION['verified'] == 1)) {
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/dist/auth/a578a8g.css">
+  <link rel="stylesheet" href="/dist/auth/r9k2p4i7h0o1g5w6a2u3.css">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
   <title>E-posta Onayı - Bizim Shop</title>

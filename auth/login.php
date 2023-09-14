@@ -12,7 +12,7 @@ if (isset($_SESSION['id'])) {
   <meta charset="utf-8">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
-  <link rel="stylesheet" href="/dist/auth/a578a8g.css">
+  <link rel="stylesheet" href="/dist/auth/r9k2p4i7h0o1g5w6a2u3.css">
   <title>Hesabınıza giriş yapın - Bizim Shop</title>
 </head>
 
