@@ -28,8 +28,12 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     foreach ($product_ids as $id) {
         $product = get_products($con, [
-            'id' => $id
+            'status' => '1',
+            'id' => $id,
         ]);
+        if (count($product) == 0) {
+            continue;
+        }
         if ($product_type === "in-cart") {
             $p = new CartItem($product[0]);
         } else if ($product_type === "default") {
@@ -48,7 +52,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             }
         }
     }
-
     echo json_encode($products);
 } else {
     header("HTTP/1.1 403 Forbidden");
