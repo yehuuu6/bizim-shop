@@ -1,6 +1,6 @@
 // Other imports
 import PanelClass from "../dashboard/classes/PanelClass";
-import ConfirmationModal from "../common/Modal";
+import ConfirmationModal from "../common/confirmationModal";
 import { getApiResponse, clearAvatarInput } from "../utils/functions.usr";
 import "./profile.css";
 import "../utils/utils.css";

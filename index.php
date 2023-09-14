@@ -3,9 +3,18 @@ define('FILE_ACCESS', TRUE);
 
 require 'vendor/autoload.php';
 
+use Components\Super\Head;
 use Components\Navbar\Navbar;
 use Components\Footer\Footer;
+use Components\Super\Legs;
 
+$styles = [
+    "/dist/core/dr50hzx.css",
+];
+
+$head = new Head([
+    "styles" => $styles,
+]);
 $navbar = new Navbar();
 ?>
 
@@ -19,4 +28,7 @@ $navbar = new Navbar();
     </div>
 </section>
 
-<?php $footer = new Footer(); ?>
+<?php
+$footer = new Footer();
+$legs = new Legs();
+?>

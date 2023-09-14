@@ -9,12 +9,6 @@ if (!defined('FILE_ACCESS')) {
 }
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
-require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/consts.inc.php");
-
-if (isset($_SESSION['id']) && $_SESSION['verified'] == 0) {
-    header("location: /auth/verify");
-    die();
-}
 
 use Components\Component;
 
@@ -25,29 +19,8 @@ class Navbar extends Component
 {
     public function __construct(array $props = [])
     {
-        // Check if metadata props are valid
-        $this->check_metadata($props);
-
-        // Set metadata props
-        $metadata = $this->set_metadata($props);
-        list($title, $desc, $keywords, $author, $favi) = $metadata;
 
         $body = <<<HTML
-        <!DOCTYPE html>
-            <html lang="tr">
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta name="description" content="{$desc}">
-                <meta name="keywords" content="{$keywords}">
-                <meta name="author" content="{$author}">
-                <link rel="stylesheet" href="/dist/main/dr50hzx.css" />
-                <link rel="shortcut icon" href="{$favi}" type="image/x-icon">
-                <script src="/global/plugins/icons.js"></script>
-                <title>{$title}</title>
-            </head>
-            <body>
             <nav class="navbar flex-display justify-between align-center">
                 <div class="navbar-item flex-display gap-5 align-center">
                     <img class="navbar-svg large-svg no-drag" src="/global/imgs/favicon.svg" alt="">
@@ -67,12 +40,16 @@ class Navbar extends Component
                     <img class="navbar-svg small-svg" src="/global/imgs/usersvg.svg" alt="">
                     {$this->render_auth_elements()}
                     <li>
-                        <button class="interactive" id="cart-btn">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </button>
-                        <button class="interactive" id="wishlist-btn">
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
+                        <div class="interactive-btns">
+                            <a href="/cart" class="interactive" id="cart-btn">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="item-count">0</span>
+                            </a>
+                            <a href="/wishlist" class="interactive" id="wishlist-btn">
+                                <i class="fa-solid fa-heart"></i>
+                                <span class="item-count">0</span>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -81,47 +58,6 @@ class Navbar extends Component
 
         // Render the component on the page
         parent::render($body);
-    }
-
-    /**
-     * Checks if metadata props are valid.
-     * @throws Exception If one or more metadata props are invalid & has more than 5 props.
-     */
-    private function check_metadata(array $props = [])
-    {
-        $allowed = [
-            "title",
-            "description",
-            "keywords",
-            "author",
-            "favicon"
-        ];
-
-        if (count($props) > 5) {
-            throw new \Exception("Navbar component has too many props.");
-        }
-
-        if ($props) {
-            foreach (array_keys($props) as $key) {
-                if (!in_array($key, $allowed)) {
-                    throw new \Exception("Navbar component has an unknown prop.");
-                }
-            }
-        }
-    }
-
-    /**
-     * Sets page metadata based on props given to the component.
-     */
-    private function set_metadata(array $props = [])
-    {
-        $PAGE_TITLE = $props["title"] ?? DEFAULT_PAGE_TITLE;
-        $PAGE_DESCRIPTION = $props["description"] ?? DEFAULT_PAGE_DESCRIPTION;
-        $PAGE_KEYWORDS = $props["keywords"] ?? DEFAULT_PAGE_KEYWORDS;
-        $PAGE_AUTHOR = $props["author"] ?? DEFAULT_PAGE_AUTHOR;
-        $PAGE_FAVICON = $props["favicon"] ?? DEFAULT_PAGE_FAVICON;
-
-        return [$PAGE_TITLE, $PAGE_DESCRIPTION, $PAGE_KEYWORDS, $PAGE_AUTHOR, $PAGE_FAVICON];
     }
 
     /**

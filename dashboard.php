@@ -250,12 +250,6 @@ $row = mysqli_fetch_assoc($res);
                   <input name="product-name" type="text" id="product-name" spellcheck="false" />
                 </div>
                 <div class="form-item">
-                  <label for="product-price">Ürün Fiyatı *</label>
-                  <input name="product-price" type="number" id="product-price" spellcheck="false" />
-                </div>
-              </div>
-              <div class="item-wrapper">
-                <div class="form-item">
                   <label for="product-category">Ürün Kategorisi *</label>
                   <select name="product-category" id="product-category">
                     <option value="1">Müzik Seti</option>
@@ -270,7 +264,23 @@ $row = mysqli_fetch_assoc($res);
                 </div>
               </div>
               <label for="product-description">Ürün Açıklaması *</label>
-              <textarea name="product-description" type="text" id="product-description" spellcheck="false""></textarea>
+              <textarea name="product-description" type="text" id="product-description" spellcheck="false"></textarea>
+              <h3 class=" bottom-header" style="margin: 0;">Fiyat Bilgileri</h3>
+              <hr style="margin: 0;">
+              <div class="item-wrapper">
+                <div class="form-item">
+                  <label for="product-price">Ürün Ücreti *</label>
+                  <input name="product-price" step="0.01" type="number" id="product-price" />
+                </div>
+                <div class="form-item">
+                  <label for="shipping-cost">Kargo Ücreti *<span> (Ücretsiz kargo seçilirse 0 kabul edilecektir.)</span></label>
+                  <input name="shipping-cost" step="0.01" type="number" id="shipping-cost" />
+                </div>
+                <div class="form-item">
+                  <label for="fee-cost">Vergi Ücreti *</label>
+                  <input name="fee-cost" step="0.01" type="number" id="fee-cost" />
+                </div>
+              </div>
               <h3 class=" bottom-header" style="margin: 0;">Diğer Bilgiler</h3>
               <hr style="margin: 0;">
               <div class="item-wrapper">
@@ -316,7 +326,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
         <div id="loader-users" class="loader">
-        <?php $loader_3 = new Loader(); ?>
+          <?php $loader_3 = new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -326,9 +336,9 @@ $row = mysqli_fetch_assoc($res);
           <div class="item">
             <div class="controls">
               <div class="c-container">
-              <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-users">
-                <i class="fa-solid fa-rotate-right"></i>
-              </button>
+                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-users">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </button>
               </div>
               <input autocomplete="off" type="text" placeholder="Kullanıcı ara" name="search-user" id="search-user" spellcheck="false" />
             </div>
@@ -357,21 +367,21 @@ $row = mysqli_fetch_assoc($res);
     </div>
     <footer>
       <div class="copyright-section">
-      <span>Tüm hakları saklıdır
-      </span>
+        <span>Tüm hakları saklıdır
+        </span>
         <p>© 2023 Bizim Shop</p>
       </div>
     </footer>
     <div class="logger">
-        <span class="flex-display justify-center align-center">
-          <img src="/global/imgs/info.png" alt="Status"/>
-        </span>
-        <p>{message}</p>
-        <div class="logger-btn">
-          <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
+      <span class="flex-display justify-center align-center">
+        <img src="/global/imgs/info.png" alt="Status" />
+      </span>
+      <p>{message}</p>
+      <div class="logger-btn">
+        <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
     </div>
     <div id="main-dashboard-loader" class="loader" style="display:flex;">
       <?php $loader_4 = new Loader(); ?>
@@ -379,31 +389,31 @@ $row = mysqli_fetch_assoc($res);
     <div class="settings-container" style="display:none;">
       <div class="settings">
         <div class="header">
-            <h2 class="main-title">Ayarlar</h2>
+          <h2 class="main-title">Ayarlar</h2>
         </div>
         <div class="content">
-            <h3 class="title">Kişiselleştirme</h3>
-            <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
-            <div class="theme-container">
-              <div class="theme-item active-theme" data-theme="light">
-                <div class="theme-img">
-                  <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
-                </div>
-                <div class="theme-info">
-                <input type="radio" id="light-theme">
-                  <label class="theme-title">Açık Tema</label>
-                </div>
+          <h3 class="title">Kişiselleştirme</h3>
+          <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
+          <div class="theme-container">
+            <div class="theme-item active-theme" data-theme="light">
+              <div class="theme-img">
+                <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
               </div>
-              <div class="theme-item" data-theme="dark">
-                <div class="theme-img">
-                  <img src="/global/imgs/dark_preview.svg" alt="">
-                </div>
-                <div class="theme-info">
-                <input type="radio" id="dark-theme">
-                  <label class="theme-title">Koyu Tema</label>
-                </div>
+              <div class="theme-info">
+                <input type="radio" id="light-theme">
+                <label class="theme-title">Açık Tema</label>
               </div>
             </div>
+            <div class="theme-item" data-theme="dark">
+              <div class="theme-img">
+                <img src="/global/imgs/dark_preview.svg" alt="">
+              </div>
+              <div class="theme-info">
+                <input type="radio" id="dark-theme">
+                <label class="theme-title">Koyu Tema</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

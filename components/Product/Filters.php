@@ -16,30 +16,21 @@ class Filters extends Component
         $body = <<<HTML
         <form id="filters" class="product-filters">
             <h3 class="filter-title">Sıralama</h3>
-            <select name="sort" id="sort">
+            <select name="p-sort" id="p-sort">
+                <option value="id ASC">Eskiden Yeniye</option>
+                <option value="id DESC">Yeniden Eskiye</option>
                 <option value="popularite">Populerlik</option>
-                <option value="price-ascending">Fiyat Artan</option>
-                <option value="price-descending">Fiyat Azalan</option>
-                <option value="date-new">Yeniden Eskiye</option>
-                <option value="date-old">Eskiden Yeniye</option>
+                <option value="price ASC">Fiyat Artan</option>
+                <option value="price DESC">Fiyat Azalan</option>
             </select>
             <h3 class="filter-title">Kategoriler</h3>
-            <div class="category">
-                <input type="checkbox" name="p-music-set" id="p-music-set" />
-                <label for="p-music-set">Müzik Seti</label>
-            </div>
-            <div class="category">
-                <input type="checkbox" name="p-speaker" id="p-speaker" />
-                <label for="p-speaker">Hoparlör</label>
-            </div>
-            <div class="category">
-                <input type="checkbox" name="p-turntables" id="p-turntables" />
-                <label for="p-turntables">Plak Çalar</label>
-            </div>
-            <div class="category">
-                <input type="checkbox" name="p-music-player" id="p-music-player" />
-                <label for="p-music-player">Müzik Çalar</label>
-            </div>
+            <select name="p-category" id="p-category">
+                <option value="0">Hepsini Göster</option>
+                <option value="1">Müzik Seti</option>
+                <option value="2">Hoparlör</option>
+                <option value="3">Plak Çalar</option>
+                <option value="4">Müzik Çalar</option>
+            </select>
             <h3 class="filter-title">Fiyat Aralığı</h3>
             <div class="price-range">
             ₺
@@ -66,6 +57,7 @@ class Filters extends Component
                 <input type="checkbox" name="p-shipment" id="p-shipment" />
                 <label for="p-shipment">Ücretsiz Kargo</label>
             </div>
+            <button type="submit" class="apply-filters">Uygula</button>
         </form>
         HTML;
 

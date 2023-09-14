@@ -1,0 +1,219 @@
+/* Products */
+
+#featured {
+  padding: 60px 80px;
+  height: auto;
+  align-items: flex-start;
+  background: #eeeeee;
+  gap: 25px;
+}
+#featured .product-container {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  min-height: 425px;
+  gap: 30px;
+  position: relative;
+}
+#featured .product-container .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  display: none;
+  place-content: center;
+  background: #fff;
+}
+#featured .product-container .loader svg {
+  width: 9rem;
+  height: 9rem;
+}
+#featured .product-filters {
+  display: flex;
+  padding: 20px;
+  width: 20%;
+  border-radius: 5px;
+  justify-content: center;
+  flex-direction: column;
+  height: 425px;
+  gap: 10px;
+  background-color: #fff;
+  border: 2px solid #dadada;
+}
+.product {
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  width: 250px;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  padding: 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  height: 330px;
+}
+.product-image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.product .product-image img {
+  height: 100%;
+  width: 100%;
+  -webkit-user-drag: none;
+  object-fit: cover;
+  transition: 0.3s all ease-in-out;
+}
+.product .add-wishlist {
+  position: absolute;
+  top: 8px;
+  box-shadow: 0 0 5px #05050560;
+  right: 8px;
+  font-size: 25px;
+  color: #363636;
+  display: grid;
+  place-items: center;
+  padding: 0.3rem;
+  background: #fff;
+  border-radius: 9999px;
+  z-index: 999;
+  cursor: pointer;
+}
+.product .featured-product {
+  position: absolute;
+  top: 10px;
+  box-shadow: 0 0 5px #05050560;
+  left: -38px;
+  font-size: 16px;
+  color: #ffe600;
+  display: grid;
+  place-items: center;
+  width: 120px;
+  transform: rotate(-45deg);
+  padding: 0.3rem;
+  background: #538fff;
+  z-index: 999;
+}
+.product .add-wishlist:hover {
+  color: #538fff;
+}
+.product .free-shipment {
+  position: absolute;
+  bottom: 0;
+  font-weight: 550;
+  color: #538fff;
+  left: 50%;
+  padding: 7px 5px;
+  text-transform: uppercase;
+  width: 101%;
+  font-size: 14px;
+  transform: translateX(-50%);
+  background: #ffffffc4;
+}
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 5px;
+}
+.product .product-info .product-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #363636;
+  text-decoration: none;
+  text-align: left;
+  margin: 0.5rem 0;
+}
+.product .product-info .product-title:hover {
+  text-decoration: underline;
+}
+.product .product-info .product-price {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #363636;
+}
+.product .add-cart,
+.product .in-cart {
+  background: #538fff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.product .add-cart:hover {
+  background: #3e7fff;
+}
+
+.product .in-cart {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Product Filters */
+.product-filters select[name="p-sort"],
+.product-filters select[name="p-category"] {
+  border: 2px solid #dadada;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1.1rem;
+  margin-left: 10px;
+  cursor: pointer;
+  outline: none;
+  line-height: 1.1;
+  background-color: #fff;
+  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
+.product-filters .category {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding-left: 10px;
+}
+.product-filters .category input[type="checkbox"] {
+  cursor: pointer;
+}
+.product-filters .category label {
+  cursor: pointer;
+}
+.product-filters .price-range {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-left: 10px;
+}
+.product-filters .price-range input[type="number"] {
+  width: 70px;
+  padding: 8px;
+  outline: none;
+  border: 2px solid #dadada;
+}
+.product-filters .filter-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #363636;
+  letter-spacing: 0.5px;
+}
+.product-filters .apply-filters {
+  background: #538fff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.product-filters .apply-filters:hover {
+  background: #3e7fff;
+}

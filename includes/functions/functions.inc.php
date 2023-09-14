@@ -164,14 +164,18 @@ function fix_strings(array $row)
  * Gets products from the database based on the given parameters.
  * @param mysqli $con The mysqli connection object.
  * @param array $props The properties to filter the products.
+ * @param string $props['id'] The id of the product if you need to get a specific product.
  * @param string $props['search'] The search query.
  * @param string $props['category'] The category of the product.
  * @param string $props['tag'] The tag of the product.
  * @param string $props['status'] The status of the product.
- * @param string $props['order'] The order of the products.
- * @param string $props['order_type'] The order type of the products.
+ * @param string $props['order_type'] The order type of the products. Example id DESC.
  * @param string $props['limit'] The limit of the products.
  * @param string $props['offset'] The offset of the products.
+ * @param string $props['featured'] The featured status of the products.
+ * @param string $props['shipping'] The shipping status of the products.
+ * @param string $props['min_price'] The minimum price of the products.
+ * @param string $props['max_price'] The maximum price of the products.
  * 
  * @return array
  */
@@ -180,11 +184,11 @@ function get_products(
     mysqli $con,
     $props = [],
 ) {
+    $id = $props['id'] ?? '';
     $search = $props['search'] ?? '';
     $category = $props['category'] ?? '';
     $tag = $props['tag'] ?? '';
     $status = $props['status'] ?? '1';
-    $order = $props['order'] ?? 'id';
     $order_type = $props['order_type'] ?? 'DESC';
     $limit = $props['limit'] ?? PHP_INT_MAX;
     $offset = $props['offset'] ?? 0;
@@ -201,8 +205,9 @@ function get_products(
     $sql .= "featured LIKE '%$featured%' AND ";
     $sql .= "price BETWEEN $min_price AND $max_price AND ";
     $sql .= "shipment LIKE '%$shipment%' ";
-    $sql .= "ORDER BY $order $order_type ";
+    $sql .= "ORDER BY $order_type ";
     $sql .= "LIMIT $limit OFFSET $offset";
+    $id !== '' ? $sql = "SELECT * FROM product WHERE id = $id" : $sql = $sql;
     $result = mysqli_query($con, $sql);
     $products = array();
     while ($row = mysqli_fetch_assoc($result)) {

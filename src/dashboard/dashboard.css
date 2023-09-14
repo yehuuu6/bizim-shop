@@ -1009,6 +1009,11 @@ table tr:hover td a i.active:hover {
   font-weight: 500;
   color: var(--text-color);
 }
+.item-wrapper .form-item label span {
+  color: var(--small-text-color);
+  font-size: 13px;
+  font-weight: 400;
+}
 .item-wrapper .form-item input {
   margin: 0;
   font-weight: 350;

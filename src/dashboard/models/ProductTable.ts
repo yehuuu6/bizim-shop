@@ -5,7 +5,7 @@ import {
   isEditMode,
   imageCount,
 } from "..";
-import ConfirmationModal from "../../common/Modal";
+import ConfirmationModal from "../../common/confirmationModal";
 import {
   getCategory,
   setStatus,
@@ -30,6 +30,8 @@ export interface ProductInterface {
   name: string;
   category: string;
   price: string;
+  shipping_cost: string;
+  fee_cost: string;
   status: string;
   image1: string;
   image2: string;
@@ -188,6 +190,8 @@ function editProduct(product: ProductInterface) {
   const elements = [
     { element: document.querySelector("#product-name"), key: "name" },
     { element: document.querySelector("#product-price"), key: "price" },
+    { element: document.querySelector("#shipping-cost"), key: "shipping_cost" },
+    { element: document.querySelector("#fee-cost"), key: "fee_cost" },
     { element: document.querySelector("#product-tags"), key: "tags" },
     {
       element: document.querySelector("#product-description"),

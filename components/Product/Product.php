@@ -11,15 +11,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
  */
 class Product extends Component
 {
+    public $body;
     public function __construct(array $product)
     {
         $product_title = parent::shorten_string($product['name'], 18);
         $is_featured = $product['featured'] == '1' ? true : false;
-        $body = <<<HTML
+        $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">
         {$this->render_featured_badge($is_featured)}
             <div class="product-image">
-                {$this->render_wishlist_element(false)}
+                <span class="add-wishlist" title="Favorilere Ekle"><i class="fa-regular fa-heart"></i></span>
                 <img src="{$this->get_image_src($product)}" alt="Resim">
                 {$this->render_shipment_element($product)}
             </div>
@@ -27,14 +28,9 @@ class Product extends Component
                 <a title="{$product['name']}" href="#" class="product-title">{$product_title}</a>
                 <span class="product-price">₺{$product['price']}</span>
             </div>
-            <div class="product-btns">
-                {$this->render_add_to_cart_element(false)}
-            </div>
+            <button id="product-cart-btn" class="add-cart">Sepete Ekle</button>
         </div>
         HTML;
-
-        // Render the component on the page
-        parent::render($body);
     }
     /**
      * Gets the image source of the product.
@@ -69,30 +65,6 @@ class Product extends Component
 
         return $body;
     }
-    /**
-     * Renders 'Add to wishlist' element and 'Remove from wishlist' element based on if the user has added the product to wishlist.
-     * @param bool $condition The condition to check if the user has added the product to wishlist.
-     * @return html $body
-     */
-    private function render_wishlist_element(bool $condition)
-    {
-        // TODO Get if user has added the product to wishlist and set $condition based on that.
-        if (!$condition) {
-            $body = <<<HTML
-            <span class="add-wishlist" title="Favorilere Ekle">
-                <i class="fa-regular fa-heart"></i>
-            </span>
-        HTML;
-        } else {
-            $body = <<<HTML
-            <span class="add-wishlist" title="Favorilerden Çıkar">
-                <i class="fa-solid fa-heart-broken"></i>
-            </span>
-        HTML;
-        }
-
-        return $body;
-    }
 
     /**
      * Renders 'Featured' badge if the product is featured.
@@ -109,29 +81,6 @@ class Product extends Component
         HTML;
         } else {
             $body = '';
-        }
-
-        return $body;
-    }
-
-    /**
-     * Renders 'Add to cart' element and 'Remove from cart' element based on if the user has added the product to cart.
-     * @param bool $condition The condition to check if the user has added the product to cart.
-     * @return html $body
-     */
-
-    private function render_add_to_cart_element(bool $condition)
-    {
-
-        // TODO Get if user has added the product to the cart and set $condition based on that.
-        if (!$condition) {
-            $body = <<<HTML
-            <button class="add-cart">Sepete Ekle</button>
-        HTML;
-        } else {
-            $body = <<<HTML
-            <button class="in-cart">Sepette</button>
-        HTML;
         }
 
         return $body;

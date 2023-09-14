@@ -5,15 +5,13 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     authorize_user();
 
-    $id = $_SESSION['id'];
-
     // Get post data
 
     $offset = get_safe_value($con, $_POST['offset']);
     $limit = get_safe_value($con, $_POST['limit']);
 
     $products = get_products($con, [
-        'order_type' => 'ASC',
+        'order_type' => 'id ASC',
         'limit' => $limit,
         'offset' => $offset,
     ]);
