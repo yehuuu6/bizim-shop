@@ -207,7 +207,7 @@ function get_products(
     $sql .= "shipment LIKE '%$shipment%' ";
     $sql .= "ORDER BY $order_type ";
     $sql .= "LIMIT $limit OFFSET $offset";
-    $id !== '' ? $sql = "SELECT * FROM product WHERE id = $id" : $sql = $sql;
+    $id !== '' ? $sql = "SELECT * FROM product WHERE status LIKE '%$status%' AND id = $id" : $sql = $sql;
     $result = mysqli_query($con, $sql);
     $products = array();
     while ($row = mysqli_fetch_assoc($result)) {
