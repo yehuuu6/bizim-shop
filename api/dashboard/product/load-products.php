@@ -14,6 +14,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         'order_type' => 'id ASC',
         'limit' => $limit,
         'offset' => $offset,
+        'status' => ''
     ]);
     echo json_encode($products);
 } else {
