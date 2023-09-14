@@ -1,28 +1,25 @@
-import { setCartItemCount, initCartBtnListeners } from "../common/cartBtns";
+import { setNavbarCartItemCount } from "../common/cartBtns";
 import { getProductsById } from "../products/getProducts";
 
-let cartItems: string[] = JSON.parse(localStorage.getItem("cartItems") || "[]");
-const shoppingCartItemCounter = document.querySelector(
-  "#cart-item-counter"
-) as HTMLSpanElement;
-shoppingCartItemCounter.innerText = cartItems.length.toString();
+const container = document.querySelector(".shopping-cart") as HTMLDivElement;
 
-const cartContainer = document.querySelector(
-  ".shopping-cart .products"
-) as HTMLDivElement;
+const cartContainer = container.querySelector(".products") as HTMLDivElement;
 
 /**
  * Initializes shopping cart by getting products from localStorage.
  */
 export default function initShoppingCart() {
+  cartContainer.innerHTML = "<h4>Seçilen Ürünler</h4>";
   const inCartIds = JSON.parse(localStorage.getItem("cartItems") || "[]");
   const formData = new FormData();
   formData.append("product-ids", inCartIds);
   formData.append("product-type", "in-cart");
   getProductsById(formData)
     .then((products) => {
+      console.log(products);
       if (products.length < 1) {
-        cartContainer.innerHTML += "<p>Sepetinizde ürün bulunmamaktadır.</p>";
+        cartContainer.innerHTML +=
+          '<div class="empty-cart"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
       } else {
         products.forEach((product: string) => {
           cartContainer.innerHTML += product;
@@ -30,16 +27,9 @@ export default function initShoppingCart() {
       }
     })
     .finally(() => {
-      controlRemoveCartBtns();
       calculateTotalPrice();
+      setRemoveFromCartBtns();
     });
-}
-
-function controlRemoveCartBtns() {
-  const products = cartContainer.querySelectorAll(
-    ".product-in-cart"
-  ) as NodeListOf<HTMLDivElement>;
-  setRemoveFromCartBtns(products);
 }
 
 export function calculateTotalPrice() {
@@ -112,32 +102,53 @@ export function calculateTotalPrice() {
   });
 }
 
-function setRemoveFromCartBtns(products: NodeListOf<HTMLDivElement>) {
-  const likedProductsContainer = document.querySelector(
-    ".liked-products"
-  ) as HTMLDivElement;
-  const cartContainer = document.querySelector(
-    ".shopping-cart .products"
-  ) as HTMLDivElement;
-  products.forEach((product) => {
-    const productId = product.dataset.id as string;
-    const removeProductBtn = product.querySelector(
-      ".remove-product-cart"
-    ) as HTMLSpanElement;
-    removeProductBtn.addEventListener("click", () => {
-      let cartItems: string[] = JSON.parse(
-        localStorage.getItem("cartItems") || "[]"
-      );
-      cartItems = cartItems.filter((id) => id !== productId);
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      shoppingCartItemCounter.innerText = cartItems.length.toString();
-      product.remove();
-      setCartItemCount();
-      if (cartItems.length < 1) {
-        cartContainer.innerHTML += "<p>Sepetinizde ürün bulunmamaktadır.</p>";
-      }
+function setRemoveFromCartBtns() {
+  const removeFromCartBtns = cartContainer.querySelectorAll(
+    ".remove-from-cart"
+  ) as NodeListOf<HTMLButtonElement>;
+
+  removeFromCartBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const productId = (btn.closest(".product-in-cart") as HTMLDivElement)
+        .dataset.id as string;
+      const productElement = document.querySelector(
+        `.product-in-cart[data-id="${productId}"]`
+      ) as HTMLDivElement;
+      productElement.remove();
       calculateTotalPrice();
-      initCartBtnListeners(likedProductsContainer);
+      removeFromLocalStorage(productId);
     });
   });
+}
+
+function removeFromLocalStorage(productId: string) {
+  const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  const index = cartItems.indexOf(productId);
+  if (index > -1) {
+    cartItems.splice(index, 1);
+  }
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+  // Update shopping cart
+  if (cartItems.length < 1) {
+    cartContainer.innerHTML +=
+      '<div class="empty-cart"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
+  }
+
+  setNavbarCartItemCount();
+
+  // Update the cart button
+
+  const container = document.querySelector(".liked-products") as HTMLDivElement;
+  const productElement = container.querySelector(
+    `.product[data-id="${productId}"]`
+  ) as HTMLDivElement;
+  if (productElement) {
+    const btn = productElement.querySelector(
+      "#product-cart-btn"
+    ) as HTMLButtonElement;
+    btn.innerText = "Sepete Ekle";
+    btn.className = "add-cart";
+    btn.disabled = false;
+  }
 }
