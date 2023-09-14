@@ -1,9 +1,13 @@
-import { setNavbarCartItemCount } from "../common/cartBtns";
+import { setNavbarCartItemCount } from "../common/controllers/cartBtns";
 import { getProductsById } from "../products/getProducts";
 
 const container = document.querySelector(".shopping-cart") as HTMLDivElement;
 
 const cartContainer = container.querySelector(".products") as HTMLDivElement;
+
+const emptyCartBtn = document.querySelector(
+  "#empty-shopping-cart"
+) as HTMLButtonElement;
 
 /**
  * Initializes shopping cart by getting products from localStorage.
@@ -16,7 +20,6 @@ export default function initShoppingCart() {
   formData.append("product-type", "in-cart");
   getProductsById(formData)
     .then((products) => {
-      console.log(products);
       if (products.length < 1) {
         cartContainer.innerHTML +=
           '<div class="empty-cart"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
@@ -87,16 +90,23 @@ export function calculateTotalPrice() {
     const type = element.dataset.type as string;
     switch (type) {
       case "products":
-        element.innerHTML = "₺" + totalProductPrice.toFixed(2);
+        element.innerHTML =
+          totalProductPrice.toFixed(2) +
+          ' <span class="product-currency">TL</span>';
         break;
       case "shipment":
-        element.innerHTML = "₺" + totalShippingPrice.toFixed(2);
+        element.innerHTML =
+          totalShippingPrice.toFixed(2) +
+          ' <span class="product-currency">TL</span>';
         break;
       case "fee":
-        element.innerHTML = "₺" + totalFeePrice.toFixed(2);
+        element.innerHTML =
+          totalFeePrice.toFixed(2) +
+          ' <span class="product-currency">TL</span>';
         break;
       case "total":
-        element.innerHTML = "₺" + totalPrice.toFixed(2);
+        element.innerHTML =
+          totalPrice.toFixed(2) + ' <span class="product-currency">TL</span>';
         break;
     }
   });
@@ -152,3 +162,13 @@ function removeFromLocalStorage(productId: string) {
     btn.disabled = false;
   }
 }
+
+function emptyShoppingCart() {
+  const productIds = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  productIds.forEach((id: string) => {
+    removeFromLocalStorage(id);
+  });
+  initShoppingCart();
+}
+
+emptyCartBtn.addEventListener("click", emptyShoppingCart);
