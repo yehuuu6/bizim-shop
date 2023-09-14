@@ -1,11 +1,11 @@
-import { setCartItemCount } from "./common/cartBtns";
-import { setWishlistItemCount } from "./common/wishlistBtns";
+import { setNavbarWishItemCount } from "./common/wishlistBtns";
+import { setNavbarCartItemCount } from "./common/cartBtns";
 
 import "./core.css";
 import "./utils/utils.css";
 
-setCartItemCount();
-setWishlistItemCount();
+setNavbarWishItemCount();
+setNavbarCartItemCount();
 
 // Cookie consent
 
