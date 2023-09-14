@@ -7,7 +7,7 @@
         </circle>
     </svg>
 </div>
-<script type="module" src="/dist/auth/a578a8g.js"></script>
+<script type="module" src="/dist/auth/r9k2p4i7h0o1g5w6a2u3.js"></script>
 </body>
 
 </html>
