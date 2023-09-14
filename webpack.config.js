@@ -27,6 +27,9 @@ module.exports = {
     filename: "[name].js",
   },
   resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
     extensions: [".ts", ".js"],
   },
   module: {
@@ -59,7 +62,7 @@ module.exports = {
           options: {
             encodeOptions: {
               jpeg: {
-                quality: 75,
+                quality: 70,
               },
               webp: {
                 lossless: true,
