@@ -41,7 +41,7 @@
   height: 425px;
   gap: 10px;
   background-color: #fff;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
 }
 .product {
   border: 1px solid #dadada;
@@ -162,7 +162,7 @@
 /* Product Filters */
 .product-filters select[name="p-sort"],
 .product-filters select[name="p-category"] {
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   border-radius: 0.25em;
   padding: 0.25em 0.5em;
   font-size: 1.1rem;
@@ -195,7 +195,7 @@
   width: 70px;
   padding: 8px;
   outline: none;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
 }
 .product-filters .filter-title {
   font-weight: 600;
