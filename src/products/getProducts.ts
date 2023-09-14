@@ -1,9 +1,6 @@
 import axios from "axios";
-import {
-  setWishlistBtns,
-  initWishlistBtnListeners,
-} from "../common/wishlistBtns";
-import { initCartBtnListeners, setCartBtns } from "../common/cartBtns";
+import { setWishlistBtns } from "../common/wishlistBtns";
+import { setAddToCartBtns } from "../common/cartBtns";
 
 export const sqlOffset = {
   value: 0,
@@ -44,21 +41,13 @@ export function setProducts(form: HTMLFormElement) {
       });
     })
     .finally(() => {
-      controlInteractiveBtns(productsContainer);
-    });
-}
+      const productElements = productsContainer.querySelectorAll(
+        ".product"
+      ) as NodeListOf<HTMLDivElement>;
 
-/**
- * Adds interactivity to wishlist and cart buttons
- */
-export function controlInteractiveBtns(container: HTMLDivElement) {
-  const products = container.querySelectorAll(
-    ".product"
-  ) as NodeListOf<HTMLDivElement>;
-  setWishlistBtns(products);
-  initWishlistBtnListeners(container);
-  setCartBtns(products);
-  initCartBtnListeners(container);
+      setWishlistBtns(productElements);
+      setAddToCartBtns(productElements);
+    });
 }
 
 /**
