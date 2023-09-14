@@ -10,9 +10,9 @@
 #featured .product-container {
   width: 80%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   min-height: 425px;
-  gap: 30px;
+  gap: 20px;
   position: relative;
 }
 #featured .product-container .loader {
@@ -46,7 +46,7 @@
 .product {
   border: 1px solid #dadada;
   border-radius: 5px;
-  width: 250px;
+  width: 280px;
   position: relative;
   overflow: hidden;
   background: #fff;
@@ -136,6 +136,14 @@
 .product .product-info .product-price {
   font-size: 1rem;
   font-weight: 500;
+  display: flex;
+  gap: 3px;
+  align-items: baseline;
+  color: #363636;
+}
+.product-currency {
+  font-size: 0.75rem;
+  font-weight: 400;
   color: #363636;
 }
 .product .add-cart,
@@ -144,6 +152,7 @@
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
+  margin: 0 3.5rem;
   border-radius: 5px;
   font-size: 1rem;
   transition: all 0.3s ease;
