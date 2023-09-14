@@ -1,9 +1,7 @@
-import {
-  setWishlistBtns,
-  initWishlistBtnListeners,
-} from "../common/wishlistBtns";
-import { setCartBtns, initCartBtnListeners } from "../common/cartBtns";
 import { getProductsById } from "../products/getProducts";
+import { setWishlistBtns } from "../common/wishlistBtns";
+import { setAddToCartBtns } from "../common/cartBtns";
+import initShoppingCart from "./cartManager";
 
 import "../products/products.css";
 
@@ -34,16 +32,29 @@ export default function initLikedProducts() {
       }
     })
     .finally(() => {
+      const productElements = likedProductsContainer.querySelectorAll(
+        ".product"
+      ) as NodeListOf<HTMLDivElement>;
+
       // Set liked item counter
-      const productCount =
-        likedProductsContainer.querySelectorAll(".product").length;
+      const productCount = productElements.length;
       likedItemCounter.innerText = `(${likedProducts.length} ürün, ${productCount} tane gösteriliyor)`;
 
-      setWishlistBtns(likedProductsContainer.querySelectorAll(".product"));
-      initWishlistBtnListeners(likedProductsContainer);
+      // Set wishlist buttons
+      setWishlistBtns(productElements);
+      // Set add to cart buttons
+      setAddToCartBtns(productElements);
 
-      setCartBtns(likedProductsContainer.querySelectorAll(".product"));
-      initCartBtnListeners(likedProductsContainer);
+      const btns = likedProductsContainer.querySelectorAll(
+        ".product #product-cart-btn"
+      ) as NodeListOf<HTMLButtonElement>;
+
+      btns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          // Refresh the shopping cart
+          initShoppingCart();
+        });
+      });
     });
 }
 
