@@ -26,7 +26,7 @@ class Product extends Component
             </div>
             <div class="product-info">
                 <a title="{$product['name']}" href="#" class="product-title">{$product_title}</a>
-                <span class="product-price">₺{$product['price']}</span>
+                <span class="product-price">{$product['price']} <span class="product-currency">TL</span></span>
             </div>
             <button id="product-cart-btn" class="add-cart">Sepete Ekle</button>
         </div>

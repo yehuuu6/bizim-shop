@@ -39,14 +39,14 @@ class CartItem extends Component
                 {$short_desc}
               </p>
               <div class="price-calculation">
-                <span data-value="{$product['price']}" class="product-price">₺{$product['price']} Ürün</span> +
-                <span data-value="{$shipping_cost}" class="shipping-cost">₺{$shipping_cost} Kargo</span> + 
-                <span data-value="{$fee_cost}" class="fee-cost">₺{$fee_cost} KDV</span> =
-                <span id="total-cart-price" data-value="{$total_price}" class="total-price">₺{$total_price} Toplam</span>
+                <span data-value="{$product['price']}" class="product-price">{$product['price']} <span class="product-currency">TL</span> Ürün</span> +
+                <span data-value="{$shipping_cost}" class="shipping-cost">{$shipping_cost} <span class="product-currency">TL</span> Kargo</span> + 
+                <span data-value="{$fee_cost}" class="fee-cost">{$fee_cost} <span class="product-currency">TL</span> KDV</span> =
+                <span id="total-cart-price" data-value="{$total_price}" class="total-price">{$total_price} <span class="product-currency">TL</span> Toplam</span>
               </div>
             </div>
             <span class="remove-from-cart" title="Ürünü Sepetten Sil">
-              Ürünü kaldır
+            <i class="fa-solid fa-trash"></i>
             </span>
           </div>
         HTML;
