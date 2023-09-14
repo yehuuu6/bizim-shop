@@ -27,9 +27,9 @@ $navbar = new Navbar();
 <section id="cart" class="page-content flex-column">
     <div class="content-header">
         <h2>Sepetim <span id="cart-item-counter">(0 ürün)</span></h2>
-        <a href="/products" class="content-btn">
-            Alışverişe geri dön
-        </a>
+        <button id="empty-shopping-cart" class="content-btn">
+            Sepeti boşalt
+        </button>
     </div>
     <div class="shopping-cart">
         <div class="products">
@@ -39,22 +39,23 @@ $navbar = new Navbar();
             <h4>Sipariş Özeti</h4>
             <div class="cart-detail">
                 <span class="cart-detail-title">Ürünler:</span>
-                <span data-type="products" class="cart-detail-value">₺0.00</span>
+                <span data-type="products" class="cart-detail-value">0.00 TL</span>
             </div>
             <div class="cart-detail">
                 <span class="cart-detail-title">Kargo:</span>
-                <span data-type="shipment" class="cart-detail-value">₺0.00</span>
+                <span data-type="shipment" class="cart-detail-value">0.00 TL</span>
             </div>
             <div class="cart-detail">
                 <span class="cart-detail-title">KDV:</span>
-                <span data-type="fee" class="cart-detail-value">₺0.00</span>
+                <span data-type="fee" class="cart-detail-value">0.00 TL</span>
             </div>
             <div class="cart-detail">
                 <span class="cart-detail-title">Genel Toplam:</span>
-                <span data-type="total" class="cart-detail-value">₺0.00</span>
+                <span data-type="total" class="cart-detail-value">0.00 TL</span>
             </div>
             <div class="cart-detail">
-                <button class="cart-detail-confirm">Alışverişi tamamla</button>
+                <a class="return-shopping" href="/products">Alışverişe devam et</a>
+                <button class="cart-detail-confirm">Sepeti onayla</button>
             </div>
         </div>
     </div>
