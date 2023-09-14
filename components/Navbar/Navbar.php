@@ -43,11 +43,11 @@ class Navbar extends Component
                         <div class="interactive-btns">
                             <a href="/cart" class="interactive" id="cart-btn">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="item-count">0</span>
+                                <span id="navbar-cart-count" class="item-count">0</span>
                             </a>
                             <a href="/wishlist" class="interactive" id="wishlist-btn">
                                 <i class="fa-solid fa-heart"></i>
-                                <span class="item-count">0</span>
+                                <span id="navbar-wishlist-count" class="item-count">0</span>
                             </a>
                         </div>
                     </li>
