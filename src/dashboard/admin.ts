@@ -3,7 +3,7 @@ import createUserTable, {
   rowNumberUsers,
 } from "./models/UserTable";
 import PanelClass from "./classes/PanelClass";
-import { runSearchUsers } from "../utils/functions.dev";
+import { runSearchUsers } from "@/common/utils/functions.dev";
 
 // VARIABLES START
 

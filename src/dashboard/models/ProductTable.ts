@@ -4,16 +4,18 @@ import {
   ManageProductsPage,
   isEditMode,
   imageCount,
-} from "..";
-import ConfirmationModal from "../../common/confirmationModal";
+} from ".."; // from index.ts
+import ConfirmationModal from "@/common/confirmationModal";
 import {
   getCategory,
   setStatus,
   addImageInput,
   quitEditMode,
-} from "../../utils/functions.dev";
-import router from "../Router";
-import { trimSentence } from "../../utils/functions.usr";
+} from "@/common/utils/functions.dev";
+import router from "@/dashboard/Router";
+import { trimSentence } from "@/common/utils/functions.usr";
+
+import IProduct from "@/common/interfaces/IProduct";
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
@@ -25,30 +27,7 @@ export const rowNumberProducts = {
   value: 0,
 };
 
-export interface ProductInterface {
-  id: string;
-  name: string;
-  category: string;
-  price: string;
-  shipping_cost: string;
-  fee_cost: string;
-  status: string;
-  image1: string;
-  image2: string;
-  image3: string;
-  image4: string;
-  image5: string;
-  image6: string;
-  root_name: string;
-  tags: string;
-  description: string;
-  quality: string;
-  shipment: string;
-  featured: string;
-  [key: string]: string;
-}
-
-export function createProductTable(product: ProductInterface) {
+export function createProductTable(product: IProduct) {
   // Create table row
   const tr = document.createElement("tr");
   tr.innerHTML = `
@@ -76,8 +55,8 @@ export function createProductTable(product: ProductInterface) {
     const id = (e.currentTarget as HTMLElement).dataset.id!;
     const clickedAction = (e.target as HTMLElement).dataset.action;
 
-    const selectedProduct: ProductInterface = currentProducts.value.find(
-      (p: ProductInterface) => p.id === id
+    const selectedProduct: IProduct = currentProducts.value.find(
+      (p: IProduct) => p.id === id
     )!;
     if (clickedAction === "edit") {
       editProduct(selectedProduct);
@@ -113,7 +92,7 @@ export function createProductTable(product: ProductInterface) {
   return tr;
 }
 
-function deleteProduct(product: ProductInterface) {
+function deleteProduct(product: IProduct) {
   document.body.appendChild(modal);
   modalText.innerText = `"${product.name}" isimli ürünü silmek üzeresiniz.`;
 
@@ -132,7 +111,7 @@ function deleteProduct(product: ProductInterface) {
       if (response[0] === "success") {
         // Delete the product from the currentProducts array
         currentProducts.value = currentProducts.value.filter(
-          (p: ProductInterface) => p.id !== product.id
+          (p: IProduct) => p.id !== product.id
         );
 
         const child = document.querySelector(`[data-id="${product.id}"]`);
@@ -150,7 +129,7 @@ function deleteProduct(product: ProductInterface) {
   };
 }
 
-function editProduct(product: ProductInterface) {
+function editProduct(product: IProduct) {
   isEditMode.value = true;
 
   if (document.querySelector("[name='product-id']")) {

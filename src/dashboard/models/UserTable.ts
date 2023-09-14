@@ -1,26 +1,25 @@
-import { currentUsers } from "../admin";
-import { ManageUsersPage } from "../admin";
+import { ManageUsersPage, currentUsers } from "@/dashboard/admin";
 
 export const rowNumberUsers = {
   value: 0,
-}
+};
 
 export interface UserInterface {
-    id: string;
-    name: string;
-    surname: string;
-    userName: string;
-    email: string;
-    telephone: string;
-    permission: string;
-    [key: string]: string;
+  id: string;
+  name: string;
+  surname: string;
+  userName: string;
+  email: string;
+  telephone: string;
+  permission: string;
+  [key: string]: string;
 }
 
 export default function createUserTable(user: UserInterface) {
-    user.userName = user["name"] + " " + user["surname"];
-    // Create table row
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+  user.userName = user["name"] + " " + user["surname"];
+  // Create table row
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
         <td>${++rowNumberUsers.value}</td>
         <td>${user.id}</td>
         <td>${user.userName}</td>
@@ -33,23 +32,37 @@ export default function createUserTable(user: UserInterface) {
             </form>
         </td>
     `;
-    const tableForm = tr.querySelector(".table-form") as HTMLElement;
-    tableForm.addEventListener("click", (e) => {
-      e.preventDefault();
-      if ((e.target as HTMLElement).dataset.action == "upgrade") {
-        // Get the id of the user
-        let id = ((e.target as HTMLElement).parentElement  as HTMLElement).dataset.id;
-        // Get the user from the currentUsers array
-        let user = currentUsers.value.find((user: UserInterface) => user["id"] == id);
-        ManageUsersPage.showMessage(["success", `${user?.userName} isimli kullanıcı yetkisi yükseltildi. (TODO)`, "none"]);
-      } else if ((e.target as HTMLElement).dataset.action == "ban") {
-        // Get the id of the user
-        let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset.id;
-        // Get the plugin from the currentUsers array
-        let user = currentUsers.value.find((user: UserInterface) => user["id"] == id);
-        ManageUsersPage.showMessage(["success", `${user?.userName} isimli kullanıcı yasaklandı. (TODO)`, "none"]);
-      }
-    });
-  
-    return tr;
-  }
+  const tableForm = tr.querySelector(".table-form") as HTMLElement;
+  tableForm.addEventListener("click", (e) => {
+    e.preventDefault();
+    if ((e.target as HTMLElement).dataset.action == "upgrade") {
+      // Get the id of the user
+      let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset
+        .id;
+      // Get the user from the currentUsers array
+      let user = currentUsers.value.find(
+        (user: UserInterface) => user["id"] == id
+      );
+      ManageUsersPage.showMessage([
+        "success",
+        `${user?.userName} isimli kullanıcı yetkisi yükseltildi. (TODO)`,
+        "none",
+      ]);
+    } else if ((e.target as HTMLElement).dataset.action == "ban") {
+      // Get the id of the user
+      let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset
+        .id;
+      // Get the plugin from the currentUsers array
+      let user = currentUsers.value.find(
+        (user: UserInterface) => user["id"] == id
+      );
+      ManageUsersPage.showMessage([
+        "success",
+        `${user?.userName} isimli kullanıcı yasaklandı. (TODO)`,
+        "none",
+      ]);
+    }
+  });
+
+  return tr;
+}

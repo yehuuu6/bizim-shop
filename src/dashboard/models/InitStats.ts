@@ -1,11 +1,5 @@
 import axios from "axios";
-
-interface IStats {
-  data: {
-    total_users: number;
-    total_products: number;
-  };
-}
+import IStats from "@/common/interfaces/IStats";
 
 /**
  * Initializes dashboard stats and renders them to the dom

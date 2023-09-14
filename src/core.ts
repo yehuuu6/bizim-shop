@@ -1,8 +1,8 @@
-import { setNavbarWishItemCount } from "./common/wishlistBtns";
-import { setNavbarCartItemCount } from "./common/cartBtns";
+import { setNavbarWishItemCount } from "./common/controllers/wishlistBtns";
+import { setNavbarCartItemCount } from "./common/controllers/cartBtns";
 
 import "./core.css";
-import "./utils/utils.css";
+import "./common/utils/utils.css";
 
 setNavbarWishItemCount();
 setNavbarCartItemCount();

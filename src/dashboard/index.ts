@@ -1,7 +1,6 @@
 import PanelClass from "./classes/PanelClass";
-import ConfirmationModal from "../common/confirmationModal";
+import ConfirmationModal from "@/common/confirmationModal";
 import {
-  ProductInterface,
   createProductTable,
   clearImageInputs,
   rowNumberProducts,
@@ -11,12 +10,13 @@ import {
   runSearchProducts,
   quitEditMode,
   cleanForm,
-} from "../utils/functions.dev";
+} from "@/common/utils/functions.dev";
+import IProduct from "@/common/interfaces/IProduct";
 import router from "./Router";
 
 // CSS
 import "./dashboard.css";
-import "../utils/utils.css";
+import "../common/utils/utils.css";
 
 // Settings panel
 const settingsBtn = document.querySelector("#settings") as HTMLButtonElement;
@@ -39,7 +39,7 @@ settingsBtn.addEventListener("click", () => {
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const currentProducts: { value: ProductInterface[] } = {
+const currentProducts: { value: IProduct[] } = {
   value: [],
 };
 const isEditMode = {
@@ -101,9 +101,8 @@ function getSearchProduct() {
   const search = searchInput.value.trim().toLowerCase();
   productTable.innerHTML = "";
   if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter(
-      (product: ProductInterface) =>
-        product["name"].toLowerCase().includes(search)
+    const matchingProducts = currentProducts.value.filter((product: IProduct) =>
+      product["name"].toLowerCase().includes(search)
     );
     if (matchingProducts.length === 0) {
       productTable.innerHTML = `
@@ -140,7 +139,7 @@ async function loadFirstProducts() {
   const products = response;
 
   if (products !== undefined || products.length !== 0) {
-    products.forEach((product: ProductInterface) => {
+    products.forEach((product: IProduct) => {
       currentProducts.value.push(product);
       productTable.appendChild(createProductTable(product));
     });
