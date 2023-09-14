@@ -12,8 +12,8 @@ use Components\Super\Legs;
 require_once 'includes/auth.inc.php';
 
 $styles = [
-    "/dist/core/dr50hzx.css",
-    "/dist/products/g5120x.css"
+    "/dist/core/r9k2p4i7h0o1g5w6a2u3.css",
+    "/dist/products/m1l5d9y6b3r2n7o8c0s.css"
 ];
 
 $head = new Head([
@@ -31,7 +31,7 @@ $navbar = new Navbar();
     <div class="product-container">
     </div>
 </section>
-<script src="/dist/products/g5120x.js"></script>
+<script src="/dist/products/m1l5d9y6b3r2n7o8c0s.js"></script>
 <?php
 $footer = new Footer();
 $legs = new Legs();
