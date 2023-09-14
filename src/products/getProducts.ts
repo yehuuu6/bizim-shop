@@ -1,6 +1,6 @@
 import axios from "axios";
-import { setWishlistBtns } from "../common/wishlistBtns";
-import { setAddToCartBtns } from "../common/cartBtns";
+import { setWishlistBtns } from "@/common/controllers/wishlistBtns";
+import { setAddToCartBtns } from "@/common/controllers/cartBtns";
 
 export const sqlOffset = {
   value: 0,

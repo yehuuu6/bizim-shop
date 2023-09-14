@@ -1,9 +1,9 @@
 // Other imports
-import PanelClass from "../dashboard/classes/PanelClass";
-import ConfirmationModal from "../common/confirmationModal";
-import { getApiResponse, clearAvatarInput } from "../utils/functions.usr";
+import PanelClass from "@/dashboard/classes/PanelClass";
+import ConfirmationModal from "@/common/confirmationModal";
+import { getApiResponse, clearAvatarInput } from "@/common/utils/functions.usr";
 import "./profile.css";
-import "../utils/utils.css";
+import "@/common/utils/utils.css";
 
 const mainLoader = document.querySelector("#main-loader") as HTMLDivElement;
 
