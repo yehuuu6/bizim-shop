@@ -9,7 +9,7 @@ use Components\Footer\Footer;
 use Components\Super\Legs;
 
 $styles = [
-    "/dist/core/dr50hzx.css",
+    "/dist/core/r9k2p4i7h0o1g5w6a2u3.css",
 ];
 
 $head = new Head([
