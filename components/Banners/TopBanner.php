@@ -28,6 +28,6 @@ class TopBanner extends Component
     private function set_banner_text()
     {
         // TODO: Get banner text from database
-        return "Seçili ürünlerde %50'ye varan indirimler!";
+        return "İlk siparişinizde kargo ücreti YOK!";
     }
 }
