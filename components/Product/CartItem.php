@@ -15,12 +15,14 @@ class CartItem extends Component
   public function __construct(array $product)
   {
     $product['shipment'] === '1' ? $shipping_cost = 0 : $shipping_cost = $product['shipping_cost'];
+    $shipping_cost = number_format($shipping_cost, 2);
+
     $fee_cost = $product['price'] * 0.18;
     $fee_cost = number_format($fee_cost, 2);
-    $total_price = $product['price'] + $product['shipping_cost'] + $fee_cost;
-    $short_desc = parent::shorten_string($product['description'], 100);
 
-    $shipping_cost = number_format($shipping_cost, 2);
+    $total_price = $product['price'] + $shipping_cost + $fee_cost;
+
+    $short_desc = parent::shorten_string($product['description'], 100);
 
     $this->body = <<<HTML
         <div class="product-in-cart" data-id="{$product['id']}">
@@ -43,7 +45,7 @@ class CartItem extends Component
                 <span id="total-cart-price" data-value="{$total_price}" class="total-price">₺{$total_price} Toplam</span>
               </div>
             </div>
-            <span class="remove-product-cart" title="Ürünü Sepetten Sil">
+            <span class="remove-from-cart" title="Ürünü Sepetten Sil">
               Ürünü kaldır
             </span>
           </div>
