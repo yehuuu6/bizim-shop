@@ -37,7 +37,7 @@ $door = $row['door'];
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
-    <link rel="stylesheet" href="/dist/profile/eb23ax4.css" />
+    <link rel="stylesheet" href="/dist/profile/k7u4h0g3t5s9e1c6q2.css" />
     <script src="/global/plugins/icons.js"></script>
     <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
     <title>Profili Düzenle - Bizim Shop</title>
@@ -221,7 +221,7 @@ $door = $row['door'];
             <?php $loader1 = new Loader(); ?>
         </div>
     </div>
-    <script type="module" src="/dist/profile/eb23ax4.js"></script>
+    <script type="module" src="/dist/profile/k7u4h0g3t5s9e1c6q2.js"></script>
 </body>
 <!--       
 
