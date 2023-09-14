@@ -25,7 +25,7 @@ use Components\Component;
  * @param string $props['keywords'] Keywords of the page, default: DEFAULT_PAGE_KEYWORDS
  * @param string $props['author'] Author of the page, default: DEFAULT_PAGE_AUTHOR
  * @param string $props['favicon'] Favicon of the page, default: DEFAULT_PAGE_FAVICON
- * @param array $props['styles'] Stylesheets of the page, default: []
+ * @param array $props['styles'] Array of stylesheets of the page to import, default: [] (no stylesheet will be imported)
  * @throws Exception If one or more metadata props are invalid & has more than 5 props.
  */
 class Head extends Component
@@ -104,7 +104,7 @@ class Head extends Component
     }
 
     /**
-     * Sets stylesheets of the page.
+     * Imports given stylesheets to the page one by one.
      */
     private function set_styles(array $styles)
     {
