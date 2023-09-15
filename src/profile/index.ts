@@ -5,6 +5,10 @@ import { getApiResponse, clearAvatarInput } from "@/common/utils/functions.usr";
 import "./profile.css";
 import "@/common/utils/utils.css";
 
+import ICity from "@/common/interfaces/ICity";
+import IDistrict from "@/common/interfaces/IDistrict";
+import IProfile from "@/common/interfaces/IProfile";
+
 const mainLoader = document.querySelector("#main-loader") as HTMLDivElement;
 
 setTimeout(() => {
@@ -45,30 +49,13 @@ removeBtn.title = "Profil resmini kaldır";
 removeBtn.id = "delete-avatar";
 removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
-interface DistrictInterface {
-  id: string;
-  district_name: string;
-  city_id: string;
-}
-
-interface CityInterface {
-  id: string;
-  city_name: string;
-}
-
-interface ProfileInfoInterface {
-  profile_image: string;
-  district: string;
-  city: string;
-}
-
 let myDistrict: string;
 let myCity: string;
 
 ProfilePage.sendApiRequest(
   "/api/dashboard/users/get-profile.php",
   new FormData()
-).then((profile: ProfileInfoInterface) => {
+).then((profile: IProfile) => {
   const profileImage = profile.profile_image;
   myDistrict = profile.district;
   myCity = profile.city;
@@ -129,13 +116,13 @@ const districtSelector = document.getElementById(
   "district"
 ) as HTMLSelectElement;
 
-let cities: Array<CityInterface> = [];
-let districts: Array<DistrictInterface> = [];
+let cities: Array<ICity> = [];
+let districts: Array<IDistrict> = [];
 
 ProfilePage.sendApiRequest(
   "/api/dashboard/users/get-cities.php",
   new FormData()
-).then((_cities: Array<CityInterface>) => {
+).then((_cities: Array<ICity>) => {
   cities = _cities;
   cities.forEach(function (city) {
     var option = document.createElement("option");
@@ -151,14 +138,14 @@ ProfilePage.sendApiRequest(
 ProfilePage.sendApiRequest(
   "/api/dashboard/users/get-districts.php",
   new FormData()
-).then((_districts: Array<DistrictInterface>) => {
+).then((_districts: Array<IDistrict>) => {
   districts = _districts;
   const cityId = citySelector.value;
   // Check if citySelector has a city selected
   if (cityId !== "") {
     // Enable district selector
     districtSelector.disabled = false;
-    districts.forEach(function (district: DistrictInterface) {
+    districts.forEach(function (district: IDistrict) {
       if (district.city_id === cityId) {
         var option = document.createElement("option");
         option.value = district.id;
@@ -179,7 +166,7 @@ citySelector.addEventListener("change", function () {
   districtSelector.disabled = true;
 
   if (cityId !== "") {
-    districts.forEach(function (district: DistrictInterface) {
+    districts.forEach(function (district: IDistrict) {
       if (district.city_id === cityId) {
         var option = document.createElement("option");
         option.value = district.id;
