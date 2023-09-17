@@ -1,5 +1,5 @@
 export default interface IDistrict {
   id: string;
-  district_name: string;
+  name: string;
   city_id: string;
 }
