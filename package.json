@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "E-commerce website for a local shop",
   "main": "index.ts",
+  "private": true,
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },
   "keywords": [],
-  "author": "therenaydin",
+  "author": "yehuuu",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.8.1",
