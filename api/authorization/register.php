@@ -8,7 +8,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $surname = get_safe_value($con, $_POST['surname']);
     $email = get_safe_value($con, $_POST['email']);
     $password = get_safe_value($con, $_POST['password']);
-    $password_confirm = get_safe_value($con, $_POST['passwordConf']);
+    $password_confirm = get_safe_value($con, $_POST['password_confirm']);
 
     if (empty($name)) {
         send_error_response('İsim alanı boş bırakılamaz.', 'name');
