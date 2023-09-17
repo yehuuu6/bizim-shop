@@ -24,7 +24,7 @@ export default function initLikedProducts() {
     .then((products) => {
       if (products.length < 1) {
         likedProductsContainer.innerHTML +=
-          "<p>Beğendiğiniz ürün bulunmamaktadır.</p>";
+          '<div class="empty-liked"><h2><i class="fa-solid fa-heart-broken"></i> Beğendiğiniz ürün bulunmamaktadır.</h2></div>';
       } else {
         products.forEach((product: string) => {
           likedProductsContainer.innerHTML += product;
