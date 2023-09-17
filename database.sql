@@ -1142,6 +1142,7 @@ CREATE TABLE `users` (
   `surname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `verified` int(11) NOT NULL DEFAULT 0,
+  'membership' int(11) NOT NULL DEFAULT 0,
   `token` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_image` varchar(255) NOT NULL DEFAULT 'nopp.png',
