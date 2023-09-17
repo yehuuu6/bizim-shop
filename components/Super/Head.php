@@ -9,7 +9,6 @@ if (!defined('FILE_ACCESS')) {
 }
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
-require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/consts.inc.php");
 
 if (isset($_SESSION['id']) && $_SESSION['verified'] == 0) {
     header("location: /auth/verify");
@@ -48,6 +47,7 @@ class Head extends Component
                 <meta name="description" content="{$desc}">
                 <meta name="keywords" content="{$keywords}">
                 <meta name="author" content="{$author}">
+                <link rel='stylesheet' href='/dist/core/r9k2p4i7h0o1g5w6a2u3.css'>
                 {$this->set_styles($styles)}
                 <link rel="shortcut icon" href="{$favi}" type="image/x-icon">
                 <script src="/global/plugins/icons.js"></script>
