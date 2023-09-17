@@ -16,6 +16,17 @@ class Component
     }
 
     /**
+     * Converts name to a valid slug.
+     * @param string $str The string to convert.
+     * @return string
+     */
+    public function get_slug(?string $str)
+    {
+        $str = str_replace('_', '-', $str);
+        return $str;
+    }
+
+    /**
      * Shortens the string to the specified length.
      * @param string $str The string to shorten.
      * @param int $length The length to shorten the string.
