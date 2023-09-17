@@ -1,7 +1,7 @@
 import axios from "axios";
 
 interface AuthorizationClassInterface {
-  form: HTMLFormElement
+  form: HTMLFormElement;
   logger: HTMLParagraphElement;
   loader: HTMLDivElement;
   url: string;
@@ -22,8 +22,14 @@ export class AuthorizationClass implements AuthorizationClassInterface {
   timer2: any;
   oldLoggerText: string | undefined;
 
-  constructor(form: HTMLFormElement, logger: HTMLParagraphElement, loader: HTMLDivElement,
-    url: string, returnUrl: string, goBackTime = 3000) {
+  constructor(
+    form: HTMLFormElement,
+    logger: HTMLParagraphElement,
+    loader: HTMLDivElement,
+    url: string,
+    returnUrl: string,
+    goBackTime = 3000
+  ) {
     this.form = form;
     this.logger = logger;
     this.loader = loader;
@@ -47,7 +53,9 @@ export class AuthorizationClass implements AuthorizationClassInterface {
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      let element = document.querySelector(`[name="${cause}"]`) as HTMLInputElement;
+      let element = document.querySelector(
+        `[name="${cause}"]`
+      ) as HTMLInputElement;
       element.style.border = "1px solid red";
 
       this.timer2 = setTimeout(() => {
