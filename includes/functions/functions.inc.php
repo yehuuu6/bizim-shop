@@ -35,7 +35,9 @@ function get_date(string $raw)
 function authorize_user()
 {
     if ($_SESSION['membership'] < 1) {
-        die();
+        header("HTTP/1.1 403 Forbidden");
+        include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+        exit;
     }
 }
 
@@ -165,6 +167,7 @@ function fix_strings(array $row)
  * @param mysqli $con The mysqli connection object.
  * @param array $props The properties to filter the products.
  * @param string $props['id'] The id of the product if you need to get a specific product.
+ * @param string $props['slug'] The slug of the product if you need to get a specific product.
  * @param string $props['search'] The search query.
  * @param string $props['category'] The category of the product.
  * @param string $props['tag'] The tag of the product.
@@ -186,6 +189,7 @@ function get_products(
 ) {
     $id = $props['id'] ?? '';
     $search = $props['search'] ?? '';
+    $slug = $props['slug'] ?? '';
     $category = $props['category'] ?? '';
     $tag = $props['tag'] ?? '';
     $status = $props['status'] ?? '1';
@@ -208,6 +212,7 @@ function get_products(
     $sql .= "ORDER BY $order_type ";
     $sql .= "LIMIT $limit OFFSET $offset";
     $id !== '' ? $sql = "SELECT * FROM product WHERE status LIKE '%$status%' AND id = $id" : $sql = $sql;
+    $slug !== '' ? $sql = "SELECT * FROM product WHERE root_name = '$slug'" : $sql = $sql;
     $result = mysqli_query($con, $sql);
     $products = array();
     while ($row = mysqli_fetch_assoc($result)) {
