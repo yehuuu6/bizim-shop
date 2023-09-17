@@ -17,7 +17,7 @@ use Components\Component;
  */
 class Navbar extends Component
 {
-    public function __construct(array $props = [])
+    public function __construct()
     {
 
         $body = <<<HTML
