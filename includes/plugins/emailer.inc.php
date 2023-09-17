@@ -5,7 +5,7 @@ if (!defined('FILE_ACCESS')) {
 	exit;
 }
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Email;
 $transport = Transport::fromDsn('smtp://' . EMAIL . ':' . PASSWORD . '@smtp.gmail.com:587');
 $mailer = new Mailer($transport);
 
-function send_verification_mail($userEmail, $token)
+function send_verification_mail(string $userEmail, string $token)
 
 {
 	global $mailer;
@@ -142,12 +142,9 @@ HTML;
 	$mailer->send($email);
 }
 
-function send_password_reset_link($userEmail, $token)
+function send_password_reset_link(string $userEmail, string $token)
 {
-
 	global $mailer;
-
-
 
 	$body = <<<HTML
     <!DOCTYPE html>
