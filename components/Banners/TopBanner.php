@@ -28,6 +28,6 @@ class TopBanner extends Component
     private function set_banner_text()
     {
         // TODO: Get banner text from database
-        return "İlk siparişinizde kargo ücreti YOK!";
+        return "İlk siparişinize özel kargo ücreti YOK!";
     }
 }
