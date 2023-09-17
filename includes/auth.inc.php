@@ -20,9 +20,10 @@ session_set_cookie_params([
 
 session_start();
 
-require_once('db.inc.php');
-require_once('plugins/emailer.inc.php');
-require_once('functions/functions.inc.php');
+require_once 'consts.inc.php';
+require_once 'db.inc.php';
+require_once 'functions/functions.inc.php';
+require_once 'plugins/emailer.inc.php';
 
 $name = "";
 $surname = "";
