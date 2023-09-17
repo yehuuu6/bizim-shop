@@ -254,15 +254,18 @@
   height: 100%;
 }
 
-.empty-cart {
+.empty-cart,
+.empty-liked {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
   height: 100%;
+  padding: 80px 40px;
 }
-.empty-cart h2 {
+.empty-cart h2,
+.empty-liked h2 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #123b57;
@@ -270,7 +273,8 @@
   align-items: center;
   gap: 10px;
 }
-.empty-cart h2 i {
+.empty-cart h2 i,
+.empty-liked h2 i {
   font-size: 2rem;
   color: #538fff;
 }

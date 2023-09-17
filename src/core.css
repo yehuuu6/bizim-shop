@@ -225,6 +225,7 @@ footer {
   display: flex;
   background-color: #151515;
   align-items: center;
+  color: aliceblue;
   justify-content: center;
   width: 100%;
 }
