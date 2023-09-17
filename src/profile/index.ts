@@ -127,7 +127,7 @@ ProfilePage.sendApiRequest(
   cities.forEach(function (city) {
     var option = document.createElement("option");
     option.value = city.id;
-    option.textContent = city.city_name;
+    option.textContent = city.name;
     if (myCity == city.id) {
       option.selected = true;
     }
@@ -149,7 +149,7 @@ ProfilePage.sendApiRequest(
       if (district.city_id === cityId) {
         var option = document.createElement("option");
         option.value = district.id;
-        option.textContent = district.district_name;
+        option.textContent = district.name;
         if (myDistrict == district.id) {
           option.selected = true;
         }
@@ -170,7 +170,7 @@ citySelector.addEventListener("change", function () {
       if (district.city_id === cityId) {
         var option = document.createElement("option");
         option.value = district.id;
-        option.textContent = district.district_name;
+        option.textContent = district.name;
         districtSelector.appendChild(option);
       }
     });
