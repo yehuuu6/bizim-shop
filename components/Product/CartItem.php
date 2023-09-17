@@ -24,6 +24,8 @@ class CartItem extends Component
 
     $short_desc = parent::shorten_string($product['description'], 100);
 
+    $slug = parent::get_slug($product['root_name']);
+
     $this->body = <<<HTML
         <div class="product-in-cart" data-id="{$product['id']}">
             {$this->render_shipment_element($product)}
@@ -34,7 +36,7 @@ class CartItem extends Component
               />
             </div>
             <div class="product-info">
-              <a href="#" class="product-title">{$product['name']}</a>
+              <a href="/product/{$slug}" class="product-title">{$product['name']}</a>
               <p class="product-desc">
                 {$short_desc}
               </p>
