@@ -6,8 +6,12 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: {
-    "auth/r9k2p4i7h0o1g5w6a2u3": path.resolve(__dirname, "src/auth/index.ts"),
+    "auth/rs5f0f0e1h08v35w6a2u3": path.resolve(__dirname, "src/auth/index.ts"),
     "cart/v8x3q6t9j2s5f0e1n7z4": path.resolve(__dirname, "src/cart/index.ts"),
+    "product-page/9k25c1l2zki6a0e1n7q6": path.resolve(
+      __dirname,
+      "src/productPage/index.ts"
+    ),
     "products/m1l5d9y6b3r2n7o8c0s": path.resolve(
       __dirname,
       "src/products/index.ts"
