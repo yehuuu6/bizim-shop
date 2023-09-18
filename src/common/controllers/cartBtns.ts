@@ -1,5 +1,5 @@
 // Define a function to update the add to cart button for a single product
-export function updateAddToCartButton(product: HTMLDivElement) {
+function updateAddToCartButton(product: HTMLDivElement) {
   const btn = product.querySelector("#product-cart-btn") as HTMLButtonElement;
   const id = product.dataset.id as string;
 
