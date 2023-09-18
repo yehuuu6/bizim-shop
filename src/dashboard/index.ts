@@ -1,5 +1,5 @@
 import PanelClass from "./classes/PanelClass";
-import ConfirmationModal from "@/common/confirmationModal";
+import ConfirmationModal from "@/common/modals/confirmationModal";
 import {
   createProductTable,
   clearImageInputs,

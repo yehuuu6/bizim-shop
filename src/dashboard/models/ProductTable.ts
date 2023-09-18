@@ -5,7 +5,7 @@ import {
   isEditMode,
   imageCount,
 } from ".."; // from index.ts
-import ConfirmationModal from "@/common/confirmationModal";
+import ConfirmationModal from "@/common/modals/confirmationModal";
 import {
   getCategory,
   setStatus,
