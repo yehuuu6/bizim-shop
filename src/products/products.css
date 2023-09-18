@@ -152,6 +152,7 @@
   background: #538fff;
   color: #fff;
   border: none;
+  font-weight: 600;
   padding: 0.5rem 1rem;
   margin: 0 3.5rem;
   border-radius: 5px;
@@ -222,6 +223,7 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   cursor: pointer;
+  font-weight: 600;
   margin-top: 10px;
 }
 .product-filters .apply-filters:hover {
