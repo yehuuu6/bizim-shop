@@ -1,3 +1,6 @@
+import axios from "axios";
+import CartModal from "@/common/modals/cartModal";
+
 // Define a function to update the add to cart button for a single product
 function updateAddToCartButton(product: HTMLDivElement) {
   const btn = product.querySelector("#product-cart-btn") as HTMLButtonElement;
@@ -23,6 +26,17 @@ function updateAddToCartButton(product: HTMLDivElement) {
       setNavbarCartItemCount();
       updateBtnContent(btn, true);
     }
+
+    const currentPage = window.location.pathname;
+    if (currentPage !== "/cart") {
+      getProduct(id).then((product) => {
+        const { modal, modalBtn } = CartModal(product);
+        document.body.append(modal);
+        modalBtn.addEventListener("click", () => {
+          window.location.href = "/cart";
+        });
+      });
+    }
   });
 
   // Initialize the button state
@@ -43,4 +57,18 @@ export function setNavbarCartItemCount() {
   const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
   const count = document.querySelector("#navbar-cart-count") as HTMLSpanElement;
   count.innerText = `${items.length}`;
+}
+
+async function getProduct(id: string) {
+  const response = await axios({
+    url: "/api/main/get-product.php",
+    method: "post",
+    data: { id: id },
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
 }
