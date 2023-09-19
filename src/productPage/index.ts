@@ -21,6 +21,12 @@ if (!localStorage.getItem("lvp")?.includes(productId)) {
       ...JSON.parse(localStorage.getItem("lvp") || "[]"),
     ])
   );
+} else {
+  // If product id already exists, move it to the front
+  const lvp = JSON.parse(localStorage.getItem("lvp") || "[]");
+  const index = lvp.indexOf(productId);
+  lvp.splice(index, 1);
+  localStorage.setItem("lvp", JSON.stringify([productId, ...lvp]));
 }
 
 // if length of lvp is greater than 5, remove the last item
