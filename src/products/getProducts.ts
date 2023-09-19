@@ -31,14 +31,19 @@ export async function getProducts(formData: FormData) {
  */
 export function setProducts(form: HTMLFormElement) {
   const formData = new FormData(form);
+  productsContainer.classList.add("dynamic-content");
   formData.append("offset", sqlOffset.value.toString());
   formData.append("limit", productLimit.value.toString());
   getProducts(formData)
     .then((products) => {
-      sqlOffset.value += productLimit.value;
-      products.forEach((product: string) => {
-        productsContainer.innerHTML += product;
-      });
+      if (products.length == 0) {
+        productsContainer.innerHTML = `<div class="no-products"><h2><i class="fa-solid fa-magnifying-glass"></i> Aradığınız ürün bulunamadı.</h2></div>`;
+      } else {
+        sqlOffset.value += productLimit.value;
+        products.forEach((product: string) => {
+          productsContainer.innerHTML += product;
+        });
+      }
     })
     .finally(() => {
       const productElements = productsContainer.querySelectorAll(
@@ -47,6 +52,9 @@ export function setProducts(form: HTMLFormElement) {
 
       setWishlistBtns(productElements);
       setAddToCartBtns(productElements);
+      setTimeout(() => {
+        productsContainer.classList.remove("dynamic-content");
+      }, 600);
     });
 }
 
