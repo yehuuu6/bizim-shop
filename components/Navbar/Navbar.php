@@ -40,7 +40,7 @@ class Navbar extends Component
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-            <div class="flex-item user-content">
+            <div class="flex-item user-content dynamic-content">
                 <div class="interactive">
                     <div class="n-cart">
                         <span id="navbar-cart-count"> 0 </span>
