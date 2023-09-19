@@ -39,6 +39,7 @@ function register($user_id, $name, $surname, $email, $verified, $token)
     $_SESSION['verified'] = $verified;
     $_SESSION['membership'] = 0;
     $_SESSION['token'] = $token;
+    $_SESSION['profile_image'] = "nopp.png";
 }
 
 function login($user)
@@ -52,6 +53,7 @@ function login($user)
     $_SESSION['address'] = $user['address'];
     $_SESSION['membership'] = $user['membership'];
     $_SESSION['verified'] = $user['verified'];
+    $_SESSION['profile_image'] = $user['profile_image'];
 }
 
 function verify_user($token)
