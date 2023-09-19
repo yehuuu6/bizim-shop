@@ -22,7 +22,7 @@ class Navbar extends Component
 
         $body = <<<HTML
             <nav class="navbar">
-            <div class="site-name">
+            <div class="flex-item site-name">
                 <img
                 src="http://localhost/global/imgs/favicon.svg"
                 class="logo"
@@ -30,7 +30,7 @@ class Navbar extends Component
                 />
                 <a href="http://localhost">Bizim <span>Shop</span></a>
             </div>
-            <div class="search-box">
+            <div class="flex-item search-box">
                 <input
                 type="text"
                 spellcheck="false"
@@ -40,7 +40,7 @@ class Navbar extends Component
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-            <div class="user-content">
+            <div class="flex-item user-content">
                 <div class="interactive">
                     <div class="n-cart">
                         <span id="navbar-cart-count"> 0 </span>
@@ -59,6 +59,28 @@ class Navbar extends Component
                 {$this->render_account_elements()}
             </div>
             </nav>
+            <div class="categories-container">
+                <ul class="categories">
+                    <li class="category">
+                        <a href="/products/stereo">Müzik Seti</a>
+                    </li>
+                    <li class="category">
+                        <a href="/products/speakers">Hoparlör</a>
+                    </li>
+                    <li class="category">
+                        <a href="/products/turntables">Plak Çalar</a>
+                    </li>
+                    <li class="category">
+                        <a href="/products/music-players">Müzik Çalar</a>
+                    </li>
+                    <li class="category">
+                        <a href="/products/tapes-records">Kaset & Plak</a>
+                    </li>
+                    <li class="category">
+                        <a href="/products">Tüm Kategoriler</a>
+                    </li>
+                </ul>
+            </div>
         HTML;
 
         // Render the component on the page
