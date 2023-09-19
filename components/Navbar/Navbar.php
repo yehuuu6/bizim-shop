@@ -50,7 +50,7 @@ class Navbar extends Component
                     </div>
                     <div class="n-wishlist" title="Beğendiklerim">
                         <span id="navbar-wishlist-count"> 0 </span>
-                        <a href="wishlist" class="wishlist-btn">
+                        <a href="/wishlist" class="wishlist-btn">
                         <i class="fas fa-heart"></i>
                         </a>
                 </div>
@@ -59,28 +59,6 @@ class Navbar extends Component
                 {$this->render_account_elements()}
             </div>
             </nav>
-            <div class="categories-container">
-                <ul class="categories">
-                    <li class="category">
-                        <a href="/products/stereo">Müzik Seti</a>
-                    </li>
-                    <li class="category">
-                        <a href="/products/speakers">Hoparlör</a>
-                    </li>
-                    <li class="category">
-                        <a href="/products/turntables">Plak Çalar</a>
-                    </li>
-                    <li class="category">
-                        <a href="/products/music-players">Müzik Çalar</a>
-                    </li>
-                    <li class="category">
-                        <a href="/products/tapes-records">Kaset & Plak</a>
-                    </li>
-                    <li class="category">
-                        <a href="/products">Tüm Kategoriler</a>
-                    </li>
-                </ul>
-            </div>
         HTML;
 
         // Render the component on the page
