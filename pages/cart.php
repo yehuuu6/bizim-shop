@@ -60,7 +60,7 @@ $categories = new Categories();
         </div>
     </div>
     <div class="content-header">
-        <h2>Son baktıklarım <span id="lvp-counter">(0 ürün)</span></h2>
+        <h2>Son baktıklarım</h2>
         <i class="fa-solid fa-magnifying-glass"></i>
     </div>
     <div id="last-viewed-products" class="product-showcase">
