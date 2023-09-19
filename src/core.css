@@ -109,6 +109,16 @@ body {
   height: 5vh;
   gap: 10px;
   position: relative;
+  opacity: 0;
+  animation: loadUserContent 0.6s ease-in-out forwards;
+}
+@keyframes loadUserContent {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .navbar .user-content .interactive {
   display: flex;
