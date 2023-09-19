@@ -5,6 +5,7 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
 use Components\Super\Head;
 use Components\Navbar\Navbar;
+use Components\Categories\Categories;
 use Components\Footer\Footer;
 use Components\Banners\TopBanner;
 use Components\Super\Legs;
@@ -19,6 +20,7 @@ $head = new Head([
 ]);
 $top_banner = new TopBanner();
 $navbar = new Navbar();
+$categories = new Categories();
 
 ?>
 
@@ -58,12 +60,18 @@ $navbar = new Navbar();
         </div>
     </div>
     <div class="content-header">
+        <h2>Son baktıklarım <span id="lvp-counter">(0 ürün)</span></h2>
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <div id="last-viewed-products" class="product-showcase">
+    </div>
+    <div class="content-header">
         <h2>Beğendiklerim <span id="liked-item-counter">(0 ürün)</span></h2>
         <a href="/wishlist" class="content-btn">
             Hepsini gör
         </a>
     </div>
-    <div class="liked-products">
+    <div id="liked-products" class="product-showcase">
     </div>
 </section>
 <script src="/dist/cart/v8x3q6t9j2s5f0e1n7z4.js"></script>
