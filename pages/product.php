@@ -6,6 +6,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 use Components\Super\Head;
 use Components\Navbar\Navbar;
 use Components\Footer\Footer;
+use Components\Categories\Categories;
 use Components\Banners\TopBanner;
 use Components\Super\Legs;
 
@@ -34,6 +35,7 @@ $head = new Head([
 ]);
 $top_banner = new TopBanner();
 $navbar = new Navbar();
+$categories = new Categories();
 
 $product = $products_data[0];
 
