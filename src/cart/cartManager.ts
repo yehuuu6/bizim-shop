@@ -14,7 +14,7 @@ const emptyCartBtn = document.querySelector(
  */
 export default function initShoppingCart() {
   cartContainer.innerHTML = "<h4>Seçilen Ürünler</h4>";
-  const inCartIds = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  const inCartIds = JSON.parse(localStorage.getItem("cart") || "[]");
   const formData = new FormData();
   formData.append("product-ids", inCartIds);
   formData.append("product-type", "in-cart");
@@ -132,12 +132,12 @@ function setRemoveFromCartBtns() {
 }
 
 function removeFromLocalStorage(productId: string) {
-  const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
   const index = cartItems.indexOf(productId);
   if (index > -1) {
     cartItems.splice(index, 1);
   }
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  localStorage.setItem("cart", JSON.stringify(cartItems));
 
   // Update shopping cart
   if (cartItems.length < 1) {
@@ -164,7 +164,7 @@ function removeFromLocalStorage(productId: string) {
 }
 
 function emptyShoppingCart() {
-  const productIds = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  const productIds = JSON.parse(localStorage.getItem("cart") || "[]");
   productIds.forEach((id: string) => {
     removeFromLocalStorage(id);
   });

@@ -13,16 +13,14 @@ function updateAddToCartButton(product: HTMLDivElement) {
   }
 
   btn.addEventListener("click", () => {
-    let cartItems: string[] = JSON.parse(
-      localStorage.getItem("cartItems") || "[]"
-    );
+    let cartItems: string[] = JSON.parse(localStorage.getItem("cart") || "[]");
     const isInCart = cartItems.includes(id);
     if (!isInCart) {
       // Add the item to the cart
       cartItems.push(id);
 
       // Update the button and store the cart items in local storage
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      localStorage.setItem("cart", JSON.stringify(cartItems));
       setNavbarCartItemCount();
       updateBtnContent(btn, true);
     }
@@ -40,9 +38,7 @@ function updateAddToCartButton(product: HTMLDivElement) {
   });
 
   // Initialize the button state
-  const cartItems: string[] = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
-  );
+  const cartItems: string[] = JSON.parse(localStorage.getItem("cart") || "[]");
   const isInCart = cartItems.includes(id);
   updateBtnContent(btn, isInCart);
 }
@@ -54,7 +50,7 @@ export function setAddToCartBtns(products: NodeListOf<HTMLDivElement>) {
 }
 
 export function setNavbarCartItemCount() {
-  const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  const items = JSON.parse(localStorage.getItem("cart") || "[]");
   const count = document.querySelector("#navbar-cart-count") as HTMLSpanElement;
   count.innerText = `${items.length}`;
 }

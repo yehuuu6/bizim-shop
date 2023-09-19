@@ -6,7 +6,7 @@ import initShoppingCart from "./cartManager";
 import "../products/products.css";
 
 const likedProductsContainer = document.querySelector(
-  ".liked-products"
+  "#liked-products"
 ) as HTMLDivElement;
 
 const likedItemCounter = document.querySelector(
@@ -17,9 +17,7 @@ const likedItemCounter = document.querySelector(
  * Initializes liked products by getting products from localStorage.
  */
 export default function initLikedProducts() {
-  const likedProducts = JSON.parse(
-    localStorage.getItem("wishlistItems") || "[]"
-  );
+  const likedProducts = JSON.parse(localStorage.getItem("wishlist") || "[]");
   getProductsById(createFormData(likedProducts))
     .then((products) => {
       if (products.length < 1) {

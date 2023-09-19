@@ -12,7 +12,7 @@ function updateWishlistButton(product: HTMLDivElement) {
 
   btn.addEventListener("click", () => {
     let wishlistItems: string[] = JSON.parse(
-      localStorage.getItem("wishlistItems") || "[]"
+      localStorage.getItem("wishlist") || "[]"
     );
     const isInWishlist = wishlistItems.includes(id);
     if (isInWishlist) {
@@ -20,7 +20,7 @@ function updateWishlistButton(product: HTMLDivElement) {
       wishlistItems = wishlistItems.filter((item) => item !== id);
 
       // Update the button and store the wishlist items in local storage
-      localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+      localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
       setNavbarWishItemCount();
       updateBtnContent(btn, false);
     } else {
@@ -28,7 +28,7 @@ function updateWishlistButton(product: HTMLDivElement) {
       wishlistItems.push(id);
 
       // Update the button and store the wishlist items in local storage
-      localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
+      localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
       setNavbarWishItemCount();
       updateBtnContent(btn, true);
     }
@@ -36,7 +36,7 @@ function updateWishlistButton(product: HTMLDivElement) {
 
   // Initialize the button state
   const wishlistItems: string[] = JSON.parse(
-    localStorage.getItem("wishlistItems") || "[]"
+    localStorage.getItem("wishlist") || "[]"
   );
   const isInWishlist = wishlistItems.includes(id);
   updateBtnContent(btn, isInWishlist);
@@ -49,7 +49,7 @@ export function setWishlistBtns(products: NodeListOf<HTMLDivElement>) {
 }
 
 export function setNavbarWishItemCount() {
-  const items = JSON.parse(localStorage.getItem("wishlistItems") || "[]");
+  const items = JSON.parse(localStorage.getItem("wishlist") || "[]");
   const count = document.querySelector(
     "#navbar-wishlist-count"
   ) as HTMLSpanElement;
