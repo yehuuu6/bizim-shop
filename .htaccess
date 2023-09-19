@@ -8,6 +8,7 @@ RewriteEngine On
 RewriteBase /
 
 RewriteRule ^product/([\w-]+)$ product.php?name=$1 [QSA,L]
+RewriteRule ^products/([\w-]+)$ products.php?category=$1 [QSA,L]
 
 RewriteRule ^(dist|api|global|images|errors)/ - [L]
 
