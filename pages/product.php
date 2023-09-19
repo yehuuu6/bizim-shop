@@ -165,7 +165,7 @@ function render_badges(array $product)
 
 ?>
 <section id="product-page" class="page-content">
-    <div class="product-container" data-id="<?= $product['id'] ?>">
+    <div class="product-container dynamic-content" data-id="<?= $product['id'] ?>">
         <div class="product-images">
             <div class="big-image">
                 <?= render_thumbnail($product) ?>
