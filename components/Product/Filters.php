@@ -11,10 +11,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
  */
 class Filters extends Component
 {
-    public function __construct()
+    protected string $category;
+
+    public function __construct(string $category)
     {
-        $category = $_GET['category'] ?? null;
-        $category = htmlspecialchars($category);
+        $this->category = $category;
 
         $body = <<<HTML
         <form id="filters" class="product-filters">
