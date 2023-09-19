@@ -21,37 +21,42 @@ class Navbar extends Component
     {
 
         $body = <<<HTML
-            <nav class="navbar flex-display justify-between align-center">
-                <div class="navbar-item flex-display gap-5 align-center">
-                    <img class="navbar-svg large-svg no-drag" src="/global/imgs/favicon.svg" alt="">
-                    <h2 class="navbar-logo flex-display gap-5">Bizim <div class="blue-text bold-text">Shop</div>
-                    </h2>
+            <nav class="navbar">
+            <div class="site-name">
+                <img
+                src="http://localhost/global/imgs/favicon.svg"
+                class="logo"
+                alt=""
+                />
+                <a href="http://localhost">Bizim <span>Shop</span></a>
+            </div>
+            <div class="search-box">
+                <input
+                type="text"
+                spellcheck="false"
+                placeholder="Ürün, kategori veya marka ara"
+                />
+                <button class="search-btn" title="Ara">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="user-content">
+                <div class="interactive">
+                    <div class="n-cart">
+                        <span id="navbar-cart-count"> 0 </span>
+                        <a href="/cart" class="cart-btn" title="Sepetim">
+                        <i class="fas fa-shopping-cart"></i>
+                        </a>
+                    </div>
+                    <div class="n-wishlist" title="Beğendiklerim">
+                        <span id="navbar-wishlist-count"> 0 </span>
+                        <a href="wishlist" class="wishlist-btn">
+                        <i class="fas fa-heart"></i>
+                        </a>
                 </div>
-                <div class="navbar-item">
-                    <ul class="no-list-style flex-display justify-space-around align-center">
-                        <img class="navbar-svg medium-svg" src="/global/imgs/linksvg.svg" alt="">
-                        <li><a class="no-decoration navbar-btn" href="/">Ana Sayfa</a></li>
-                        <li><a class="no-decoration navbar-btn" href="/products">Ürünler</a></li>
-                        <li><a class="no-decoration navbar-btn" href="/feedbacks">Yorumlar</a></li>
-                    </ul>
                 </div>
-                <div class="navbar-item">
-                <ul class="no-list-style flex-display justify-space-around align-center">
-                    <img class="navbar-svg small-svg" src="/global/imgs/usersvg.svg" alt="">
-                    {$this->render_auth_elements()}
-                    <li>
-                        <div class="interactive-btns">
-                            <a href="/cart" class="interactive" id="cart-btn">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span id="navbar-cart-count" class="item-count">0</span>
-                            </a>
-                            <a href="/wishlist" class="interactive" id="wishlist-btn">
-                                <i class="fa-solid fa-heart"></i>
-                                <span id="navbar-wishlist-count" class="item-count">0</span>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                <hr />
+                {$this->render_account_elements()}
             </div>
             </nav>
         HTML;
@@ -61,21 +66,41 @@ class Navbar extends Component
     }
 
     /**
-     * Renders authentication buttons based on permissions.
+     * Renders account elements based on authentication status.
      * @return Html
      */
-    private function render_auth_elements()
+    private function render_account_elements()
     {
         if (!isset($_SESSION['id'])) {
             $body = <<<HTML
-                <li><a class="no-decoration navbar-btn" href="/auth/login">Giriş Yap</a></li>
-                <li><a class="no-decoration navbar-btn" href="/auth/register">Kayıt Ol</a></li>
+                <div class="account">
+                    <div class="user-img">
+                        <img src="http://localhost/global/imgs/nopp.png" alt="Profil resmi" />
+                    </div>
+                    <div class="a-content">
+                        <span>Hesabım</span>
+                        <span
+                        ><a href="/auth/login">Giriş Yap</a> |
+                        <a href="/auth/register">Kayıt Ol</a></span
+                        >
+                    </div>
+                </div>
             HTML;
         } else {
+            $src = PRODUCT_USER_SITE_PATH . $_SESSION['profile_image'] . "?timestamp=" . time();
             $body = <<<HTML
-                <li><a class="no-decoration navbar-btn" href="/edit-profile">Profili Düzenle</a></li>
-                <li><a class="no-decoration navbar-btn" href="/dashboard">Panel</a></li>
-                <li><a class="no-decoration navbar-btn" href="/?logout=1">Çıkış</a></li>
+                <div class="account">
+                    <div class="user-img">
+                        <img src="{$src}" alt="Profil resmi" />
+                    </div>
+                    <div class="a-content">
+                        <span>Hoş geldin {$_SESSION['name']}</span>
+                        <span
+                        ><a href="/account">Hesabım</a> |
+                        <a href="/dashboard">Panel</a></span
+                        >
+                    </div>
+                </div>
             HTML;
         }
 
