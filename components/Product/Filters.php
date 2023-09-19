@@ -13,6 +13,9 @@ class Filters extends Component
 {
     public function __construct()
     {
+        $category = $_GET['category'] ?? null;
+        $category = htmlspecialchars($category);
+
         $body = <<<HTML
         <form id="filters" class="product-filters">
             <h3 class="filter-title">Sıralama</h3>
@@ -25,11 +28,7 @@ class Filters extends Component
             </select>
             <h3 class="filter-title">Kategoriler</h3>
             <select name="p-category" id="p-category">
-                <option value="0">Hepsini Göster</option>
-                <option value="1">Müzik Seti</option>
-                <option value="2">Hoparlör</option>
-                <option value="3">Plak Çalar</option>
-                <option value="4">Müzik Çalar</option>
+                {$this->render_categories($category)}
             </select>
             <h3 class="filter-title">Fiyat Aralığı</h3>
             <div class="price-range">
@@ -63,5 +62,40 @@ class Filters extends Component
 
         // Render the component on the page
         parent::render($body);
+    }
+
+    function render_categories(?string $category)
+    {
+        // Category provisions
+        $categories = [
+            '' => 'Hepsini Göster',
+            'stereo' => 'Müzik Seti',
+            'speakers' => 'Hoparlör',
+            'turntables' => 'Plak Çalar',
+            'music-players' => 'Müzik Çalar',
+            'tapes-records' => 'Kaset & Plak'
+        ];
+
+        // Render the categories
+
+        $html = '';
+
+        for ($i = 0; $i < count($categories); $i++) {
+            $key = array_keys($categories)[$i];
+            $value = array_values($categories)[$i];
+            $is_selected = $this->render_selected($category, $key);
+            $html .= <<<HTML
+            <option value="{$i}" {$is_selected}> {$value} </option>
+            HTML;
+        }
+
+        return $html;
+    }
+
+    function render_selected(?string $category, string $key)
+    {
+        if ($category == $key) {
+            return 'selected';
+        }
     }
 }
