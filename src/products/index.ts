@@ -16,8 +16,12 @@ const filterForm = document.querySelector("#filters") as HTMLFormElement;
 filterForm.addEventListener("submit", function (e) {
   e.preventDefault();
   sqlOffset.value = 0;
+  productsContainer.classList.add("dynamic-content");
   productsContainer.innerHTML = "";
   setProducts(filterForm);
+  setTimeout(() => {
+    productsContainer.classList.remove("dynamic-content");
+  }, 600);
 });
 
 setProducts(filterForm);

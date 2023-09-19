@@ -2,6 +2,7 @@ import { getProductsById } from "../products/getProducts";
 import { setWishlistBtns } from "../common/controllers/wishlistBtns";
 import { setAddToCartBtns } from "../common/controllers/cartBtns";
 import initShoppingCart from "./cartManager";
+import initLikedProducts from "./initLiked";
 
 import "../products/products.css";
 
@@ -9,12 +10,12 @@ const lvpContainer = document.querySelector(
   "#last-viewed-products"
 ) as HTMLDivElement;
 
-const lvpCounter = document.querySelector("#lvp-counter") as HTMLSpanElement;
-
 /**
  * Initializes latest viewed products by getting products from localStorage.
  */
 export default function initLatestProducts() {
+  lvpContainer.classList.add("dynamic-content");
+  lvpContainer.innerHTML = "";
   const lvpProducts = JSON.parse(localStorage.getItem("lvp") || "[]");
   getProductsById(createFormData(lvpProducts))
     .then((products) => {
@@ -32,9 +33,6 @@ export default function initLatestProducts() {
         ".product"
       ) as NodeListOf<HTMLDivElement>;
 
-      // Set latest viewed products counter
-      lvpCounter.innerText = `(${lvpProducts.length} ürün)`;
-
       // Set wishlist buttons
       setWishlistBtns(productElements);
       // Set add to cart buttons
@@ -46,10 +44,15 @@ export default function initLatestProducts() {
 
       btns.forEach((btn) => {
         btn.addEventListener("click", () => {
-          // Refresh the shopping cart
+          // Refresh the shopping cart and showcases
           initShoppingCart();
+          initLikedProducts();
+          initLatestProducts();
         });
       });
+      setTimeout(() => {
+        lvpContainer.classList.remove("dynamic-content");
+      }, 600);
     });
 }
 

@@ -4,6 +4,7 @@ import { setAddToCartBtns } from "../common/controllers/cartBtns";
 import initShoppingCart from "./cartManager";
 
 import "../products/products.css";
+import initLatestProducts from "./initLastViewed";
 
 const likedProductsContainer = document.querySelector(
   "#liked-products"
@@ -17,6 +18,8 @@ const likedItemCounter = document.querySelector(
  * Initializes liked products by getting products from localStorage.
  */
 export default function initLikedProducts() {
+  likedProductsContainer.classList.add("dynamic-content");
+  likedProductsContainer.innerHTML = "";
   const likedProducts = JSON.parse(localStorage.getItem("wishlist") || "[]");
   getProductsById(createFormData(likedProducts))
     .then((products) => {
@@ -49,10 +52,15 @@ export default function initLikedProducts() {
 
       btns.forEach((btn) => {
         btn.addEventListener("click", () => {
-          // Refresh the shopping cart
+          // Refresh the shopping cart and showcases
           initShoppingCart();
+          initLikedProducts();
+          initLatestProducts();
         });
       });
+      setTimeout(() => {
+        likedProductsContainer.classList.remove("dynamic-content");
+      }, 600);
     });
 }
 

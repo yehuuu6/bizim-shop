@@ -13,6 +13,7 @@ const emptyCartBtn = document.querySelector(
  * Initializes shopping cart by getting products from localStorage.
  */
 export default function initShoppingCart() {
+  cartContainer.classList.add("dynamic-content");
   cartContainer.innerHTML = "<h4>Seçilen Ürünler</h4>";
   const inCartIds = JSON.parse(localStorage.getItem("cart") || "[]");
   const formData = new FormData();
@@ -22,7 +23,7 @@ export default function initShoppingCart() {
     .then((products) => {
       if (products.length < 1) {
         cartContainer.innerHTML +=
-          '<div class="empty-cart"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
+          '<div class="no-products"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
       } else {
         products.forEach((product: string) => {
           cartContainer.innerHTML += product;
@@ -32,6 +33,9 @@ export default function initShoppingCart() {
     .finally(() => {
       calculateTotalPrice();
       setRemoveFromCartBtns();
+      setTimeout(() => {
+        cartContainer.classList.remove("dynamic-content");
+      }, 600);
     });
 }
 
@@ -142,25 +146,29 @@ function removeFromLocalStorage(productId: string) {
   // Update shopping cart
   if (cartItems.length < 1) {
     cartContainer.innerHTML +=
-      '<div class="empty-cart"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
+      '<div class="no-products"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
   }
 
   setNavbarCartItemCount();
 
   // Update the cart button
 
-  const container = document.querySelector(".liked-products") as HTMLDivElement;
-  const productElement = container.querySelector(
-    `.product[data-id="${productId}"]`
-  ) as HTMLDivElement;
-  if (productElement) {
-    const btn = productElement.querySelector(
-      "#product-cart-btn"
-    ) as HTMLButtonElement;
-    btn.innerText = "Sepete Ekle";
-    btn.className = "add-cart";
-    btn.disabled = false;
-  }
+  const showcases = document.querySelectorAll(
+    ".product-showcase"
+  ) as NodeListOf<HTMLDivElement>;
+  showcases.forEach((showcase) => {
+    const productElement = showcase.querySelector(
+      `.product[data-id="${productId}"]`
+    ) as HTMLDivElement;
+    if (productElement) {
+      const btn = productElement.querySelector(
+        "#product-cart-btn"
+      ) as HTMLButtonElement;
+      btn.innerText = "Sepete Ekle";
+      btn.className = "add-cart";
+      btn.disabled = false;
+    }
+  });
 }
 
 function emptyShoppingCart() {
