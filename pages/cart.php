@@ -37,25 +37,25 @@ $categories = new Categories();
         </div>
         <div class="cart-details">
             <h4>Sipariş Özeti</h4>
-            <div class="cart-detail">
+            <div class="cart-detail dynamic-content">
                 <span class="cart-detail-title">Ürünler:</span>
                 <span data-type="products" class="cart-detail-value">0.00 TL</span>
             </div>
-            <div class="cart-detail">
+            <div class="cart-detail dynamic-content">
                 <span class="cart-detail-title">Kargo:</span>
                 <span data-type="shipment" class="cart-detail-value">0.00 TL</span>
             </div>
-            <div class="cart-detail">
+            <div class="cart-detail dynamic-content">
                 <span class="cart-detail-title">KDV:</span>
                 <span data-type="fee" class="cart-detail-value">0.00 TL</span>
             </div>
-            <div class="cart-detail">
+            <div class="cart-detail dynamic-content">
                 <span class="cart-detail-title">Genel Toplam:</span>
                 <span data-type="total" class="cart-detail-value">0.00 TL</span>
             </div>
             <div class="cart-detail">
-                <a class="return-shopping" href="/products">Alışverişe devam et</a>
                 <button class="cart-detail-confirm">Sepeti onayla</button>
+                <a class="return-shopping" href="/products">Alışverişe devam et</a>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@ $categories = new Categories();
         <h2>Son baktıklarım</h2>
         <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <div id="last-viewed-products" class="product-showcase">
+    <div id="last-viewed-products" class="product-showcase dynamic-content">
     </div>
     <div class="content-header">
         <h2>Beğendiklerim <span id="liked-item-counter">(0 ürün)</span></h2>
@@ -71,7 +71,7 @@ $categories = new Categories();
             Hepsini gör
         </a>
     </div>
-    <div id="liked-products" class="product-showcase">
+    <div id="liked-products" class="product-showcase dynamic-content">
     </div>
 </section>
 <script src="/dist/cart/v8x3q6t9j2s5f0e1n7z4.js"></script>
