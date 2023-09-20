@@ -12,6 +12,9 @@ body {
   background: #fff;
   overflow-x: hidden;
 }
+img {
+  -webkit-user-drag: none;
+}
 .top-banner {
   background: #ff3333;
   background-image: radial-gradient(
