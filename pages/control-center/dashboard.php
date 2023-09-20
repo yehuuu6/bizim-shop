@@ -34,7 +34,7 @@ $row = mysqli_fetch_assoc($res);
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
-  <link rel="stylesheet" href="/dist/dashboard/p2w4z9o5y8v3q6i1r7.css" />
+  <link rel="stylesheet" href="/dist/control-center/p2w4z9o5y8v3q6i1r7.css" />
   <script src="/global/plugins/icons.js"></script>
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <title>İstatistikler - Bizim Shop Panel Kontrol Merkezi</title>
@@ -418,9 +418,9 @@ $row = mysqli_fetch_assoc($res);
       </div>
     </div>
   </div>
-  <script src="/dist/dashboard/p2w4z9o5y8v3q6i1r7.js"></script>
-  <script src="/dist/panels/2j4k6s8o9t1a3v5w7y0u.js"></script>
-  <script src="/dist/panels/4s9k5f7p3o8t2a0v1w6u.js"></script>
+  <script src="/dist/control-center/p2w4z9o5y8v3q6i1r7.js"></script>
+  <script src="/dist/control-center/2j4k6s8o9t1a3v5w7y0u.js"></script>
+  <script src="/dist/control-center/4s9k5f7p3o8t2a0v1w6u.js"></script>
 </body>
 <!--       
 
