@@ -11,9 +11,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
  */
 class Filters extends Component
 {
-    protected string $category;
+    protected ?string $category;
 
-    public function __construct(string $category)
+    public function __construct(?string $category)
     {
         $this->category = $category;
 
