@@ -96,8 +96,8 @@ class Navbar extends Component
                     <div class="a-content">
                         <span>Hoş geldin {$_SESSION['name']}</span>
                         <span
-                        ><a href="/account">Hesabım</a> |
-                        <a href="/dashboard">Panel</a></span
+                        ><a href="/control-center/account">Hesabım</a> |
+                        <a href="/control-center/dashboard">Panel</a></span
                         >
                     </div>
                 </div>
