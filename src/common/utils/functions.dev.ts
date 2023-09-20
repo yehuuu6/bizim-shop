@@ -1,5 +1,9 @@
-import { getSearchProduct, imageCount, isEditMode } from "@/dashboard";
-import { getSearchUser } from "@/dashboard/admin";
+import {
+  getSearchProduct,
+  imageCount,
+  isEditMode,
+} from "@/control-center/dashboard";
+import { getSearchUser } from "@/control-center/dashboard/admin";
 import { trimSentence } from "./functions.usr";
 
 export function runSearchProducts(searchProductInput: HTMLInputElement) {
