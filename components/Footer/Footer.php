@@ -49,7 +49,7 @@ class Footer extends Component
                 </div>
                 <div class="footer-copyright medium-text">
                     <p>© 2023 Bizim
-                    <span class="blue-text bold-text">Shop</span> Tüm Hakları Saklıdır.</p>
+                    <span class="blue-text bold-text">Shop</span> tüm hakları saklıdır.</p>
                 </div>
             </footer>
         HTML;
