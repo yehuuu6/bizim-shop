@@ -75,7 +75,7 @@ function render_showcase_items(array $product)
 
     foreach ($valid_images as $image) {
         $src = PRODUCT_IMAGE_SITE_PATH . "{$product['root_name']}/{$image}";
-        $html .= "<img src='{$src}' alt='Urun resmi' />";
+        $html .= "<img data-img src='{$src}' alt='Urun resmi' />";
     }
 
     return $html;
