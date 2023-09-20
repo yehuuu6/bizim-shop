@@ -53,6 +53,20 @@ class Head extends Component
                 <script src="/global/plugins/icons.js"></script>
                 <title>{$title}</title>
             </head>
+            <noscript>
+                <style>
+                    .no-js {
+                        font-family: 'Poppins', sans-serif;
+                    }
+
+                    .app {
+                        display: none;
+                    }
+                </style>
+                <div class="no-js">
+                    <h1>JavaScript Devre Dışı</h1>
+                    <p>JavaScript devre dışı bırakılmış. Lütfen tarayıcınızın JavaScript desteğini etkinleştirin.</p>
+            </noscript>
             <body>
         HTML;
 
