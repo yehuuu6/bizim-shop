@@ -1,27 +1,18 @@
-import initStats from "./models/InitStats";
+import IRouter, { PageType } from "@/common/interfaces/IRouter";
 
 // Router
 const menuBtns: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll(".menu-btn");
-const statPage = document.getElementById("statistics") as HTMLElement;
 
-const productPage = document.getElementById("manage-products") as HTMLElement;
-const createProduct = document.getElementById("add-product") as HTMLElement;
-const userPage = document.getElementById("manage-users") as HTMLElement;
+const editAccountPage = document.getElementById(
+  "change-user-info"
+) as HTMLElement;
 
-let sections = [statPage, productPage, userPage, createProduct];
-
-interface RouterInterface {
-  loadType: PageType;
-  setPageContent(type: string, page: HTMLElement): void;
-  loadPage(type: PageType, target: string): void;
-}
-
-type PageType = "hash" | "btn";
+let sections = [editAccountPage];
 
 const mainLoader = document.querySelector("#main-loader") as HTMLDivElement;
 
-export class Router implements RouterInterface {
+export class Router implements IRouter {
   loadType: PageType;
   constructor() {
     setTimeout(() => {
@@ -44,18 +35,8 @@ export class Router implements RouterInterface {
 
   loadPage(type: PageType, target: string) {
     switch (target) {
-      case "statistics":
-        this.setPageContent(type, statPage);
-        initStats();
-        break;
-      case "products":
-        this.setPageContent(type, productPage);
-        break;
-      case "users":
-        this.setPageContent(type, userPage);
-        break;
-      case "add-product":
-        this.setPageContent(type, createProduct);
+      case "edit-profile":
+        this.setPageContent(type, editAccountPage);
         break;
     }
   }
@@ -64,7 +45,8 @@ export class Router implements RouterInterface {
     // Scroll to top of the page
     window.scrollTo(0, 0);
 
-    if (page !== statPage) {
+    const url = page.dataset.url;
+    if (page !== editAccountPage) {
       const url = page.dataset.url;
       if (typeof url === "string") {
         // Check if url is defined and is a string
