@@ -40,7 +40,7 @@ $navbar = new Navbar();
 $categories = new Categories();
 
 ?>
-<section id="featured" class="page-content">
+<section id="product-lister" class="page-content">
     <?php
     $filters = new Filters($category);
     ?>
