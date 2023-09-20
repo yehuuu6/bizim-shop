@@ -10,7 +10,7 @@ if (isset($_SESSION['id'])) {
 
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/dist/auth/r9k2p4i7h0o1g5w6a2u3.css">
+  <link rel="stylesheet" href="/dist/auth/rs5f0f0e1h08v35w6a2u3.css">
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
   <title>Şifremi Unuttum - Bizim Shop</title>
