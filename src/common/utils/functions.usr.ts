@@ -1,4 +1,4 @@
-import PanelClass from "@/dashboard/classes/PanelClass";
+import PanelClass from "@/common/classes/PanelClass";
 
 /**
  * Directly gets response and displays the message. Use this if you don't need to do stuff with response.

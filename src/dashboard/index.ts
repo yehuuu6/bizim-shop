@@ -1,4 +1,4 @@
-import PanelClass from "./classes/PanelClass";
+import PanelClass from "../common/classes/PanelClass";
 import ConfirmationModal from "@/common/modals/confirmationModal";
 import {
   createProductTable,
@@ -13,6 +13,7 @@ import {
 } from "@/common/utils/functions.dev";
 import IProduct from "@/common/interfaces/IProduct";
 import router from "./Router";
+import initStats from "./models/InitStats";
 
 // CSS
 import "./dashboard.css";
@@ -343,6 +344,10 @@ cleanProductForm.addEventListener("click", () => {
     "Form başarıyla temizlendi.",
     "none",
   ]);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  initStats();
 });
 
 // CREATE PRODUCT PAGE END

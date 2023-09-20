@@ -2,7 +2,7 @@ import createUserTable, {
   UserInterface,
   rowNumberUsers,
 } from "./models/UserTable";
-import PanelClass from "./classes/PanelClass";
+import PanelClass from "../common/classes/PanelClass";
 import { runSearchUsers } from "@/common/utils/functions.dev";
 
 // VARIABLES START
