@@ -35,7 +35,7 @@ module.exports = {
       __dirname,
       "src/control-center/account/index.ts"
     ),
-    "core/r9k2p4i7h0o1g5w6a2u3": path.resolve(__dirname, "src/core.ts"),
+    "core/r9k2p4i7h0o1g5w6a2u3": path.resolve(__dirname, "src/core/index.ts"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
