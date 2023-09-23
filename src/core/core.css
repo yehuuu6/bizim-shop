@@ -69,21 +69,15 @@ img {
   height: 2.5rem;
 }
 .navbar .search-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 600px;
   height: 5vh;
   background-color: #fff;
-  border-radius: 2rem;
+  border-radius: 5px;
   overflow: hidden;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
 }
 .navbar .flex-item {
   flex: 1;
-  max-width: 33%;
 }
 .navbar .search-box input {
   width: 100%;
