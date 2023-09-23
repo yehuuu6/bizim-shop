@@ -22,42 +22,42 @@ class Navbar extends Component
 
         $body = <<<HTML
             <nav class="navbar">
-            <div class="flex-item site-name">
-                <img
-                src="http://localhost/global/imgs/favicon.svg"
-                class="logo"
-                alt=""
-                />
-                <a href="http://localhost">Bizim <span>Shop</span></a>
-            </div>
-            <div class="flex-item search-box">
-                <input
-                type="text"
-                spellcheck="false"
-                placeholder="Ürün, kategori veya marka ara"
-                />
-                <button class="search-btn" title="Ara">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-            <div class="flex-item user-content dynamic-content">
-                <div class="interactive">
-                    <div class="n-cart">
-                        <span id="navbar-cart-count"> 0 </span>
-                        <a href="/cart" class="cart-btn" title="Sepetim">
-                        <i class="fas fa-shopping-cart"></i>
-                        </a>
+                <div class="flex-item site-name">
+                    <img
+                    src="http://localhost/global/imgs/favicon.svg"
+                    class="logo"
+                    alt=""
+                    />
+                    <a href="http://localhost">Bizim <span>Shop</span></a>
+                </div>
+                <div class="flex-item search-box">
+                    <input
+                    type="text"
+                    spellcheck="false"
+                    placeholder="Ürün, kategori veya marka ara"
+                    />
+                    <button class="search-btn" title="Ara">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="flex-item user-content dynamic-content">
+                    <div class="interactive">
+                        <div class="n-cart">
+                            <span id="navbar-cart-count"> 0 </span>
+                            <a href="/cart" class="cart-btn" title="Sepetim">
+                            <i class="fas fa-shopping-cart"></i>
+                            </a>
+                        </div>
+                        <div class="n-wishlist" title="Beğendiklerim">
+                            <span id="navbar-wishlist-count"> 0 </span>
+                            <a href="/wishlist" class="wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            </a>
                     </div>
-                    <div class="n-wishlist" title="Beğendiklerim">
-                        <span id="navbar-wishlist-count"> 0 </span>
-                        <a href="/wishlist" class="wishlist-btn">
-                        <i class="fas fa-heart"></i>
-                        </a>
+                    </div>
+                    <hr />
+                    {$this->render_account_elements()}
                 </div>
-                </div>
-                <hr />
-                {$this->render_account_elements()}
-            </div>
             </nav>
         HTML;
 
