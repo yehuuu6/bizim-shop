@@ -177,3 +177,11 @@
   justify-content: baseline;
   align-items: baseline;
 }
+
+/* Media query for laptops */
+
+@media screen and (max-width: 1368px){
+  #product-page {
+    padding: 2.5rem 7rem;
+  }
+}

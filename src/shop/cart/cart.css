@@ -253,3 +253,18 @@
   width: 100%;
   height: 100%;
 }
+/* Media query for laptop screens */
+@media screen and (max-width: 1368px) {
+  #cart {
+    padding: 30px 100px;
+  }
+  .shopping-cart{
+    gap:10px;
+  }
+  .shopping-cart .products{
+    width: 65%;
+  }
+  .shopping-cart .cart-details{
+    width: 35%;
+  }
+}

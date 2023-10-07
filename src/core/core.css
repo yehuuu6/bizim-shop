@@ -30,7 +30,7 @@ img {
   color: aliceblue;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   letter-spacing: 1px;
 }
 /* Navbar */
@@ -594,4 +594,18 @@ footer {
   align-items: center;
   width: 100%;
   height: 100%;
+}
+
+@media screen and (max-width:1368px){
+  .navbar .search-box {
+    width: 500px;
+  }
+  .navbar .search-box input {
+    font-size:1rem;
+    padding: 0 2.45rem 0 0.75rem;
+  }
+  .navbar .search-box .search-btn {
+    width: 40px;
+    font-size: 0.9rem;
+  }
 }
