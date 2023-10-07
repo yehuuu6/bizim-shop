@@ -64,6 +64,18 @@ class Navbar extends Component
         // Render the component on the page
         parent::render($body);
     }
+    /**
+     * Returns the image source for the user profile image.
+     * @return string
+     */
+    private function get_img_src()
+    {
+        if ($_SESSION['profile_image'] === 'nopp.png') {
+            return "http://localhost/global/imgs/nopp.png";
+        } else {
+            return PRODUCT_USER_SITE_PATH . $_SESSION['profile_image'] . "?timestamp=" . time();
+        }
+    }
 
     /**
      * Renders account elements based on authentication status.
@@ -87,7 +99,7 @@ class Navbar extends Component
                 </div>
             HTML;
         } else {
-            $src = PRODUCT_USER_SITE_PATH . $_SESSION['profile_image'] . "?timestamp=" . time();
+            $src = $this->get_img_src() . "?timestamp=" . time();
             $body = <<<HTML
                 <div class="account">
                     <div class="user-img">
