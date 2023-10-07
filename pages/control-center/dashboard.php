@@ -397,7 +397,7 @@ $row = mysqli_fetch_assoc($res);
           <div class="theme-container">
             <div class="theme-item active-theme" data-theme="light">
               <div class="theme-img">
-                <img src="/global/imgs/light_high_contrast_preview.svg" alt="">
+                <img src="/global/imgs/light_preview.svg" alt="">
               </div>
               <div class="theme-info">
                 <input type="radio" id="light-theme">
