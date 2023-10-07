@@ -37,6 +37,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             try {
                 mysqli_query($con, $sql);
                 delete_files($going_to_delete);
+                $_SESSION['profile_image'] = 'nopp.png';
                 send_success_response('Profil resmi başarıyla silindi.');
             } catch (Exception $e) {
                 send_error_response('Bir hata oluştu, lütfen daha sonra tekrar deneyin.');
