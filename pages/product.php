@@ -39,6 +39,8 @@ $categories = new Categories();
 
 $product = $products_data[0];
 
+$error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
+
 function render_thumbnail(array $product)
 {
     $image = $product['image1'];
@@ -48,8 +50,8 @@ function render_thumbnail(array $product)
     } else {
         $src = PRODUCT_IMAGE_SITE_PATH . "{$product['root_name']}/{$image}";
     }
-
-    return "<img src='{$src}' alt='Urun resmi' />";
+    global $error_src;
+    return "<img src='{$src}' alt='Urun resmi' onerror='this.src=\"{$error_src}\"' />";
 }
 
 function render_showcase_items(array $product)
@@ -72,10 +74,10 @@ function render_showcase_items(array $product)
     }
 
     $html = '';
-
+    global $error_src;
     foreach ($valid_images as $image) {
         $src = PRODUCT_IMAGE_SITE_PATH . "{$product['root_name']}/{$image}";
-        $html .= "<img data-img src='{$src}' alt='Urun resmi' />";
+        $html .= "<img data-img src='{$src}' alt='Urun resmi' onerror='this.src=\"{$error_src}\"' />";
     }
 
     return $html;

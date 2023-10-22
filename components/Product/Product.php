@@ -25,7 +25,7 @@ class Product extends Component
         {$this->render_featured_badge($is_featured)}
             <div class="product-image">
                 <span class="add-wishlist" title="Favorilere Ekle"><i class="fa-regular fa-heart"></i></span>
-                <img src="{$this->get_image_src($product)}" alt="Resim">
+                {$this->render_image_element($product)}
                 {$this->render_shipment_element($product)}
             </div>
             <div class="product-info">
@@ -39,16 +39,21 @@ class Product extends Component
     /**
      * Gets the image source of the product.
      * @param array $product The product to get the image source.
-     * @return string
+     * @return void
      */
-    private function get_image_src(array $product)
-    {
+    private function render_image_element(array $product)
+    {   
+        $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
         if ($product['image1'] === "noimg.jpg") {
-            $image_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
+            $image_src = $error_src;
         } else {
             $image_src = PRODUCT_IMAGE_SITE_PATH . "{$product['root_name']}/{$product['image1']}";
         }
-        return $image_src;
+        $body = <<<HTML
+            <img src="{$image_src}" alt="{$product['name']}" title="{$product['name']}" onerror="this.src='{$error_src}'">
+        HTML;
+
+        return $body;
     }
     /**
      * Renders 'Free Shipment' element if the product has free shipment.

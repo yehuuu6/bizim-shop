@@ -26,6 +26,8 @@ class CartItem extends Component
 
     $slug = parent::get_slug($product['root_name']);
 
+    $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
+
     $this->body = <<<HTML
         <div class="product-in-cart" data-id="{$product['id']}">
             {$this->render_shipment_element($product)}
@@ -33,6 +35,7 @@ class CartItem extends Component
               <img
                 src="{$this->get_image_src($product)}"
                 alt="Resim"
+                onerror='this.src="{$error_src}"'
               />
             </div>
             <div class="product-info">
