@@ -108,7 +108,7 @@ img {
   position: relative;
 }
 .dynamic-content {
-  animation: loadContent 0.6s ease-in-out alternate;
+  animation: loadContent 0.85s ease-in-out alternate;
 }
 @keyframes loadContent {
   0% {
@@ -596,12 +596,12 @@ footer {
   height: 100%;
 }
 
-@media screen and (max-width:1368px){
+@media screen and (max-width: 1368px) {
   .navbar .search-box {
     width: 500px;
   }
   .navbar .search-box input {
-    font-size:1rem;
+    font-size: 1rem;
     padding: 0 2.45rem 0 0.75rem;
   }
   .navbar .search-box .search-btn {
