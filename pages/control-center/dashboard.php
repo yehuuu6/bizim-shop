@@ -80,7 +80,7 @@ $row = mysqli_fetch_assoc($res);
             <p class="user-role"><?= $perm_content ?></p>
           </div>
           <div class="user-image-container">
-            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" />
+            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
           </div>
         </div>
       </div>
