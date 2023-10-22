@@ -103,7 +103,7 @@ class Navbar extends Component
             $body = <<<HTML
                 <div class="account">
                     <div class="user-img">
-                        <img src="{$src}" alt="Profil resmi" />
+                        <img src="{$src}" alt="Profil resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
                     </div>
                     <div class="a-content">
                         <span>Hoş geldin {$_SESSION['name']}</span>
