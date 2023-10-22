@@ -57,6 +57,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             $avatar_name = $avatar_check;
         }
         $update_avatar = "UPDATE users SET profile_image='$avatar_name' WHERE id='$id'"; // Update avatar name in database
+        $_SESSION['profile_image'] = $avatar_name;
         $max_width = 800;
         $max_height = 800;
         $source_path = $avatar['tmp_name'];
