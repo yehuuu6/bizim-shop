@@ -19,6 +19,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     echo json_encode($products);
 } else {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     exit;
 }

@@ -143,7 +143,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     }
 } else {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     exit;
 }
 
@@ -151,7 +151,7 @@ function upload_images($ready_to_upload, $max_width, $max_height)
 {
     foreach ($ready_to_upload as $image_tmp => $image_destination) {
         if (compress_save_image($image_tmp, $image_destination, $max_height, $max_width) === false) {
-            send_error_response('Resim yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'image');
+            send_error_response('Resim yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'image-label-1');
         }
     }
 }
@@ -225,6 +225,11 @@ function update_product($con, $id, $category, $name, $description, $tags, $price
     mysqli_stmt_bind_result($stmt, $old_root_name);
     mysqli_stmt_fetch($stmt);
     mysqli_stmt_close($stmt);
+
+    // Check if the folder exists
+    if (!file_exists(PRODUCT_IMAGE_SERVER_PATH . $old_root_name . '')) {
+        mkdir(PRODUCT_IMAGE_SERVER_PATH . $old_root_name . '');
+    }
 
     // If root name is changed, rename the folder
     if ($old_root_name !== $root_name) {
