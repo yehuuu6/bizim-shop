@@ -52,6 +52,30 @@ class Footer extends Component
                     <span class="blue-text bold-text">Shop</span> tüm hakları saklıdır.</p>
                 </div>
             </footer>
+            <script>
+                function isInViewport(element) {
+                    const rect = element.getBoundingClientRect();
+                    return (
+                    rect.bottom > 0 &&
+                    rect.right > 0 &&
+                    rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
+                    rect.top < (window.innerHeight || document.documentElement.clientHeight)
+                    );
+                }
+
+                window.addEventListener('scroll', function () {
+                    const targetDiv = document.querySelector('.maintenance-info');
+                    const placeHolder = document.querySelector('.placeholder');
+                    if (placeHolder && targetDiv && !isInViewport(placeHolder)) {
+                        targetDiv.classList.add('fixed');
+                        targetDiv.style.display = 'flex';
+                    }
+                    if (window.scrollY === 0) {
+                        targetDiv.classList.remove('fixed');
+                        targetDiv.style.display = 'none';
+                    }
+                });
+            </script>
         HTML;
 
         // Render the component on the page
