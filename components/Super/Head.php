@@ -4,7 +4,7 @@ namespace Components\Super;
 
 if (!defined('FILE_ACCESS')) {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     exit;
 }
 
@@ -16,6 +16,7 @@ if (isset($_SESSION['id']) && $_SESSION['verified'] == 0) {
 }
 
 use Components\Component;
+use Components\Banners\MaintenanceInfo;
 
 /**
  * Head component of the page
@@ -68,10 +69,12 @@ class Head extends Component
                     <p>JavaScript devre dışı bırakılmış. Lütfen tarayıcınızın JavaScript desteğini etkinleştirin.</p>
             </noscript>
             <body>
+            
         HTML;
 
         // Render the component on the page
         parent::render($body);
+        $this->render_maintenance_banner();
     }
 
     /**
@@ -125,6 +128,16 @@ class Head extends Component
         foreach ($styles as $style) {
             $style = "<link rel='stylesheet' href='{$style}'>";
             echo $style;
+        }
+    }
+
+    /**
+     * Renders the maintenance banner if maintenance mode is active.
+     */
+    public function render_maintenance_banner()
+    {
+        if ($_SESSION['maintenance'] == 'true') {
+            $maintenance_banner = new MaintenanceInfo();
         }
     }
 }
