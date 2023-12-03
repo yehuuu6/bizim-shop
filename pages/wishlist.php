@@ -21,9 +21,15 @@ $head = new Head([
 ]);
 $top_banner = new TopBanner();
 $navbar = new Navbar();
-$categories = new Categories();
 
 ?>
+
+<div class="categories-container">
+    <ul class="categories">
+        <?php $categories = new Categories(); ?>
+    </ul>
+</div>
+
 <section id="liked-products" class="page-content">
     <div class="product-container">
     </div>
