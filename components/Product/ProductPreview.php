@@ -28,6 +28,7 @@ class ProductPreview extends Component
               <img
                 src="{$this->get_image_src($product)}"
                 alt="Resim"
+                loading="lazy"
               />
             </div>
             <div class="product-info">
