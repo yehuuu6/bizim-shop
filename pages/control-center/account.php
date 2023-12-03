@@ -39,7 +39,7 @@ $door = $row['door'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
     <link rel="stylesheet" href="/dist/control-center/p2w4z9o5y8v3q6i1r7.css" />
     <script src="/global/plugins/icons.js"></script>
-    <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/global/imgs/logo.png" type="image/x-icon">
     <title>Profili Düzenle - Bizim Shop Kontrol Merkezi</title>
 </head>
 <noscript>
@@ -83,7 +83,7 @@ $door = $row['door'];
                         <p class="user-role"><?= $perm_content ?></p>
                     </div>
                     <div class="user-image-container">
-                        <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
+                        <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@ $door = $row['door'];
                             <div class="item-wrapper">
                                 <div class="first-item">
                                     <div class="image-container">
-                                        <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
+                                        <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
                                     </div>
                                     <label id="avatar-label" class="dashboard-btn edit-btn" for="avatar-input">Profil Resmi Yükle</label>
                                     <p id="avatar-input-displayer" class="display-file">Dosya seçilmedi.</p>
