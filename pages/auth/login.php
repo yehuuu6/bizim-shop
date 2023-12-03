@@ -1,4 +1,5 @@
 <?php
+define('BYPASS_MAINTENANCE', TRUE);
 require_once './header.php';
 if (isset($_SESSION['id'])) {
   header('location: /');
