@@ -83,7 +83,7 @@
   background-color: #fff;
   border: 1px solid #dadada;
   width: 25%;
-  max-height: 205px;
+  height: max-content;
   gap: 10px;
   border-radius: 5px;
 }
@@ -119,6 +119,10 @@
   background-color: #06a700;
   border: none;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
   padding: 10px;
   width: 50%;
   cursor: pointer;
@@ -133,6 +137,10 @@
   color: aliceblue;
   background-color: #538fff;
   border: none;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
   text-align: center;
   text-decoration: none;
@@ -258,13 +266,13 @@
   #cart {
     padding: 30px 100px;
   }
-  .shopping-cart{
-    gap:10px;
+  .shopping-cart {
+    gap: 10px;
   }
-  .shopping-cart .products{
+  .shopping-cart .products {
     width: 65%;
   }
-  .shopping-cart .cart-details{
+  .shopping-cart .cart-details {
     width: 35%;
   }
 }

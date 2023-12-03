@@ -1,10 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap);
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap");
 
 :root {
   --primary-color: #5a44ff;
   --secondary-color: #4c34ff;
   --tertiary-color: #563fff;
   --main-theme-color: #fff;
+  --table-seperator-color: #e9ecef;
   --secondary-theme-color: #f1f4f6;
   --border-color: #dadada;
   --input-bg-color: #f1f4f6;
@@ -13,12 +15,8 @@
   --small-text-color: #7a7a7a;
   --loader-bg-color: #ffffff9d;
   --loader-bg-circle: #a1a1a1;
-  --monitor-bg-color: radial-gradient(
-    circle 369px at -2.9% 12.9%,
-    rgba(247, 234, 163, 1) 0%,
-    rgba(236, 180, 238, 0.56) 46.4%,
-    rgba(163, 203, 247, 1) 100.7%
-  );
+  --monitor-bg-color: #ccc6ff;
+  --menu-btn-hover-bg: #d3d3d3;
   /* Buttons text colors */
   --success-btn-color: #0d6d23;
   --delete-btn-color: #721c24;
@@ -68,10 +66,12 @@
   --input-bg-color: #1a1a1a;
   --readonly-input: #0e0b0b;
   --text-color: #fff;
+  --table-seperator-color: #161616;
   --small-text-color: #adadad;
   --loader-bg-color: #131313fa;
   --loader-bg-circle: #333333;
-  --monitor-bg-color: linear-gradient(0deg, #201b42 0%, #000000 74%);
+  --monitor-bg-color: #16151c;
+  --menu-btn-hover-bg: #1a1a1a;
   /* Buttons text colors */
   --success-btn-color: #0ea500;
   --delete-btn-color: #db2e3f;
@@ -114,7 +114,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
 img {
   -webkit-user-drag: none;
@@ -122,6 +121,7 @@ img {
 body {
   overflow-x: hidden;
   position: relative;
+  font-family: "Poppins", sans-serif;
 }
 a {
   text-decoration: none;
@@ -369,7 +369,6 @@ nav {
     0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
     0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
     0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
-  background: #141e30;
   background: var(--monitor-bg-color);
 }
 .monitor .value {
@@ -380,7 +379,7 @@ nav {
 .monitor .title {
   font-size: 1rem;
   font-weight: 500;
-  color: var(--small-text-color);
+  color: var(--text-color);
 }
 .monitor .icon {
   height: 65px;
@@ -467,20 +466,40 @@ section {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
-  width: auto;
-  min-width: 300px;
-  height: 85px;
-  padding: 0 20px;
+  width: max-content;
+  height: 100px;
+  padding: 10px 20px;
   border-radius: 7px;
   display: flex;
-  gap: 5px;
-  justify-content: center;
-  text-align: center;
+  align-items: center;
+  gap: 20px;
 }
 .logger span img {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
+  width: 35px;
+  height: 35px;
+}
+
+#close-logger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  border-radius: 9999px;
+  display: none;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  color: red;
+  opacity: 0.8;
+  border: none;
+}
+
+.logger:hover #close-logger {
+  display: flex;
+}
+
+#close-logger:hover {
+  opacity: 1;
 }
 
 .logger p {
@@ -488,24 +507,6 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.logger-btn {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#close-logger {
-  color: #ff2b59;
-  background: transparent;
-  font-size: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.8;
-}
-#close-logger:hover {
-  opacity: 1;
 }
 
 .warning,
@@ -670,6 +671,20 @@ section {
   color: var(--small-text-color);
   margin-bottom: 1rem;
 }
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--main-theme-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
 
 .loader {
   position: fixed;
@@ -763,9 +778,6 @@ section {
   position: relative;
 }
 .content-header .item .controls {
-  position: absolute;
-  top: -25px;
-  right: 0;
   display: flex;
   gap: 10px;
 }
@@ -800,7 +812,7 @@ input[type="file"] {
 }
 .second label {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-color);
 }
 .second .edit-btn {
@@ -850,8 +862,6 @@ input[type="file"] {
 }
 .bottom-header {
   color: #3a3a3a;
-  font-size: 16px;
-  font-weight: 700;
   margin-bottom: 5px;
 }
 .menu-btn,
@@ -872,7 +882,9 @@ input[type="file"] {
 }
 .menu-controller {
   margin: 15px 0;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   letter-spacing: 1px;
+  font-weight: 900;
 }
 .menu-controller h3 {
   color: var(--secondary-color);
@@ -890,9 +902,10 @@ input[type="file"] {
 .dashboard-btn {
   user-select: none;
   border-radius: 5px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   text-align: center;
   width: 100%;
   transition: 0.1s ease-in-out;
@@ -961,15 +974,12 @@ input[type="file"] {
 .hidden-menu .menu-btn {
   padding: 5px 20px;
 }
-.active-menu .menu-btn {
-  padding: 5px 25px;
-}
 .loader svg {
   color: #000;
 }
 .menu-btn:hover {
   opacity: 1;
-  padding: 0 15px;
+  background-color: var(--menu-btn-hover-bg);
 }
 table {
   width: 100%;
@@ -1016,7 +1026,7 @@ td img {
   object-fit: cover;
 }
 table tr:nth-child(odd) {
-  background-color: var(--main-theme-color);
+  background-color: var(--table-seperator-color);
 }
 table tr:hover td {
   color: var(--text-color);
@@ -1033,7 +1043,7 @@ table tr:hover td a i.active:hover {
 .active {
   opacity: 1;
   color: aliceblue;
-  background: var(--primary-color);
+  background: var(--primary-color) !important;
 }
 .item-wrapper {
   display: flex;
@@ -1060,16 +1070,15 @@ table tr:hover td a i.active:hover {
   margin: 0;
   font-weight: 350;
   width: 100%;
-  padding: 5px;
   border: 1px solid var(--border-color);
   background-color: var(--input-bg-color);
   color: var(--text-color);
 }
 .item-wrapper .form-item select {
-  padding: 5px;
   border: 1px solid var(--border-color);
   font-size: 16px;
   font-weight: 350;
+  padding: 10px;
   outline: none;
   width: 100%;
   background: var(--input-bg-color);
@@ -1078,6 +1087,67 @@ table tr:hover td a i.active:hover {
 .btns-section {
   display: flex;
   gap: 15px;
+}
+.category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  background: var(--main-theme-color);
+  padding: 10px;
+  align-items: center;
+}
+.category-btn-container {
+  display: flex;
+  gap: 10px;
+}
+.category-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
+.category-item .delete-sub-cat-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  outline: none;
+  color: #ff4545;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.category-item .delete-sub-cat-btn:hover {
+  opacity: 1;
+}
+.category-item:hover .category-name {
+  opacity: 1;
+}
+.category-name {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.8;
+  color: var(--text-color);
+}
+.category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 10px;
+}
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  background: var(--secondary-theme-color);
+  border: 1px solid var(--border-color);
+  cursor: -webkit-grab;
 }
 footer {
   width: 100%;
@@ -1111,7 +1181,7 @@ footer p {
     width: 250px;
   }
   .bottom-header {
-    font-size: 14px;
+    font-size: 16px !important;
   }
   .item-wrapper .form-item input {
     font-size: 14px;
@@ -1141,9 +1211,6 @@ footer p {
     padding: 10px 20px;
     font-size: 13px;
   }
-  nav {
-    padding: 8px 13px;
-  }
   .list-title h3 {
     font-size: 0.7rem;
   }
@@ -1162,13 +1229,40 @@ footer p {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 979px) {
+  .menu-controller {
+    margin: 10px 0;
+  }
+  .settings {
+    margin: 50px;
+  }
+  .delete-modal-content {
+    margin: 50px;
+  }
+  .category-container h3 {
+    font-size: 1rem;
+  }
+  .category-btn-container {
+    gap: 4px;
+  }
+  .category-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .category-name {
+    font-size: 0.8rem;
+  }
+  .category-container .small-btn {
+    width: 45px !important;
+  }
   .left-bar {
     width: 100%;
     border-right: 1px solid var(--border-color);
+    padding-right: 5px;
   }
   .header-user {
-    gap: 10px;
+    gap: 5px;
   }
   .header-user .user-info .username,
   .header-user .user-info .user-role {
@@ -1177,12 +1271,10 @@ footer p {
   }
   .small-btn {
     width: 100% !important;
-  }
-  .c-container {
-    width: 170px;
+    height: 36px;
   }
   .wide-page {
-    padding: 20px 20px 20px 95px;
+    padding: 20px 20px 20px 80px;
   }
   .hidden-menu {
     transform: translateX(-85%);
@@ -1193,9 +1285,13 @@ footer p {
     padding: 15px 40px;
     border-bottom: 1px solid var(--border-color);
   }
+  .content-header {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+  }
   .content-header .item .controls {
     flex-direction: column;
-    top: -45px;
   }
   .table-form-td {
     display: table-cell;
@@ -1204,16 +1300,19 @@ footer p {
     height: 55px;
   }
   table tbody tr {
-    height: 85px;
+    height: 75px;
   }
   table .dashboard-btn {
-    padding: 1px 2px;
-    font-size: 10px;
+    padding: 5px 7px;
+    font-size: 12px;
   }
   table th,
   table td {
     font-size: 12px;
-    padding: 0 2px;
+    text-align: left;
+  }
+  .content-header .item {
+    width: 100%;
   }
   .content-header .item .controls button {
     width: 100%;
@@ -1225,21 +1324,21 @@ footer p {
   }
   .content-header .item .controls input {
     font-size: 14px;
-    width: 170px;
+    width: 100%;
+  }
+  .container {
+    overflow-x: scroll;
   }
   .narrow-page {
-    padding: 20px 20px 20px 95px;
+    padding: 20px 20px 20px 80px;
   }
   .content-header .item p {
-    width: 50%;
+    width: 100%;
     font-size: 14px;
+    text-align: center;
   }
   .item-wrapper {
     flex-direction: column;
-  }
-  .table-form {
-    flex-direction: column;
-    gap: 4px;
   }
   .list-title hr {
     display: none;
@@ -1251,8 +1350,20 @@ footer p {
     justify-content: center;
     font-size: 13px;
   }
+  .bottom-header {
+    font-size: 16px !important;
+  }
+  .form-item label {
+    font-size: 14px !important;
+  }
   .page-content .header {
-    font-size: 14px;
-    width: 50%;
+    width: 100%;
+    text-align: center;
+  }
+  .statistics-monitors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
   }
 }
