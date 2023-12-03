@@ -42,7 +42,7 @@ class Product extends Component
      * @return void
      */
     private function render_image_element(array $product)
-    {   
+    {
         $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
         if ($product['image1'] === "noimg.jpg") {
             $image_src = $error_src;
@@ -50,7 +50,7 @@ class Product extends Component
             $image_src = PRODUCT_IMAGE_SITE_PATH . "{$product['root_name']}/{$product['image1']}";
         }
         $body = <<<HTML
-            <img src="{$image_src}" alt="{$product['name']}" title="{$product['name']}" onerror="this.src='{$error_src}'">
+            <img src="{$image_src}" alt="{$product['name']}" title="{$product['name']}" loading="lazy" onerror="this.src='{$error_src}'">
         HTML;
 
         return $body;
