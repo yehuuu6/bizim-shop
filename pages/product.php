@@ -14,13 +14,19 @@ use Components\Super\Legs;
 
 if (!$name) {
     header("HTTP/1.1 404 Not Found");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/404.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/404.php');
     exit;
 }
 
 $name = convert_name($name);
 
 $products_data = get_products($con, ['slug' => $name]);
+
+if (!$products_data) {
+    header("HTTP/1.1 404 Not Found");
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/404.php');
+    exit;
+}
 
 $title = "{$products_data[0]['name']} - Bizim Shop";
 $tags = "{$products_data[0]['tags']}";
@@ -35,7 +41,6 @@ $head = new Head([
 ]);
 $top_banner = new TopBanner();
 $navbar = new Navbar();
-$categories = new Categories();
 
 $product = $products_data[0];
 
@@ -166,6 +171,13 @@ function render_badges(array $product)
 }
 
 ?>
+
+<div class="categories-container">
+    <ul class="categories">
+        <?php $categories = new Categories(); ?>
+    </ul>
+</div>
+
 <section id="product-page" class="page-content">
     <div class="product-container dynamic-content" data-id="<?= $product['id'] ?>">
         <div class="product-images">
