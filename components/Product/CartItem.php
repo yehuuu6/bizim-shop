@@ -36,6 +36,7 @@ class CartItem extends Component
                 src="{$this->get_image_src($product)}"
                 alt="Resim"
                 onerror='this.src="{$error_src}"'
+                loading="lazy"
               />
             </div>
             <div class="product-info">
