@@ -20,9 +20,14 @@ $head = new Head([
 ]);
 $top_banner = new TopBanner();
 $navbar = new Navbar();
-$categories = new Categories();
 
 ?>
+
+<div class="categories-container">
+    <ul class="categories">
+        <?php $categories = new Categories(); ?>
+    </ul>
+</div>
 
 <section id="cart" class="page-content flex-column">
     <div class="content-header">
