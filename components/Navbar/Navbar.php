@@ -4,7 +4,7 @@ namespace Components\Navbar;
 
 if (!defined('FILE_ACCESS')) {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ class Navbar extends Component
             <nav class="navbar">
                 <div class="flex-item site-name">
                     <img
-                    src="http://localhost/global/imgs/favicon.svg"
+                    src="http://localhost/global/imgs/logo.png"
                     class="logo"
                     alt=""
                     />
