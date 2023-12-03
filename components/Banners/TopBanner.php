@@ -17,8 +17,10 @@ class TopBanner extends Component
             </div>
         HTML;
 
-        // Render the component on the page
-        parent::render($body);
+        // Render the component on the page if maintenance mode is disabled
+        if ($_SESSION['maintenance'] == 'false') {
+            parent::render($body);
+        }
     }
 
     /**
@@ -28,6 +30,6 @@ class TopBanner extends Component
     private function set_banner_text()
     {
         // TODO: Get banner text from database
-        return "İlk siparişinize özel kargo ücreti YOK!";
+        return "İlk siparişinize özel kargo bedeli BİZDEN!";
     }
 }
