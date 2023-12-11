@@ -128,6 +128,13 @@
   cursor: pointer;
   transition: 0.3s;
 }
+.shopping-cart .cart-details .cart-detail .cart-detail-confirm:disabled {
+  background-color: #bfbfbf;
+  cursor: not-allowed;
+}
+.shopping-cart .cart-details .cart-detail .cart-detail-confirm:disabled:hover {
+  background-color: #bfbfbf;
+}
 .shopping-cart .cart-details .cart-detail .cart-detail-confirm:hover {
   background-color: #07c700;
 }

@@ -200,7 +200,7 @@
 
 /* Product Filters */
 .product-filters select[name="p-sort"],
-.product-filters select[name="p-category"] {
+.product-filters select[name="p-sub-category"] {
   border: 1px solid #dadada;
   border-radius: 0.25em;
   padding: 0.25em 0.5em;

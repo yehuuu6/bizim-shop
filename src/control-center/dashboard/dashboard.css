@@ -1058,7 +1058,6 @@ table tr:hover td a i.active:hover {
 }
 .item-wrapper .form-item label {
   font-size: 16px;
-  font-weight: 500;
   color: var(--text-color);
 }
 .item-wrapper .form-item label span {
@@ -1073,6 +1072,9 @@ table tr:hover td a i.active:hover {
   border: 1px solid var(--border-color);
   background-color: var(--input-bg-color);
   color: var(--text-color);
+}
+.item-wrapper .form-item input[name="email"] {
+  background-color: var(--readonly-input);
 }
 .item-wrapper .form-item select {
   border: 1px solid var(--border-color);
