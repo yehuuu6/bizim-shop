@@ -1,5 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap);
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap");
 
 :root {
   --primary-color: #5a44ff;
@@ -9,13 +8,12 @@
   --table-seperator-color: #e9ecef;
   --secondary-theme-color: #f1f4f6;
   --border-color: #dadada;
-  --input-bg-color: #f1f4f6;
+  --input-bg-color: #00000017;
   --readonly-input: #d8d8d8;
   --text-color: #131313;
   --small-text-color: #7a7a7a;
   --loader-bg-color: #ffffff9d;
   --loader-bg-circle: #a1a1a1;
-  --monitor-bg-color: #ccc6ff;
   --menu-btn-hover-bg: #d3d3d3;
   /* Buttons text colors */
   --success-btn-color: #0d6d23;
@@ -60,18 +58,17 @@
   --primary-color: #4026ff;
   --secondary-color: #5741ff;
   --tertiary-color: #4027ff;
-  --main-theme-color: #131313;
-  --secondary-theme-color: #1a1a1a;
-  --border-color: #202020;
-  --input-bg-color: #1a1a1a;
-  --readonly-input: #0e0b0b;
+  --main-theme-color: #02090f;
+  --secondary-theme-color: #ffffff08;
+  --border-color: #131020;
+  --input-bg-color: #0a1116;
+  --readonly-input: #01000c;
   --text-color: #fff;
-  --table-seperator-color: #161616;
+  --table-seperator-color: #040c0f;
   --small-text-color: #adadad;
-  --loader-bg-color: #131313fa;
-  --loader-bg-circle: #333333;
-  --monitor-bg-color: #16151c;
-  --menu-btn-hover-bg: #1a1a1a;
+  --loader-bg-color: #02090fd4;
+  --loader-bg-circle: #0c1118c9;
+  --menu-btn-hover-bg: #061522;
   /* Buttons text colors */
   --success-btn-color: #0ea500;
   --delete-btn-color: #db2e3f;
@@ -114,6 +111,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 img {
   -webkit-user-drag: none;
@@ -121,7 +119,6 @@ img {
 body {
   overflow-x: hidden;
   position: relative;
-  font-family: "Poppins", sans-serif;
 }
 a {
   text-decoration: none;
@@ -186,7 +183,6 @@ li {
   background: var(--main-theme-color);
   border-radius: 10px;
   gap: 10px;
-  border: 2px solid var(--border-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -309,8 +305,8 @@ li {
   letter-spacing: 0;
 }
 hr {
-  border: 1px solid var(--border-color);
   margin: 10px 3px;
+  border: 1px solid var(--border-color);
 }
 nav {
   width: 100%;
@@ -340,7 +336,7 @@ nav {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid var(--border-color);
+
   overflow: hidden;
 }
 .header-user .user-image-container .user-avatar {
@@ -350,18 +346,19 @@ nav {
 }
 .statistics-monitors {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  width: 35%;
+  width: 100%;
 }
 .intro {
   width: 65%;
 }
 .monitor {
   display: flex;
+  padding: 0.8rem 2.3rem;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 5px;
   height: 220px;
   border-radius: 5px;
@@ -369,31 +366,39 @@ nav {
     0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
     0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
     0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
-  background: var(--monitor-bg-color);
+  background: #4026ff;
+  opacity: 0.8;
+  user-select: none;
+}
+.monitor:hover {
+  opacity: 1;
+  cursor: pointer;
 }
 .monitor .value {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--text-color);
+  font-size: 3rem;
+  color: aliceblue;
+  font-weight: 600;
 }
-.monitor .title {
-  font-size: 1rem;
+.monitor .title,
+.monitor .increase {
+  font-size: 1.15rem;
   font-weight: 500;
-  color: var(--text-color);
+  color: aliceblue;
 }
-.monitor .icon {
-  height: 65px;
-  width: 65px;
-  border-radius: 9999px;
-  border: 1px solid var(--text-color);
+.monitor .increase {
   display: flex;
   align-items: center;
+  gap: 15px;
   justify-content: center;
-  background: aliceblue;
-  color: #533cff;
 }
-.monitor .icon i {
-  font-size: 30px;
+.monitor .increase i {
+  font-size: 1.3rem;
+  color: aliceblue;
+}
+.monitor .increase .amount {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #20dd00;
 }
 .user-btn .user-btn-item {
   display: flex;
@@ -414,7 +419,6 @@ nav {
   background: var(--secondary-theme-color);
 }
 .header-user hr {
-  border: 1px solid var(--border-color);
   height: 50px;
 }
 .header-user .user-info-container {
@@ -534,6 +538,10 @@ section {
   border-radius: 7px;
 }
 
+input:readonly {
+  cursor: not-allowed !important;
+}
+
 .error {
   border-color: var(--logger-error-border-color);
   background-color: var(--logger-error-bg-color);
@@ -576,7 +584,6 @@ section {
   background: var(--main-theme-color);
   border-radius: 10px;
   gap: 10px;
-  border: 2px solid var(--border-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -598,7 +605,6 @@ section {
   gap: 10px;
 }
 .settings .theme-item {
-  border: 1px solid var(--border-color);
   box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.56);
   overflow: hidden;
   background: var(--main-theme-color);
@@ -653,7 +659,6 @@ section {
   background-color: var(--readonly-input);
   width: 18px;
   height: 18px;
-  border: 2px solid var(--border-color);
   border-radius: 50%;
 }
 
@@ -740,7 +745,6 @@ section {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid var(--border-color);
   overflow: hidden;
 }
 .first-item .image-container .remove-image {
@@ -764,7 +768,7 @@ section {
   height: 250px;
   object-fit: cover;
 }
-.second {
+.form-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -810,33 +814,35 @@ section {
 input[type="file"] {
   display: none;
 }
-.second label {
+.form-content label {
   font-size: 16px;
   font-weight: 600;
   color: var(--text-color);
 }
-.second .edit-btn {
+.form-content .edit-btn {
   color: var(--edit-btn-color);
 }
-.second textarea {
+.form-content textarea {
   resize: none;
   height: 125px;
   padding: 10px;
-  border: 1px solid var(--border-color);
   background-color: var(--input-bg-color);
+  border-radius: 5px;
+  border: none;
   color: var(--text-color);
   font-size: 16px;
 }
-.second input {
+.form-content input {
   padding: 10px;
-  border: 1px solid var(--border-color);
   font-size: 16px;
+  border-radius: 5px;
   background-color: var(--input-bg-color);
   color: var(--text-color);
+  border: none;
   outline: none;
   margin-bottom: 15px;
 }
-.second textarea:focus {
+.form-content textarea:focus {
   outline: none;
 }
 .page-content .header {
@@ -870,7 +876,7 @@ input[type="file"] {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 9999px;
   font-size: 15px;
   height: 50px;
 }
@@ -882,11 +888,11 @@ input[type="file"] {
 }
 .menu-controller {
   margin: 15px 0;
-  font-family: "M PLUS Rounded 1c", sans-serif;
-  letter-spacing: 1px;
-  font-weight: 900;
 }
 .menu-controller h3 {
+  letter-spacing: 1px;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: var(--secondary-color);
 }
 .menu-controller span {
@@ -905,7 +911,6 @@ input[type="file"] {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  font-family: "M PLUS Rounded 1c", sans-serif;
   text-align: center;
   width: 100%;
   transition: 0.1s ease-in-out;
@@ -1069,7 +1074,6 @@ table tr:hover td a i.active:hover {
   margin: 0;
   font-weight: 350;
   width: 100%;
-  border: 1px solid var(--border-color);
   background-color: var(--input-bg-color);
   color: var(--text-color);
 }
@@ -1077,14 +1081,21 @@ table tr:hover td a i.active:hover {
   background-color: var(--readonly-input);
 }
 .item-wrapper .form-item select {
-  border: 1px solid var(--border-color);
+  border-radius: 5px;
   font-size: 16px;
   font-weight: 350;
   padding: 10px;
   outline: none;
   width: 100%;
   background: var(--input-bg-color);
+  border: none;
   color: var(--text-color);
+}
+.item-wrapper .form-item select option {
+  margin: 40px;
+  background: var(--input-bg-color);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 .btns-section {
   display: flex;
@@ -1095,8 +1106,8 @@ table tr:hover td a i.active:hover {
   flex-direction: column;
   gap: 10px;
   border-radius: 5px;
-  border: 1px solid var(--border-color);
   background: var(--main-theme-color);
+  border: 1px solid var(--border-color);
   padding: 10px;
   align-items: center;
 }
@@ -1148,7 +1159,6 @@ table tr:hover td a i.active:hover {
   width: 100%;
   border-radius: 5px;
   background: var(--secondary-theme-color);
-  border: 1px solid var(--border-color);
   cursor: -webkit-grab;
 }
 footer {
@@ -1191,7 +1201,7 @@ footer p {
   .item-wrapper .form-item select {
     font-size: 14px;
   }
-  .second label {
+  .form-content label {
     font-size: 14px;
   }
   .dashboard-btn {

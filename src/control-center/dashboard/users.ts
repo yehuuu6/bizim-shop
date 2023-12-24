@@ -41,14 +41,17 @@ function getSearchUser() {
   userTable.innerHTML = "";
 
   if (search.length > 0) {
-    const matchingUsers = currentUsers.value.filter((user: UserInterface) =>
-      user["userName"].toLowerCase().includes(search)
+    const matchingUsers = currentUsers.value.filter(
+      (user: UserInterface) =>
+        user["userName"].toLowerCase().includes(search) ||
+        user["email"].toLowerCase().includes(search) ||
+        user["telephone"].toLowerCase().includes(search)
     );
 
     if (matchingUsers.length === 0) {
       userTable.innerHTML = `
         <tr>
-          <td colspan="7">Hiçbir ürün bulunamadı</td>
+          <td colspan="7">Hiçbir kullanıcı bulunamadı.</td>
         </tr>
       `;
     } else {
