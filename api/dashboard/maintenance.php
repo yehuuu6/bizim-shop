@@ -15,10 +15,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     if ($old_maintenance == 'true') {
         $maintenance = 'false';
-        $msg = "Bakım modundan çıkıldı.";
     } else {
         $maintenance = 'true';
-        $msg = "Bakım moduna alındı.";
     }
 
     $sql = "UPDATE site SET value = ? WHERE keyword = 'maintenance'";
