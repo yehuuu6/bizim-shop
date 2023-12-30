@@ -39,11 +39,11 @@ class Footer extends Component
                 </div>
                 <div class="footer-powered">
                     <div class="footer-item gap-10">
-                        <img class="no-drag wide-img" src="/global/imgs/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
+                        <img class="no-drag wide-img" src="/global/imgs/footer/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
                         <p>Bazı içerikler ve kod örnekleri, <a class="link purple-text" target="_blank" href="https://openai.com/blog/chatgpt">OpenAI GPT-3</a> tarafından sağlanmıştır.</p>
                     </div>
                     <div class="footer-item gap-10">
-                        <img class="no-drag wide-img" src="/global/imgs/Discord_Logo.png" alt="Discord Logo">
+                        <img class="no-drag wide-img" src="/global/imgs/footer/Discord_Logo.png" alt="Discord Logo">
                         <p>Öneri ve istekleriniz için <a class="link purple-text" target="_blank" href="https://discord.gg/4ZyAb3sZVS">Discord</a> sunucumuza katılabilirsiniz!</p>
                     </div>
                 </div>
@@ -52,30 +52,6 @@ class Footer extends Component
                     <span class="blue-text bold-text">Shop</span> tüm hakları saklıdır.</p>
                 </div>
             </footer>
-            <script>
-                function isInViewport(element) {
-                    const rect = element.getBoundingClientRect();
-                    return (
-                    rect.bottom > 0 &&
-                    rect.right > 0 &&
-                    rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
-                    rect.top < (window.innerHeight || document.documentElement.clientHeight)
-                    );
-                }
-
-                window.addEventListener('scroll', function () {
-                    const targetDiv = document.querySelector('.maintenance-info');
-                    const placeHolder = document.querySelector('.placeholder');
-                    if (placeHolder && targetDiv && !isInViewport(placeHolder)) {
-                        targetDiv.classList.add('fixed');
-                        targetDiv.style.display = 'flex';
-                    }
-                    if (window.scrollY === 0) {
-                        targetDiv.classList.remove('fixed');
-                        targetDiv.style.display = 'none';
-                    }
-                });
-            </script>
         HTML;
 
         // Render the component on the page
