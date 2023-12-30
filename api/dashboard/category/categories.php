@@ -16,6 +16,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     // Send category list to client
     if ($category_count > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
+            // Skip Uncategorized category
+            if ($row['id'] == 0) {
+                continue;
+            }
             $result[] = $row;
         }
     }
