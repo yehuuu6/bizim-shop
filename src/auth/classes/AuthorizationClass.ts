@@ -53,9 +53,9 @@ export class AuthorizationClass implements AuthorizationClassInterface {
     if (cause !== "none") {
       clearTimeout(this.timer2);
 
-      let element = document.querySelector(
-        `[name="${cause}"]`
-      ) as HTMLInputElement;
+      const element =
+        (document.querySelector(`[name=${cause}]`) as HTMLElement) ||
+        (document.querySelector(`[id=${cause}]`) as HTMLElement);
       element.style.border = "1px solid red";
 
       this.timer2 = setTimeout(() => {
