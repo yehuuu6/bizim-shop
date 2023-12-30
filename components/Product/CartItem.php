@@ -26,6 +26,8 @@ class CartItem extends Component
 
     $slug = parent::get_slug($product['root_name']);
 
+    $slug = urlencode(urlencode($slug));
+
     $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
 
     $this->body = <<<HTML
@@ -46,16 +48,27 @@ class CartItem extends Component
               </p>
               <div class="price-calculation">
                 <span data-value="{$product['price']}" class="product-price">{$product['price']} <span class="product-currency">TL</span> Ürün</span> +
-                <span data-value="{$shipping_cost}" class="shipping-cost">{$shipping_cost} <span class="product-currency">TL</span> Kargo</span> + 
+                <span data-value="{$shipping_cost}" class="shipping-cost" {$this->render_indicator($product)}>{$shipping_cost} <span class="product-currency" {$this->render_indicator($product)}>TL</span> Kargo</span> + 
                 <span data-value="{$fee_cost}" class="fee-cost">{$fee_cost} <span class="product-currency">TL</span> KDV</span> =
                 <span id="total-cart-price" data-value="{$total_price}" class="total-price">{$total_price} <span class="product-currency">TL</span> Toplam</span>
               </div>
             </div>
-            <span class="remove-from-cart" title="Ürünü Sepetten Sil">
-            <i class="fa-solid fa-trash"></i>
+            <span class="remove-from-cart" title="Ürünü Sepetten Kaldır">
+              <i class="fa-solid fa-trash"></i>
             </span>
           </div>
         HTML;
+  }
+  private function render_indicator($product)
+  {
+    if ($product['shipment'] === '1') {
+      $body = <<<HTML
+      style="color: #00b300;"
+      HTML;
+    } else {
+      $body = '';
+    }
+    return $body;
   }
   /**
    * Gets the image source of the product.
