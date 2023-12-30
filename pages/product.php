@@ -10,7 +10,7 @@ use Components\Categories\Categories;
 use Components\Banners\TopBanner;
 use Components\Super\Legs;
 
-@$name = get_safe_value($con, $_GET['name']);
+$name = isset($_GET['name']) ? get_safe_value($con, urldecode($_GET['name'])) : "";
 
 if (!$name) {
     header("HTTP/1.1 404 Not Found");
@@ -192,6 +192,13 @@ function render_badges(array $product)
             <div class="detail">
                 <div class="product-title">
                     <h1><?= $product['name'] ?></h1>
+                </div>
+            </div>
+            <div class="detail">
+                <div class="product-category">
+                    <a href="/products/<?= convert_link_name(get_category_name($product['category'])) ?>"><?= get_category_name($product['category']) ?></a>
+                    >
+                    <a href="/products/<?= convert_link_name(get_category_name($product['category'])) . '/' . convert_link_name(get_sub_category_name($product['subcategory'])) ?>"><?= get_sub_category_name($product['subcategory']) ?></a>
                 </div>
             </div>
             <div class="detail">
