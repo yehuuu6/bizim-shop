@@ -11,6 +11,7 @@ if (!defined('FILE_ACCESS')) {
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
 use Components\Component;
+use Components\Product\SearchItem;
 
 /**
  * Navbar component
@@ -34,11 +35,14 @@ class Navbar extends Component
                     <input
                     type="text"
                     spellcheck="false"
-                    placeholder="Ürün, kategori veya marka ara"
+                    placeholder="Ürün aramaya başla..."
+                    id="search-products"
                     />
                     <button class="search-btn" title="Ara">
                         <i class="fas fa-search"></i>
                     </button>
+                    <div class="search-results">
+                    </div>
                 </div>
                 <div class="flex-item user-content dynamic-content">
                     <div class="interactive">
@@ -99,14 +103,14 @@ class Navbar extends Component
                 </div>
             HTML;
         } else {
-            $src = $this->get_img_src() . "?timestamp=" . time();
+            $src = $this->get_img_src();
             $body = <<<HTML
                 <div class="account">
                     <div class="user-img">
                         <img src="{$src}" alt="Profil resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
                     </div>
                     <div class="a-content">
-                        <span>Hoş geldin {$_SESSION['name']}</span>
+                        <span>Hoş geldin, {$_SESSION['name']}</span>
                         <span
                         ><a href="/control-center/account">Hesabım</a> |
                         <a href="/control-center/dashboard">Panel</a></span
