@@ -3,7 +3,7 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Product\ProductPreview;
+use Components\Product\AddedToCart;
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
@@ -15,7 +15,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         'limit' => '1',
     ]);
 
-    $product = new ProductPreview($product_data[0]);
+    $product = new AddedToCart($product_data[0]);
 
     echo json_encode($product->body);
 } else {
