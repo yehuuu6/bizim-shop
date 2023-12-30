@@ -29,10 +29,10 @@ export default class PanelClass implements IPanel {
 
     const imageSrc =
       messageType === "success"
-        ? "/global/imgs/success.png"
+        ? "/global/imgs/icons/success.png"
         : messageType === "warning"
-        ? "/global/imgs/info.png"
-        : "/global/imgs/error.png";
+        ? "/global/imgs/icons/info.png"
+        : "/global/imgs/icons/error.png";
     logImage.src = imageSrc;
     logMessage.innerText = message;
 
