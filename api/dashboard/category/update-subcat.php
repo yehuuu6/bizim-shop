@@ -24,6 +24,16 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         mysqli_stmt_bind_param($stmt, 'sisi', $sub_name, $cid, $slug, $sub_id);
         try {
             mysqli_stmt_execute($stmt);
+            $sql2 = "UPDATE product SET category = ? WHERE subcategory = ?";
+            $stmt2 = mysqli_prepare($con, $sql2);
+            mysqli_stmt_bind_param($stmt2, 'ii', $cid, $sub_id);
+            try {
+                mysqli_stmt_execute($stmt2);
+            } catch (Exception $e) {
+                send_error_response("{$e->getMessage()}");
+            } finally {
+                mysqli_stmt_close($stmt2);
+            }
             send_success_response("Alt kategori başarıyla güncellendi.");
         } catch (Exception $e) {
             send_error_response("{$e->getMessage()}");
