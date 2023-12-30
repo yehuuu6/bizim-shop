@@ -8,11 +8,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $password_confirm = get_safe_value($con, $_POST['passwordConf']);
 
     if (empty($password) || empty($password_confirm)) {
-        send_error_response('Lütfen tüm alanları doldurunuz.', 'password');
+        send_error_response('Lütfen tüm alanları doldurunuz.');
     } elseif ($password !== $password_confirm) {
-        send_error_response('Şifreler eşleşmiyor.', 'password_confirm');
+        send_error_response('Şifreler eşleşmiyor.');
     } elseif (strlen($password) < 8) {
-        send_error_response('Şifre minimum 8 karakter olmalıdır.', 'password');
+        send_error_response('Şifre minimum 8 karakter olmalıdır.');
     } else {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $email = $_SESSION['email'];
@@ -22,7 +22,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         if ($result) {
             send_success_response("Şifreniz başarıyla güncellendi, yönlendiriliyorsunuz...");
         } else {
-            send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'password');
+            send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.');
         }
         die();
     }
