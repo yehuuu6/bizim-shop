@@ -7,17 +7,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     $result = array();
 
-    $query = "SELECT (SELECT COUNT(*) FROM USERS) as total_users, (SELECT COUNT(*) FROM PRODUCT) as total_products";
+    $query = "SELECT (SELECT COUNT(*) FROM USERS) as total_users, (SELECT COUNT(*) FROM ORDERS) as total_orders";
     $stmt = $con->prepare($query);
 
     // Execute the statement
     if ($stmt->execute()) {
-        $stmt->bind_result($total_users, $total_products);
+        $stmt->bind_result($total_users, $total_orders);
         $stmt->fetch();
         $stmt->close();
 
         $result['total_users'] = $total_users;
-        $result['total_products'] = $total_products;
+        $result['total_orders'] = $total_orders;
     } else {
         die("Bir hata oluştu.");
     }
