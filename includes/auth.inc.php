@@ -2,13 +2,17 @@
 
 if (!defined('FILE_ACCESS')) {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     die();
 }
 
 ini_set('session.name', 'bss_i');
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_set_cookie_params([
     'lifetime' => 86400,
@@ -28,6 +32,32 @@ require_once 'plugins/emailer.inc.php';
 $name = "";
 $surname = "";
 $email = "";
+
+# Pull site settings from database
+$sql = "SELECT * FROM site";
+$stmt = $con->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+$site = $result->fetch_assoc();
+
+$_SESSION['maintenance'] = $site['value'];
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    session_unset();
+    header("location: http://localhost/auth/login");
+    die();
+}
+
+if ($_SESSION['maintenance'] == 'true' && !defined('BYPASS_MAINTENANCE')) {
+    if (@$_SESSION['membership'] < 1) {
+        header("HTTP/1.1 503 Service Unavailable");
+        include($_SERVER['DOCUMENT_ROOT'] . '/errors/503.php');
+        die();
+    }
+}
 
 function register($user_id, $name, $surname, $email, $verified, $token)
 {
@@ -118,11 +148,4 @@ function reset_password($token)
     } else {
         die("Tokenin süresi doldu veya geçersiz. Lütfen şifre sıfırlama işlemini tekrar deneyiniz.");
     }
-}
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    session_unset();
-    header("location: http://localhost/auth/login");
-    die();
 }
