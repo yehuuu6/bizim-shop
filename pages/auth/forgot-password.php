@@ -21,7 +21,7 @@ if (isset($_SESSION['id'])) {
     <form id="forgot-password-form" class="form">
       <div class="header primary-color">Şifremi Unuttum</div>
       <div class="logger warning">
-        <span><img src="/global/imgs/info.png" alt=""></span>
+        <span><img src="/global/imgs/icons/info.png" alt=""></span>
         Hesabınızın e-posta adresini girin.
       </div>
       <div class="formGroup">
