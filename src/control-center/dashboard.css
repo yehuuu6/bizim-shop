@@ -387,9 +387,9 @@ nav {
 }
 .monitor .increase {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
+  justify-content: start;
 }
 .monitor .increase i {
   font-size: 1.3rem;
@@ -536,10 +536,6 @@ section {
   top: 10%;
   border: 1px solid;
   border-radius: 7px;
-}
-
-input:readonly {
-  cursor: not-allowed !important;
 }
 
 .error {
@@ -1079,6 +1075,7 @@ table tr:hover td a i.active:hover {
 }
 .item-wrapper .form-item input[name="email"] {
   background-color: var(--readonly-input);
+  cursor: not-allowed;
 }
 .item-wrapper .form-item select {
   border-radius: 5px;

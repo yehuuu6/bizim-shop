@@ -195,7 +195,7 @@
   box-shadow: 0 0 5px #05050560;
   left: -33px;
   font-size: 14px;
-  color: #ffe600;
+  color: aliceblue;
   display: grid;
   place-items: center;
   width: 100px;
@@ -207,7 +207,7 @@
 .shopping-cart .products .product-in-cart .product-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .shopping-cart .products .product-in-cart .product-info {
   display: flex;
@@ -237,6 +237,7 @@
   font-weight: 400;
   color: #363636;
   background: #dfdfdf;
+  white-space: nowrap;
   padding: 5px;
   border-radius: 10px;
 }

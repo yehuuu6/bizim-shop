@@ -113,6 +113,9 @@
 .m-t-10 {
   margin-top: 10px;
 }
+.dynamic-content {
+  animation: loadContent 0.85s ease-in-out alternate;
+}
 .btn {
   border: 0;
   padding: 0.75rem 2rem;
