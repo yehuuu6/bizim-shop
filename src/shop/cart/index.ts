@@ -14,7 +14,6 @@ initLikedProducts();
  * @param type Type of the showcase to be updated (cart, wishlist)
  */
 export function resetShowcases(productId: string, type: string) {
-  console.log("resetShowcases");
   const inCart = localStorage.getItem("cart") || "[]";
   const inWishlist = localStorage.getItem("wishlist") || "[]";
   const showcases = document.querySelectorAll(
