@@ -19,6 +19,7 @@ class Product extends Component
         $is_featured = $product['featured'] == '1' ? true : false;
 
         $slug = parent::get_slug($product['root_name']);
+        $urlSlug = urlencode(urlencode($slug));
 
         $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">
@@ -29,7 +30,7 @@ class Product extends Component
                 {$this->render_shipment_element($product)}
             </div>
             <div class="product-info">
-                <a title="{$product['name']}" href="/product/{$slug}" class="product-title">{$product_title}</a>
+                <a title="{$product['name']}" href="/product/{$urlSlug}" class="product-title">{$product_title}</a>
                 <span class="product-price">{$product['price']} <span class="product-currency">TL</span></span>
             </div>
             <button id="product-cart-btn" class="add-cart">Sepete Ekle</button>
