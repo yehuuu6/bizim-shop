@@ -11,14 +11,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
  */
 class Filters extends Component
 {
-    protected ?string $category;
+    protected ?string $category_slug;
+    protected ?string $category_id;
+    protected ?string $sub_category_slug;
 
-    public function __construct(?string $category)
+    public function __construct(?string $category_slug = "0", ?string $category_id = '0', ?string $sub_category_slug = '0')
     {
-        $this->category = $category;
+        $this->category_slug = $category_slug;
+        $this->category_id = $category_id;
+        $this->sub_category_slug = $sub_category_slug;
 
         $body = <<<HTML
         <form id="filters" class="product-filters">
+            <input type="hidden" name="category" value="{$category_id}" />
             <h3 class="filter-title">Sıralama</h3>
             <select name="p-sort" id="p-sort">
                 <option value="id ASC">Eskiden Yeniye</option>
@@ -28,8 +33,8 @@ class Filters extends Component
                 <option value="price DESC">Fiyat Azalan</option>
             </select>
             <h3 class="filter-title">Kategoriler</h3>
-            <select name="p-category" id="p-category">
-                {$this->render_categories($category)}
+            <select name="p-sub-category" id="p-sub-category">
+                {$this->render_sub_categories($category_slug)}
             </select>
             <h3 class="filter-title">Fiyat Aralığı</h3>
             <div class="price-range">
@@ -65,38 +70,29 @@ class Filters extends Component
         parent::render($body);
     }
 
-    function render_categories(?string $category)
+    function render_sub_categories(?string $category_slug)
     {
-        // Category provisions
-        $categories = [
-            '' => 'Hepsini Göster',
-            'stereo' => 'Müzik Seti',
-            'speakers' => 'Hoparlör',
-            'turntables' => 'Plak Çalar',
-            'music-players' => 'Müzik Çalar',
-            'tapes-records' => 'Kaset & Plak'
-        ];
+        $sub_categories = get_sub_categories($category_slug);
 
         // Render the categories
 
-        $html = '';
+        $html = <<<HTML
+        <option value="0">Tümünü Göster</option>
+        HTML;
 
-        for ($i = 0; $i < count($categories); $i++) {
-            $key = array_keys($categories)[$i];
-            $value = array_values($categories)[$i];
-            $is_selected = $this->render_selected($category, $key);
+        foreach ($sub_categories as $sub_cat) {
             $html .= <<<HTML
-            <option value="{$i}" {$is_selected}> {$value} </option>
+            <option value="{$sub_cat['id']}" data-slug="{$sub_cat['slug']}" {$this->render_selected($sub_cat['slug'],$this->sub_category_slug)}>{$sub_cat['name']}</option>
             HTML;
         }
 
         return $html;
     }
 
-    function render_selected(?string $category, string $key)
+    function render_selected(?string $current_slug, ?string $selected_slug)
     {
-        if ($category == $key) {
-            return 'selected';
+        if ($current_slug == $selected_slug) {
+            return "selected";
         }
     }
 }
