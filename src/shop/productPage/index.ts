@@ -50,6 +50,6 @@ showcaseImgs.forEach((img) => {
     replace.src = img.src;
     setTimeout(() => {
       showcase.classList.remove("dynamic-content");
-    }, 600);
+    }, 850);
   });
 });
