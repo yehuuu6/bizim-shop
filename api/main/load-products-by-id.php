@@ -15,6 +15,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     isset($limit) ? $limit = $limit : $limit = PHP_INT_MAX;
 
+    if (!is_string($product_ids)) {
+        echo json_encode(array());
+        exit;
+    }
     // Convert string to array
     $product_ids = explode(",", $product_ids);
 
