@@ -2,7 +2,7 @@
 import PanelClass from "@/common/classes/PanelClass";
 import ConfirmationModal from "@/common/modals/confirmationModal";
 import { getApiResponse, clearAvatarInput } from "@/common/utils/functions.usr";
-import "@/control-center/dashboard/dashboard.css";
+import "@/control-center/dashboard.css";
 import "@/common/utils/utils.css";
 
 import ICity from "@/common/interfaces/ICity";
