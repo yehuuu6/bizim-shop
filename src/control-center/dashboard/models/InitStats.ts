@@ -18,14 +18,14 @@ const initStats = async () => {
   });
   // Get dom elements
   const totalUsers = document.getElementById("total-users") as HTMLSpanElement;
-  const totalProducts = document.getElementById(
-    "total-products"
+  const totalOrders = document.getElementById(
+    "total-orders"
   ) as HTMLSpanElement;
 
-  const { total_users, total_products } = data;
+  const { total_users, total_orders } = data;
 
   totalUsers.innerText = total_users.toString();
-  totalProducts.innerText = total_products.toString();
+  totalOrders.innerText = total_orders.toString();
 };
 
 export default initStats;
