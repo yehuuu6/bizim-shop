@@ -1,7 +1,7 @@
 import {
   ManageUsersPage,
   currentUsers,
-} from "@/control-center/dashboard/admin";
+} from "@/control-center/dashboard/users";
 
 export const rowNumberUsers = {
   value: 0,
@@ -24,7 +24,6 @@ export default function createUserTable(user: UserInterface) {
   const tr = document.createElement("tr");
   tr.innerHTML = `
         <td>${++rowNumberUsers.value}</td>
-        <td>${user.id}</td>
         <td>${user.userName}</td>
         <td>${user.email}</td>
         <td>${user.telephone}</td>
