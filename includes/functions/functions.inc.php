@@ -2,7 +2,7 @@
 
 if (!defined('FILE_ACCESS')) {
     header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
     exit;
 }
 
@@ -34,9 +34,9 @@ function get_date(string $raw)
  */
 function authorize_user()
 {
-    if ($_SESSION['membership'] < 1) {
+    if ($_SESSION['membership'] != 1) {
         header("HTTP/1.1 403 Forbidden");
-        include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.html');
+        include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
         exit;
     }
 }
@@ -114,6 +114,118 @@ function convert_name(?string $str)
     return strtolower($str);
 }
 
+function get_categories()
+{
+    global $con;
+    $sql = "SELECT id, name, slug FROM categories";
+    $res = mysqli_query($con, $sql);
+    $category_count = mysqli_num_rows($res);
+
+    // Send category list to client
+    if ($category_count > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            // Skip Uncategorized category
+            if ($row['id'] == 0) {
+                continue;
+            }
+            $result[] = $row;
+        }
+        return $result;
+    } else {
+        return [];
+    }
+}
+
+function get_sub_categories($category_slug)
+{
+    global $con;
+
+    $sql = "SELECT id, name FROM categories WHERE slug = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 's', $category_slug);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $category_data = mysqli_fetch_row($res);
+    $category_id = $category_data[0];
+
+    $sql = "SELECT id, name, slug FROM subcats WHERE cid = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $category_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $sub_category_count = mysqli_num_rows($res);
+
+    if ($sub_category_count > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            // Skip Uncategorized category
+            if ($row['id'] == 0) {
+                continue;
+            }
+            $result[] = $row;
+        }
+        return $result;
+    } else {
+        return [];
+    }
+}
+
+/**
+ * Places order to the database (Testing purpose)
+ * @param mysqli $con The mysqli connection object.
+ * @param string $uid The id of the user.
+ * @param string $pid The id of the product.
+ * @status 0 = Beklemede, 1 = Hazırlanıyor, 2 = Kargoya Verildi, 3 = Teslim Edildi, 4 = İptal Edildi, 5 = İade Edildi, 6 = Tamamlandı, 7 = Tamamlanmadı
+ * @return bool
+ */
+function place_order(mysqli $con, string $uid, string $pid)
+{
+    $date = time();
+    $status = 0;
+    $sql = "INSERT INTO orders (uid, pid, date, status) VALUES (?, ?, ?, ?)";
+    try {
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, 'ssss', $uid, $pid, $date, $status);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_close($stmt);
+        return true;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+function get_category_name(?string $category_id)
+{
+    global $con;
+    $sql = "SELECT name FROM categories WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $category_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $category_data = mysqli_fetch_row($res);
+    return $category_data[0];
+}
+
+function get_sub_category_name(?string $sub_category_id)
+{
+    global $con;
+    $sql = "SELECT name FROM subcats WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $sub_category_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $sub_category_data = mysqli_fetch_row($res);
+    return $sub_category_data[0];
+}
+
+function convert_link_name(string $str)
+{
+    $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '_');
+    $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '-', '-');
+    $str = str_replace($search, $replace, $str);
+    $url_encoded_str = urlencode(urlencode($str));
+    return strtolower($url_encoded_str);
+}
+
 /**
  * Sends an error response to the client and terminates the script.
  */
@@ -169,8 +281,7 @@ function fix_strings(array $row)
  * @param string $props['id'] The id of the product if you need to get a specific product.
  * @param string $props['slug'] The slug of the product if you need to get a specific product.
  * @param string $props['search'] The search query.
- * @param string $props['category'] The category of the product.
- * @param string $props['tag'] The tag of the product.
+ * @param string $props['sub_category'] The category of the product.
  * @param string $props['status'] The status of the product.
  * @param string $props['order_type'] The order type of the products. Example id DESC.
  * @param string $props['limit'] The limit of the products.
@@ -183,17 +294,16 @@ function fix_strings(array $row)
  * @return array
  */
 
-function get_products(
-    mysqli $con,
-    $props = [],
-) {
+// Looks like this code is vulnerable to SQL injection. You should use prepared statements instead.
+function get_products(mysqli $con, $props = [])
+{
     $id = $props['id'] ?? '';
     $search = $props['search'] ?? '';
     $slug = $props['slug'] ?? '';
     $category = $props['category'] ?? '';
-    $tag = $props['tag'] ?? '';
+    $sub_category = $props['sub_category'] ?? '';
     $status = $props['status'] ?? '1';
-    $order_type = $props['order_type'] ?? 'DESC';
+    $order_type = $props['order_type'] ?? 'id DESC';
     $limit = $props['limit'] ?? PHP_INT_MAX;
     $offset = $props['offset'] ?? 0;
     $featured = $props['featured'] ?? '';
@@ -201,23 +311,41 @@ function get_products(
     $min_price = $props['min_price'] ?? '0';
     $max_price = $props['max_price'] ?? PHP_INT_MAX;
 
-    $sql = "SELECT * FROM product WHERE ";
-    $sql .= "name LIKE '%$search%' AND ";
-    $sql .= "category LIKE '%$category%' AND ";
-    $sql .= "tags LIKE '%$tag%' AND ";
-    $sql .= "status LIKE '%$status%' AND ";
-    $sql .= "featured LIKE '%$featured%' AND ";
-    $sql .= "price BETWEEN $min_price AND $max_price AND ";
-    $sql .= "shipment LIKE '%$shipment%' ";
-    $sql .= "ORDER BY $order_type ";
-    $sql .= "LIMIT $limit OFFSET $offset";
-    $id !== '' ? $sql = "SELECT * FROM product WHERE status LIKE '%$status%' AND id = $id" : $sql = $sql;
-    $slug !== '' ? $sql = "SELECT * FROM product WHERE root_name = '$slug'" : $sql = $sql;
-    $result = mysqli_query($con, $sql);
-    $products = array();
-    while ($row = mysqli_fetch_assoc($result)) {
-        $row = fix_strings($row);
-        array_push($products, $row);
+    $sql = "SELECT * ";
+    $sql .= "FROM product WHERE (name LIKE '%$search%' OR root_name LIKE '%$search%' OR description LIKE '%$search%' OR tags LIKE '%$search%') ";
+    $sql .= "AND category LIKE '%$category%' AND subcategory LIKE '%$sub_category%' AND status LIKE '%$status%' ";
+    $sql .= "AND featured LIKE '%$featured%' AND price BETWEEN $min_price AND $max_price AND shipment LIKE '%$shipment%' ";
+
+    if ($id !== '') {
+        $sql .= "AND id = $id ";
+    } elseif ($slug !== '') {
+        $sql .= "AND root_name = '$slug' ";
     }
+
+    $sql .= "ORDER BY $order_type LIMIT $limit OFFSET $offset";
+
+    $result = mysqli_query($con, $sql);
+    $products = [];
+
+    $subCategoryNames = [];
+    $subCategoryIds = array_column($result->fetch_all(MYSQLI_ASSOC), 'subcategory');
+
+    if (!empty($subCategoryIds)) {
+        $subCategorySql = "SELECT id, name FROM subcats WHERE id IN (" . implode(',', $subCategoryIds) . ")";
+        $subCategoryResult = mysqli_query($con, $subCategorySql);
+
+        while ($row = mysqli_fetch_assoc($subCategoryResult)) {
+            $subCategoryNames[$row['id']] = $row['name'];
+        }
+    }
+
+    mysqli_data_seek($result, 0);
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $row['sub_category_name'] = $subCategoryNames[$row['subcategory']] ?? '';
+        $row = fix_strings($row);
+        $products[] = $row;
+    }
+
     return $products;
 }
