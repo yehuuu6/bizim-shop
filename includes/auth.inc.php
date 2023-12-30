@@ -115,6 +115,7 @@ function verify_user($token)
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['verified'] = 1;
+            $_SESSION['token'] = $newToken;
             header('location: http://localhost/');
             die();
         }
