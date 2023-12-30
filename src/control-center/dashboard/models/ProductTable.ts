@@ -7,7 +7,6 @@ import {
 } from ".."; // from index.ts
 import ConfirmationModal from "@/common/modals/confirmationModal";
 import {
-  getCategory,
   setStatus,
   addImageInput,
   quitEditMode,
@@ -32,9 +31,8 @@ export function createProductTable(product: IProduct) {
   const tr = document.createElement("tr");
   tr.innerHTML = `
     <td>${++rowNumberProducts.value}</td>
-    <td>${product.id}</td>
     <td>${product.name}</td>
-    <td>${getCategory(product.category)}</td>
+    <td>${product.sub_category_name}</td>
     <td>₺${product.price}</td>
     <td data-mission="status">${setStatus(product.status)}</td>
     <td class="table-form-td">
@@ -170,13 +168,15 @@ function editProduct(product: IProduct) {
     { element: document.querySelector("#product-name"), key: "name" },
     { element: document.querySelector("#product-price"), key: "price" },
     { element: document.querySelector("#shipping-cost"), key: "shipping_cost" },
-    { element: document.querySelector("#fee-cost"), key: "fee_cost" },
     { element: document.querySelector("#product-tags"), key: "tags" },
     {
       element: document.querySelector("#product-description"),
       key: "description",
     },
-    { element: document.querySelector("#product-category"), key: "category" },
+    {
+      element: document.querySelector("#product-sub-category"),
+      key: "subcategory",
+    },
     { element: document.querySelector("#quality"), key: "quality" },
     { element: document.querySelector("#shipment"), key: "shipment" },
     { element: document.querySelector("#featured"), key: "featured" },
@@ -188,6 +188,22 @@ function editProduct(product: IProduct) {
   elements.forEach(
     (item) => ((item.element as HTMLInputElement).value = product[item.key])
   );
+
+  // Select the sub category option to selected
+  const subCategorySelector = document.querySelector(
+    "#product-sub-category"
+  ) as HTMLSelectElement;
+  const selectedSubCategory = product.subcategory;
+  console.log(selectedSubCategory);
+  const subCategoryOptions = subCategorySelector.querySelectorAll(
+    "option"
+  ) as NodeListOf<HTMLOptionElement>;
+  subCategoryOptions.forEach((option) => {
+    if (option.value === selectedSubCategory) {
+      option.selected = true;
+      console.log(option);
+    }
+  });
 
   const images: string[] = [];
   for (let i = 1; i <= 6; i++) {
