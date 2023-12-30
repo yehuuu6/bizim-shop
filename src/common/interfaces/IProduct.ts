@@ -2,6 +2,7 @@ export default interface IProduct {
   id: string;
   name: string;
   category: string;
+  sub_category: string;
   price: string;
   shipping_cost: string;
   fee_cost: string;
