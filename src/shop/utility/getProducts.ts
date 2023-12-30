@@ -2,16 +2,23 @@ import axios from "axios";
 import { setWishlistBtns } from "@/common/controllers/shop/wishlistBtns";
 import { setAddToCartBtns } from "@/common/controllers/shop/cartBtns";
 
+// Get page number from url
+const url = new URL(window.location.href);
+const page = parseInt(url.searchParams.get("page") as string) || 0;
+
 export const sqlOffset = {
   value: 0,
 };
+
+if (page > 1) {
+  sqlOffset.value = (page - 1) * 50;
+}
+
 const productLimit = {
   value: 50,
 };
 
-const productsContainer = document.querySelector(
-  ".product-container"
-) as HTMLDivElement;
+const productsContainer = document.querySelector(".products") as HTMLDivElement;
 
 export async function getProducts(formData: FormData) {
   const response = await axios({
@@ -61,7 +68,7 @@ export function setProducts(form: HTMLFormElement) {
       setAddToCartBtns(productElements);
       setTimeout(() => {
         productsContainer.classList.remove("dynamic-content");
-      }, 600);
+      }, 850);
     });
 }
 

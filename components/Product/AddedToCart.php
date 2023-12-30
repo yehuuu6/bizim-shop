@@ -7,9 +7,9 @@ use Components\Component;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/consts.inc.php';
 
 /**
- * Product preview component for "added to cart" modal
+ * Notification component for "added to cart" modal
  */
-class ProductPreview extends Component
+class AddedToCart extends Component
 {
   public $body;
   public function __construct(array $product)
@@ -20,6 +20,8 @@ class ProductPreview extends Component
     $short_desc = parent::shorten_string($product['description'], 100);
 
     $slug = parent::get_slug($product['root_name']);
+
+    $slug = urlencode(urlencode($slug));
 
     $this->body = <<<HTML
         <div class="product-in-modal" data-id="{$product['id']}">
