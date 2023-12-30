@@ -16,8 +16,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $name = get_safe_value($con, $_POST['product-name']);
     $price = get_safe_value($con, $_POST['product-price']);
     $shipping_cost = get_safe_value($con, $_POST['shipping-cost']);
-    $fee_cost = get_safe_value($con, $_POST['fee-cost']);
-    $category = get_safe_value($con, $_POST['product-category']);
+    $sub_category = get_safe_value($con, $_POST['product-sub-category']);
     $tags = get_safe_value($con, $_POST['product-tags']);
     $description = get_safe_value($con, $_POST['product-description']);
     $shipment = get_safe_value($con, $_POST['shipment']);
@@ -85,8 +84,8 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         send_error_response('Lütfen geçerli bir fiyat giriniz.', 'product-price');
     } elseif ($shipping_cost <= 0) {
         send_error_response('Lütfen geçerli bir kargo ücreti giriniz.', 'shipping-cost');
-    } elseif ($fee_cost <= 0) {
-        send_error_response('Lütfen geçerli bir vergi ücreti giriniz.', 'fee-cost');
+    } elseif ($sub_category <= 0) {
+        send_error_response('Lütfen geçerli bir alt kategori seçiniz.', 'product-sub-category');
     } else {
         for ($i = 1; $i < $image_count; $i++) {
             @$image = $_FILES["product-image-$i"]['name'];
@@ -125,14 +124,14 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         }
 
         if ($is_editing) {
-            $conclusion = update_product($con, $id, $category, $name, $description, $tags, $price, $shipping_cost, $fee_cost, $shipment, $featured, $quality, $images);
+            $conclusion = update_product($con, $id, $sub_category, $name, $description, $tags, $price, $shipping_cost, $shipment, $featured, $quality, $images);
             if ($conclusion) {
                 $log = "Değişiklikler başarıyla kaydedildi.";
             } else {
                 $log = 'Değişiklikler kaydedilirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.';
             }
         } else {
-            $conclusion = insert_product($con, $uid, $category, $name, $description, $tags, $price, $shipping_cost, $fee_cost, $shipment, $featured, $quality, $images);
+            $conclusion = insert_product($con, $uid, $sub_category, $name, $description, $tags, $price, $shipping_cost, $shipment, $featured, $quality, $images);
             if ($conclusion) {
                 $log = 'Ürün başarıyla eklendi.';
             } else {
@@ -156,12 +155,21 @@ function upload_images($ready_to_upload, $max_width, $max_height)
     }
 }
 
-function insert_product($con, $uid, $category, $name, $description, $tags, $price, $shipping_cost, $fee_cost, $shipment, $featured, $quality, $images)
+function insert_product($con, $uid, $sub_category, $name, $description, $tags, $price, $shipping_cost, $shipment, $featured, $quality, $images)
 {
     global $root_name;
     global $ready_to_upload;
     global $max_height;
     global $max_width;
+
+    // Get category id
+    $sql = "SELECT cid FROM subcats WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $sub_category);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $category);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
 
     if (!file_exists(PRODUCT_IMAGE_SERVER_PATH . $root_name . '')) {
         mkdir(PRODUCT_IMAGE_SERVER_PATH . $root_name . '');
@@ -172,21 +180,21 @@ function insert_product($con, $uid, $category, $name, $description, $tags, $pric
 
     upload_images($ready_to_upload, $max_width, $max_height);
 
-    $sql = "INSERT INTO product (uid, category, name, root_name, description, tags, price, shipping_cost, fee_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO product (uid, category, subcategory name, root_name, description, tags, price, shipping_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "iissssdddiiissssss",
+        "iiissssddiiissssss",
         $uid,
         $category,
+        $sub_category,
         $name,
         $root_name,
         $description,
         $tags,
         $price,
         $shipping_cost,
-        $fee_cost,
         $shipment,
         $featured,
         $quality,
@@ -207,12 +215,21 @@ function insert_product($con, $uid, $category, $name, $description, $tags, $pric
     }
 }
 
-function update_product($con, $id, $category, $name, $description, $tags, $price, $shipping_cost, $fee_cost, $shipment, $featured, $quality, $images)
+function update_product($con, $id, $sub_category, $name, $description, $tags, $price, $shipping_cost, $shipment, $featured, $quality, $images)
 {
     global $root_name;
     global $ready_to_upload;
     global $max_height;
     global $max_width;
+
+    // Get category id
+    $sql = "SELECT cid FROM subcats WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $sub_category);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $category);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
 
     // Replace the null images with noimg.jpg
     $images = array_pad($images, 6, 'noimg.jpg');
@@ -238,20 +255,20 @@ function update_product($con, $id, $category, $name, $description, $tags, $price
 
     upload_images($ready_to_upload, $max_width, $max_height);
 
-    $sql = "UPDATE product SET category = ?, name = ?, root_name = ?, description = ?, tags = ?, price = ?, shipping_cost = ?, fee_cost = ?, shipment = ?, featured = ?,
+    $sql = "UPDATE product SET category = ?, subcategory = ?, name = ?, root_name = ?, description = ?, tags = ?, price = ?, shipping_cost = ?, shipment = ?, featured = ?,
     quality = ?, image1 = ?, image2 = ?, image3 = ?, image4 = ?, image5 = ?, image6 = ? WHERE id = ?";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "issssdddiiissssssi",
+        "iissssddiiissssssi",
         $category,
+        $sub_category,
         $name,
         $root_name,
         $description,
         $tags,
         $price,
         $shipping_cost,
-        $fee_cost,
         $shipment,
         $featured,
         $quality,
