@@ -7,7 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 use Components\Loader\Loader;
 
 if (!isset($_SESSION['id'])) {
-    header('location: ' . DOMAIN . 'auth/login');
+    header('location: ' . DOMAIN . '/auth/login');
     exit();
 }
 
@@ -112,6 +112,9 @@ $door = $row['door'];
                         Hesap Ayarları <i class="fa-solid fa-user"></i>
                     </div>
                 </li>
+                <li>
+                    <div class="menu-btn" data-name="orders">Siparişlerim <i class="fa-solid fa-truck"></i></div>
+                </li>
             </ul>
         </div>
         <div class="main-page">
@@ -131,7 +134,7 @@ $door = $row['door'];
                 <div class="container">
                     <form id="profile-form">
                         <h3 class="bottom-header">Genel Bilgiler</h3>
-                        <div class="second">
+                        <div class="form-content">
                             <div class="item-wrapper">
                                 <div class="first-item">
                                     <div class="image-container">
@@ -203,7 +206,7 @@ $door = $row['door'];
                         <div class="theme-container">
                             <div class="theme-item active-theme" data-theme="light">
                                 <div class="theme-img">
-                                    <img src="/global/imgs/light_preview.svg" alt="">
+                                    <img src="/global/imgs/dashboard/light_preview.svg" alt="">
                                 </div>
                                 <div class="theme-info">
                                     <input type="radio" id="light-theme">
@@ -212,7 +215,7 @@ $door = $row['door'];
                             </div>
                             <div class="theme-item" data-theme="dark">
                                 <div class="theme-img">
-                                    <img src="/global/imgs/dark_preview.svg" alt="">
+                                    <img src="/global/imgs/dashboard/dark_preview.svg" alt="">
                                 </div>
                                 <div class="theme-info">
                                     <input type="radio" id="dark-theme">
@@ -233,7 +236,7 @@ $door = $row['door'];
         </footer>
         <div class="logger">
             <span class="flex-display justify-center align-center">
-                <img src="/global/imgs/info.png" alt="Status" />
+                <img src="/global/imgs/icons/info.png" alt="Status" />
             </span>
             <p>{message}</p>
             <div class="logger-btn">
