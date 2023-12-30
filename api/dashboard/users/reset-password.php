@@ -15,7 +15,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $submissions = reset_submission_counts($con, $submissions, $last_sub, $id);
 
     if ($submissions < 8) {
-        send_password_reset_link($_SESSION['email'], $_SESSION['token']);
+        try {
+            send_password_reset_link($_SESSION['email'], $_SESSION['token']);
+        } catch (Exception $e) {
+            send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+        }
         $submissions += 1;
         $sql = "UPDATE users SET submissions = '$submissions' WHERE id = '$id'";
         mysqli_query($con, $sql);
