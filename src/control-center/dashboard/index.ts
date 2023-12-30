@@ -10,13 +10,15 @@ import {
   runSearchProducts,
   quitEditMode,
   cleanForm,
+  setSubCategories,
 } from "@/common/utils/functions.dev";
 import IProduct from "@/common/interfaces/IProduct";
 import router from "./Router";
 import initStats from "./models/InitStats";
+import initCategories from "./models/InitCategory";
 
 // CSS
-import "./dashboard.css";
+import "../dashboard.css";
 import "@/common/utils/utils.css";
 
 // Settings panel
@@ -102,8 +104,10 @@ function getSearchProduct() {
   const search = searchInput.value.trim().toLowerCase();
   productTable.innerHTML = "";
   if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter((product: IProduct) =>
-      product["name"].toLowerCase().includes(search)
+    const matchingProducts = currentProducts.value.filter(
+      (product: IProduct) =>
+        product["name"].toLowerCase().includes(search) ||
+        product["tags"].toLowerCase().includes(search)
     );
     if (matchingProducts.length === 0) {
       productTable.innerHTML = `
@@ -169,6 +173,7 @@ productRefreshBtn.addEventListener("click", () => {
   document.querySelector('div[data-name="add-product"]') as HTMLDivElement
 ).addEventListener("click", () => {
   quitEditMode();
+  setSubCategories();
   clearImageInputs();
 });
 
@@ -334,6 +339,7 @@ addImageBtn.addEventListener("click", function (e) {
 addNewProduct.addEventListener("click", () => {
   const destination = document.querySelector("#add-product") as HTMLElement;
   router.loadPage("hash", destination.dataset.url!);
+  setSubCategories();
   quitEditMode();
 });
 
@@ -348,9 +354,36 @@ cleanProductForm.addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   initStats();
+  initCategories();
 });
 
 // CREATE PRODUCT PAGE END
+
+// Maintenance mode controller
+
+const maintenanceBtn = document.querySelector(
+  "#maintenance-btn"
+) as HTMLButtonElement;
+
+maintenanceBtn.addEventListener("click", () => {
+  const formData = new FormData();
+  ManageProductsPage.sendApiRequest(
+    "/api/dashboard/maintenance.php",
+    formData
+  ).then((data) => {
+    const maintenanceStatus = data[1];
+    const msg =
+      maintenanceStatus === "true"
+        ? "Bakım moduna alındı."
+        : "Bakım modundan çıkıldı.";
+    ManageProductsPage.showMessage(["success", msg, "none"]);
+    // Update the maintenance button
+    maintenanceBtn.innerText =
+      maintenanceStatus === "true" ? "Bakım Modundan Çık" : "Bakım Moduna Al";
+  });
+});
+
+// Category controller
 
 // Exports
 
