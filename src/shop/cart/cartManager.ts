@@ -1,8 +1,12 @@
 import { resetShowcases } from ".";
 import { setNavbarCartItemCount } from "@/common/controllers/shop/cartBtns";
-import { getProductsById } from "@/shop/productsPage/getProducts";
+import { getProductsById } from "@/shop/utility/getProducts";
 
 const container = document.querySelector(".shopping-cart") as HTMLDivElement;
+
+const confirmShoppingCartBtn = document.querySelector(
+  ".cart-detail-confirm"
+) as HTMLButtonElement;
 
 const cartContainer = container.querySelector(".products") as HTMLDivElement;
 
@@ -23,6 +27,7 @@ export default function initShoppingCart() {
   getProductsById(formData)
     .then((products) => {
       if (products.length < 1) {
+        confirmShoppingCartBtn.disabled = true;
         cartContainer.innerHTML +=
           '<div class="no-products"><h2><i class="fas fa-shopping-cart"></i> Sepetinizde ürün bulunmamaktadır.</h2></div>';
       } else {
@@ -36,7 +41,7 @@ export default function initShoppingCart() {
       setRemoveFromCartBtns();
       setTimeout(() => {
         cartContainer.classList.remove("dynamic-content");
-      }, 600);
+      }, 850);
     });
 }
 
@@ -82,6 +87,11 @@ export function calculateTotalPrice() {
     totalFeePrice += productFeePriceValue;
     totalPrice +=
       productPriceValue + productShippingPriceValue + productFeePriceValue;
+    if (totalPrice < 0) {
+      totalPrice = 0;
+    } else {
+      confirmShoppingCartBtn.disabled = false;
+    }
   });
 
   // Set values to DOM
