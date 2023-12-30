@@ -45,7 +45,7 @@ export class AuthorizationClass implements AuthorizationClassInterface {
 
     const iconPath = messageType === "success" ? "success.png" : "error.png";
     const className = `logger ${messageType}`;
-    const imageTag = `<span><img src='/global/imgs/${iconPath}'/></span>`;
+    const imageTag = `<span><img src='/global/imgs/icons/${iconPath}'/></span>`;
 
     this.logger.className = className;
     this.logger.innerHTML = `${imageTag} ${message}`;
