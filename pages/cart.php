@@ -5,7 +5,6 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
 use Components\Super\Head;
 use Components\Navbar\Navbar;
-use Components\Categories\Categories;
 use Components\Footer\Footer;
 use Components\Banners\TopBanner;
 use Components\Super\Legs;
@@ -22,12 +21,6 @@ $top_banner = new TopBanner();
 $navbar = new Navbar();
 
 ?>
-
-<div class="categories-container">
-    <ul class="categories">
-        <?php $categories = new Categories(); ?>
-    </ul>
-</div>
 
 <section id="cart" class="page-content flex-column">
     <div class="content-header">
@@ -60,7 +53,7 @@ $navbar = new Navbar();
             </div>
             <div class="cart-detail">
                 <button class="cart-detail-confirm">Sepeti onayla</button>
-                <a class="return-shopping" href="/products">Alışverişe devam et</a>
+                <a class="return-shopping" href="/">Alışverişe devam et</a>
             </div>
         </div>
     </div>
@@ -68,7 +61,7 @@ $navbar = new Navbar();
         <h2>Son baktıklarım</h2>
         <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <div id="last-viewed-products" class="product-showcase dynamic-content">
+    <div id="last-viewed-products" class="product-showcase">
     </div>
     <div class="content-header">
         <h2>Beğendiklerim <span id="liked-item-counter">(0 ürün)</span></h2>
@@ -76,7 +69,7 @@ $navbar = new Navbar();
             Hepsini gör
         </a>
     </div>
-    <div id="liked-products" class="product-showcase dynamic-content">
+    <div id="liked-products" class="product-showcase">
     </div>
 </section>
 <script src="/dist/cart/v8x3q6t9j2s5f0e1n7z4.js"></script>
