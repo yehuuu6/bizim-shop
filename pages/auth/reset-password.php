@@ -31,10 +31,10 @@ if (isset($_GET['password-token'])) {
       </div>
       <div class="formGroup">
         <div class="labelContainer">
-          <label htmlFor="passwordConf">Şifreyi Onayla</label>
+          <label htmlFor="password_confirm">Şifreyi Onayla</label>
           <i class="fa-solid fa-lock"></i>
         </div>
-        <input placeholder="********" maxlenght="16" type="password" name="passwordConf">
+        <input placeholder="********" maxlenght="16" type="password" name="password_confirm">
       </div>
       <div class="formGroup">
         <button class="superiorBtn" type="submit" name="reset-password-btn">Gönder</button>
