@@ -48,6 +48,8 @@ class Head extends Component
                 <meta name="description" content="{$desc}">
                 <meta name="keywords" content="{$keywords}">
                 <meta name="author" content="{$author}">
+                <meta name="copyrigth" content="Bizim Shop">
+                <meta name="language" content="Turkish">
                 <link rel='stylesheet' href='/dist/core/r9k2p4i7h0o1g5w6a2u3.css'>
                 {$this->set_styles($styles)}
                 <link rel="shortcut icon" href="{$favi}" type="image/x-icon">
