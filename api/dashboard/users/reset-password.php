@@ -5,7 +5,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     $id = $_SESSION['id'];
 
-    $sql = "SELECT submissions, last_submission FROM users WHERE id = '$id'";
+    $sql = "SELECT submissions, last_submission, token FROM users WHERE id = '$id'";
     $res = mysqli_query($con, $sql);
     $row = mysqli_fetch_assoc($res);
 
@@ -16,7 +16,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     if ($submissions < 8) {
         try {
-            send_password_reset_link($_SESSION['email'], $_SESSION['token']);
+            send_password_reset_link($_SESSION['email'], $row['token']);
         } catch (Exception $e) {
             send_error_response('Bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
         }
