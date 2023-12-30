@@ -10,46 +10,36 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $password = get_safe_value($con, $_POST['password']);
     $password_confirm = get_safe_value($con, $_POST['password_confirm']);
 
-    if (empty($name)) {
-        send_error_response('İsim alanı boş bırakılamaz.', 'name');
+    $errors = [
+        ['message' => 'İsim alanı boş bırakılamaz.', 'field' => 'name', 'condition' => empty($name)],
+        ['message' => 'Soy isim alanı boş bırakılamaz.', 'field' => 'surname', 'condition' => empty($surname)],
+        ['message' => 'E-posta alanı boş bırakılamaz.', 'field' => 'email', 'condition' => empty($email)],
+        ['message' => 'Lütfen geçerli bir e-posta adresi giriniz.', 'field' => 'email', 'condition' => !filter_var($email, FILTER_VALIDATE_EMAIL)],
+        ['message' => 'Şifre alanı boş bırakılamaz.', 'field' => 'password', 'condition' => empty($password)],
+        ['message' => 'Şifreler eşleşmiyor.', 'field' => 'password_confirm', 'condition' => $password !== $password_confirm],
+        ['message' => 'Şifre minimum 8 karakter olmalıdır.', 'field' => 'password', 'condition' => isset($password) && strlen($password) < 8],
+        ['message' => 'İsim minimum 2 karakter olmalıdır.', 'field' => 'name', 'condition' => isset($name) && strlen($name) < 2],
+        ['message' => 'İsim 15 karakterden uzun olamaz.', 'field' => 'name', 'condition' => isset($name) && strlen($name) > 15],
+        ['message' => 'Soy isim minimum 2 karakter olmalıdır.', 'field' => 'surname', 'condition' => isset($surname) && strlen($surname) < 2],
+        ['message' => 'Soy isim 15 karakterden uzun olamaz.', 'field' => 'surname', 'condition' => isset($surname) && strlen($surname) > 15],
+    ];
+
+    foreach ($errors as $error) {
+        if ($error['condition']) {
+            send_error_response($error['message'], $error['field']);
+        }
     }
-    if (empty($surname)) {
-        send_error_response('Soy isim alanı boş bırakılamaz.', 'surname');
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        send_error_response('Lütfen geçerli bir e-posta adresi giriniz.', 'email');
-    }
-    if (empty($email)) {
-        send_error_response('E-posta alanı boş bırakılamaz.', 'email');
-    }
-    if (empty($password)) {
-        send_error_response('Şifre alanı boş bırakılamaz.', 'password');
-    }
-    if ($password !== $password_confirm) {
-        send_error_response('Şifreler eşleşmiyor.', 'password_confirm');
-    }
-    $email_query = "SELECT * FROM users WHERE email=? LIMIT 1";
+
+    $email_query = "SELECT email FROM users WHERE email=? LIMIT 1";
     $stmt = $con->prepare($email_query);
     $stmt->bind_param('s', $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $userCount = $result->num_rows;
     $stmt->close();
+
     if ($userCount > 0) {
         send_error_response('Bu e-posta adresi zaten kayıtlı.', 'email');
-    }
-    if (strlen($password) < 8) {
-        send_error_response('Şifre minimum 8 karakter olmalıdır.', 'password');
-    }
-    if (strlen($name) < 2) {
-        send_error_response('İsim minimum 2 karakter olmalıdır.', 'name');
-    } elseif (strlen($name) > 15) {
-        send_error_response('İsim 15 karakterden uzun olamaz.', 'name');
-    }
-    if (strlen($surname) < 2) {
-        send_error_response('Soy isim minimum 2 karakter olmalıdır.', 'surname');
-    } elseif (strlen($name) > 15) {
-        send_error_response('Soy isim 15 karakterden uzun olamaz.', 'surname');
     } else {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $token = bin2hex(random_bytes(50));
