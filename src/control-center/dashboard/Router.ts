@@ -1,15 +1,25 @@
+import { setSubCategories } from "@/common/utils/functions.dev";
 import initStats from "./models/InitStats";
 
 // Router
 const menuBtns: NodeListOf<HTMLButtonElement> =
   document.querySelectorAll(".menu-btn");
-const statPage = document.getElementById("statistics") as HTMLElement;
 
+const statPage = document.getElementById("statistics") as HTMLElement;
+const manageSite = document.getElementById("manage-site") as HTMLElement;
 const productPage = document.getElementById("manage-products") as HTMLElement;
 const createProduct = document.getElementById("add-product") as HTMLElement;
 const userPage = document.getElementById("manage-users") as HTMLElement;
+const ordersPage = document.getElementById("manage-orders") as HTMLElement;
 
-let sections = [statPage, productPage, userPage, createProduct];
+let sections = [
+  statPage,
+  manageSite,
+  productPage,
+  userPage,
+  createProduct,
+  ordersPage,
+];
 
 interface RouterInterface {
   loadType: PageType;
@@ -35,18 +45,14 @@ export class Router implements RouterInterface {
     return window.location.hash.substring(1);
   }
 
-  /**
-   * Just makes sure that the router is included in the bundle doesn't do anything
-   */
-  static initialize() {
-    // do nothing
-  }
-
   loadPage(type: PageType, target: string) {
     switch (target) {
       case "statistics":
         this.setPageContent(type, statPage);
         initStats();
+        break;
+      case "manage-site":
+        this.setPageContent(type, manageSite);
         break;
       case "products":
         this.setPageContent(type, productPage);
@@ -54,8 +60,12 @@ export class Router implements RouterInterface {
       case "users":
         this.setPageContent(type, userPage);
         break;
+      case "orders":
+        this.setPageContent(type, ordersPage);
+        break;
       case "add-product":
         this.setPageContent(type, createProduct);
+        setSubCategories();
         break;
     }
   }
