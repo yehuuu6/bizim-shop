@@ -32,7 +32,7 @@ if (($_SESSION['verified'] == 1)) {
       <form id="verify-account-form" class="form">
         <div class="header primary-color">Hoş Geldiniz <?php echo $_SESSION['username']; ?></div>
         <div class="logger warning">
-          <span><img src="/global/imgs/info.png" alt=""></span>
+          <span><img src="/global/imgs/icons/info.png" alt=""></span>
           <p>Sitede gezinmeden önce e-posta adresinizi onaylamanız gerekiyor. Spam klasörünüzü kontrol edin!
             <strong><?php echo $_SESSION['email']; ?></strong>
           </p>
