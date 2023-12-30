@@ -1,4 +1,4 @@
-import { getProductsById } from "@/shop/productsPage/getProducts";
+import { getProductsById } from "@/shop/utility/getProducts";
 import { setWishlistBtns } from "@/common/controllers/shop/wishlistBtns";
 import { setAddToCartBtns } from "@/common/controllers/shop/cartBtns";
 import initShoppingCart from "./cartManager";
