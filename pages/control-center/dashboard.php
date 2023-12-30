@@ -7,7 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 use Components\Loader\Loader;
 
 if (!isset($_SESSION['id'])) {
-  header('location: ' . DOMAIN . 'auth/login');
+  header('location: ' . DOMAIN . '/auth/login');
   exit();
 }
 
@@ -20,6 +20,21 @@ authorize_user();
 
 $power = $_SESSION['membership'];
 $perm_content = get_permission($power);
+
+$sub_cat_query = "SELECT id, cid, name FROM subcats";
+$sub_cat_query_result = mysqli_query($con, $sub_cat_query);
+$sub_cat_count = mysqli_num_rows($sub_cat_query_result);
+
+// Send sub category list to client
+if ($sub_cat_count > 0) {
+  while ($row = mysqli_fetch_assoc($sub_cat_query_result)) {
+    // Skip Uncategorized category
+    if ($row['id'] == 0) {
+      continue;
+    }
+    $sub_cats[] = $row;
+  }
+}
 
 $sql = "SELECT name, surname, profile_image FROM users WHERE id = {$_SESSION['id']}";
 $res = mysqli_query($con, $sql);
@@ -36,8 +51,8 @@ $row = mysqli_fetch_assoc($res);
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
   <link rel="stylesheet" href="/dist/control-center/p2w4z9o5y8v3q6i1r7.css" />
   <script src="/global/plugins/icons.js"></script>
-  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
-  <title>İstatistikler - Bizim Shop Panel Kontrol Merkezi</title>
+  <link rel="shortcut icon" href="/global/imgs/logo.png" type="image/x-icon">
+  <title>İstatistikler - Bizim Shop Kontrol Merkezi</title>
 </head>
 <noscript>
   <style>
@@ -80,7 +95,7 @@ $row = mysqli_fetch_assoc($res);
             <p class="user-role"><?= $perm_content ?></p>
           </div>
           <div class="user-image-container">
-            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
+            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
           </div>
         </div>
       </div>
@@ -89,7 +104,7 @@ $row = mysqli_fetch_assoc($res);
       <ul>
         <li>
           <div class="menu-controller">
-            <h3>Kontrol Merkezi</h3>
+            <h3>Bizim Shop</h3>
             <input id="menu-toggle" type="checkbox">
             <label for="menu-toggle" class="burger" title="Menü">
               <div class="line"></div>
@@ -107,6 +122,11 @@ $row = mysqli_fetch_assoc($res);
         <li>
           <div class="menu-btn active" data-name="statistics">
             İstatistikler <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </li>
+        <li>
+          <div class="menu-btn" data-name="manage-site">
+            Siteyi Yönet <i class="fa-solid fa-store"></i>
           </div>
         </li>
         <li>
@@ -132,45 +152,159 @@ $row = mysqli_fetch_assoc($res);
       </ul>
     </div>
     <div class="main-page">
-      <section id="statistics" data-url="statistics" data-title="İstatistikler" class="page-content narrow-page" style="display:block;">
+      <section id="statistics" data-url="statistics" data-title="İstatistikler" class="page-content wide-page" style="display:block;">
         <div class="content-header">
           <div class="item">
             <h2 class="header">İstatistikler</h2>
             <p>Burada sitenizin verilerini görebilirsiniz.</p>
           </div>
+          <div class="item">
+            <div class="controls">
+              <div class="c-container">
+                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-statistics">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="container">
           <div class="statistics-monitors">
             <div class="monitor">
-              <div class="icon">
-                <i class="fa-solid fa-users"></i>
+              <h3 class="title">Kullanıcılar</h3>
+              <span class="value" id="total-users">783</span>
+              <div class="increase">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span class="amount" id="total-users-increase">+12%</span>
               </div>
-              <span class="value" id="total-users">17.8k</span>
-              <h3 class="title">Kullanıcı</h3>
             </div>
             <div class="monitor">
-              <div class="icon">
-                <i class="fa-solid fa-boxes-stacked"></i>
+              <h3 class="title">Siparişler</h3>
+              <span class="value" id="total-orders">385</span>
+              <div class="increase">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span class="amount" id="total-orders-increase">+23%</span>
               </div>
-              <span class="value" id="total-products">5.3k</span>
-              <h3 class="title">Ürün</h3>
             </div>
             <div class="monitor">
-              <div class="icon">
-                <i class="fa-solid fa-truck"></i>
+              <h3 class="title">Yorumlar</h3>
+              <span class="value" id="total-reviews">1,476</span>
+              <div class="increase">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span class="amount" id="total-reviews-increase">+54%</span>
               </div>
-              <span class="value" id="total-orders">2.5k</span>
-              <h3 class="title">Sipariş</h3>
             </div>
             <div class="monitor">
-              <div class="icon">
-                <i class="fa-solid fa-money-bill-trend-up"></i>
+              <h3 class="title">Hasılat</h3>
+              <span class="value" id="total-revenue">₺19,493</span>
+              <div class="increase">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span class="amount" id="total-revenue-increase">+290%</span>
               </div>
-              <span class="value" id="total-earnings">3578 TL</span>
-              <h3 class="title">Kazanç</h3>
             </div>
           </div>
-          <div class="intro"></div>
+          <div class="management-team">
+            <h3 class="bottom-header">Yönetim Ekibi</h3>
+            <div class="team">
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/1.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Ahmet Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/2.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Mehmet Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/3.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Ayşe Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/4.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Fatma Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/5.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Ali Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/team/6.jpg" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Veli Yılmaz</h3>
+                  <p class="member-role">Yönetici</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="manage-site" data-title="Siteyi Yönet" data-url="manage-site" class="page-content narrow-page">
+        <div id="loader-site-options" class="loader">
+          <?php $loader_a = new Loader(); ?>
+        </div>
+        <div class="content-header">
+          <div class="item">
+            <h2 class="header">Mağazayı Yönet</h2>
+            <p>Burada sitenizde bulunan kategorileri düzenleyebilir, siteyi bakıma alabilir veya daha fazla ayar yapabilirsiniz.</p>
+          </div>
+          <div class="item">
+            <div class="controls">
+              <div class="c-container">
+                <button style="padding:0.45rem 1rem;" id="maintenance-btn" class="dashboard-btn status-btn">
+                  <?php if ($_SESSION['maintenance'] === "false") : ?>
+                    Bakım Moduna Al
+                  <?php else : ?>
+                    Bakım Modundan Çık
+                  <?php endif; ?>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="form-content">
+            <h3 class="bottom-header" style="margin: 0;">Kategorileri Yönet</h3>
+            <hr style="margin: 0;">
+            <div class="item-wrapper">
+              <div class="form-item">
+                <input type="text" placeholder="Kategori Adı" name="new-category-name" id="new-category-name" spellcheck="false" autocomplete="off" maxlength="20" />
+                <button id="add-category-btn" title="Kategori Ekle" class="dashboard-btn success-btn"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="form-item">
+                <label>Mevcut Kategoriler</label>
+                <div class="category-wrapper">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
@@ -201,7 +335,6 @@ $row = mysqli_fetch_assoc($res);
             <thead>
               <tr>
                 <th width="1%">#</th>
-                <th width="1%">ID</th>
                 <th width="7%">Ad</th>
                 <th width="5%">Kategori</th>
                 <th width="5%">Fiyat</th>
@@ -212,10 +345,10 @@ $row = mysqli_fetch_assoc($res);
             <tbody>
             </tbody>
           </table>
-          <button class="dashboard-btn success-btn" id="load-more-products">
-            Daha fazla yükle
-          </button>
         </div>
+        <button class="dashboard-btn success-btn" id="load-more-products" style="margin-top:10px;">
+          Daha fazla yükle
+        </button>
       </section>
       <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
         <div id="loader-create" class="loader">
@@ -241,47 +374,39 @@ $row = mysqli_fetch_assoc($res);
         </div>
         <div class="container">
           <form id="create-form">
-            <div class="second">
+            <div class="form-content">
               <h3 class="bottom-header" style="margin: 0;">Genel Bilgiler</h3>
               <hr style="margin: 0;">
               <div class="item-wrapper">
                 <div class="form-item">
                   <label for="product-name">Ürün Adı *</label>
-                  <input name="product-name" type="text" id="product-name" spellcheck="false" />
+                  <input autocomplete="off" name="product-name" type="text" id="product-name" spellcheck="false" />
                 </div>
                 <div class="form-item">
-                  <label for="product-category">Ürün Kategorisi *</label>
-                  <select name="product-category" id="product-category">
-                    <option value="1">Müzik Seti</option>
-                    <option value="2">Hoparlör</option>
-                    <option value="3">Plak Çalar</option>
-                    <option value="4">Müzik Çalar</option>
+                  <label for="product-sub-category">Ürün Kategorisi *</label>
+                  <select name="product-sub-category" id="product-sub-category">
                   </select>
                 </div>
                 <div class="form-item">
                   <label for="product-tags">Ürün Etiketleri *</label>
-                  <input name="product-tags" type="text" id="product-tags" spellcheck="false" />
+                  <input autocomplete="off" name="product-tags" type="text" id="product-tags" spellcheck="false" />
                 </div>
               </div>
               <label for="product-description">Ürün Açıklaması *</label>
               <textarea name="product-description" type="text" id="product-description" spellcheck="false"></textarea>
-              <h3 class=" bottom-header" style="margin: 0;">Fiyat Bilgileri</h3>
+              <h3 class="bottom-header" style="margin: 0;">Fiyat Bilgileri</h3>
               <hr style="margin: 0;">
               <div class="item-wrapper">
                 <div class="form-item">
                   <label for="product-price">Ürün Ücreti *</label>
-                  <input name="product-price" step="0.01" type="number" id="product-price" />
+                  <input name="product-price" step="0.01" type="number" id="product-price" autocomplete="off" />
                 </div>
                 <div class="form-item">
-                  <label for="shipping-cost">Kargo Ücreti *<span> (Ücretsiz kargo seçilirse 0 kabul edilecektir.)</span></label>
+                  <label for="shipping-cost">Kargo Ücreti *</label>
                   <input name="shipping-cost" step="0.01" type="number" id="shipping-cost" />
                 </div>
-                <div class="form-item">
-                  <label for="fee-cost">Vergi Ücreti *</label>
-                  <input name="fee-cost" step="0.01" type="number" id="fee-cost" />
-                </div>
               </div>
-              <h3 class=" bottom-header" style="margin: 0;">Diğer Bilgiler</h3>
+              <h3 class="bottom-header" style="margin: 0;">Diğer Bilgiler</h3>
               <hr style="margin: 0;">
               <div class="item-wrapper">
                 <div class="form-item">
@@ -349,7 +474,6 @@ $row = mysqli_fetch_assoc($res);
             <thead>
               <tr>
                 <th width="1%">#</th>
-                <th width="1%">ID</th>
                 <th width="3%">Kullanıcı</th>
                 <th width="5%">E Posta</th>
                 <th width="5%">Telefon</th>
@@ -359,10 +483,50 @@ $row = mysqli_fetch_assoc($res);
             <tbody>
             </tbody>
           </table>
-          <button class="dashboard-btn success-btn" name="load-more" id="load-more-users">
-            Daha fazla yükle
-          </button>
         </div>
+        <button class="dashboard-btn success-btn" name="load-more" id="load-more-users" style="margin-top:10px;">
+          Daha fazla yükle
+        </button>
+      </section>
+      <section id="manage-orders" data-url="orders" data-title="Siparişler" class="page-content narrow-page">
+        <div id="loader-orders" class="loader">
+          <?php $loader_orders = new Loader(); ?>
+        </div>
+        <div class="content-header">
+          <div class="item">
+            <h2 class="header">Siparişleri Yönet</h2>
+            <p>Burada verilen siparişleri yönetebilirsiniz.</p>
+          </div>
+          <div class="item">
+            <div class="controls">
+              <div class="c-container">
+                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-orders">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </button>
+              </div>
+              <input autocomplete="off" type="text" placeholder="Sipariş ara" name="search-order" id="search-order" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <table id="orders-table">
+            <thead>
+              <tr>
+                <th width="1%">#</th>
+                <th width="7%">Sipariş Veren</th>
+                <th width="10%">Ürün</th>
+                <th width="5%">Fiyat</th>
+                <th width="3%">Durum</th>
+                <th width="10%">Eylemler</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <button class="dashboard-btn success-btn" name="load-more" id="load-more-orders" style="margin-top:10px;">
+          Daha fazla yükle
+        </button>
       </section>
     </div>
     <footer>
@@ -374,14 +538,12 @@ $row = mysqli_fetch_assoc($res);
     </footer>
     <div class="logger">
       <span class="flex-display justify-center align-center">
-        <img src="/global/imgs/info.png" alt="Status" />
+        <img src="/global/imgs/icons/info.png" alt="Status" />
       </span>
       <p>{message}</p>
-      <div class="logger-btn">
-        <button class="btn small-btn" title="Bildirimi sil" id="close-logger">
-          <i class="fa-solid fa-times"></i>
-        </button>
-      </div>
+      <button id="close-logger">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
     </div>
     <div id="main-loader" class="loader" style="display:flex;">
       <?php $loader_4 = new Loader(); ?>
@@ -397,7 +559,7 @@ $row = mysqli_fetch_assoc($res);
           <div class="theme-container">
             <div class="theme-item active-theme" data-theme="light">
               <div class="theme-img">
-                <img src="/global/imgs/light_preview.svg" alt="">
+                <img src="/global/imgs/dashboard/light_preview.svg" alt="">
               </div>
               <div class="theme-info">
                 <input type="radio" id="light-theme">
@@ -406,7 +568,7 @@ $row = mysqli_fetch_assoc($res);
             </div>
             <div class="theme-item" data-theme="dark">
               <div class="theme-img">
-                <img src="/global/imgs/dark_preview.svg" alt="">
+                <img src="/global/imgs/dashboard/dark_preview.svg" alt="">
               </div>
               <div class="theme-info">
                 <input type="radio" id="dark-theme">
