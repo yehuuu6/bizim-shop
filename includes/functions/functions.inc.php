@@ -184,6 +184,9 @@ function get_all_sub_categories()
             if ($row['id'] == 0) {
                 continue;
             }
+            // Convert row to string
+            $row['id'] = (string)$row['id'];
+            $row['cid'] = (string)$row['cid'];
             $result[] = $row;
         }
         return $result;
