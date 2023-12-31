@@ -8,7 +8,7 @@ use Components\Super\Head;
 use Components\Navbar\Navbar;
 use Components\Footer\Footer;
 use Components\Categories\Categories;
-use Components\Product\Product;
+use Components\Product\FiltersSearch;
 use Components\Banners\TopBanner;
 use Components\Super\Legs;
 
@@ -78,32 +78,21 @@ $encoded_query = urlencode(urlencode($query));
     <?php endif; ?>
 </div>
 <section id="product-lister" class="page-content">
-    <?php if ($total_product_count == 0) : ?>
-        <div class="no-products">
-            <h2><i class="fa-solid fa-magnifying-glass"></i> Aradığınız ürün bulunamadı.</h2>
+    <?php $filters = new FiltersSearch($query); ?>
+    <div class="product-container">
+        <div class="products">
         </div>
-    <?php else : ?>
-        <div class="product-container">
-            <div class="products">
-                <?php while ($row = mysqli_fetch_assoc($res)) : ?>
-                    <?php
-                    $product = new Product($row);
-                    echo $product->body;
-                    ?>
-                <?php endwhile; ?>
-            </div>
-            <div class="page-numbers">
-                <!---- Page buttons does not update when filters applied, FIX IT -->
-                <?php foreach (range(1, ceil($total_product_count / 50)) as $page) : ?>
-                    <?php if ($page != 0) : ?>
-                        <a href="/search?q=<?= $encoded_query !== "" ? "{$encoded_query}" : '' ?>&?page=<?= $page ?>" class="page-number <?= $page == $page_num ? 'active' : '' ?>"><?= $page ?></a>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
+        <div class="page-numbers">
+            <!---- Page buttons does not update when filters applied, FIX IT -->
+            <?php foreach (range(1, ceil($total_product_count / 50)) as $page) : ?>
+                <?php if ($page != 0) : ?>
+                    <a href="/search?q=<?= $encoded_query !== "" ? "{$encoded_query}" : '' ?>&?page=<?= $page ?>" class="page-number <?= $page == $page_num ? 'active' : '' ?>"><?= $page ?></a>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
-    <?php endif; ?>
+    </div>
 </section>
-<script src="/dist/products/m1l5d9y6b3r2n7o8c0s.js"></script>
+<script src="/dist/search/s2a3g8g3n7k5x1p0vqj.js"></script>
 <?php
 $footer = new Footer();
 $legs = new Legs();
