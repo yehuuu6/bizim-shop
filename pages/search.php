@@ -48,7 +48,7 @@ if ($query !== "") {
 $title = $query == "" ? "Ürünler" : "{$query}";
 $title = "{$title} - Bizim Shop";
 
-$keywords = `{$query}, ürünler, arama, ara, bul, bizim, shop, bizim shop, bizimshop, bizimshop.com`;
+$keywords = "{$query}, ürünler, arama, ara, bul, bizim, shop, bizim shop, bizimshop, bizimshop.com";
 $description = "Bizim Shop'ta aradığınız ürünü bulun. {$query} araması için sonuçlar.";
 
 $head = new Head([
