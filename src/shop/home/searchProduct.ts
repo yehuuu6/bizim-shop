@@ -75,7 +75,6 @@ export function searchProducts() {
         const target = event.target as HTMLElement;
         if (!searchResultContainer.contains(target)) {
           searchResultContainer.style.display = "none";
-          searchInput.value = "";
           searchResultContainer.innerHTML = "";
         }
       });
