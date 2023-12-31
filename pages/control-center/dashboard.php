@@ -294,7 +294,9 @@ $row = mysqli_fetch_assoc($res);
             <div class="item-wrapper">
               <div class="form-item">
                 <input type="text" placeholder="Kategori Adı" name="new-category-name" id="new-category-name" spellcheck="false" autocomplete="off" maxlength="20" />
-                <button id="add-category-btn" title="Kategori Ekle" class="dashboard-btn success-btn"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <div class="form-item">
+                <button id="add-category-btn" title="Kategori Ekle" class="dashboard-btn success-btn small-btn"><i class="fa-solid fa-plus"></i></button>
               </div>
             </div>
             <div class="item-wrapper">
@@ -533,7 +535,7 @@ $row = mysqli_fetch_assoc($res);
       <div class="copyright-section">
         <span>Tüm hakları saklıdır
         </span>
-        <p>© 2023 Bizim Shop</p>
+        <p>© 2024 Bizim Shop</p>
       </div>
     </footer>
     <div class="logger">
@@ -559,7 +561,7 @@ $row = mysqli_fetch_assoc($res);
           <div class="theme-container">
             <div class="theme-item active-theme" data-theme="light">
               <div class="theme-img">
-                <img src="/global/imgs/dashboard/light_preview.svg" alt="">
+                <img src="/global/imgs/dashboard/light.png" alt="">
               </div>
               <div class="theme-info">
                 <input type="radio" id="light-theme">
@@ -568,7 +570,7 @@ $row = mysqli_fetch_assoc($res);
             </div>
             <div class="theme-item" data-theme="dark">
               <div class="theme-img">
-                <img src="/global/imgs/dashboard/dark_preview.svg" alt="">
+                <img src="/global/imgs/dashboard/dark.png" alt="">
               </div>
               <div class="theme-info">
                 <input type="radio" id="dark-theme">
