@@ -13,13 +13,17 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $sort = get_safe_value($con, $_POST['p-sort']);
     $limit = get_safe_value($con, $_POST['limit']);
     $offset = get_safe_value($con, $_POST['offset']);
-    $category = get_safe_value($con, $_POST['category']);
-    $sub_category = get_safe_value($con, $_POST['p-sub-category']);
+    @$search = get_safe_value($con, $_POST['search']);
+    @$category = get_safe_value($con, $_POST['category']);
+    @$sub_category = get_safe_value($con, $_POST['p-sub-category']);
     @$featured = get_safe_value($con, $_POST['p-featured']);
     @$shipment = get_safe_value($con, $_POST['p-shipment']);
     @$min_price = get_safe_value($con, $_POST['min-price']);
     @$max_price = get_safe_value($con, $_POST['max-price']);
 
+    isset($search) ? $search = $search : $search = '';
+    isset($category) ? $category = $category : $category = '';
+    isset($sub_category) ? $sub_category = $sub_category : $sub_category = '';
     isset($featured) ? $featured = '1' : $featured = '';
     isset($shipment) ? $shipment = '1' : $shipment = '';
     $sub_category == 0 ? $sub_category = '' : $sub_category = $sub_category;
@@ -28,6 +32,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
 
     $products = get_products($con, [
         'order_type' => $sort,
+        'search' => $search,
         'category' => $category,
         'sub_category' => $sub_category,
         'shipping' => $shipment,
@@ -39,6 +44,10 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     ]);
 
     foreach ($products as $product) {
+        // If not already in the array push it
+        if (in_array($product['id'], $result)) {
+            continue;
+        }
         $p = new Product($product);
         array_push($result, $p->body);
     }
