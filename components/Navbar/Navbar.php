@@ -11,16 +11,18 @@ if (!defined('FILE_ACCESS')) {
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
 use Components\Component;
-use Components\Product\SearchItem;
 
 /**
  * Navbar component
  */
 class Navbar extends Component
 {
+    private string $query = "";
+
     public function __construct()
     {
-
+        global $con;
+        $this->query = isset($_GET['q']) ? get_safe_value($con, $_GET['q']) : "";
         $body = <<<HTML
             <nav class="navbar">
                 <div class="flex-item site-name">
@@ -37,6 +39,7 @@ class Navbar extends Component
                     spellcheck="false"
                     placeholder="Ürün aramaya başla..."
                     id="search-products"
+                    value="{$this->query}"
                     />
                     <button class="search-btn" title="Ara">
                         <i class="fas fa-search"></i>
