@@ -169,6 +169,29 @@ function get_sub_categories($category_slug)
     }
 }
 
+function get_all_sub_categories()
+{
+    global $con;
+    $sql = "SELECT * FROM subcats";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $sub_category_count = mysqli_num_rows($res);
+
+    if ($sub_category_count > 0) {
+        while ($row = mysqli_fetch_assoc($res)) {
+            // Skip Uncategorized category
+            if ($row['id'] == 0) {
+                continue;
+            }
+            $result[] = $row;
+        }
+        return $result;
+    } else {
+        return [];
+    }
+}
+
 /**
  * Places order to the database (Testing purpose)
  * @param mysqli $con The mysqli connection object.
