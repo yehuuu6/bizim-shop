@@ -118,7 +118,6 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
         data: formData,
       });
       const [type, message, cause] = response.data;
-      console.log(response.data);
       if (type === "success") {
         ManageProductsPage.showMessage(response.data);
         initCategories();
@@ -340,7 +339,6 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
               subcategoryContainer.remove();
               initCategories();
             } else {
-              console.log("error");
               ManageProductsPage.showMessage([
                 "error",
                 "Bir hata oluştu!",
@@ -418,7 +416,6 @@ async function updateSubCategory(id: number, cid: number, name: string) {
   if (type === "success") {
     ManageProductsPage.showMessage(response.data);
     initCategories();
-    console.log(response.data);
   } else {
     ManageProductsPage.showMessage(response.data);
   }
