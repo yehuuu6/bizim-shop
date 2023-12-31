@@ -27,6 +27,10 @@ module.exports = {
       __dirname,
       "src/shop/productsPage/index.ts"
     ),
+    "search/s2a3g8g3n7k5x1p0vqj": path.resolve(
+      __dirname,
+      "src/shop/searchPage/index.ts"
+    ),
     "control-center/p2w4z9o5y8v3q6i1r7": path.resolve(
       __dirname,
       "src/control-center/dashboard/index.ts"
