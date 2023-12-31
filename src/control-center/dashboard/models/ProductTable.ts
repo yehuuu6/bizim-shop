@@ -189,22 +189,6 @@ function editProduct(product: IProduct) {
     (item) => ((item.element as HTMLInputElement).value = product[item.key])
   );
 
-  // Select the sub category option to selected
-  const subCategorySelector = document.querySelector(
-    "#product-sub-category"
-  ) as HTMLSelectElement;
-  const selectedSubCategory = product.subcategory;
-  console.log(selectedSubCategory);
-  const subCategoryOptions = subCategorySelector.querySelectorAll(
-    "option"
-  ) as NodeListOf<HTMLOptionElement>;
-  subCategoryOptions.forEach((option) => {
-    if (option.value === selectedSubCategory) {
-      option.selected = true;
-      console.log(option);
-    }
-  });
-
   const images: string[] = [];
   for (let i = 1; i <= 6; i++) {
     const imageKey = `image${i}`;
