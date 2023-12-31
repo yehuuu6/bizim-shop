@@ -70,7 +70,7 @@ $navbar = new Navbar();
         <li>
             <div class="review">
                 <div class="user">
-                    <img src="http://localhost/images/users/eren_aydin_avatar_b3jvqpb25a.jpeg?timestamp=1703008096" alt="user">
+                    <img src="http://localhost/images/users/eren_aydin_avatar_yfh5fpnr0v.jpeg?timestamp=1704040183" alt="user">
                     <p>John Doe</p>
                 </div>
             </div>
