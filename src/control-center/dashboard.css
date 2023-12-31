@@ -889,7 +889,7 @@ input[type="file"] {
   letter-spacing: 1px;
   font-weight: 700;
   font-size: 1.2rem;
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 .menu-controller span {
   font-weight: 900;
@@ -908,6 +908,9 @@ input[type="file"] {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   transition: 0.1s ease-in-out;
   border: none;
