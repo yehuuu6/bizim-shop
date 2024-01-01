@@ -145,8 +145,12 @@ function get_sub_categories($category_slug)
     mysqli_stmt_bind_param($stmt, 's', $category_slug);
     mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
-    $category_data = mysqli_fetch_row($res);
-    $category_id = $category_data[0];
+    if (mysqli_num_rows($res) > 0) {
+        $category_data = mysqli_fetch_assoc($res);
+        $category_id = $category_data['id'];
+    } else {
+        return [];
+    }
 
     $sql = "SELECT id, name, slug FROM subcats WHERE cid = ?";
     $stmt = mysqli_prepare($con, $sql);
