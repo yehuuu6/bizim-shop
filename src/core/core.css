@@ -848,18 +848,18 @@ footer {
   overflow: hidden;
   border-radius: 15px;
 }
-#categories .category-card .category-card-image {
+#categories .category-card .category-image {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-#categories .category-card .category-card-image img {
+#categories .category-card .category-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: 0.5s ease-in-out;
 }
-#categories .category-card:hover .category-card-image img {
+#categories .category-card:hover .category-image img {
   transform: scale(1.1);
 }
 #categories .category-card a {
