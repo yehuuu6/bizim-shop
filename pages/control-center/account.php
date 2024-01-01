@@ -195,6 +195,45 @@ $door = $row['door'];
                     </form>
                 </div>
             </section>
+            <section id="my-orders" data-url="orders" data-title="Siparişlerim" class="page-content narrow-page">
+                <div id="loader-orders" class="loader">
+                    <?php $loader_orders = new Loader(); ?>
+                </div>
+                <div class="content-header">
+                    <div class="item">
+                        <h2 class="header">Siparişlerim</h2>
+                        <p>Burada verdiginiz siparişleri görebilirsiniz.</p>
+                    </div>
+                    <div class="item">
+                        <div class="controls">
+                            <div class="c-container">
+                                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-orders">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                            </div>
+                            <input autocomplete="off" type="text" placeholder="Sipariş ara" name="search-order" id="search-order" spellcheck="false" />
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th width="1%">#</th>
+                                <th width="10%">Ürün</th>
+                                <th width="5%">Fiyat</th>
+                                <th width="3%">Durum</th>
+                                <th width="10%">Eylemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="dashboard-btn success-btn" name="load-more" id="load-more-orders" style="margin-top:10px;">
+                    Daha fazla yükle
+                </button>
+            </section>
             <div class="settings-container" style="display:none;">
                 <div class="settings">
                     <div class="header">
@@ -206,7 +245,7 @@ $door = $row['door'];
                         <div class="theme-container">
                             <div class="theme-item active-theme" data-theme="light">
                                 <div class="theme-img">
-                                    <img src="/global/imgs/dashboard/light_preview.svg" alt="">
+                                    <img src="/global/imgs/dashboard/light.png" alt="">
                                 </div>
                                 <div class="theme-info">
                                     <input type="radio" id="light-theme">
@@ -215,7 +254,7 @@ $door = $row['door'];
                             </div>
                             <div class="theme-item" data-theme="dark">
                                 <div class="theme-img">
-                                    <img src="/global/imgs/dashboard/dark_preview.svg" alt="">
+                                    <img src="/global/imgs/dashboard/dark.png" alt="">
                                 </div>
                                 <div class="theme-info">
                                     <input type="radio" id="dark-theme">
