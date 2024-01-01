@@ -7,6 +7,7 @@ use Components\Super\Head;
 use Components\Navbar\Navbar;
 use Components\Footer\Footer;
 use Components\Banners\TopBanner;
+use Components\Categories\Categories;
 use Components\Super\Legs;
 
 $styles = [
@@ -21,7 +22,11 @@ $top_banner = new TopBanner();
 $navbar = new Navbar();
 
 ?>
-
+<div class="categories-container">
+    <ul class="categories">
+        <?php $categories = new Categories(); ?>
+    </ul>
+</div>
 <section id="cart" class="page-content flex-column">
     <div class="content-header">
         <h2>Sepetim <span id="cart-item-counter">(0 ürün)</span></h2>

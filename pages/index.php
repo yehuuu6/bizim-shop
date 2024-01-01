@@ -5,7 +5,6 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
 use Components\Super\Head;
 use Components\Navbar\Navbar;
-use Components\Categories\Categories;
 use Components\Footer\Footer;
 use Components\Super\Legs;
 use Components\Banners\TopBanner;
@@ -23,16 +22,37 @@ $navbar = new Navbar();
 
 ?>
 
-<div class="categories-container">
-    <ul class="categories">
-        <?php $categories = new Categories(); ?>
-    </ul>
-</div>
 <?php $slider = new Slider([
     new PromotionTheme1(),
     new PromotionTheme2(),
     new PromotionTheme3()
 ]); ?>
+<section class="home-page-featured" id="categories">
+    <div class="category-card card-wide">
+        <div class="category-card-image dynamic-content">
+            <img src="http://localhost/global/imgs/categories/electronic.jpg" alt="category" loading="lazy">
+        </div>
+        <a href="/products/elektronik">Elektronik</a>
+    </div>
+    <div class="category-card card-tall">
+        <div class="category-card-image dynamic-content">
+            <img src="http://localhost/global/imgs/categories/pets.jpg" alt="category" loading="lazy">
+        </div>
+        <a href="/products/evcil-hayvan">Evcil Hayvan</a>
+    </div>
+    <div class="category-card">
+        <div class="category-card-image dynamic-content">
+            <img src="http://localhost/global/imgs/categories/instrument.jpg" alt="category" loading="lazy">
+        </div>
+        <a href="/products/enstruman">Enstrüman</a>
+    </div>
+    <div class="category-card">
+        <div class="category-card-image dynamic-content">
+            <img src="http://localhost/global/imgs/categories/sneakers.jpg" alt="category" loading="lazy">
+        </div>
+        <a href="/products/moda">Moda</a>
+    </div>
+</section>
 <section class="home-page-featured" id="brands">
     <ul class="dynamic-content">
         <li>
@@ -99,5 +119,25 @@ $navbar = new Navbar();
 </section>
 <?php
 $footer = new Footer();
+?>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let e = 1,
+            t;
+
+        function n() {
+            e = e % 3 + 1, document.getElementById(`slide${e}`).checked = !0
+        }
+
+        function d() {
+            t = setInterval(n, 5e3)
+        }
+        d(), document.getElementById("slider").addEventListener("mouseover", function e() {
+            clearInterval(t)
+        }), document.getElementById("slider").addEventListener("mouseout", d)
+    });
+</script>
+
+<?php
 $legs = new Legs();
 ?>
