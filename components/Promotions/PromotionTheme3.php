@@ -9,9 +9,10 @@ use Components\Component;
  */
 class PromotionTheme3 extends Component
 {
+    public $body;
     public function __construct()
     {
-        $body = <<<HTML
+        $this->body = <<<HTML
             <section class="promotion" id="theme-3">
                 <div class="promotion-details dynamic-content">
                     <div class="thumbnail" style="border-radius: 99999px;">
@@ -30,8 +31,5 @@ class PromotionTheme3 extends Component
                 </div>
             </section>
         HTML;
-
-        // Render the component on the page
-        $this->render($body);
     }
 }

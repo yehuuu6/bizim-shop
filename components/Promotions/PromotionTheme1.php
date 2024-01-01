@@ -9,19 +9,20 @@ use Components\Component;
  */
 class PromotionTheme1 extends Component
 {
+    public $body;
     public function __construct()
     {
-        $body = <<<HTML
+        $this->body = <<<HTML
             <section class="promotion" id="theme-1">
                 <div class="promotion-details dynamic-content">
                     <div class="content">
                         <div class="info">
-                            <h4>Müzik Çalar</h4>
-                            <h3>Sony Walkman</h3>
+                            <h4>WH-1000XM3</h4>
+                            <h3>Sony Gürültü Önleyici Kulaklık</h3>
                         </div>
                         <div class="btns">
-                            <a class="primary" href="http://localhost/product/sony-walkman">Hemen Al</a>
-                            <a class="secondary" href="http://localhost/products/elektronik/muzik-calar">Hepsini Gör</a>
+                            <a class="primary" href="http://localhost/product/sony-noise-canceling-headphones">Hemen Al</a>
+                            <a class="secondary" href="http://localhost/products/elektronik/kulaklik">Hepsini Gör</a>
                         </div>
                     </div>
                     <div class="thumbnail">
@@ -30,8 +31,5 @@ class PromotionTheme1 extends Component
                 </div>
             </section>
         HTML;
-
-        // Render the component on the page
-        $this->render($body);
     }
 }
