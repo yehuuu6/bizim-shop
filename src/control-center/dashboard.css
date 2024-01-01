@@ -344,14 +344,54 @@ nav {
   height: 50px;
   object-fit: cover;
 }
+.team {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+.team .member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: right;
+  width: 100%;
+  background: #4026ff;
+  opacity: 0.8;
+  border-radius: 5px;
+  padding: 1rem;
+  user-select: none;
+  -webkit-user-drag: none;
+  cursor: pointer;
+}
+.team .member:hover {
+  opacity: 1;
+}
+.team .member .member-info h3 {
+  color: aliceblue;
+}
+.team .member .member-info p {
+  color: #ececec;
+}
+.team .member .member-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.team .member .member-image img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
 .statistics-monitors {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   width: 100%;
-}
-.intro {
-  width: 65%;
 }
 .monitor {
   display: flex;
@@ -616,7 +656,7 @@ section {
   color: var(--primary-color);
 }
 .settings .theme-item .theme-img img {
-  object-fit: cover;
+  object-fit: contain;
   height: 100%;
   width: 100%;
   border-bottom: 2px solid var(--border-color);
