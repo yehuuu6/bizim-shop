@@ -4,21 +4,13 @@ import {
   currentOrders,
 } from "@/control-center/dashboard/orders";
 
+import { IOrder } from "@/common/interfaces/IOrder";
+
 export const rowNumberOrders = {
   value: 0,
 };
 
-export interface OrderInterface {
-  id: string;
-  uid: string;
-  pid: string;
-  status: string;
-  user_name: string;
-  product_name: string;
-  product_price: string;
-}
-
-export default function createOrderTable(order: OrderInterface) {
+export default function createOrderTable(order: IOrder) {
   // Create table row
   const tr = document.createElement("tr");
 
@@ -44,7 +36,7 @@ export default function createOrderTable(order: OrderInterface) {
         .id;
       // Get the order from the currentOrders array
       let order = currentOrders.value.find(
-        (order: OrderInterface) => order["id"] == id
+        (order: IOrder) => order["id"] == id
       );
       ManageOrdersPage.showMessage([
         "success",
@@ -57,7 +49,7 @@ export default function createOrderTable(order: OrderInterface) {
         .id;
       // Get the plugin from the currentOrders array
       let order = currentOrders.value.find(
-        (order: OrderInterface) => order["id"] == id
+        (order: IOrder) => order["id"] == id
       );
       ManageOrdersPage.showMessage([
         "success",

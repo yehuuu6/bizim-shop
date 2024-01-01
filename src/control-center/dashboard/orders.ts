@@ -1,14 +1,12 @@
-import createOrderTable, {
-  OrderInterface,
-  rowNumberOrders,
-} from "./models/OrderTable";
+import createOrderTable, { rowNumberOrders } from "./models/OrderTable";
 import PanelClass from "@/common/classes/PanelClass";
+import { IOrder } from "@/common/interfaces/IOrder";
 import { runSearchOrders } from "@/common/utils/functions.dev";
 
 // VARIABLES START
 
 // order storage
-const currentOrders: { value: OrderInterface[] } = {
+const currentOrders: { value: IOrder[] } = {
   value: [],
 };
 
@@ -42,7 +40,7 @@ function getSearchOrder() {
 
   if (search.length > 0) {
     const matchingOrders = currentOrders.value.filter(
-      (order: OrderInterface) =>
+      (order: IOrder) =>
         order["product_name"].toLowerCase().includes(search) ||
         order["user_name"].toLowerCase().includes(search)
     );
@@ -83,7 +81,7 @@ async function loadFirstOrders() {
   const orders = response;
 
   if (orders !== undefined || orders.length !== 0) {
-    orders.forEach((order: OrderInterface) => {
+    orders.forEach((order: IOrder) => {
       currentOrders.value.push(order);
       orderTable.appendChild(createOrderTable(order));
     });
