@@ -8,7 +8,9 @@ const editAccountPage = document.getElementById(
   "change-user-info"
 ) as HTMLElement;
 
-let sections = [editAccountPage];
+const myOrdersPage = document.getElementById("my-orders") as HTMLElement;
+
+let sections = [editAccountPage, myOrdersPage];
 
 const mainLoader = document.querySelector("#main-loader") as HTMLDivElement;
 
@@ -38,6 +40,9 @@ export class Router implements IRouter {
       case "edit-profile":
         this.setPageContent(type, editAccountPage);
         break;
+      case "orders":
+        this.setPageContent(type, myOrdersPage);
+        break;
     }
   }
 
@@ -47,7 +52,6 @@ export class Router implements IRouter {
 
     const url = page.dataset.url;
     if (page !== editAccountPage) {
-      const url = page.dataset.url;
       if (typeof url === "string") {
         // Check if url is defined and is a string
         window.location.hash = url;
