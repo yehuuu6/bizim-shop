@@ -49,10 +49,12 @@ $category_data = mysqli_fetch_row($res) ?? null;
 if ($category_data === null) {
     $sql = "SELECT COUNT(*) FROM product";
     $stmt = mysqli_prepare($con, $sql);
+    $category_id = '0';
 } else {
     $sql = "SELECT COUNT(*) FROM product WHERE category = ?";
     $stmt = mysqli_prepare($con, $sql);
     $stmt->bind_param('i', $category_data[0]);
+    $category_id = $category_data[0];
 }
 mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);
@@ -85,7 +87,7 @@ $navbar = new Navbar();
 </div>
 <section id="product-lister" class="page-content">
     <?php
-    $filters = new Filters($slug, $category_data[0], $sub_category_slug);
+    $filters = new Filters($slug, $category_id, $sub_category_slug);
     $encoded_sub_category_slug = urlencode(urlencode($sub_category_slug));
     ?>
     <div class="product-container">
