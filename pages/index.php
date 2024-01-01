@@ -9,6 +9,7 @@ use Components\Categories\Categories;
 use Components\Footer\Footer;
 use Components\Super\Legs;
 use Components\Banners\TopBanner;
+use Components\Slider\Slider;
 
 // Promotions
 
@@ -27,10 +28,11 @@ $navbar = new Navbar();
         <?php $categories = new Categories(); ?>
     </ul>
 </div>
-
-<?php $promotion1 = new PromotionTheme1(); ?>
-<?php $promotion3 = new PromotionTheme3(); ?>
-<?php $promotion2 = new PromotionTheme2(); ?>
+<?php $slider = new Slider([
+    new PromotionTheme1(),
+    new PromotionTheme2(),
+    new PromotionTheme3()
+]); ?>
 <section class="home-page-featured" id="brands">
     <ul class="dynamic-content">
         <li>
