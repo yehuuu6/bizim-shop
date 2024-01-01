@@ -73,9 +73,8 @@ export class Router implements RouterInterface {
   setPageContent(type: PageType, page: HTMLElement) {
     // Scroll to top of the page
     window.scrollTo(0, 0);
-
+    const url = page.dataset.url;
     if (page !== statPage) {
-      const url = page.dataset.url;
       if (typeof url === "string") {
         // Check if url is defined and is a string
         window.location.hash = url;
