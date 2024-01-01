@@ -168,7 +168,38 @@ $row = mysqli_fetch_assoc($res);
             </div>
           </div>
         </div>
-        <div class="container">
+        <div class="container flex-display flex-column gap-10">
+          <div class="management-team">
+            <div class="team">
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/nopp.png" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Harun Aydın</h3>
+                  <p class="member-role">Kurucu</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="http://localhost/images/users/eren_aydin_avatar_yfh5fpnr0v.jpeg?timestamp=1704113584" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Eren Aydın</h3>
+                  <p class="member-role">CEO & Geliştirici</p>
+                </div>
+              </div>
+              <div class="member">
+                <div class="member-image">
+                  <img src="/global/imgs/nopp.png" alt="Üye Resmi" />
+                </div>
+                <div class="member-info">
+                  <h3 class="member-name">Memnune Aydın</h3>
+                  <p class="member-role">İnsan Kaynakları</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="statistics-monitors">
             <div class="monitor">
               <h3 class="title">Kullanıcılar</h3>
@@ -200,65 +231,6 @@ $row = mysqli_fetch_assoc($res);
               <div class="increase">
                 <i class="fa-solid fa-arrow-trend-up"></i>
                 <span class="amount" id="total-revenue-increase">+290%</span>
-              </div>
-            </div>
-          </div>
-          <div class="management-team">
-            <h3 class="bottom-header">Yönetim Ekibi</h3>
-            <div class="team">
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/1.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Ahmet Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
-              </div>
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/2.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Mehmet Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
-              </div>
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/3.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Ayşe Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
-              </div>
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/4.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Fatma Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
-              </div>
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/5.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Ali Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
-              </div>
-              <div class="member">
-                <div class="member-image">
-                  <img src="/global/imgs/team/6.jpg" alt="Üye Resmi" />
-                </div>
-                <div class="member-info">
-                  <h3 class="member-name">Veli Yılmaz</h3>
-                  <p class="member-role">Yönetici</p>
-                </div>
               </div>
             </div>
           </div>
