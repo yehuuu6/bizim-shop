@@ -40,11 +40,11 @@ class Footer extends Component
                 <div class="footer-powered">
                     <div class="footer-item gap-10">
                         <img class="no-drag wide-img" src="/global/imgs/footer/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
-                        <p>Bazı içerikler ve kod örnekleri, <a class="link purple-text" target="_blank" href="https://openai.com/blog/chatgpt">OpenAI GPT-3</a> tarafından sağlanmıştır.</p>
+                        <p>Bazı içerikler ve kod örnekleri, <a class="link dark-blue-text" target="_blank" href="https://openai.com/blog/chatgpt">OpenAI GPT-3</a> tarafından sağlanmıştır.</p>
                     </div>
                     <div class="footer-item gap-10">
                         <img class="no-drag wide-img" src="/global/imgs/footer/Discord_Logo.png" alt="Discord Logo">
-                        <p>Öneri ve istekleriniz için <a class="link purple-text" target="_blank" href="https://discord.gg/4ZyAb3sZVS">Discord</a> sunucumuza katılabilirsiniz!</p>
+                        <p>Öneri ve istekleriniz için <a class="link dark-blue-text" target="_blank" href="https://discord.gg/4ZyAb3sZVS">Discord</a> sunucumuza katılabilirsiniz!</p>
                     </div>
                 </div>
                 <div class="footer-copyright medium-text">
