@@ -15,6 +15,7 @@ use Components\Slider\Slider;
 use Components\Promotions\PromotionTheme1;
 use Components\Promotions\PromotionTheme2;
 use Components\Promotions\PromotionTheme3;
+use Components\Promotions\Catalog;
 
 $head = new Head();
 $top_banner = new TopBanner();
@@ -26,33 +27,10 @@ $navbar = new Navbar();
     new PromotionTheme1(),
     new PromotionTheme2(),
     new PromotionTheme3()
-]); ?>
-<section class="home-page-featured" id="categories">
-    <div class="category-card card-wide">
-        <div class="category-card-image dynamic-content">
-            <img src="http://localhost/global/imgs/categories/electronic.jpg" alt="category" loading="lazy">
-        </div>
-        <a href="/products/elektronik">Elektronik</a>
-    </div>
-    <div class="category-card card-tall">
-        <div class="category-card-image dynamic-content">
-            <img src="http://localhost/global/imgs/categories/pets.jpg" alt="category" loading="lazy">
-        </div>
-        <a href="/products/evcil-hayvan">Evcil Hayvan</a>
-    </div>
-    <div class="category-card">
-        <div class="category-card-image dynamic-content">
-            <img src="http://localhost/global/imgs/categories/instrument.jpg" alt="category" loading="lazy">
-        </div>
-        <a href="/products/enstruman">Enstrüman</a>
-    </div>
-    <div class="category-card">
-        <div class="category-card-image dynamic-content">
-            <img src="http://localhost/global/imgs/categories/sneakers.jpg" alt="category" loading="lazy">
-        </div>
-        <a href="/products/moda">Moda</a>
-    </div>
-</section>
+]);
+$catalog = new Catalog();
+?>
+
 <section class="home-page-featured" id="brands">
     <ul class="dynamic-content">
         <li>
