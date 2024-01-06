@@ -1,5 +1,6 @@
 <?php
 define('FILE_ACCESS', TRUE);
+define('BYPASS_MAINTENANCE', TRUE);
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
