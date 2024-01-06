@@ -13,73 +13,106 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
   <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon" />
   <title>Bakımdayız - Bizim Shop</title>
   <style>
-    body {
-      background-color: #f1f1f1;
-      font-family: "Poppins", sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
     }
 
     .container {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-      box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03),
-        0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03),
-        0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05),
-        0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
-      background-color: #fff;
-      padding: 5rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 4rem;
+    }
+
+    h3 {
+      font-size: 25px;
+      font-weight: 500;
+      color: #131313;
+      margin-bottom: 1rem;
     }
 
     h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
+      font-size: 110px;
+      font-weight: 900;
+      margin: .5rem 0;
+      color: #1e6dff;
     }
 
     p {
-      font-size: 24px;
-      margin-bottom: 30px;
+      font-size: 18px;
+      font-weight: 400;
+      color: #131313;
+      line-height: 1.5;
+      text-align: center;
+      width: clamp(300px, 50%, 750px);
     }
 
-    a {
-      color: #000;
-      text-decoration: underline;
+    .btns {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2.5rem;
+      gap: 3rem;
     }
 
-    .btn {
-      background-color: #333;
-      font-weight: 600;
-      color: aliceblue;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
-    }
-
-    .btn:hover {
+    .btns button {
+      outline: none;
+      border: 1px solid #1e6dff;
+      padding: 1rem 3.3rem;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
       opacity: 1;
+      transition: all .3s ease;
+    }
+
+    .btns button:hover {
+      opacity: 0.8;
+    }
+
+    .btns .primary {
+      background-color: #1e6dff;
+      color: aliceblue;
+    }
+
+    .btns .secondary {
+      background-color: transparent;
+      font-weight: 600;
+      color: #1e6dff;
+    }
+
+    img {
+      width: 100%;
+      max-width: 250px;
+      margin-top: 8rem;
+      -webkit-user-drag: none;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>503: Bakımdayız</h1>
-    <p>
-      Size daha iyi hizmet verebilmek için çalışıyoruz. Lütfen daha sonra
-      tekrar deneyin.
-    </p>
-    <?php if (isset($_SESSION['id'])) : ?>
-      <a href="?logout=1" class="btn">Çıkış Yap</a>
-    <?php else : ?>
-      <a href="/auth/login" class="btn">Giriş Yap</a>
-    <?php endif; ?>
+    <h3>bizimshop</h3>
+    <h1>503</h1>
+    <p>Üzgünüz, ancak şu anda size daha iyi hizmet verebilmek için çalışıyoruz. Lütfen bir süre bekleyip tekrar deneyin. Anlayışınız için teşekkür ederiz.</p>
+    <div class="btns">
+      <?php if (isset($_SESSION['id'])) : ?>
+        <button class="primary" onclick="window.location.href = '/?logout=1'">ÇIKIŞ YAP</button>
+      <?php else : ?>
+        <button class="primary" onclick="window.location.href = '/auth/login'">GİRİŞ YAP</button>
+      <?php endif; ?>
+    </div>
+    <img src="/global/imgs/astronaut.svg" alt="">
   </div>
 </body>
 
