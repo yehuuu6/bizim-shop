@@ -673,7 +673,7 @@ footer {
   height: 100%;
 }
 .promotion .promotion-details .content .btns .primary {
-  background: #538fff;
+  background: #1d6cff;
   color: #fff;
   border: none;
   padding: 1rem 1.5rem;
@@ -956,7 +956,6 @@ footer {
   font-weight: 500;
   width: 100%;
   letter-spacing: 1px;
-  font-family: "Poppins", sans-serif;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
