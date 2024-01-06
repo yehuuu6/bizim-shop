@@ -4,7 +4,7 @@ define('FILE_ACCESS', TRUE);
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
-use Components\Loader\Loader;
+use Components\Utility\Loader;
 
 if (!isset($_SESSION['id'])) {
   header('location: ' . DOMAIN . '/auth/login');
@@ -238,7 +238,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-site" data-title="Siteyi Yönet" data-url="manage-site" class="page-content narrow-page">
         <div id="loader-site-options" class="loader">
-          <?php $loader_a = new Loader(); ?>
+          <?php new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -283,7 +283,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-products" data-url="products" data-title="Ürünler" class="page-content narrow-page">
         <div id="loader-products" class="loader">
-          <?php $loader_1 = new Loader(); ?>
+          <?php new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -326,7 +326,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="add-product" data-url="add-product" data-title="Ürün Ekle" class="page-content narrow-page">
         <div id="loader-create" class="loader">
-          <?php $loader_2 = new Loader(); ?>
+          <?php new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -425,7 +425,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-users" data-url="users" data-title="Kullanıcıları Yönet" class="page-content narrow-page">
         <div id="loader-users" class="loader">
-          <?php $loader_3 = new Loader(); ?>
+          <?php new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -464,7 +464,7 @@ $row = mysqli_fetch_assoc($res);
       </section>
       <section id="manage-orders" data-url="orders" data-title="Siparişler" class="page-content narrow-page">
         <div id="loader-orders" class="loader">
-          <?php $loader_orders = new Loader(); ?>
+          <?php new Loader(); ?>
         </div>
         <div class="content-header">
           <div class="item">
@@ -520,7 +520,7 @@ $row = mysqli_fetch_assoc($res);
       </button>
     </div>
     <div id="main-loader" class="loader" style="display:flex;">
-      <?php $loader_4 = new Loader(); ?>
+      <?php new Loader(); ?>
     </div>
     <div class="settings-container" style="display:none;">
       <div class="settings">

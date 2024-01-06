@@ -4,7 +4,7 @@ define('FILE_ACCESS', TRUE);
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
-use Components\Loader\Loader;
+use Components\Utility\Loader;
 
 if (!isset($_SESSION['id'])) {
     header('location: ' . DOMAIN . '/auth/login');
@@ -120,7 +120,7 @@ $door = $row['door'];
         <div class="main-page">
             <section id="change-user-info" data-url="profile" data-title="Profili Düzenle" class="page-content narrow-page" style="display:block;">
                 <div id="profile-loader" class="loader">
-                    <?php $loader2 = new Loader(); ?>
+                    <?php new Loader(); ?>
                 </div>
                 <div class="content-header">
                     <div class="item">
@@ -197,7 +197,7 @@ $door = $row['door'];
             </section>
             <section id="my-orders" data-url="orders" data-title="Siparişlerim" class="page-content narrow-page">
                 <div id="loader-orders" class="loader">
-                    <?php $loader_orders = new Loader(); ?>
+                    <?php new Loader(); ?>
                 </div>
                 <div class="content-header">
                     <div class="item">
@@ -285,7 +285,7 @@ $door = $row['door'];
             </div>
         </div>
         <div id="main-loader" class="loader" style="display:flex;">
-            <?php $loader1 = new Loader(); ?>
+            <?php new Loader(); ?>
         </div>
     </div>
     <script src="/dist/control-center/k7u4h0g3t5s9e1c6q2.js"></script>
