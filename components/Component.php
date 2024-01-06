@@ -10,7 +10,7 @@ class Component
     /**
      * Renders component to the page
      */
-    public function render(String $body)
+    public function render(string $body)
     {
         echo $body;
     }

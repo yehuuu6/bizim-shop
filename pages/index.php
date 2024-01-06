@@ -3,32 +3,35 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Super\Head;
-use Components\Navbar\Navbar;
-use Components\Footer\Footer;
-use Components\Super\Legs;
-use Components\Banners\TopBanner;
-use Components\Slider\Slider;
+use Components\Layout\Meta\Top;
+use Components\Layout\Meta\Bottom;
+use Components\Layout\Custom\Navbar;
+use Components\Layout\Custom\Footer;
+use Components\Utility\Banners\TopBanner;
+use Components\Utility\Slider;
 
 // Promotions
 
-use Components\Promotions\PromotionTheme1;
-use Components\Promotions\PromotionTheme2;
-use Components\Promotions\PromotionTheme3;
-use Components\Promotions\Catalog;
+use Components\Utility\Promotions\Card1;
+use Components\Utility\Promotions\Card2;
+use Components\Utility\Promotions\Card3;
 
-$head = new Head();
-$top_banner = new TopBanner();
-$navbar = new Navbar();
+// Catalog
+
+use Components\Categories\Catalog;
+
+new Top();
+new TopBanner();
+new Navbar();
 
 ?>
 
-<?php $slider = new Slider([
-    new PromotionTheme1(),
-    new PromotionTheme2(),
-    new PromotionTheme3()
+<?php new Slider([
+    new Card1(),
+    new Card2(),
+    new Card3()
 ]);
-$catalog = new Catalog();
+new Catalog();
 ?>
 
 <section class="home-page-featured" id="brands">
@@ -96,7 +99,7 @@ $catalog = new Catalog();
     </ul>
 </section>
 <?php
-$footer = new Footer();
+new Footer();
 ?>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -117,5 +120,5 @@ $footer = new Footer();
 </script>
 
 <?php
-$legs = new Legs();
+new Bottom();
 ?>

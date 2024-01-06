@@ -3,12 +3,12 @@ define('FILE_ACCESS', TRUE);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
-use Components\Super\Head;
-use Components\Navbar\Navbar;
-use Components\Footer\Footer;
-use Components\Categories\Categories;
-use Components\Banners\TopBanner;
-use Components\Super\Legs;
+use Components\Layout\Meta\Top;
+use Components\Layout\Meta\Bottom;
+use Components\Layout\Custom\Navbar;
+use Components\Layout\Custom\Footer;
+use Components\Utility\Banners\TopBanner;
+use Components\Categories\Links;
 
 $name = isset($_GET['name']) ? get_safe_value($con, urldecode($_GET['name'])) : "";
 
@@ -34,13 +34,13 @@ $styles = [
     "/dist/product-page/9k25c1l2zki6a0e1n7q6.css"
 ];
 
-$head = new Head([
+new Top([
     "title" => $title,
     "keywords" => $tags,
     "styles" => $styles,
 ]);
-$top_banner = new TopBanner();
-$navbar = new Navbar();
+new TopBanner();
+new Navbar();
 
 $product = $products_data[0];
 
@@ -174,7 +174,7 @@ function render_badges(array $product)
 
 <div class="categories-container">
     <ul class="categories">
-        <?php $categories = new Categories(); ?>
+        <?php new Links(); ?>
     </ul>
 </div>
 
@@ -229,6 +229,6 @@ function render_badges(array $product)
 </section>
 <script src="/dist/product-page/9k25c1l2zki6a0e1n7q6.js"></script>
 <?php
-$footer = new Footer();
-$legs = new Legs();
+new Footer();
+new Bottom();
 ?>

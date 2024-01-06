@@ -4,13 +4,14 @@ define('FILE_ACCESS', TRUE);
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-use Components\Super\Head;
-use Components\Navbar\Navbar;
-use Components\Footer\Footer;
-use Components\Categories\Categories;
-use Components\Product\FiltersSearch;
-use Components\Banners\TopBanner;
-use Components\Super\Legs;
+use Components\Layout\Meta\Top;
+use Components\Layout\Meta\Bottom;
+use Components\Layout\Custom\Navbar;
+use Components\Layout\Custom\Footer;
+use Components\Utility\Banners\TopBanner;
+use Components\Categories\Links;
+
+use Components\Product\Filters\SFilter;
 
 // Set stylesheets
 $styles = [
@@ -51,14 +52,14 @@ $title = "{$title} - Bizim Shop";
 $keywords = "{$query}, ürünler, arama, ara, bul, bizim, shop, bizim shop, bizimshop, bizimshop.com";
 $description = "Bizim Shop'ta aradığınız ürünü bulun. {$query} araması için sonuçlar.";
 
-$head = new Head([
+new Top([
     "keywords" => $keywords,
     "title" => $title,
     "styles" => $styles,
     "description" => $description
 ]);
-$top_banner = new TopBanner();
-$navbar = new Navbar();
+new TopBanner();
+new Navbar();
 
 $encoded_query = urlencode(urlencode($query));
 
@@ -66,7 +67,7 @@ $encoded_query = urlencode(urlencode($query));
 
 <div class="categories-container">
     <ul class="categories">
-        <?php $categories = new Categories(); ?>
+        <?php new Links(); ?>
     </ul>
 </div>
 
@@ -78,7 +79,7 @@ $encoded_query = urlencode(urlencode($query));
     <?php endif; ?>
 </div>
 <section id="product-lister" class="page-content">
-    <?php $filters = new FiltersSearch($query); ?>
+    <?php new SFilter($query); ?>
     <div class="product-container">
         <div class="products">
         </div>
@@ -94,6 +95,6 @@ $encoded_query = urlencode(urlencode($query));
 </section>
 <script src="/dist/search/s2a3g8g3n7k5x1p0vqj.js"></script>
 <?php
-$footer = new Footer();
-$legs = new Legs();
+new Footer();
+new Bottom();
 ?>

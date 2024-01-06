@@ -4,13 +4,14 @@ define('FILE_ACCESS', TRUE);
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-use Components\Super\Head;
-use Components\Navbar\Navbar;
-use Components\Footer\Footer;
-use Components\Categories\Categories;
-use Components\Product\Filters;
-use Components\Banners\TopBanner;
-use Components\Super\Legs;
+use Components\Layout\Meta\Top;
+use Components\Layout\Meta\Bottom;
+use Components\Layout\Custom\Navbar;
+use Components\Layout\Custom\Footer;
+use Components\Utility\Banners\TopBanner;
+use Components\Categories\Links;
+
+use Components\Product\Filters\CFilter;
 
 // Set stylesheets
 $styles = [
@@ -64,18 +65,18 @@ $total_product_count = mysqli_fetch_row($res)[0];
 $title = $category_data[1] ?? 'Tüm Ürünler';
 $title = "{$title} - Bizim Shop";
 
-$head = new Head([
+new Top([
     "title" => $title,
     "styles" => $styles,
 ]);
-$top_banner = new TopBanner();
-$navbar = new Navbar();
+new TopBanner();
+new Navbar();
 
 ?>
 
 <div class="categories-container">
     <ul class="categories">
-        <?php $categories = new Categories(); ?>
+        <?php new Links(); ?>
     </ul>
 </div>
 
@@ -87,7 +88,7 @@ $navbar = new Navbar();
 </div>
 <section id="product-lister" class="page-content">
     <?php
-    $filters = new Filters($slug, $category_id, $sub_category_slug);
+    new CFilter($slug, $category_id, $sub_category_slug);
     $encoded_sub_category_slug = urlencode(urlencode($sub_category_slug));
     ?>
     <div class="product-container">
@@ -105,6 +106,6 @@ $navbar = new Navbar();
 </section>
 <script src="/dist/products/m1l5d9y6b3r2n7o8c0s.js"></script>
 <?php
-$footer = new Footer();
-$legs = new Legs();
+new Footer();
+new Bottom();
 ?>

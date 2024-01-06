@@ -3,8 +3,8 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Product\CartItem;
-use Components\Product\Product;
+use Components\Product\Cards\InCart;
+use Components\Product\Cards\ProductCard;
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
@@ -39,9 +39,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
             continue;
         }
         if ($product_type === "in-cart") {
-            $p = new CartItem($product[0]);
+            $p = new InCart($product[0]);
         } else if ($product_type === "default") {
-            $p = new Product($product[0]);
+            $p = new ProductCard($product[0]);
         } else {
             echo json_encode(array());
             exit;

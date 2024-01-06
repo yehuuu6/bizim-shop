@@ -3,7 +3,7 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Product\AddedToCart;
+use Components\Product\Cards\AddedToCart;
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");

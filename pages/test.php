@@ -3,21 +3,28 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Super\Head;
-use Components\Navbar\Navbar;
-use Components\Footer\Footer;
-use Components\Super\Legs;
-use Components\Banners\TopBanner;
+use Components\Layout\Meta\Top;
+use Components\Layout\Meta\Bottom;
+use Components\Layout\Custom\Navbar;
+use Components\Layout\Custom\Footer;
+use Components\Utility\Banners\TopBanner;
+use Components\Categories\Links;
 
-$head = new Head();
-$top_banner = new TopBanner();
-$navbar = new Navbar();
+new Top();
+new TopBanner();
+new Navbar();
 ?>
+<div class="categories-container">
+    <ul class="categories">
+        <?php new Links(); ?>
+    </ul>
+</div>
+
 <section class="page-content">
     <div id="monitor"></div>
     <button id="place-order-btn" class="btn primary-btn">Place Order</button>
 </section>
 <?php
-$footer = new Footer();
-$legs = new Legs();
+new Footer();
+new Bottom();
 ?>

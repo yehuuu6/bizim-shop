@@ -3,7 +3,7 @@ define('FILE_ACCESS', TRUE);
 
 require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 
-use Components\Product\SearchItem;
+use Components\Product\Cards\InSearch;
 
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     $result = [];
 
     foreach ($product_data as $product) {
-        $result[] = new SearchItem($product);
+        $result[] = new InSearch($product);
     }
 
     echo json_encode($result);
