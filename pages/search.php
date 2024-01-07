@@ -74,8 +74,7 @@ $encoded_query = urlencode(urlencode($query));
 <div class="router">
     <a href="/">Ana Sayfa</a>
     <?php if ($query !== "") : ?>
-        >
-        <a href="/search?q=<?= $encoded_query ?>">"<?= $query ?>" için arama sonuçları</a>
+        <a href="/search?q=<?= $encoded_query ?>"> > "<?= $query ?>" için arama sonuçları</a>
     <?php endif; ?>
 </div>
 <section id="product-lister" class="page-content">
