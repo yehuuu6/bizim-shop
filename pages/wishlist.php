@@ -29,14 +29,19 @@ new Navbar();
         <?php new Links(); ?>
     </ul>
 </div>
-
-<section id="liked-products" class="page-content">
+<div class="router">
+    <a href="/">Ana Sayfa</a>
+    <a href="/wishlist">> Beğendiğim Ürünler</a>
+</div>
+<section id="product-lister" class="page-content">
     <div class="product-container">
+        <div class="products"></div>
     </div>
 </section>
 <?php
 new Footer();
 ?>
+<script src="/dist/shop/wishlist/1k2c1l5d6z3r7o8b0s4.js"></script>
 <?php
 new Bottom();
 ?>
