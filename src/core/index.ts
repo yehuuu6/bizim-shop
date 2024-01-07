@@ -1,10 +1,10 @@
 import axios from "axios";
-import { setNavbarWishItemCount } from "../common/controllers/shop/wishlistBtns";
-import { setNavbarCartItemCount } from "../common/controllers/shop/cartBtns";
-import { searchProducts } from "@/shop/home/searchProduct";
+import { setNavbarWishItemCount } from "@/common/managers/shop/wishlistBtnsManager";
+import { setNavbarCartItemCount } from "@/common/managers/shop/cartBtnsManager";
+import { searchProducts } from "@/pages/shop/home/searchProduct";
 
 import "./core.css";
-import "@/common/utils/utils.css";
+import "./utils.css";
 
 setNavbarWishItemCount();
 setNavbarCartItemCount();
