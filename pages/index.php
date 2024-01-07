@@ -73,7 +73,7 @@ new Catalog();
         <li>
             <div class="review">
                 <div class="user">
-                    <img src="http://localhost/images/users/eren_aydin_avatar_yfh5fpnr0v.jpeg?timestamp=1704040183" alt="user">
+                    <img src="http://localhost/images/users/nopp.png" alt="user">
                     <p>John Doe</p>
                 </div>
             </div>
