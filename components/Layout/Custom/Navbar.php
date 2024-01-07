@@ -23,6 +23,7 @@ class Navbar extends Component
     {
         global $con;
         $this->query = isset($_GET['q']) ? get_safe_value($con, $_GET['q']) : "";
+        $this->query = urldecode(urldecode($this->query));
         $body = <<<HTML
             <nav class="navbar">
                 <div class="flex-item site-name">
