@@ -12,7 +12,7 @@ use Components\Categories\Links;
 
 // Set stylesheets
 $styles = [
-    "/dist/products/m1l5d9y6b3r2n7o8c0s.css"
+    "/dist/shop/products/m1l5d9y6b3r2n7o8c0s.css"
 ];
 
 new Top([
@@ -36,5 +36,7 @@ new Navbar();
 </section>
 <?php
 new Footer();
+?>
+<?php
 new Bottom();
 ?>

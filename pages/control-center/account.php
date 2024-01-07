@@ -37,7 +37,7 @@ $door = $row['door'];
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1" />
-    <link rel="stylesheet" href="/dist/control-center/p2w4z9o5y8v3q6i1r7.css" />
+    <link rel="stylesheet" href="/dist/control-center/account/k7u4h0g3t5s9e1c6q2.css" />
     <script src="/global/plugins/icons.js"></script>
     <link rel="shortcut icon" href="/global/imgs/logo.png" type="image/x-icon">
     <title>Profili Düzenle - Bizim Shop Kontrol Merkezi</title>
@@ -288,9 +288,9 @@ $door = $row['door'];
             <?php new Loader(); ?>
         </div>
     </div>
-    <script src="/dist/control-center/k7u4h0g3t5s9e1c6q2.js"></script>
-    <script src="/dist/control-center/2j4k6s8o9t1a3v5w7y0u.js"></script>
-    <script src="/dist/control-center/4s9k5f7p3o8t2a0v1w6u.js"></script>
+    <script src="/dist/control-center/account/k7u4h0g3t5s9e1c6q2.js"></script>
+    <script src="/dist/control-center/managers/2j4k6s8o9t1a3v5w7y0u.js"></script>
+    <script src="/dist/control-center/managers/4s9k5f7p3o8t2a0v1w6u.js"></script>
 </body>
 
 </html>

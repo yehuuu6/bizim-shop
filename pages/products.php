@@ -15,7 +15,7 @@ use Components\Product\Filters\CFilter;
 
 // Set stylesheets
 $styles = [
-    "/dist/products/m1l5d9y6b3r2n7o8c0s.css"
+    "/dist/shop/products/m1l5d9y6b3r2n7o8c0s.css"
 ];
 global $con;
 
@@ -104,8 +104,10 @@ new Navbar();
         </div>
     </div>
 </section>
-<script src="/dist/products/m1l5d9y6b3r2n7o8c0s.js"></script>
 <?php
 new Footer();
+?>
+<script src="/dist/shop/products/m1l5d9y6b3r2n7o8c0s.js"></script>
+<?php
 new Bottom();
 ?>

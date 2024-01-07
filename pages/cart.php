@@ -11,7 +11,7 @@ use Components\Utility\Banners\TopBanner;
 use Components\Categories\Links;
 
 $styles = [
-    "/dist/cart/v8x3q6t9j2s5f0e1n7z4.css"
+    "/dist/shop/cart/v8x3q6t9j2s5f0e1n7z4.css"
 ];
 
 new Top([
@@ -77,8 +77,11 @@ new Navbar();
     <div id="liked-products" class="product-showcase">
     </div>
 </section>
-<script src="/dist/cart/v8x3q6t9j2s5f0e1n7z4.js"></script>
+
 <?php
 new Footer();
+?>
+<script src="/dist/shop/cart/v8x3q6t9j2s5f0e1n7z4.js"></script>
+<?php
 new Bottom();
 ?>

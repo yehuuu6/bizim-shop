@@ -31,7 +31,7 @@ if (!$products_data) {
 $title = "{$products_data[0]['name']} - Bizim Shop";
 $tags = "{$products_data[0]['tags']}";
 $styles = [
-    "/dist/product-page/9k25c1l2zki6a0e1n7q6.css"
+    "/dist/shop/product/9k25c1l2zki6a0e1n7q6.css"
 ];
 
 new Top([
@@ -227,8 +227,10 @@ function render_badges(array $product)
         </div>
     </div>
 </section>
-<script src="/dist/product-page/9k25c1l2zki6a0e1n7q6.js"></script>
 <?php
 new Footer();
+?>
+<script src="/dist/shop/product/9k25c1l2zki6a0e1n7q6.js"></script>
+<?php
 new Bottom();
 ?>

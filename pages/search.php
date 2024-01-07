@@ -15,7 +15,7 @@ use Components\Product\Filters\SFilter;
 
 // Set stylesheets
 $styles = [
-    "/dist/products/m1l5d9y6b3r2n7o8c0s.css"
+    "/dist/shop/products/m1l5d9y6b3r2n7o8c0s.css"
 ];
 global $con;
 // Get the search query from URL
@@ -93,8 +93,10 @@ $encoded_query = urlencode(urlencode($query));
         </div>
     </div>
 </section>
-<script src="/dist/search/s2a3g8g3n7k5x1p0vqj.js"></script>
 <?php
 new Footer();
+?>
+<script src="/dist/shop/search/s2a3g8g3n7k5x1p0vqj.js"></script>
+<?php
 new Bottom();
 ?>
