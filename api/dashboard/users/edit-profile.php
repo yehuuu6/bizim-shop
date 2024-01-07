@@ -75,11 +75,11 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     if ($id != '') {
         if ($submissions < 8) {
             if ($change_avatar) {
-                if ($avatar_size > 8) {
-                    send_error_response('Lütfen 8MB\'dan daha küçük bir resim yükleyin.', 'avatar-label');
-                }
                 if (!in_array($avatar_ext, $allowed)) {
                     send_error_response('Lütfen geçerli bir resim dosyası yükleyin. (jpg, jpeg, png)', 'avatar-label');
+                }
+                if ($avatar_size > 8) {
+                    send_error_response('Lütfen 8MB\'dan daha küçük bir resim yükleyin.', 'avatar-label');
                 }
                 if (compress_save_image($source_path, PRODUCT_USER_SERVER_PATH . $avatar_name, $max_width, $max_height) !== false) {
                     mysqli_query($con, $update_avatar);
