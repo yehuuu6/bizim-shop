@@ -6,38 +6,41 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: {
-    "control-center/2j4k6s8o9t1a3v5w7y0u": path.resolve(
+    "control-center/managers/2j4k6s8o9t1a3v5w7y0u": path.resolve(
       __dirname,
-      "src/common/controllers/panel/menuController.ts"
+      "src/common/managers/dashboard/menuManager.ts"
     ),
-    "control-center/4s9k5f7p3o8t2a0v1w6u": path.resolve(
+    "control-center/managers/4s9k5f7p3o8t2a0v1w6u": path.resolve(
       __dirname,
-      "src/common/controllers/panel/themeController.ts"
+      "src/common/managers/dashboard/themeManager.ts"
     ),
-    "auth/rs5f0f0e1h08v35w6a2u3": path.resolve(__dirname, "src/auth/index.ts"),
-    "cart/v8x3q6t9j2s5f0e1n7z4": path.resolve(
+    "auth/rs5f0f0e1h08v35w6a2u3": path.resolve(
       __dirname,
-      "src/shop/cart/index.ts"
+      "src/pages/auth/index.ts"
     ),
-    "product-page/9k25c1l2zki6a0e1n7q6": path.resolve(
+    "shop/cart/v8x3q6t9j2s5f0e1n7z4": path.resolve(
       __dirname,
-      "src/shop/productPage/index.ts"
+      "src/pages/shop/cart/index.ts"
     ),
-    "products/m1l5d9y6b3r2n7o8c0s": path.resolve(
+    "shop/product/9k25c1l2zki6a0e1n7q6": path.resolve(
       __dirname,
-      "src/shop/productsPage/index.ts"
+      "src/pages/shop/product/index.ts"
     ),
-    "search/s2a3g8g3n7k5x1p0vqj": path.resolve(
+    "shop/products/m1l5d9y6b3r2n7o8c0s": path.resolve(
       __dirname,
-      "src/shop/searchPage/index.ts"
+      "src/pages/shop/products/index.ts"
     ),
-    "control-center/p2w4z9o5y8v3q6i1r7": path.resolve(
+    "shop/search/s2a3g8g3n7k5x1p0vqj": path.resolve(
       __dirname,
-      "src/control-center/dashboard/index.ts"
+      "src/pages/shop/search/index.ts"
     ),
-    "control-center/k7u4h0g3t5s9e1c6q2": path.resolve(
+    "control-center/dashboard/p2w4z9o5y8v3q6i1r7": path.resolve(
       __dirname,
-      "src/control-center/account/index.ts"
+      "src/pages/control-center/dashboard/index.ts"
+    ),
+    "control-center/account/k7u4h0g3t5s9e1c6q2": path.resolve(
+      __dirname,
+      "src/pages/control-center/account/index.ts"
     ),
     "core/r9k2p4i7h0o1g5w6a2u3": path.resolve(__dirname, "src/core/index.ts"),
   },
