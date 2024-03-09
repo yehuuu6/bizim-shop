@@ -20,7 +20,7 @@ function initWishlistedProducts() {
         wishlistContainer.style.justifyContent = "center";
         wishlistContainer.style.alignItems = "center";
         wishlistContainer.innerHTML +=
-          '<div class="no-products"><h2><i class="fas fa-heart"></i> Favori listenizde ürün bulunmamaktadır.</h2></div>';
+          '<div class="no-products"><h2><i class="fas fa-heart"></i> Beğendiğiniz ürün bulunmamaktadır.</h2></div>';
       } else {
         products.forEach((product: string) => {
           wishlistContainer.innerHTML += product;
