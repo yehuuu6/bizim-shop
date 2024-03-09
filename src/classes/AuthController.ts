@@ -84,6 +84,7 @@ export class AuthController implements IAuthController {
       },
     })
       .then((response) => {
+        //console.log(response); Enable this when error occurs
         this.loader.style.display = "none";
         const [status, message, cause] = response.data;
         this.showMessage(message, status, cause);
