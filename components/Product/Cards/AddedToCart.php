@@ -23,6 +23,8 @@ class AddedToCart extends Component
 
     $slug = urlencode(urlencode($slug));
 
+    $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
+
     $this->body = <<<HTML
         <div class="product-in-modal" data-id="{$product['id']}">
             {$this->render_shipment_element($product)}
@@ -31,6 +33,7 @@ class AddedToCart extends Component
                 src="{$this->get_image_src($product)}"
                 alt="Resim"
                 loading="lazy"
+                onerror='this.src="{$error_src}"'
               />
             </div>
             <div class="product-info">
