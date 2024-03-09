@@ -5,7 +5,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
     require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
     $password = get_safe_value($con, $_POST['password']);
-    $password_confirm = get_safe_value($con, $_POST['passwordConf']);
+    $password_confirm = get_safe_value($con, $_POST['password_confirm']);
 
     $errors = [
         ['message' => 'Lütfen tüm alanları doldurunuz.', 'field' => 'none', 'condition' => empty($password) || empty($password_confirm)],
