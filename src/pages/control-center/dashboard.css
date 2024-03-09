@@ -1134,7 +1134,7 @@ table tr:hover td a i.active:hover {
 .item-wrapper .form-item select option {
   margin: 40px;
   background: var(--input-bg-color);
-  color: #fff;
+  color: var(--text-color);
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 .btns-section {
