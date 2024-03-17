@@ -4,17 +4,18 @@ import {
   ManageProductsPage,
   isEditMode,
   imageCount,
-} from ".."; // from index.ts
-import ConfirmationModal from "@/common/modals/confirmation";
+} from '..'; // from index.ts
+import ConfirmationModal from '@/common/modals/confirmation';
 import {
   setStatus,
   addImageInput,
   quitEditMode,
-} from "@/common/funcs/functions.dev";
-import router from "@/pages/control-center/dashboard/Router";
-import { trimSentence } from "@/common/funcs/functions.usr";
+  setSubCategories,
+} from '@/common/funcs/functions.dev';
+import router from '@/pages/control-center/dashboard/Router';
+import { trimSentence } from '@/common/funcs/functions.usr';
 
-import IProduct from "@/common/interfaces/utility/IProduct";
+import IProduct from '@/common/interfaces/utility/IProduct';
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
@@ -28,7 +29,7 @@ export const rowNumberProducts = {
 
 export function createProductTable(product: IProduct) {
   // Create table row
-  const tr = document.createElement("tr");
+  const tr = document.createElement('tr');
   tr.innerHTML = `
     <td>${++rowNumberProducts.value}</td>
     <td>${product.name}</td>
@@ -38,17 +39,17 @@ export function createProductTable(product: IProduct) {
     <td class="table-form-td">
       <form class="table-form" data-id="${product.id}">
         <button data-action="status" class="dashboard-btn ${
-          product.status === "1" ? "status-btn" : "success-btn"
-        }">${product.status === "1" ? "Satıldı" : "Satışta"}</button>
+          product.status === '1' ? 'status-btn' : 'success-btn'
+        }">${product.status === '1' ? 'Satıldı' : 'Satışta'}</button>
         <button data-action="edit" class="dashboard-btn edit-btn">Düzenle</button>
         <button data-action="delete" class="dashboard-btn delete-btn">Sil</button>
       </form>
     </td>
   `;
 
-  const tableForm = tr.querySelector(".table-form") as HTMLElement;
+  const tableForm = tr.querySelector('.table-form') as HTMLElement;
 
-  tableForm.addEventListener("click", async (e) => {
+  tableForm.addEventListener('click', async (e) => {
     e.preventDefault();
     const id = (e.currentTarget as HTMLElement).dataset.id!;
     const clickedAction = (e.target as HTMLElement).dataset.action;
@@ -56,30 +57,30 @@ export function createProductTable(product: IProduct) {
     const selectedProduct: IProduct = currentProducts.value.find(
       (p: IProduct) => p.id === id
     )!;
-    if (clickedAction === "edit") {
+    if (clickedAction === 'edit') {
       editProduct(selectedProduct);
-    } else if (clickedAction === "delete") {
+    } else if (clickedAction === 'delete') {
       deleteProduct(selectedProduct);
-    } else if (clickedAction === "status") {
-      const newStatus = product.status === "1" ? "0" : "1";
+    } else if (clickedAction === 'status') {
+      const newStatus = product.status === '1' ? '0' : '1';
 
       const formData = new FormData();
-      formData.append("id", id);
-      formData.append("status", newStatus);
+      formData.append('id', id);
+      formData.append('status', newStatus);
 
       const response = await ManageProductsPage.sendApiRequest(
-        "/api/dashboard/product/change-status.php",
+        '/api/dashboard/product/change-status.php',
         formData
       );
 
-      if (response[0] === "success") {
+      if (response[0] === 'success') {
         product.status = newStatus;
         (e.target as HTMLElement).innerText =
-          newStatus === "1" ? "Satıldı" : "Satışta";
+          newStatus === '1' ? 'Satıldı' : 'Satışta';
         (tr.querySelector("[data-mission='status']") as HTMLElement).innerText =
           setStatus(newStatus);
         (e.target as HTMLElement).className = `dashboard-btn ${
-          newStatus === "1" ? "status-btn" : "success-btn"
+          newStatus === '1' ? 'status-btn' : 'success-btn'
         }`;
       }
 
@@ -96,17 +97,17 @@ function deleteProduct(product: IProduct) {
 
   modalBtn.onclick = async () => {
     const formData = new FormData();
-    formData.append("id", product.id);
+    formData.append('id', product.id);
 
     try {
       const response = await CreateProductPage.sendApiRequest(
-        "/api/dashboard/product/delete-product.php",
+        '/api/dashboard/product/delete-product.php',
         formData
       );
 
       ManageProductsPage.showMessage(response);
 
-      if (response[0] === "success") {
+      if (response[0] === 'success') {
         // Delete the product from the currentProducts array
         currentProducts.value = currentProducts.value.filter(
           (p: IProduct) => p.id !== product.id
@@ -120,7 +121,7 @@ function deleteProduct(product: IProduct) {
         }
       }
     } catch (e) {
-      ManageProductsPage.showMessage(["error", "Bir hata oluştu.", "none"]);
+      ManageProductsPage.showMessage(['error', 'Bir hata oluştu.', 'none']);
     } finally {
       modal.remove();
     }
@@ -130,69 +131,72 @@ function deleteProduct(product: IProduct) {
 function editProduct(product: IProduct) {
   isEditMode.value = true;
 
+  setSubCategories(product.subcategory);
+
   if (document.querySelector("[name='product-id']")) {
     (
       document.querySelector("[name='product-id']") as HTMLInputElement
     ).remove();
   }
-  const form = document.querySelector("#create-form") as HTMLFormElement;
-  const destination = document.querySelector("#add-product") as HTMLElement;
-  router.loadPage("hash", destination.dataset.url!);
+  const form = document.querySelector('#create-form') as HTMLFormElement;
+  const destination = document.querySelector('#add-product') as HTMLElement;
+  router.loadPage('hash', destination.dataset.url!);
   clearImageInputs();
 
-  const inputId = document.createElement("input");
-  inputId.type = "hidden";
-  inputId.name = "product-id";
+  const inputId = document.createElement('input');
+  inputId.type = 'hidden';
+  inputId.name = 'product-id';
   inputId.value = product.id;
   form.appendChild(inputId);
 
   CreateProductPage.showMessage([
-    "warning",
+    'warning',
     `${product.name} isimli ürünü düzenliyorsunuz.`,
-    "none",
+    'none',
   ]);
 
   const exitEditMode = document.querySelector(
-    "#exit-edit-mode"
+    '#exit-edit-mode'
   ) as HTMLButtonElement;
-  const button = document.querySelector("#create-product") as HTMLButtonElement;
-  const title = document.querySelector("#create-product-title") as HTMLElement;
+  const button = document.querySelector('#create-product') as HTMLButtonElement;
+  const title = document.querySelector('#create-product-title') as HTMLElement;
   const paragraph = document.querySelector(
-    "#create-product-text"
+    '#create-product-text'
   ) as HTMLParagraphElement;
-  button.innerText = "Değişiklikleri Kaydet";
+  button.innerText = 'Değişiklikleri Kaydet';
   title.innerText = `${product.name} Ürününü Düzenliyorsunuz.`;
   paragraph.innerText = `Düzenleme modundan çıkmak için yanda bulunan X butonuna basabilirsiniz.`;
 
   const elements = [
-    { element: document.querySelector("#product-name"), key: "name" },
-    { element: document.querySelector("#product-price"), key: "price" },
-    { element: document.querySelector("#shipping-cost"), key: "shipping_cost" },
-    { element: document.querySelector("#product-tags"), key: "tags" },
+    { element: document.querySelector('#product-name'), key: 'name' },
+    { element: document.querySelector('#product-price'), key: 'price' },
+    { element: document.querySelector('#shipping-cost'), key: 'shipping_cost' },
+    { element: document.querySelector('#product-tags'), key: 'tags' },
     {
-      element: document.querySelector("#product-description"),
-      key: "description",
+      element: document.querySelector('#product-description'),
+      key: 'description',
     },
+    { element: document.querySelector('#quality'), key: 'quality' },
+    { element: document.querySelector('#shipment'), key: 'shipment' },
+    { element: document.querySelector('#featured'), key: 'featured' },
     {
-      element: document.querySelector("#product-sub-category"),
-      key: "subcategory",
+      element: document.querySelector('#product-sub-category'),
+      key: 'subcategory',
     },
-    { element: document.querySelector("#quality"), key: "quality" },
-    { element: document.querySelector("#shipment"), key: "shipment" },
-    { element: document.querySelector("#featured"), key: "featured" },
   ];
 
-  exitEditMode.classList.remove("none-display");
+  exitEditMode.classList.remove('none-display');
   exitEditMode.disabled = false;
 
-  elements.forEach(
-    (item) => ((item.element as HTMLInputElement).value = product[item.key])
-  );
+  elements.forEach((el) => {
+    const input = el.element as HTMLInputElement;
+    input.value = product[el.key];
+  });
 
   const images: string[] = [];
   for (let i = 1; i <= 6; i++) {
     const imageKey = `image${i}`;
-    if (product[imageKey] !== "noimg.jpg") {
+    if (product[imageKey] !== 'noimg.jpg') {
       images.push(product[imageKey]);
     }
   }
@@ -203,7 +207,7 @@ function editProduct(product: IProduct) {
       `button[id="remove-pic-${index + 1}"]`
     ) as HTMLButtonElement;
     deleteImageBtn.dataset.image = image;
-    deleteImageBtn.classList.remove("small-btn");
+    deleteImageBtn.classList.remove('small-btn');
     deleteImageBtn.innerHTML = `${index + 1}. Resmi Sil`;
     const imagePreview = document.querySelector(
       `#image-preview-${index + 1}`
@@ -219,27 +223,27 @@ function editProduct(product: IProduct) {
     ) as HTMLInputElement;
     const hostname = window.location.origin;
     // Hide imageLabel and imageInput
-    imageLabel.style.display = "none";
-    imageInput.style.display = "none";
+    imageLabel.style.display = 'none';
+    imageInput.style.display = 'none';
     imageInput.disabled = true;
-    imagePreview.style.display = "block";
+    imagePreview.style.display = 'block';
     imageText.textContent = trimSentence(product[`image${index + 1}`], 20);
     imageText.title = product[`image${index + 1}`];
     imagePreview.src = `${hostname}/images/product/${
-      product["root_name"]
+      product['root_name']
     }/${image}?timestamp=${Date.now()}`;
   });
 
-  exitEditMode.addEventListener("click", () => {
+  exitEditMode.addEventListener('click', () => {
     CreateProductPage.showMessage([
-      "warning",
-      "Ürün düzenleme modundan çıktınız.",
-      "none",
+      'warning',
+      'Ürün düzenleme modundan çıktınız.',
+      'none',
     ]);
     clearImageInputs();
-    title.innerText = "Markete Ürün Ekle";
-    paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
-    button.innerText = "Ürünü Ekle";
+    title.innerText = 'Markete Ürün Ekle';
+    paragraph.innerText = 'Yanında (*) olan alanlar zorunludur.';
+    button.innerText = 'Ürünü Ekle';
     quitEditMode();
   });
 }
@@ -247,12 +251,12 @@ function editProduct(product: IProduct) {
 export function clearImageInputs() {
   imageCount.value = 1;
   const imageInputs = (
-    document.querySelector("#create-form") as HTMLFormElement
+    document.querySelector('#create-form') as HTMLFormElement
   ).querySelectorAll("[data-type='image-input']");
   imageInputs.forEach((input) => input.remove());
   const addImageBtn = document.querySelector(
     'button[name="add-image"]'
   ) as HTMLButtonElement;
-  addImageBtn.className = "dashboard-btn small-btn add-image-btn";
+  addImageBtn.className = 'dashboard-btn small-btn add-image-btn';
   addImageBtn.disabled = false;
 }
