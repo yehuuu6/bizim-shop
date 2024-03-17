@@ -90,6 +90,24 @@ function render_showcase_items(array $product)
     return $html;
 }
 
+function render_likes($connection, $product)
+{
+    // Get the count of likes
+    $sql = "SELECT COUNT(*) as count FROM likes WHERE pid = ?";
+    try {
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('i', $product['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $count = $row['count'];
+    } catch (Exception $e) {
+        $count = 0;
+    }
+
+    return "<div class='like-indicator'><i class='fa-solid fa-heart'></i> <span>{$count}</span> Favori</div>";
+}
+
 function render_badges(array $product)
 {
     $badges = [];
@@ -114,7 +132,7 @@ function render_badges(array $product)
         $body_shipment = <<<HTML
         <div class="item">
             <div class="badge">
-                <i style="font-size: 1.1rem" class="fa-solid fa-truck"></i>
+                <i class="fa-solid fa-truck"></i>
             </div>
             <h3>Kargo: {$shipping_cost} <span class="currency">TL</span></h3>
         </div>
@@ -123,7 +141,7 @@ function render_badges(array $product)
         $body_shipment = <<<HTML
         <div class="item">
             <div class="badge">
-                <i style="font-size: 1.1rem" class="fa-solid fa-truck"></i>
+                <i class="fa-solid fa-truck"></i>
             </div>
             <h3>Ücretsiz Kargo</h3>
         </div>
@@ -135,7 +153,7 @@ function render_badges(array $product)
         $body_quality = <<<HTML
         <div class="item">
             <div class="badge">
-                <i class="fa-solid fa-face-smile"></i>
+                <i class="fa-solid fa-check"></i>
             </div>
             <h3>İyi Durumda</h3>
         </div>
@@ -144,7 +162,7 @@ function render_badges(array $product)
         $body_quality = <<<HTML
         <div class="item">
             <div class="badge">
-                <i class="fa-solid fa-face-meh"></i>
+                <i class="fa-solid fa-recycle"></i>
             </div>
             <h3>Bazı Özellikler Çalışmıyor/Eksik</h3>
         </div>
@@ -153,7 +171,7 @@ function render_badges(array $product)
         $body_quality = <<<HTML
         <div class="item">
             <div class="badge">
-                <i class="fa-solid fa-face-frown"></i>
+                <i class="fa-solid fa-skull"></i>
             </div>
             <h3>Hurda (Tamamen Bozuk)</h3>
         </div>
@@ -194,6 +212,7 @@ function render_badges(array $product)
             <div class="detail">
                 <div class="product-title">
                     <h1><?= $product['name'] ?></h1>
+                    <?= render_likes($con, $product) ?>
                 </div>
             </div>
             <div class="detail">
