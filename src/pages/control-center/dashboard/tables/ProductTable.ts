@@ -130,7 +130,7 @@ function deleteProduct(product: IProduct) {
 
 function editProduct(product: IProduct) {
   isEditMode.value = true;
-
+  product.description = product.description.replace(/<br>/g, '\n'); // Replace <br> with new line
   setSubCategories(product.subcategory);
 
   if (document.querySelector("[name='product-id']")) {
