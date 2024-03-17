@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: #fff;
   overflow-x: hidden;
 }
@@ -471,7 +471,7 @@ footer {
   position: relative;
 }
 .footer-title:after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   bottom: 0px;
@@ -719,7 +719,7 @@ footer {
 #slider {
   width: 100%;
 }
-#slider input[type="radio"] {
+#slider input[type='radio'] {
   display: none;
 }
 #slider label {
@@ -956,6 +956,7 @@ footer {
   font-weight: 500;
   width: 100%;
   letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
