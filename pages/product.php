@@ -30,12 +30,14 @@ if (!$products_data) {
 
 $title = "{$products_data[0]['name']} - Bizim Shop";
 $tags = "{$products_data[0]['tags']}";
+$description = "{$products_data[0]['description']}";
 $styles = [
     "/dist/shop/product/9k25c1l2zki6a0e1n7q6.css"
 ];
 
 new Top([
     "title" => $title,
+    "description" => "{$description} - Bizim Shop",
     "keywords" => $tags,
     "styles" => $styles,
 ]);
