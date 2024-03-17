@@ -28,6 +28,9 @@ const settingsContainer = document.querySelector(
   '.settings-container'
 ) as HTMLDivElement;
 
+// Set subcategories
+setSubCategories();
+
 // If clicked something other than .settings, display none
 settingsContainer.addEventListener('click', (e) => {
   if (e.target === settingsContainer) {
@@ -53,7 +56,7 @@ const imageCount = {
 };
 
 let sqlOffset = 0;
-let productLimit = 5;
+let productLimit = 30;
 
 const cleanProductForm = document.querySelector(
   '#clean-create-form'
@@ -208,7 +211,7 @@ productMore.addEventListener('click', function (e) {
         productTable.append(createProductTable(product));
         ManageProductsPage.showMessage([
           'success',
-          '5 ürün başarıyla yüklendi.',
+          `${productLimit} ürün başarıyla yüklendi.`,
           'none',
         ]);
         window.scrollTo({
