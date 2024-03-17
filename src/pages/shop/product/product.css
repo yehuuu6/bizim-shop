@@ -182,10 +182,14 @@
   display: grid;
   font-size: 1.2rem;
   place-items: center;
+  transition: all 0.5s ease;
   border-radius: 9999px;
 }
 .product-details .detail .add-wishlist:hover {
   background: #ff3f3f;
+}
+.product-details .detail .add-wishlist:active {
+  transform: scale(1.2);
 }
 .product-details .detail .btns {
   display: flex;
