@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2024 at 01:20 PM
+-- Generation Time: Mar 17, 2024 at 01:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1148,9 +1148,11 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
-(55, 9, 3),
 (59, 9, 6),
-(61, 9, 1);
+(63, 9, 9),
+(89, 9, 3),
+(90, 9, 7),
+(91, 9, 2);
 
 -- --------------------------------------------------------
 
@@ -1208,7 +1210,17 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (6, 9, 'Fender Stratocaster Guitar', 899.99, 39.99, 30.00, 1, 'fender_stratocaster_guitar', 'fender electric guitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 42, 56, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (7, 9, 'Yamaha Stage Piano', 799.99, 59.99, 20.00, 1, 'yamaha_stage_piano', 'yamaha digital piano', 'The Yamaha Stage Piano is a high-quality digital piano that emulates the sound and feel of an acoustic piano. It\\\'s ideal for both stage performances and studio recordings, offering a wide range of sounds and features. Walkman', 1, 1, 0, 42, 57, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (8, 9, 'Bowers & Wilkins Floorstanding Speaker', 1299.99, 69.99, 40.00, 1, 'bowers_&_wilkins_floorstanding_speaker', 'bowers wilkins floorstanding speaker', 'The Bowers & Wilkins Floorstanding Speaker delivers exceptional audio performance with its premium components and craftsmanship. It\\\'s a perfect choice for audiophiles seeking a truly immersive listening experience.', 0, 0, 1, 31, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(9, 9, 'Sony Noise-Canceling Headphones', 349.99, 25.99, 15.00, 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg');
+(9, 9, 'Sony Noise-Canceling Headphones', 349.99, 25.99, 15.00, 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(10, 9, 'Apple AirPods Pro', 249.99, 19.99, 10.00, 1, 'apple_airpods_pro', 'apple airpods noise-cancellation', 'Experience seamless connectivity and immersive sound with Apple AirPods Pro. These wireless earbuds feature active noise cancellation and customizable fit for all-day comfort.', 1, 1, 1, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(11, 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television', 'Bring the theater experience home with Samsung 4K Smart TV. Enjoy stunning visuals and smart features for streaming your favorite content with ease.', 2, 1, 1, 32, 61, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(12, 9, 'Canon EOS Rebel T7i DSLR Camera', 699.99, 39.99, 25.00, 1, 'canon_eos_rebel_t7i_dslr_camera', 'canon dslr camera', 'Capture life\'s moments in stunning detail with Canon EOS Rebel T7i DSLR Camera. It features a 24.2MP sensor and advanced autofocus for professional-quality photos and videos.', 2, 0, 1, 33, 62, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(13, 9, 'GoPro Hero 9 Black', 449.99, 29.99, 15.00, 1, 'gopro_hero_9_black', 'gopro action camera', 'Record your adventures in crisp 4K resolution with GoPro Hero 9 Black. This rugged action camera is waterproof and features advanced stabilization for smooth footage.', 1, 1, 0, 33, 63, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(14, 9, 'DJI Mavic Air 2 Drone', 799.99, 49.99, 30.00, 1, 'dji_mavic_air_2_drone', 'dji drone quadcopter', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. This compact quadcopter boasts intelligent features and a powerful camera for stunning results.', 2, 0, 1, 33, 0, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(15, 9, 'Nintendo Switch Console', 299.99, 19.99, 10.00, 1, 'nintendo_switch_console', 'nintendo gaming console', 'Enter the world of gaming with Nintendo Switch Console. Play at home or on the go with its versatile design and expansive library of games.', 1, 1, 1, 34, 65, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(16, 9, 'Logitech MX Master 3 Mouse', 99.99, 9.99, 5.00, 1, 'logitech_mx_master_3_mouse', 'logitech wireless mouse', 'Enhance your productivity with Logitech MX Master 3 Mouse. This ergonomic wireless mouse offers precision control and customizable buttons for seamless workflow.', 0, 0, 1, 35, 66, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(17, 9, 'Microsoft Surface Laptop 4', 1299.99, 59.99, 40.00, 1, 'microsoft_surface_laptop_4', 'microsoft laptop computer', 'Experience performance and style with Microsoft Surface Laptop 4. This sleek laptop boasts powerful internals and a vibrant touchscreen display for all-day productivity.', 2, 1, 1, 36, 67, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(18, 9, 'Fitbit Versa 3 Smartwatch', 229.99, 14.99, 8.00, 1, 'fitbit_versa_3_smartwatch', 'fitbit fitness tracker', 'Stay active and connected with Fitbit Versa 3 Smartwatch. Track your workouts, monitor your health, and receive notifications on your wrist with this versatile wearable.', 1, 1, 0, 37, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(19, 9, 'Anker PowerCore 20000 Portable Charger', 49.99, 7.99, 4.00, 1, 'anker_powercore_20000_portable_charger', 'anker portable power bank', 'Never run out of battery with Anker PowerCore 20000 Portable Charger. This high-capacity power bank keeps your devices charged on the go, so you can stay connected wherever you are.', 0, 0, 1, 38, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg');
 
 -- --------------------------------------------------------
 
@@ -1254,8 +1266,7 @@ INSERT INTO `subcats` (`id`, `cid`, `name`, `slug`) VALUES
 (56, 42, 'Gitar', 'gitar'),
 (57, 42, 'Piyano', 'piyano'),
 (59, 31, 'Müzik Seti', 'muzik-seti'),
-(60, 31, 'Kulaklık', 'kulaklik'),
-(62, 44, 'Ayva', 'ayva');
+(60, 31, 'Kulaklık', 'kulaklik');
 
 -- --------------------------------------------------------
 
@@ -1311,7 +1322,8 @@ ALTER TABLE `cities`
 -- Indexes for table `districts`
 --
 ALTER TABLE `districts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `city_id` (`city_id`);
 
 --
 -- Indexes for table `likes`
@@ -1341,7 +1353,8 @@ ALTER TABLE `site`
 -- Indexes for table `subcats`
 --
 ALTER TABLE `subcats`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cid` (`cid`);
 
 --
 -- Indexes for table `users`
@@ -1358,7 +1371,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1376,7 +1389,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1388,7 +1401,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `site`
@@ -1400,13 +1413,29 @@ ALTER TABLE `site`
 -- AUTO_INCREMENT for table `subcats`
 --
 ALTER TABLE `subcats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `districts`
+--
+ALTER TABLE `districts`
+  ADD CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `subcats`
+--
+ALTER TABLE `subcats`
+  ADD CONSTRAINT `subcats_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
