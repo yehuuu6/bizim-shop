@@ -47,10 +47,22 @@ $category_data = mysqli_fetch_row($res) ?? null;
 # 2 => slug
 # for the category
 
+$sql = "SELECT id,name,slug FROM subcats WHERE slug = ?";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, 's', $sub_category_slug);
+mysqli_stmt_execute($stmt);
+$res = mysqli_stmt_get_result($stmt);
+$sub_category_data = mysqli_fetch_row($res) ?? null;
+
 if ($category_data === null) {
     $sql = "SELECT COUNT(*) FROM product";
     $stmt = mysqli_prepare($con, $sql);
     $category_id = '0';
+} else if ($sub_category_data !== null) {
+    $sql = "SELECT COUNT(*) FROM product WHERE subcategory = ? AND category = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    $stmt->bind_param('ii', $sub_category_data[0], $category_data[0]);
+    $category_id = $category_data[0];
 } else {
     $sql = "SELECT COUNT(*) FROM product WHERE category = ?";
     $stmt = mysqli_prepare($con, $sql);
@@ -96,7 +108,8 @@ new Navbar();
         </div>
         <div class="page-numbers">
             <!---- Page buttons does not update when filters applied, FIX IT -->
-            <?php foreach (range(1, ceil($total_product_count / 50)) as $page) : ?>
+            <!---- We must render page buttons in javascript -->
+            <?php foreach (range(1, ceil($total_product_count / 16)) as $page) : ?>
                 <?php if ($page != 0) : ?>
                     <a href="/products<?= $slug !== "" ? "/{$slug}" : '' ?><?= $sub_category_slug !== "" ? "/{$encoded_sub_category_slug}" : '' ?>?page=<?= $page ?>" class="page-number <?= $page == $page_num ? 'active' : '' ?>"><?= $page ?></a>
                 <?php endif; ?>
