@@ -14,6 +14,7 @@ class InCart extends Component
   public $body;
   public function __construct(array $product)
   {
+    $old_shipping_cost = number_format($product['shipping_cost'], 2);
     $product['shipment'] === '1' ? $shipping_cost = 0 : $shipping_cost = $product['shipping_cost'];
     $shipping_cost = number_format($shipping_cost, 2);
 
@@ -48,7 +49,7 @@ class InCart extends Component
               </p>
               <div class="price-calculation">
                 <span data-value="{$product['price']}" class="product-price">{$product['price']} <span class="product-currency">TL</span> Ürün</span> +
-                <span data-value="{$shipping_cost}" class="shipping-cost" {$this->render_indicator($product)}>{$shipping_cost} <span class="product-currency" {$this->render_indicator($product)}>TL</span> Kargo</span> + 
+                <span {$this->render_old_price($old_shipping_cost,$shipping_cost)} data-value="{$shipping_cost}" class="shipping-cost" {$this->render_indicator($product)}>{$shipping_cost} <span class="product-currency" {$this->render_indicator($product)}>TL</span> Kargo</span> + 
                 <span data-value="{$fee_cost}" class="fee-cost">{$fee_cost} <span class="product-currency">TL</span> KDV</span> =
                 <span id="total-cart-price" data-value="{$total_price}" class="total-price">{$total_price} <span class="product-currency">TL</span> Toplam</span>
               </div>
@@ -59,6 +60,21 @@ class InCart extends Component
           </div>
         HTML;
   }
+
+  private function render_old_price($old_shipping_cost, $shipping_cost)
+  {
+    if ($old_shipping_cost != $shipping_cost) {
+      $body = <<<HTML
+      data-old-value="{$old_shipping_cost}"
+      HTML;
+    } else {
+      $body = <<<HTML
+      data-old-value="0"
+      HTML;
+    }
+    return $body;
+  }
+
   private function render_indicator($product)
   {
     if ($product['shipment'] === '1') {
