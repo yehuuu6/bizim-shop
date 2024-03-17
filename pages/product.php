@@ -90,6 +90,13 @@ function render_showcase_items(array $product)
     return $html;
 }
 
+function render_questions($connection, $product)
+{
+    // TODO: Implement question system for product
+
+    return "<div class='question-indicator'><i class='fa-regular fa-circle-question'></i> <strong>0</strong> Soru & Cevap</div>";
+}
+
 function render_likes($connection, $product)
 {
     // Get the count of likes
@@ -105,7 +112,7 @@ function render_likes($connection, $product)
         $count = 0;
     }
 
-    return "<div class='like-indicator'><i class='fa-solid fa-heart'></i> <span>{$count}</span> Favori</div>";
+    return "<div class='like-indicator'><i class='fa-regular fa-heart'></i> <strong>{$count}</strong> Favori</div>";
 }
 
 function render_badges(array $product)
@@ -212,7 +219,11 @@ function render_badges(array $product)
             <div class="detail">
                 <div class="product-title">
                     <h1><?= $product['name'] ?></h1>
-                    <?= render_likes($con, $product) ?>
+                    <div class="product-summary">
+                        <?= render_questions($con, $product) ?>
+                        <i style="font-size: 4px; color: #131313;" class="fa-solid fa-square"></i>
+                        <?= render_likes($con, $product) ?>
+                    </div>
                 </div>
             </div>
             <div class="detail">
@@ -229,9 +240,9 @@ function render_badges(array $product)
                 </div>
             </div>
             <div class="detail">
-                <div class="product-description">
+                <article class="product-description">
                     <?= $product['description'] ?>
-                </div>
+                </article>
             </div>
             <div class="detail badges">
                 <?= render_badges($product) ?>
