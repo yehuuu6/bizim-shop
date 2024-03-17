@@ -1,33 +1,33 @@
-import axios from "axios";
-import { setWishlistBtns } from "@/common/managers/shop/wishlistBtnsManager";
-import { setAddToCartBtns } from "@/common/managers/shop/cartBtnsManager";
+import axios from 'axios';
+import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
+import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
 
 // Get page number from url
 const url = new URL(window.location.href);
-const page = parseInt(url.searchParams.get("page") as string) || 0;
+const page = parseInt(url.searchParams.get('page') as string) || 0;
 
 export const sqlOffset = {
   value: 0,
 };
 
 if (page > 1) {
-  sqlOffset.value = (page - 1) * 50;
+  sqlOffset.value = (page - 1) * 16;
 }
 
 const productLimit = {
-  value: 50,
+  value: 16,
 };
 
-const productsContainer = document.querySelector(".products") as HTMLDivElement;
+const productsContainer = document.querySelector('.products') as HTMLDivElement;
 
 export async function getProducts(formData: FormData) {
   const response = await axios({
-    url: "/api/main/load-products.php",
-    method: "post",
+    url: '/api/main/load-products.php',
+    method: 'post',
     data: formData,
     headers: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "multipart/form-data",
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'multipart/form-data',
     },
   });
   return response.data;
@@ -38,21 +38,21 @@ export async function getProducts(formData: FormData) {
  */
 export function setProducts(form: HTMLFormElement) {
   const formData = new FormData(form);
-  productsContainer.classList.add("dynamic-content");
-  formData.append("offset", sqlOffset.value.toString());
-  formData.append("limit", productLimit.value.toString());
+  productsContainer.classList.add('dynamic-content');
+  formData.append('offset', sqlOffset.value.toString());
+  formData.append('limit', productLimit.value.toString());
   getProducts(formData)
     .then((products) => {
       if (products.length == 0) {
-        productsContainer.style.display = "flex";
-        productsContainer.style.justifyContent = "center";
-        productsContainer.style.alignItems = "center";
+        productsContainer.style.display = 'flex';
+        productsContainer.style.justifyContent = 'center';
+        productsContainer.style.alignItems = 'center';
         productsContainer.innerHTML = `<div class="no-products"><h2><i class="fa-solid fa-magnifying-glass"></i> Aradığınız ürün bulunamadı.</h2></div>`;
       } else {
         // Resset products container style
-        productsContainer.style.display = "";
-        productsContainer.style.justifyContent = "";
-        productsContainer.style.alignItems = "";
+        productsContainer.style.display = '';
+        productsContainer.style.justifyContent = '';
+        productsContainer.style.alignItems = '';
         sqlOffset.value += productLimit.value;
         products.forEach((product: string) => {
           productsContainer.innerHTML += product;
@@ -61,13 +61,13 @@ export function setProducts(form: HTMLFormElement) {
     })
     .finally(() => {
       const productElements = productsContainer.querySelectorAll(
-        ".product"
+        '.product'
       ) as NodeListOf<HTMLDivElement>;
 
       setWishlistBtns(productElements);
       setAddToCartBtns(productElements);
       setTimeout(() => {
-        productsContainer.classList.remove("dynamic-content");
+        productsContainer.classList.remove('dynamic-content');
       }, 850);
     });
 }
@@ -79,12 +79,12 @@ export function setProducts(form: HTMLFormElement) {
  */
 export async function getProductsById(formData: FormData) {
   const response = await axios({
-    url: "/api/main/load-products-by-id.php",
-    method: "post",
+    url: '/api/main/load-products-by-id.php',
+    method: 'post',
     data: formData,
     headers: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "multipart/form-data",
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'multipart/form-data',
     },
   });
   return response.data;
