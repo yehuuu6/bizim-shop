@@ -1,43 +1,43 @@
-import PanelClass from "@/classes/PanelController";
-import ConfirmationModal from "@/common/modals/confirmation";
+import PanelClass from '@/classes/PanelController';
+import ConfirmationModal from '@/common/modals/confirmation';
 import {
   createProductTable,
   clearImageInputs,
   rowNumberProducts,
-} from "./tables/ProductTable";
+} from './tables/ProductTable';
 import {
   addImageInput,
   runSearchProducts,
   quitEditMode,
   cleanForm,
   setSubCategories,
-} from "@/common/funcs/functions.dev";
-import IProduct from "@/common/interfaces/utility/IProduct";
-import router from "./Router";
-import initStats from "./init/InitStats";
-import initCategories from "./init/InitCategory";
+} from '@/common/funcs/functions.dev';
+import IProduct from '@/common/interfaces/utility/IProduct';
+import router from './Router';
+import initStats from './init/InitStats';
+import initCategories from './init/InitCategory';
 
 // CSS
-import "../dashboard.css";
-import "@/core/utils.css";
+import '../dashboard.css';
+import '@/core/utils.css';
 
 // Settings panel
-const settingsBtn = document.querySelector("#settings") as HTMLButtonElement;
+const settingsBtn = document.querySelector('#settings') as HTMLButtonElement;
 // Settings container
 const settingsContainer = document.querySelector(
-  ".settings-container"
+  '.settings-container'
 ) as HTMLDivElement;
 
 // If clicked something other than .settings, display none
-settingsContainer.addEventListener("click", (e) => {
+settingsContainer.addEventListener('click', (e) => {
   if (e.target === settingsContainer) {
-    settingsContainer.style.display = "none";
+    settingsContainer.style.display = 'none';
   }
 });
 
 // If clicked settings button, display block
-settingsBtn.addEventListener("click", () => {
-  settingsContainer.style.display = "flex";
+settingsBtn.addEventListener('click', () => {
+  settingsContainer.style.display = 'flex';
 });
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
@@ -56,26 +56,26 @@ let sqlOffset = 0;
 let productLimit = 5;
 
 const cleanProductForm = document.querySelector(
-  "#clean-create-form"
+  '#clean-create-form'
 ) as HTMLFormElement;
 const addNewProduct = document.querySelector(
-  "#add-new-product"
+  '#add-new-product'
 ) as HTMLButtonElement;
 const productRefreshBtn = document.querySelector(
-  "#refresh-products"
+  '#refresh-products'
 ) as HTMLButtonElement;
 const productLoad = document.querySelector(
-  "#loader-products"
+  '#loader-products'
 ) as HTMLDivElement;
 const productMore = document.querySelector(
-  "#load-more-products"
+  '#load-more-products'
 ) as HTMLButtonElement;
 const productTable = document.querySelector(
-  "#products-table tbody"
+  '#products-table tbody'
 ) as HTMLTableSectionElement;
-const searchInput = document.querySelector("#search-pr") as HTMLInputElement;
+const searchInput = document.querySelector('#search-pr') as HTMLInputElement;
 
-const createLoad = document.querySelector("#loader-create") as HTMLDivElement;
+const createLoad = document.querySelector('#loader-create') as HTMLDivElement;
 
 const addImageBtn = document.querySelector(
   'button[name="add-image"]'
@@ -88,10 +88,10 @@ const CreateProductPage = new PanelClass(createLoad);
 // Delete notification
 
 const deleteNotificationBtn = document.querySelector(
-  "#close-logger"
+  '#close-logger'
 ) as HTMLButtonElement;
 
-deleteNotificationBtn.addEventListener("click", () => {
+deleteNotificationBtn.addEventListener('click', () => {
   ManageProductsPage.clearLogger();
 });
 
@@ -102,12 +102,13 @@ deleteNotificationBtn.addEventListener("click", () => {
 function getSearchProduct() {
   rowNumberProducts.value = 0;
   const search = searchInput.value.trim().toLowerCase();
-  productTable.innerHTML = "";
+  productTable.innerHTML = '';
   if (search.length > 0) {
     const matchingProducts = currentProducts.value.filter(
       (product: IProduct) =>
-        product["name"].toLowerCase().includes(search) ||
-        product["tags"].toLowerCase().includes(search)
+        product['name'].toLowerCase().includes(search) ||
+        product['tags'].toLowerCase().includes(search) ||
+        product['description'].toLowerCase().includes(search)
     );
     if (matchingProducts.length === 0) {
       productTable.innerHTML = `
@@ -129,15 +130,15 @@ function getSearchProduct() {
 
 async function loadFirstProducts() {
   currentProducts.value = [];
-  productMore.classList.remove("disabled");
+  productMore.classList.remove('disabled');
   productMore.disabled = false;
-  productTable.innerHTML = "";
+  productTable.innerHTML = '';
 
   const formData = new FormData();
-  formData.append("offset", "0");
-  formData.append("limit", productLimit.toString());
+  formData.append('offset', '0');
+  formData.append('limit', productLimit.toString());
   const response = await ManageProductsPage.sendApiRequest(
-    "/api/dashboard/product/load-products.php",
+    '/api/dashboard/product/load-products.php',
     formData
   );
 
@@ -155,23 +156,23 @@ runSearchProducts(searchInput);
 
 function refreshProducts() {
   loadFirstProducts();
-  searchInput.value = "";
+  searchInput.value = '';
   sqlOffset = 0;
   rowNumberProducts.value = 0;
 }
 
-productRefreshBtn.addEventListener("click", () => {
+productRefreshBtn.addEventListener('click', () => {
   refreshProducts();
 });
 
 (
   document.querySelector('div[data-name="products"]') as HTMLDivElement
-).addEventListener("click", () => {
+).addEventListener('click', () => {
   refreshProducts();
 });
 (
   document.querySelector('div[data-name="add-product"]') as HTMLDivElement
-).addEventListener("click", () => {
+).addEventListener('click', () => {
   quitEditMode();
   setSubCategories();
   clearImageInputs();
@@ -180,25 +181,25 @@ productRefreshBtn.addEventListener("click", () => {
 loadFirstProducts();
 
 // Load 5 more products on click
-productMore.addEventListener("click", function (e) {
+productMore.addEventListener('click', function (e) {
   e.preventDefault();
   sqlOffset += productLimit;
   const formData = new FormData();
-  formData.append("offset", sqlOffset.toString());
-  formData.append("limit", productLimit.toString());
+  formData.append('offset', sqlOffset.toString());
+  formData.append('limit', productLimit.toString());
   ManageProductsPage.sendApiRequest(
-    "/api/dashboard/product/load-products.php",
+    '/api/dashboard/product/load-products.php',
     formData
   ).then((response) => {
     let products = response;
     if (products === undefined || products.length === 0) {
-      productMore.classList.add("disabled");
+      productMore.classList.add('disabled');
       productMore.disabled = true;
       sqlOffset -= productLimit;
       ManageProductsPage.showMessage([
-        "error",
-        "Daha fazla ürün bulunamadı.",
-        "none",
+        'error',
+        'Daha fazla ürün bulunamadı.',
+        'none',
       ]);
     } else {
       for (let i = 0; i < products.length; i++) {
@@ -206,13 +207,13 @@ productMore.addEventListener("click", function (e) {
         currentProducts.value.push(product);
         productTable.append(createProductTable(product));
         ManageProductsPage.showMessage([
-          "success",
-          "5 ürün başarıyla yüklendi.",
-          "none",
+          'success',
+          '5 ürün başarıyla yüklendi.',
+          'none',
         ]);
         window.scrollTo({
           top: document.body.scrollHeight,
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       }
     }
@@ -220,23 +221,23 @@ productMore.addEventListener("click", function (e) {
 });
 
 // Save product to database
-(document.getElementById("create-form") as HTMLFormElement).addEventListener(
-  "submit",
+(document.getElementById('create-form') as HTMLFormElement).addEventListener(
+  'submit',
   function (e) {
     e.preventDefault();
     let formData = new FormData(this);
-    formData.append("image-count", imageCount.value.toString());
-    formData.append("edit-mode", isEditMode.value ? "true" : "false");
+    formData.append('image-count', imageCount.value.toString());
+    formData.append('edit-mode', isEditMode.value ? 'true' : 'false');
     CreateProductPage.sendApiRequest(
-      "/api/dashboard/product/upload-product.php",
+      '/api/dashboard/product/upload-product.php',
       formData
     ).then((data) => {
       CreateProductPage.showMessage(data);
-      if (data[0] === "success") {
+      if (data[0] === 'success') {
         quitEditMode();
         router.setPageContent(
-          "hash",
-          document.querySelector("#manage-products") as HTMLElement
+          'hash',
+          document.querySelector('#manage-products') as HTMLElement
         );
         refreshProducts();
       }
@@ -251,15 +252,15 @@ function removeAndReorderImages(imageInput: HTMLInputElement) {
   imageInputs.forEach((input, index) => {
     const newIndex = index + 1;
 
-    const button = input.querySelector("button") as HTMLButtonElement;
-    const label = input.querySelector("label") as HTMLLabelElement;
-    const image = input.querySelector("input") as HTMLInputElement;
-    const imageText = input.querySelector("p") as HTMLParagraphElement;
-    const imagePreview = input.querySelector("img") as HTMLImageElement;
+    const button = input.querySelector('button') as HTMLButtonElement;
+    const label = input.querySelector('label') as HTMLLabelElement;
+    const image = input.querySelector('input') as HTMLInputElement;
+    const imageText = input.querySelector('p') as HTMLParagraphElement;
+    const imagePreview = input.querySelector('img') as HTMLImageElement;
 
     button.id = `remove-pic-${newIndex}`;
     button.title = `${newIndex}. Resmi Sil`;
-    button.hasAttribute("data-image")
+    button.hasAttribute('data-image')
       ? (button.innerText = `${newIndex}. Resmi Sil`)
       : (button.innerHTML = `<i class="fa-solid fa-minus"></i>`);
     label.id = `image-label-${newIndex}`;
@@ -273,39 +274,39 @@ function removeAndReorderImages(imageInput: HTMLInputElement) {
   });
 
   addImageBtn.disabled = false;
-  addImageBtn.className = "dashboard-btn small-btn add-image-btn";
+  addImageBtn.className = 'dashboard-btn small-btn add-image-btn';
   imageCount.value--;
 }
 
 // Deleting and reordering image inputs
-document.addEventListener("click", function (e) {
-  const clickedButton = (e.target as HTMLElement).closest("button");
+document.addEventListener('click', function (e) {
+  const clickedButton = (e.target as HTMLElement).closest('button');
 
-  if (clickedButton && clickedButton.id.startsWith("remove-pic-")) {
+  if (clickedButton && clickedButton.id.startsWith('remove-pic-')) {
     e.preventDefault();
     const imageInput = clickedButton.closest(
       '[data-type="image-input"]'
     ) as HTMLInputElement;
-    const imageName: string = clickedButton.getAttribute("data-image")!;
-    const imageNumber: string = clickedButton.id.split("-")[2];
+    const imageName: string = clickedButton.getAttribute('data-image')!;
+    const imageNumber: string = clickedButton.id.split('-')[2];
     if (isEditMode.value == true && imageName !== null) {
       document.body.append(modal);
       modalText.innerText = `${imageName} isimli resmi silmek istediğinize emin misiniz?`;
       modalBtn.onclick = function () {
         const formData = new FormData();
-        formData.append("image", imageName);
+        formData.append('image', imageName);
         formData.append(
-          "product-id",
+          'product-id',
           (document.querySelector("[name='product-id']") as HTMLInputElement)
             .value
         );
-        formData.append("image-number", imageNumber);
+        formData.append('image-number', imageNumber);
         CreateProductPage.sendApiRequest(
-          "/api/dashboard/product/delete-image.php",
+          '/api/dashboard/product/delete-image.php',
           formData
         ).then((data) => {
           CreateProductPage.showMessage(data);
-          if (data[0] === "success") {
+          if (data[0] === 'success') {
             removeAndReorderImages(imageInput);
           }
         });
@@ -319,40 +320,40 @@ document.addEventListener("click", function (e) {
 
 // CREATE PRODUCT PAGE START
 
-addImageBtn.addEventListener("click", function (e) {
+addImageBtn.addEventListener('click', function (e) {
   e.preventDefault();
 
   if (imageCount.value > maxImages) {
     CreateProductPage.showMessage([
-      "error",
-      "En fazla 6 resim yükleyebilirsiniz",
-      "none",
+      'error',
+      'En fazla 6 resim yükleyebilirsiniz',
+      'none',
     ]);
     addImageBtn.disabled = true;
-    addImageBtn.className = "dashboard-btn small-btn disabled";
+    addImageBtn.className = 'dashboard-btn small-btn disabled';
     return;
   }
 
   addImageInput(addImageBtn);
 });
 
-addNewProduct.addEventListener("click", () => {
-  const destination = document.querySelector("#add-product") as HTMLElement;
-  router.loadPage("hash", destination.dataset.url!);
+addNewProduct.addEventListener('click', () => {
+  const destination = document.querySelector('#add-product') as HTMLElement;
+  router.loadPage('hash', destination.dataset.url!);
   setSubCategories();
   quitEditMode();
 });
 
-cleanProductForm.addEventListener("click", () => {
-  cleanForm(document.querySelector("#create-form") as HTMLFormElement);
+cleanProductForm.addEventListener('click', () => {
+  cleanForm(document.querySelector('#create-form') as HTMLFormElement);
   CreateProductPage.showMessage([
-    "success",
-    "Form başarıyla temizlendi.",
-    "none",
+    'success',
+    'Form başarıyla temizlendi.',
+    'none',
   ]);
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   initStats();
   initCategories();
 });
@@ -362,24 +363,24 @@ document.addEventListener("DOMContentLoaded", () => {
 // Maintenance mode controller
 
 const maintenanceBtn = document.querySelector(
-  "#maintenance-btn"
+  '#maintenance-btn'
 ) as HTMLButtonElement;
 
-maintenanceBtn.addEventListener("click", () => {
+maintenanceBtn.addEventListener('click', () => {
   const formData = new FormData();
   ManageProductsPage.sendApiRequest(
-    "/api/dashboard/maintenance.php",
+    '/api/dashboard/maintenance.php',
     formData
   ).then((data) => {
     const maintenanceStatus = data[1];
     const msg =
-      maintenanceStatus === "true"
-        ? "Bakım moduna alındı."
-        : "Bakım modundan çıkıldı.";
-    ManageProductsPage.showMessage(["success", msg, "none"]);
+      maintenanceStatus === 'true'
+        ? 'Bakım moduna alındı.'
+        : 'Bakım modundan çıkıldı.';
+    ManageProductsPage.showMessage(['success', msg, 'none']);
     // Update the maintenance button
     maintenanceBtn.innerText =
-      maintenanceStatus === "true" ? "Bakım Modundan Çık" : "Bakım Moduna Al";
+      maintenanceStatus === 'true' ? 'Bakım Modundan Çık' : 'Bakım Moduna Al';
   });
 });
 
