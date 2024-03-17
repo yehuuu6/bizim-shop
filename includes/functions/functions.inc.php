@@ -300,6 +300,9 @@ function fix_strings(array $row)
     $row['name'] = str_replace("\\'", "'", $row['name']);
     $row['tags'] = str_replace("\\'", "'", $row['tags']);
     $row['description'] = str_replace("\\'", "'", $row['description']);
+    $row['description'] = str_replace("\\r\\n", "<br>", $row['description']);
+    // Do the same for \\"
+    $row['description'] = str_replace('\\"', '"', $row['description']);
     return $row;
 }
 
