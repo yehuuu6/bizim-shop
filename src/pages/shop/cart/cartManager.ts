@@ -1,29 +1,29 @@
-import { resetShowcases } from ".";
-import { setNavbarCartItemCount } from "@/common/managers/shop/cartBtnsManager";
-import { getProductsById } from "@/pages/shop/utility/getProducts";
+import { resetShowcases } from '.';
+import { setNavbarCartItemCount } from '@/common/managers/shop/cartBtnsManager';
+import { getProductsById } from '@/pages/shop/utility/getProducts';
 
-const container = document.querySelector(".shopping-cart") as HTMLDivElement;
+const container = document.querySelector('.shopping-cart') as HTMLDivElement;
 
 const confirmShoppingCartBtn = document.querySelector(
-  ".cart-detail-confirm"
+  '.cart-detail-confirm'
 ) as HTMLButtonElement;
 
-const cartContainer = container.querySelector(".products") as HTMLDivElement;
+const cartContainer = container.querySelector('.products') as HTMLDivElement;
 
 const emptyCartBtn = document.querySelector(
-  "#empty-shopping-cart"
+  '#empty-shopping-cart'
 ) as HTMLButtonElement;
 
 /**
  * Initializes shopping cart by getting products from localStorage.
  */
 export default function initShoppingCart() {
-  cartContainer.classList.add("dynamic-content");
-  cartContainer.innerHTML = "<h4>Seçilen Ürünler</h4>";
-  const inCartIds = JSON.parse(localStorage.getItem("cart") || "[]");
+  cartContainer.classList.add('dynamic-content');
+  cartContainer.innerHTML = '<h4>Seçilen Ürünler</h4>';
+  const inCartIds = JSON.parse(localStorage.getItem('cart') || '[]');
   const formData = new FormData();
-  formData.append("product-ids", inCartIds);
-  formData.append("product-type", "in-cart");
+  formData.append('product-ids', inCartIds);
+  formData.append('product-type', 'in-cart');
   getProductsById(formData)
     .then((products) => {
       if (products.length < 1) {
@@ -40,42 +40,47 @@ export default function initShoppingCart() {
       calculateTotalPrice();
       setRemoveFromCartBtns();
       setTimeout(() => {
-        cartContainer.classList.remove("dynamic-content");
+        cartContainer.classList.remove('dynamic-content');
       }, 850);
     });
 }
 
 export function calculateTotalPrice() {
   const products = cartContainer.querySelectorAll(
-    ".product-in-cart"
+    '.product-in-cart'
   ) as NodeListOf<HTMLDivElement>;
 
   const cartItemCounter = document.querySelector(
-    "#cart-item-counter"
+    '#cart-item-counter'
   ) as HTMLSpanElement;
 
   cartItemCounter.innerText = `(${products.length} ürün)`;
 
   let totalProductPrice = 0;
   let totalShippingPrice = 0;
+  let totalOldShippingPrice = 0;
   let totalFeePrice = 0;
   let totalPrice = 0;
 
   products.forEach((product) => {
     const productPrice = product.querySelector(
-      ".product-price"
+      '.product-price'
     ) as HTMLSpanElement;
     const productShippingPrice = product.querySelector(
-      ".shipping-cost"
+      '.shipping-cost'
     ) as HTMLSpanElement;
     const productFeePrice = product.querySelector(
-      ".fee-cost"
+      '.fee-cost'
     ) as HTMLSpanElement;
 
     // Get values from data-value attribute
     const productPriceValue = parseFloat(productPrice.dataset.value as string);
     const productShippingPriceValue = parseFloat(
       productShippingPrice.dataset.value as string
+    );
+    const productOldShippingPriceValue = parseFloat(
+      // Get the data set old-value
+      productShippingPrice.dataset.oldValue as string
     );
     const productFeePriceValue = parseFloat(
       productFeePrice.dataset.value as string
@@ -84,6 +89,7 @@ export function calculateTotalPrice() {
     // Calculate total price
     totalProductPrice += productPriceValue;
     totalShippingPrice += productShippingPriceValue;
+    totalOldShippingPrice += productOldShippingPriceValue;
     totalFeePrice += productFeePriceValue;
     totalPrice +=
       productPriceValue + productShippingPriceValue + productFeePriceValue;
@@ -96,30 +102,41 @@ export function calculateTotalPrice() {
 
   // Set values to DOM
   const cartDetailsContainer = document.querySelector(
-    ".cart-details"
+    '.cart-details'
   ) as HTMLDivElement;
   const valueHolders = cartDetailsContainer.querySelectorAll(
-    "[data-type]"
+    '[data-type]'
   ) as NodeListOf<HTMLSpanElement>;
   valueHolders.forEach((element) => {
     const type = element.dataset.type as string;
     switch (type) {
-      case "products":
+      case 'products':
         element.innerHTML =
           totalProductPrice.toFixed(2) +
           ' <span class="product-currency">TL</span>';
         break;
-      case "shipment":
-        element.innerHTML =
-          totalShippingPrice.toFixed(2) +
-          ' <span class="product-currency">TL</span>';
+      case 'shipment':
+        // Must return the old value if there is a discount, old value must be striked and red colored
+        if (totalOldShippingPrice > 0) {
+          const totalDiscount = totalOldShippingPrice + totalShippingPrice;
+          element.innerHTML =
+            '<span title="Eski kargo fiyatı" class="old-price">' +
+            totalDiscount.toFixed(2) +
+            '</span> ' +
+            totalShippingPrice.toFixed(2) +
+            ' <span class="product-currency">TL</span>';
+        } else {
+          element.innerHTML =
+            totalShippingPrice.toFixed(2) +
+            ' <span class="product-currency">TL</span>';
+        }
         break;
-      case "fee":
+      case 'fee':
         element.innerHTML =
           totalFeePrice.toFixed(2) +
           ' <span class="product-currency">TL</span>';
         break;
-      case "total":
+      case 'total':
         element.innerHTML =
           totalPrice.toFixed(2) + ' <span class="product-currency">TL</span>';
         break;
@@ -129,12 +146,12 @@ export function calculateTotalPrice() {
 
 function setRemoveFromCartBtns() {
   const removeFromCartBtns = cartContainer.querySelectorAll(
-    ".remove-from-cart"
+    '.remove-from-cart'
   ) as NodeListOf<HTMLButtonElement>;
 
   removeFromCartBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const productId = (btn.closest(".product-in-cart") as HTMLDivElement)
+    btn.addEventListener('click', () => {
+      const productId = (btn.closest('.product-in-cart') as HTMLDivElement)
         .dataset.id as string;
       removeFromLocalStorage(productId);
       initShoppingCart();
@@ -143,12 +160,12 @@ function setRemoveFromCartBtns() {
 }
 
 function removeFromLocalStorage(productId: string) {
-  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+  const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
   const index = cartItems.indexOf(productId);
   if (index > -1) {
     cartItems.splice(index, 1);
   }
-  localStorage.setItem("cart", JSON.stringify(cartItems));
+  localStorage.setItem('cart', JSON.stringify(cartItems));
 
   // Update shopping cart
   if (cartItems.length < 1) {
@@ -160,15 +177,15 @@ function removeFromLocalStorage(productId: string) {
 
   // Update the cart button
 
-  resetShowcases(productId, "cart");
+  resetShowcases(productId, 'cart');
 }
 
 function emptyShoppingCart() {
-  const productIds = JSON.parse(localStorage.getItem("cart") || "[]");
+  const productIds = JSON.parse(localStorage.getItem('cart') || '[]');
   productIds.forEach((id: string) => {
     removeFromLocalStorage(id);
   });
   initShoppingCart();
 }
 
-emptyCartBtn.addEventListener("click", emptyShoppingCart);
+emptyCartBtn.addEventListener('click', emptyShoppingCart);
