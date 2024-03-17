@@ -2,16 +2,16 @@ import {
   getSearchProduct,
   imageCount,
   isEditMode,
-} from "@/pages/control-center/dashboard";
-import { getSearchUser } from "@/pages/control-center/dashboard/users";
-import { getSearchOrder } from "@/pages/control-center/dashboard/orders";
-import { trimSentence } from "./functions.usr";
-import axios from "axios";
+} from '@/pages/control-center/dashboard';
+import { getSearchUser } from '@/pages/control-center/dashboard/users';
+import { getSearchOrder } from '@/pages/control-center/dashboard/orders';
+import { trimSentence } from './functions.usr';
+import axios from 'axios';
 
 export function runSearchProducts(searchProductInput: HTMLInputElement) {
   let productSearchInterval: any = null;
   // Set interval on focus to search input and clear it when it's not focused
-  searchProductInput.addEventListener("focus", () => {
+  searchProductInput.addEventListener('focus', () => {
     if (!productSearchInterval) {
       productSearchInterval = setInterval(() => {
         getSearchProduct();
@@ -19,13 +19,13 @@ export function runSearchProducts(searchProductInput: HTMLInputElement) {
     }
   });
 
-  searchProductInput.addEventListener("blur", () => {
+  searchProductInput.addEventListener('blur', () => {
     clearInterval(productSearchInterval);
     productSearchInterval = null; // Reset the interval variable
   });
 
   searchProductInput.addEventListener(
-    "input",
+    'input',
     debounce(() => {
       getSearchProduct();
     }, 300)
@@ -35,7 +35,7 @@ export function runSearchProducts(searchProductInput: HTMLInputElement) {
 export function runSearchOrders(searchOrderInput: HTMLInputElement) {
   let orderSearchInterval: any = null;
   // Set interval on focus to search input and clear it when it's not focused
-  searchOrderInput.addEventListener("focus", () => {
+  searchOrderInput.addEventListener('focus', () => {
     if (!orderSearchInterval) {
       orderSearchInterval = setInterval(() => {
         getSearchOrder();
@@ -43,13 +43,13 @@ export function runSearchOrders(searchOrderInput: HTMLInputElement) {
     }
   });
 
-  searchOrderInput.addEventListener("blur", () => {
+  searchOrderInput.addEventListener('blur', () => {
     clearInterval(orderSearchInterval);
     orderSearchInterval = null; // Reset the interval variable
   });
 
   searchOrderInput.addEventListener(
-    "input",
+    'input',
     debounce(() => {
       getSearchOrder();
     }, 300)
@@ -59,7 +59,7 @@ export function runSearchOrders(searchOrderInput: HTMLInputElement) {
 export function runSearchUsers(searchUserInput: HTMLInputElement) {
   let userSearchInterval: any = null;
   // Set interval on focus to search input and clear it when it's not focused
-  searchUserInput.addEventListener("focus", () => {
+  searchUserInput.addEventListener('focus', () => {
     if (!userSearchInterval) {
       userSearchInterval = setInterval(() => {
         getSearchUser();
@@ -67,13 +67,13 @@ export function runSearchUsers(searchUserInput: HTMLInputElement) {
     }
   });
 
-  searchUserInput.addEventListener("blur", () => {
+  searchUserInput.addEventListener('blur', () => {
     clearInterval(userSearchInterval);
     userSearchInterval = null; // Reset the interval variable
   });
 
   searchUserInput.addEventListener(
-    "input",
+    'input',
     debounce(() => {
       getSearchUser();
     }, 300)
@@ -90,70 +90,78 @@ function debounce(callback: any, delay: number) {
 
 // 0 = Beklemede, 1 = Hazırlanıyor, 2 = Kargoya Verildi, 3 = Teslim Edildi, 4 = İptal Edildi, 5 = İade Edildi, 6 = Tamamlandı, 7 = Tamamlanmadı
 export function setOrderStatus(status: string) {
-  let statusText: string | undefined = "Hata";
+  let statusText: string | undefined = 'Hata';
 
   switch (status) {
-    case "0":
-      statusText = "Beklemede";
+    case '0':
+      statusText = 'Beklemede';
       break;
-    case "1":
-      statusText = "Hazırlanıyor";
+    case '1':
+      statusText = 'Hazırlanıyor';
       break;
-    case "2":
-      statusText = "Kargoya Verildi";
+    case '2':
+      statusText = 'Kargoya Verildi';
       break;
-    case "3":
-      statusText = "Teslim Edildi";
+    case '3':
+      statusText = 'Teslim Edildi';
       break;
-    case "4":
-      statusText = "İptal Edildi";
+    case '4':
+      statusText = 'İptal Edildi';
       break;
-    case "5":
-      statusText = "İade Edildi";
+    case '5':
+      statusText = 'İade Edildi';
       break;
-    case "6":
-      statusText = "Tamamlandı";
+    case '6':
+      statusText = 'Tamamlandı';
       break;
-    case "7":
-      statusText = "Tamamlanmadı";
+    case '7':
+      statusText = 'Tamamlanmadı';
       break;
     default:
-      statusText = "Hata";
+      statusText = 'Hata';
       break;
   }
   return statusText;
 }
 
 export function setStatus(status: string) {
-  let statusText = "";
+  let statusText = '';
   switch (status) {
-    case "1":
-      statusText = "Satılık";
+    case '1':
+      statusText = 'Satılık';
       break;
-    case "0":
-      statusText = "Satıldı";
+    case '0':
+      statusText = 'Satıldı';
       break;
   }
   return statusText;
 }
 
 const subCatSelector = document.querySelector(
-  "#product-sub-category"
+  '#product-sub-category'
 ) as HTMLSelectElement;
 
-export async function setSubCategories() {
+export async function setSubCategories(
+  selectedCategoryId: string | null = null
+) {
+  // If subCatSelector is already filled, don't make a request
+  if (subCatSelector.options.length > 1) return;
   const response = await axios({
-    url: "/api/dashboard/category/subcategories.php",
-    method: "post",
+    url: '/api/dashboard/category/subcategories.php',
+    method: 'post',
     headers: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "multipart/form-data",
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'multipart/form-data',
     },
   });
   const subCategories = response.data;
   subCatSelector.innerHTML = "<option value='0'>Kategori Seçiniz</option>";
-  subCategories.forEach((subCategory: any) => {
-    subCatSelector.innerHTML += `<option value="${subCategory.id}">${subCategory.name}</option>`;
+  subCategories.forEach((subCat: any) => {
+    if (selectedCategoryId && selectedCategoryId === subCat.id) {
+      subCatSelector.innerHTML += `<option value="${subCat.id}" selected>${subCat.name}</option>`;
+    } else {
+      subCatSelector.innerHTML += `<option value="${subCat.id}">${subCat.name}</option>`;
+    }
   });
 }
 
@@ -161,32 +169,32 @@ export async function setSubCategories() {
  * This function is used to exit edit mode and clean the form
  */
 export function quitEditMode() {
-  cleanForm(document.querySelector("#create-form") as HTMLFormElement);
-  const button = document.querySelector("#create-product") as HTMLButtonElement;
-  const title = document.querySelector("#create-product-title") as HTMLElement;
+  cleanForm(document.querySelector('#create-form') as HTMLFormElement);
+  const button = document.querySelector('#create-product') as HTMLButtonElement;
+  const title = document.querySelector('#create-product-title') as HTMLElement;
   const paragraph = document.querySelector(
-    "#create-product-text"
+    '#create-product-text'
   ) as HTMLParagraphElement;
   isEditMode.value = false;
-  title.innerText = "Markete Ürün Ekle";
-  paragraph.innerText = "Yanında (*) olan alanlar zorunludur.";
-  button.innerText = "Ürünü Ekle";
+  title.innerText = 'Markete Ürün Ekle';
+  paragraph.innerText = 'Yanında (*) olan alanlar zorunludur.';
+  button.innerText = 'Ürünü Ekle';
   if (document.querySelector("[name='product-id']")) {
     (
       document.querySelector("[name='product-id']") as HTMLInputElement
     ).remove();
   }
   (
-    document.querySelector("#exit-edit-mode") as HTMLButtonElement
-  ).classList.add("none-display");
-  (document.querySelector("#exit-edit-mode") as HTMLButtonElement).disabled =
+    document.querySelector('#exit-edit-mode') as HTMLButtonElement
+  ).classList.add('none-display');
+  (document.querySelector('#exit-edit-mode') as HTMLButtonElement).disabled =
     true;
   (
     document.querySelector('button[name="add-image"]') as HTMLButtonElement
   ).disabled = false;
   (
     document.querySelector('button[name="add-image"]') as HTMLButtonElement
-  ).className = "dashboard-btn small-btn add-image-btn";
+  ).className = 'dashboard-btn small-btn add-image-btn';
 }
 
 export function addImageInput(addImageBtn: HTMLButtonElement) {
@@ -202,7 +210,7 @@ export function addImageInput(addImageBtn: HTMLButtonElement) {
           </div>
         `;
 
-  addImageBtn?.parentElement?.insertAdjacentHTML("beforebegin", template);
+  addImageBtn?.parentElement?.insertAdjacentHTML('beforebegin', template);
 
   const fileInput: HTMLInputElement = document.querySelector(
     `#product-image-${imageCount.value}`
@@ -214,11 +222,11 @@ export function addImageInput(addImageBtn: HTMLButtonElement) {
     `#image-text-${imageCount.value}`
   )!;
 
-  fileInput.addEventListener("change", function () {
+  fileInput.addEventListener('change', function () {
     if (this.files && this.files.length > 0) {
       const file = this.files[0];
       if (file) {
-        imagePreview.style.display = "block";
+        imagePreview.style.display = 'block';
         const reader = new FileReader();
         reader.onload = function (e) {
           if (e.target && e.target.result) {
@@ -230,8 +238,8 @@ export function addImageInput(addImageBtn: HTMLButtonElement) {
         imageText.textContent = trimSentence(file.name, 20);
       }
     } else {
-      imagePreview.style.display = "none";
-      imageText.textContent = "Dosya seçilmedi.";
+      imagePreview.style.display = 'none';
+      imageText.textContent = 'Dosya seçilmedi.';
     }
   });
   imageCount.value++;
@@ -246,14 +254,14 @@ export function cleanForm(form: HTMLFormElement) {
     'button[name="add-image"]'
   )!;
   imageInputs.forEach((input) => {
-    const button = input.querySelector("button") as HTMLButtonElement;
-    if (!button.hasAttribute("data-image")) {
+    const button = input.querySelector('button') as HTMLButtonElement;
+    if (!button.hasAttribute('data-image')) {
       imageCount.value--;
       input.remove();
     }
   });
   if (imageCount.value <= 6) {
     addImageBtn.disabled = false;
-    addImageBtn.className = "dashboard-btn small-btn add-image-btn";
+    addImageBtn.className = 'dashboard-btn small-btn add-image-btn';
   }
 }
