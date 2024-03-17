@@ -296,6 +296,9 @@ $row = mysqli_fetch_assoc($res);
                 <button title="Ürün Ekle" class="dashboard-btn edit-btn small-btn" id="add-new-product">
                   <i class="fa-solid fa-plus"></i>
                 </button>
+                <button title="Sayfanın en altına git" class="dashboard-btn status-btn small-btn" onclick="window.scrollTo(0, document.body.scrollHeight)">
+                  <i class="fa-solid fa-arrow-down"></i>
+                </button>
                 <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-products">
                   <i class="fa-solid fa-rotate-right"></i>
                 </button>
