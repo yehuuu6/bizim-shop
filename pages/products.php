@@ -17,7 +17,6 @@ use Components\Product\Filters\CFilter;
 $styles = [
     "/dist/shop/products/m1l5d9y6b3r2n7o8c0s.css"
 ];
-global $con;
 
 // If slug is not set, go back.
 if (!isset($_GET['category'])) {
