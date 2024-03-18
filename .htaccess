@@ -9,15 +9,24 @@ ErrorDocument 503 /errors/503.php
 RewriteEngine On
 RewriteBase /
 
+# Rewrite product URLs
 RewriteRule ^product/([^/]+)$ product.php?name=$1 [QSA,L]
-RewriteRule ^products/([\w-]+)$ products.php?category=$1 [QSA,L]
+
+# Rewrite category URLs (with optional trailing slash)
+RewriteRule ^products/([\w-]+)/?$ products.php?category=$1 [QSA,L]
+
+# Rewrite sub-category URLs
 RewriteRule ^products/([^/]+)/([^/]+)$ products.php?category=$1&sub-category=$2 [QSA,L]
 
+# Exclude certain directories from rewriting
 RewriteRule ^(dist|api|global|images|errors)/ - [L]
 
+# Ensure that requests not starting with /pages/ are redirected to /pages/
 RewriteCond %{REQUEST_URI} !^/pages/
 RewriteRule ^(.*)$ /pages/$1 [L]
 
+# Check if requested PHP file exists and rewrite if it does
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php [NC,L]
+
