@@ -174,6 +174,85 @@
   background-color: #fff;
   width: 75%;
 }
+.shopping-cart #address-form {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 75%;
+}
+.shopping-cart #address-form h4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.shopping-cart #address-form h4 a {
+  font-size: 18px;
+  color: #538fff;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.shopping-cart #address-form .form-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.shopping-cart #address-form .form-layout .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+.shopping-cart #address-form .form-layout .form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #363636;
+}
+.shopping-cart #address-form .form-layout .form-group input {
+  padding: 10px;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #363636;
+  width: 100%;
+}
+.shopping-cart #address-form .form-layout .form-group input::placeholder {
+  font-size: 15px;
+  font-weight: 400;
+  color: #363636;
+}
+.shopping-cart #address-form .form-layout .form-group input:focus {
+  outline: none;
+  border: 1px solid #538fff;
+}
+/* Text area for address */
+.shopping-cart #address-form .form-layout .form-group textarea {
+  padding: 10px;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #363636;
+  height: 105px;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  resize: none;
+}
+.shopping-cart #address-form .form-layout .form-group textarea::placeholder {
+  font-size: 15px;
+  font-weight: 400;
+  color: #363636;
+}
+.shopping-cart #address-form .form-layout .form-group textarea:focus {
+  outline: none;
+  border: 1px solid #538fff;
+}
 .shopping-cart .products .product-in-cart {
   display: flex;
   align-items: center;
