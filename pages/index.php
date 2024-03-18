@@ -19,10 +19,18 @@ use Components\Utility\Promotions\Card3;
 // Catalog
 
 use Components\Categories\Catalog;
+use Components\Categories\Links;
 
 new Top();
 new TopBanner();
 new Navbar();
+?>
+<div class="categories-container">
+    <ul class="categories">
+        <?php new Links(); ?>
+    </ul>
+</div>
+<?php
 
 ?>
 
@@ -33,7 +41,6 @@ new Navbar();
 ]);
 new Catalog();
 ?>
-
 <section class="home-page-featured" id="brands">
     <ul class="dynamic-content">
         <li>
