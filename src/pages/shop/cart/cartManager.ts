@@ -1,6 +1,7 @@
 import { resetShowcases } from '.';
 import { setNavbarCartItemCount } from '@/common/managers/shop/cartBtnsManager';
 import { getProductsById } from '@/pages/shop/utility/getProducts';
+import axios from 'axios';
 
 const container = document.querySelector('.shopping-cart') as HTMLDivElement;
 
@@ -189,3 +190,34 @@ function emptyShoppingCart() {
 }
 
 emptyCartBtn.addEventListener('click', emptyShoppingCart);
+
+async function checkIfLoggedIn() {
+  const response = await axios.post(
+    '/api/checkout/cart.php',
+    {
+      action: 'checkLogin',
+    },
+    {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+  return response.data;
+}
+
+const addressForm = document.querySelector('#address-form') as HTMLFormElement;
+
+confirmShoppingCartBtn.addEventListener('click', async () => {
+  const loggedIn = await checkIfLoggedIn();
+  if (!loggedIn) {
+    window.location.href = '/auth/login';
+    return;
+  }
+  cartContainer.style.display = 'none';
+  addressForm.style.display = 'flex';
+  addressForm.classList.add('dynamic-content');
+  confirmShoppingCartBtn.innerText = 'Adresi Onayla';
+  confirmShoppingCartBtn.classList.add('dynamic-content');
+});
