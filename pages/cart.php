@@ -9,6 +9,7 @@ use Components\Layout\Custom\Navbar;
 use Components\Layout\Custom\Footer;
 use Components\Utility\Banners\TopBanner;
 use Components\Categories\Links;
+use Components\Forms\AddressForm;
 
 $styles = [
     "/dist/shop/cart/v8x3q6t9j2s5f0e1n7z4.css"
@@ -38,6 +39,11 @@ new Navbar();
         <div class="products">
             <h4>Seçilen Ürünler</h4>
         </div>
+        <?php
+        if (isset($_SESSION['id'])) {
+            new AddressForm($con);
+        }
+        ?>
         <div class="cart-details">
             <h4>Sipariş Özeti</h4>
             <div class="cart-detail dynamic-content">
