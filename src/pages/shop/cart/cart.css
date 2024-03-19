@@ -87,6 +87,75 @@
   gap: 10px;
   border-radius: 5px;
 }
+.shopping-cart .cart-details input[name='confirm-address'] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.shopping-cart .cart-details label[for='confirm-address'] {
+  display: none;
+  position: relative;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  padding-left: 35px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.shopping-cart .cart-details label[for='confirm-address'] .confirm-checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+.shopping-cart .cart-details input[name='confirm-address'] ~ .confirm-checkbox {
+  background-color: #f5f5f5;
+  outline: 1px solid #dadada;
+}
+.shopping-cart .cart-details label[for='confirm-address'] span.confirm-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #363636;
+}
+.shopping-cart
+  .cart-details
+  input[name='confirm-address']:checked
+  ~ .confirm-checkbox {
+  background-color: #538fff;
+}
+.shopping-cart
+  .cart-details
+  input[name='confirm-address']:checked
+  ~ .confirm-checkbox:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.shopping-cart
+  .cart-details
+  input[name='confirm-address']:checked
+  ~ .confirm-checkbox:after {
+  display: block;
+}
+
+.shopping-cart .cart-details .confirm-checkbox:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
 .shopping-cart .cart-details .cart-detail {
   display: flex;
   gap: 10px;

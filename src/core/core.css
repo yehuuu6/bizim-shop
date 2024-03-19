@@ -7,7 +7,7 @@
 }
 body {
   font-family: 'Poppins', sans-serif;
-  background: #fff;
+  background: #e7e7e7;
   overflow-x: hidden;
 }
 img {
@@ -780,59 +780,6 @@ footer {
   }
 }
 /* Promotion slider */
-.home-page-featured {
-  width: 100%;
-  margin: 50px 20px;
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-#featured ul {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  text-align: center;
-  list-style: none;
-}
-#featured ul li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 400px;
-  height: 250px;
-  border: 2px solid #dadada;
-  background: #fff;
-  border-radius: 30px;
-  padding: 20px 30px;
-}
-#brands ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 50px;
-}
-#brands ul li img {
-  width: 150px;
-  height: 100%;
-  display: block;
-  object-fit: contain;
-}
-#featured ul li img {
-  width: 100px;
-  border-radius: 9999px;
-  height: 100px;
-  object-fit: cover;
-}
 #categories * {
   user-select: none;
 }
@@ -849,7 +796,6 @@ footer {
   height: 100%;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 15px;
 }
 #categories .category-card .category-image {
   width: 100%;
