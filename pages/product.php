@@ -150,7 +150,7 @@ function render_badges(array $product)
             <div class="badge">
                 <i class="fa-solid fa-truck"></i>
             </div>
-            <h3>Ücretsiz Kargo</h3>
+            <h3>Ücretsiz kargo</h3>
         </div>
         HTML;
     }
@@ -162,7 +162,7 @@ function render_badges(array $product)
             <div class="badge">
                 <i class="fa-solid fa-check"></i>
             </div>
-            <h3>İyi Durumda</h3>
+            <h3>İyi durumda</h3>
         </div>
         HTML;
     } elseif ($product['quality'] == 1) {
@@ -171,7 +171,7 @@ function render_badges(array $product)
             <div class="badge">
                 <i class="fa-solid fa-recycle"></i>
             </div>
-            <h3>Bazı Özellikler Çalışmıyor/Eksik</h3>
+            <h3>Bazı özellikler çalışmıyor / eksik</h3>
         </div>
         HTML;
     } else {
@@ -180,7 +180,7 @@ function render_badges(array $product)
             <div class="badge">
                 <i class="fa-solid fa-skull"></i>
             </div>
-            <h3>Hurda (Tamamen Bozuk)</h3>
+            <h3>Hurda (Tamamen bozuk)</h3>
         </div>
         HTML;
     }
