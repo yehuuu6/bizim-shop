@@ -91,6 +91,9 @@ class AddressForm extends Component
 
     private function get_city_name($city_id, mysqli $connection)
     {
+        if ($city_id == 0) {
+            return '';
+        }
         $sql = "SELECT name FROM cities WHERE id = ?";
         $stmt = mysqli_prepare($connection, $sql);
         mysqli_stmt_bind_param($stmt, "i", $city_id);
@@ -101,6 +104,9 @@ class AddressForm extends Component
 
     private function get_district_name($district_id, mysqli $connection)
     {
+        if ($district_id == 0) {
+            return '';
+        }
         $sql = "SELECT name FROM districts WHERE id = ?";
         $stmt = mysqli_prepare($connection, $sql);
         mysqli_stmt_bind_param($stmt, "i", $district_id);
