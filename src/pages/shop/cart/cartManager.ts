@@ -207,17 +207,70 @@ async function checkIfLoggedIn() {
   return response.data;
 }
 
+let checkoutState = 1;
+// 1: Confirm products,
+// 2: Confirm address,
 const addressForm = document.querySelector('#address-form') as HTMLFormElement;
-
+const confirmMyAddressBox = document.querySelector(
+  '#confirm-address-box'
+) as HTMLInputElement;
+const inputForAddressConfirmation = confirmMyAddressBox.querySelector(
+  'input'
+) as HTMLInputElement;
 confirmShoppingCartBtn.addEventListener('click', async () => {
-  const loggedIn = await checkIfLoggedIn();
-  if (!loggedIn) {
-    window.location.href = '/auth/login';
-    return;
+  if (checkoutState === 1) {
+    const loggedIn = await checkIfLoggedIn();
+    if (!loggedIn) {
+      window.location.href = '/auth/login';
+      return;
+    }
+    cartContainer.style.display = 'none';
+    confirmMyAddressBox.style.display = 'flex';
+    addressForm.style.display = 'flex';
+    addressForm.classList.add('dynamic-content');
+    confirmShoppingCartBtn.innerText = 'Ödeme Yap';
+    confirmShoppingCartBtn.classList.add('dynamic-content');
+    checkoutState = 2;
+  } else if (checkoutState === 2) {
+    const addressFormData = new FormData(addressForm);
+    const products = localStorage.getItem('cart') || '[]';
+    if (!products) {
+      window.location.href = '/';
+    }
+    addressFormData.append('products', products);
+    addressFormData.append('action', 'finishCart');
+    addressFormData.append(
+      'confirm-address',
+      inputForAddressConfirmation.checked ? '1' : '0'
+    );
+    const response = await axios.post(
+      '/api/checkout/cart.php',
+      addressFormData,
+      {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    const [status, message, cause] = response.data;
+    if (status === 'success') {
+      // Make message url friendly
+      const urlFriendlyMessage = encodeURIComponent(message);
+      window.location.href = `/checkout?message=${urlFriendlyMessage}`;
+    } else {
+      //alert(message);
+      if (cause !== '') {
+        // Make the cause border red for 2 seconds (cause is id of the input)
+        const input = document.getElementById(cause) as HTMLInputElement;
+        const oldBorder = input.style.border;
+        if (oldBorder !== '1px solid red') {
+          input.style.border = '1px solid red';
+          setTimeout(() => {
+            input.style.border = oldBorder;
+          }, 2000);
+        }
+      }
+    }
   }
-  cartContainer.style.display = 'none';
-  addressForm.style.display = 'flex';
-  addressForm.classList.add('dynamic-content');
-  confirmShoppingCartBtn.innerText = 'Adresi Onayla';
-  confirmShoppingCartBtn.classList.add('dynamic-content');
 });
