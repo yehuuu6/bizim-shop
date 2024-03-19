@@ -62,6 +62,11 @@ new Navbar();
                 <span class="cart-detail-title">Genel Toplam:</span>
                 <span data-type="total" class="cart-detail-value">0.00 TL</span>
             </div>
+            <label id="confirm-address-box" for="confirm-address" class="dynamic-content">
+                <span class="confirm-text">Adresin doğru olduğunu onaylıyorum.</span>
+                <input type="checkbox" name="confirm-address" id="confirm-address">
+                <span id="custom-box" class="confirm-checkbox"></span>
+            </label>
             <div class="cart-detail">
                 <button class="cart-detail-confirm">Sepeti onayla</button>
                 <a class="return-shopping" href="/">Alışverişe devam et</a>
