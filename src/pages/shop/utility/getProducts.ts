@@ -117,13 +117,7 @@ export function setProducts(form: HTMLFormElement) {
         });
         getProductCount(formData).then((response) => {
           const productCount = response.data;
-          console.log(productCount);
-          initPageButtons(
-            response.data,
-            category_slug,
-            sub_category_slug,
-            page
-          );
+          initPageButtons(productCount, category_slug, sub_category_slug, page);
         });
       }
     })
