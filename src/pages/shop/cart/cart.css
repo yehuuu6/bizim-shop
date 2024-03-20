@@ -75,6 +75,9 @@
   font-weight: 600;
   color: #538fff;
 }
+.shopping-cart .checkout {
+  width: 25%;
+}
 .shopping-cart .cart-details {
   display: flex;
   flex-direction: column;
@@ -82,10 +85,36 @@
   padding: 10px;
   background-color: #fff;
   border: 1px solid #dadada;
-  width: 25%;
+  width: 100%;
   height: max-content;
   gap: 10px;
   border-radius: 5px;
+}
+.shopping-cart .error-logger {
+  display: none;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+  padding: 10px;
+  background-color: #ffc4c4;
+  border: 1px solid #cd3436;
+  border-radius: 5px;
+  color: #cd3436;
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+}
+.shopping-cart .error-logger .error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+.shopping-cart .error-logger .error-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .shopping-cart .cart-details input[name='confirm-address'] {
   position: absolute;
@@ -432,9 +461,16 @@
     gap: 10px;
   }
   .shopping-cart .products {
-    width: 65%;
+    width: 70%;
+  }
+  .shopping-cart .checkout {
+    width: 30%;
   }
   .shopping-cart .cart-details {
-    width: 35%;
+    width: 100%;
+  }
+  .shopping-cart .cart-details .cart-detail .return-shopping,
+  .shopping-cart .cart-details .cart-detail .cart-detail-confirm {
+    font-size: 12px;
   }
 }
