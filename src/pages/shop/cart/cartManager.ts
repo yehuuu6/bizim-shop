@@ -191,25 +191,51 @@ function emptyShoppingCart() {
 
 emptyCartBtn.addEventListener('click', emptyShoppingCart);
 
-async function checkIfLoggedIn() {
-  const response = await axios.post(
-    '/api/checkout/cart.php',
-    {
-      action: 'checkLogin',
+async function postRequest(url: string, data: any) {
+  return await axios.post(url, data, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'multipart/form-data',
     },
-    {
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  });
+}
+
+async function checkIfLoggedIn() {
+  const response = await postRequest('/api/checkout/cart.php', {
+    action: 'checkLogin',
+  });
+  console.log(response.data);
   return response.data;
 }
 
+function showErrorAndRedirect(errorMessage: string, redirectUrl: string) {
+  logger.style.display = 'flex';
+  loggerText.innerText = errorMessage;
+  setTimeout(() => {
+    logger.style.display = 'none';
+    loggerText.innerText = '';
+    window.location.href = redirectUrl;
+  }, 4000);
+}
+
+function displayError(errorMessage: string) {
+  logger.style.display = 'flex';
+  loggerText.innerText = errorMessage;
+}
+
+function indicateError(input: HTMLInputElement) {
+  const oldBorder = input.style.border;
+  if (oldBorder !== '1px solid red') {
+    input.style.border = '1px solid red';
+    setTimeout(() => {
+      input.style.border = oldBorder;
+      logger.style.display = 'none';
+      loggerText.innerText = '';
+    }, 4000);
+  }
+}
+
 let checkoutState = 1;
-// 1: Confirm products,
-// 2: Confirm address,
 const addressForm = document.querySelector('#address-form') as HTMLFormElement;
 const confirmMyAddressBox = document.querySelector(
   '#confirm-address-box'
@@ -217,11 +243,17 @@ const confirmMyAddressBox = document.querySelector(
 const inputForAddressConfirmation = confirmMyAddressBox.querySelector(
   'input'
 ) as HTMLInputElement;
+const logger = document.querySelector('.error-logger') as HTMLDivElement;
+const loggerText = logger.querySelector('.error-text') as HTMLSpanElement;
+
 confirmShoppingCartBtn.addEventListener('click', async () => {
   if (checkoutState === 1) {
     const loggedIn = await checkIfLoggedIn();
     if (!loggedIn) {
-      window.location.href = '/auth/login';
+      showErrorAndRedirect(
+        'Alışverişinizi tamamlamak için giriş yapmanız gerekmektedir.',
+        '/auth/login'
+      );
       return;
     }
     cartContainer.style.display = 'none';
@@ -231,6 +263,13 @@ confirmShoppingCartBtn.addEventListener('click', async () => {
     confirmShoppingCartBtn.innerText = 'Ödeme Yap';
     confirmShoppingCartBtn.classList.add('dynamic-content');
     checkoutState = 2;
+    const addressFormData = new FormData(addressForm);
+    confirmShoppingCartBtn.disabled = Array.from(
+      addressFormData.values()
+    ).includes('');
+    if (confirmShoppingCartBtn.disabled) {
+      displayError('Lütfen tüm alanları doldurunuz');
+    }
   } else if (checkoutState === 2) {
     const addressFormData = new FormData(addressForm);
     const products = localStorage.getItem('cart') || '[]';
@@ -243,33 +282,18 @@ confirmShoppingCartBtn.addEventListener('click', async () => {
       'confirm-address',
       inputForAddressConfirmation.checked ? '1' : '0'
     );
-    const response = await axios.post(
+    const response = await postRequest(
       '/api/checkout/cart.php',
-      addressFormData,
-      {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      addressFormData
     );
     const [status, message, cause] = response.data;
     if (status === 'success') {
-      // Make message url friendly
-      const urlFriendlyMessage = encodeURIComponent(message);
-      window.location.href = `/checkout?message=${urlFriendlyMessage}`;
+      displayError(message);
+      window.location.href = `/checkout?message=${encodeURIComponent(message)}`;
     } else {
-      //alert(message);
+      displayError(message);
       if (cause !== '') {
-        // Make the cause border red for 2 seconds (cause is id of the input)
-        const input = document.getElementById(cause) as HTMLInputElement;
-        const oldBorder = input.style.border;
-        if (oldBorder !== '1px solid red') {
-          input.style.border = '1px solid red';
-          setTimeout(() => {
-            input.style.border = oldBorder;
-          }, 2000);
-        }
+        indicateError(document.querySelector(`#${cause}`) as HTMLInputElement);
       }
     }
   }
