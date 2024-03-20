@@ -1,17 +1,17 @@
-import { setProducts, sqlOffset } from "@/pages/shop/utility/getProducts";
+import { setProducts, sqlOffset } from '@/pages/shop/utility/getProducts';
 
-import "./products.css";
+import './products.css';
 
 // Get products
 
-const filterForm = document.querySelector("#filters") as HTMLFormElement;
+const filterForm = document.querySelector('#filters') as HTMLFormElement;
 
-const productsContainer = document.querySelector(".products") as HTMLDivElement;
+const productsContainer = document.querySelector('.products') as HTMLDivElement;
 
-const router = document.querySelector(".router") as HTMLDivElement;
+const router = document.querySelector('.router') as HTMLDivElement;
 
 const subCatSelector = filterForm.querySelector(
-  "#p-sub-category"
+  '#p-sub-category'
 ) as HTMLSelectElement;
 
 function updateRouter() {
@@ -25,7 +25,7 @@ function updateRouter() {
   // Get category slug from url
   const url = new URL(window.location.href);
   const subCatSlug = decodeURIComponent(
-    decodeURIComponent(url.pathname.split("/")[3])
+    decodeURIComponent(url.pathname.split('/')[3])
   );
   // Set sub category selector to category slug
   const subCategoryOption = subCatSelector.querySelector(
@@ -33,7 +33,7 @@ function updateRouter() {
   ) as HTMLOptionElement;
 
   // Divide url pathname into three parts
-  const pathName = url.pathname.split("/").slice(0, 3).join("/");
+  const pathName = url.pathname.split('/').slice(0, 3).join('/');
   // Get target url
   const targetUrl = `${pathName}/${encodeURIComponent(
     encodeURIComponent(subCatSlug)
@@ -50,12 +50,12 @@ updateRouter();
 /**
  * Everytime filter form changes, gets new products from database
  */
-filterForm.addEventListener("submit", function (e) {
+filterForm.addEventListener('submit', function (e) {
   e.preventDefault();
   sqlOffset.value = 0;
   // Remove page number from url
   const url = new URL(window.location.href);
-  const pathName = url.pathname.split("/").slice(0, 3).join("/");
+  const pathName = url.pathname.split('/').slice(0, 3).join('/');
   const subCatSlug = subCatSelector.options[subCatSelector.selectedIndex]
     .dataset.slug as string;
   // Add sub category slug to url directly
@@ -66,14 +66,14 @@ filterForm.addEventListener("submit", function (e) {
   } else {
     url.pathname = `${pathName}`;
   }
-  url.searchParams.delete("page");
-  window.history.replaceState({}, "", url.href);
-  productsContainer.classList.add("dynamic-content");
-  productsContainer.innerHTML = "";
+  url.searchParams.delete('page');
+  window.history.replaceState({}, '', url.href);
+  productsContainer.classList.add('dynamic-content');
+  productsContainer.innerHTML = '';
   setProducts(filterForm);
   updateRouter();
   setTimeout(() => {
-    productsContainer.classList.remove("dynamic-content");
+    productsContainer.classList.remove('dynamic-content');
   }, 850);
 });
 
