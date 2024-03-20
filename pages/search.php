@@ -27,10 +27,6 @@ if ($query == "") {
     exit;
 }
 
-$page_num = $_GET['page'] ?? 1;
-
-$total_product_count = 0;
-
 // Get the products from database
 if ($query !== "") {
     $query = urldecode(urldecode($query));
@@ -83,12 +79,6 @@ $encoded_query = urlencode(urlencode($query));
         <div class="products">
         </div>
         <div class="page-numbers">
-            <!---- Page buttons does not update when filters applied, FIX IT -->
-            <?php foreach (range(1, ceil($total_product_count / 50)) as $page) : ?>
-                <?php if ($page != 0) : ?>
-                    <a href="/search?q=<?= $encoded_query !== "" ? "{$encoded_query}" : '' ?>&?page=<?= $page ?>" class="page-number <?= $page == $page_num ? 'active' : '' ?>"><?= $page ?></a>
-                <?php endif; ?>
-            <?php endforeach; ?>
         </div>
     </div>
 </section>
