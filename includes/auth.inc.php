@@ -1,9 +1,7 @@
 <?php
 
 if (!defined('FILE_ACCESS')) {
-    header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-    die();
+    send_forbidden_response();
 }
 
 ini_set('session.name', 'bss_i');

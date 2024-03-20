@@ -1,9 +1,7 @@
 <?php
 
 if (!defined('FILE_ACCESS')) {
-    header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-    exit;
+    send_forbidden_response();
 }
 
 /**
@@ -35,10 +33,23 @@ function get_date(string $raw)
 function authorize_user()
 {
     if ($_SESSION['membership'] != 1) {
-        header("HTTP/1.1 403 Forbidden");
-        include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-        exit;
+        send_forbidden_response();
     }
+}
+
+/**
+ * Sends a forbidden response to the client and terminates the script.
+ */
+function send_forbidden_response()
+{
+    header("HTTP/1.1 403 Forbidden");
+    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
+    exit;
+}
+
+function validate_request()
+{
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 }
 
 /**

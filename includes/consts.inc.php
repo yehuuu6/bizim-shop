@@ -1,9 +1,7 @@
 <?php
 
 if (!defined('FILE_ACCESS')) {
-    header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-    exit;
+    send_forbidden_response();
 }
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';

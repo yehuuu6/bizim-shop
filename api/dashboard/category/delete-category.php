@@ -1,44 +1,43 @@
 <?php
 define('FILE_ACCESS', TRUE);
-if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
-    require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-    authorize_user();
+require_once("{$_SERVER['DOCUMENT_ROOT']}/includes/auth.inc.php");
 
-    $result = array();
+if (!validate_request()) {
+    send_forbidden_response();
+}
 
-    // Get post data
+authorize_user();
 
-    $category_id = get_safe_value($con, $_POST['cid']);
+$result = array();
 
-    // Send category list to client
-    if ($category_id != '') {
-        $sql = "DELETE FROM categories WHERE id = ?";
-        $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $category_id);
+// Get post data
+
+$category_id = get_safe_value($con, $_POST['cid']);
+
+// Send category list to client
+if ($category_id != '') {
+    $sql = "DELETE FROM categories WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $category_id);
+    try {
+        mysqli_stmt_execute($stmt);
+        $sql3 = "UPDATE product SET category = 0, subcategory = 0 WHERE category = ?";
+        $stmt3 = mysqli_prepare($con, $sql3);
+        mysqli_stmt_bind_param($stmt3, 'i', $category_id);
         try {
-            mysqli_stmt_execute($stmt);
-            $sql3 = "UPDATE product SET category = 0, subcategory = 0 WHERE category = ?";
-            $stmt3 = mysqli_prepare($con, $sql3);
-            mysqli_stmt_bind_param($stmt3, 'i', $category_id);
-            try {
-                mysqli_stmt_execute($stmt3);
-                send_success_response("Kategori ve alt kategorileri başarıyla silindi.");
-            } catch (Exception $e) {
-                send_error_response("{$e->getMessage()}");
-            } finally {
-                mysqli_stmt_close($stmt3);
-            }
+            mysqli_stmt_execute($stmt3);
+            send_success_response("Kategori ve alt kategorileri başarıyla silindi.");
         } catch (Exception $e) {
             send_error_response("{$e->getMessage()}");
         } finally {
-            mysqli_stmt_close($stmt2);
+            mysqli_stmt_close($stmt3);
         }
-    } else {
-        send_error_response("Kategori seçilmedi.");
+    } catch (Exception $e) {
+        send_error_response("{$e->getMessage()}");
+    } finally {
+        mysqli_stmt_close($stmt2);
     }
 } else {
-    header("HTTP/1.1 403 Forbidden");
-    include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-    exit;
+    send_error_response("Kategori seçilmedi.");
 }
