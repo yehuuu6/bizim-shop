@@ -19,42 +19,89 @@ class Footer extends Component
                 <button class="cookie-btn">Tamam</button>
             </div>
             <footer>
-                <div class="footer-row">
-                    <div class="footer-item">
-                        <h3 class="footer-title">Yardım Merkezi</h3>
-                        <ul class="no-list-style">
-                            <li><a class="no-decoration" href="/help-center/about-us">Hakkımızda</a></li>
-                            <li><a class="no-decoration" href="/help-center/contact-us">İletişim</a></li>
-                            <li><a class="no-decoration" href="/help-center/terms-of-use">Kullanım Şartları</a></li>
-                            <li><a class="no-decoration" href="/help-center/privacy-policy">Gizlilik Politikası</a></li>
-                        </ul>
+                <div class="first-part">
+                    <div class="links">
+                    <h3>Yardım</h3>
+                    <ul>
+                        <li><a href="/faq">Sıkça Sorulan Sorular</a></li>
+                        <li><a href="/contact">İletişim</a></li>
+                        <li><a href="/privacy-policy">Gizlilik Politikası</a></li>
+                        <li><a href="/terms-of-service">Kullanım Koşulları</a></li>
+                    </ul>
                     </div>
-                    <div class="footer-item">
-                        <h3 class="footer-title">Katkıda Bulunun</h3>
-                        <ul class="no-list-style">
-                            <li><a class="no-decoration" href="#">Sponsorluk</a></li>
-                            <li><a class="no-decoration" href="#">Destek</a></li>
-                        </ul>
+                    <div class="links">
+                    <h3>Alışveriş</h3>
+                    <ul>
+                        <li><a href="/control-center/account">Hesabım</a></li>
+                        <li><a href="/cart">Sepetim</a></li>
+                        <li><a href="/wishlist">Favorilerim</a></li>
+                        <li><a href="/control-center/account#orders">Siparişlerim</a></li>
+                    </ul>
+                    </div>
+                    <div class="links">
+                    <h3>Diğer</h3>
+                    <ul>
+                        <li><a href="/sell-us">Bize Sat</a></li>
+                        <li><a href="/fix-my-product">Tamirat</a></li>
+                        <li><a href="/feedbacks">Yorumlar</a></li>
+                        <li><a href="/sponsorship">Sponsorluk</a></li>
+                    </ul>
                     </div>
                 </div>
-                <div class="footer-powered">
-                    <div class="footer-item gap-10">
-                        <img class="no-drag wide-img" src="/global/imgs/footer/OpenAI_Logo.png" alt="Open AI GPT-3 Logo">
-                        <p>Bazı içerikler ve kod örnekleri, <a class="link dark-blue-text" target="_blank" href="https://openai.com/blog/chatgpt">OpenAI GPT-3</a> tarafından sağlanmıştır.</p>
+                <hr />
+                <div class="middle-part">
+                    <a href="/" class="logo">
+                    <img src="/global/imgs/logo.png" alt="" />
+                    <h3>Bizim Shop</h3>
+                    </a>
+                    <ul class="category-links">
+                        {$this->render_category_links()}
+                    </ul>
+                </div>
+                <div class="last-part">
+                    <div class="projects">
+                    <div class="project">
+                        <a target="_blank" href="https://github.com/yehuuu6/selftos"
+                        >Selftos</a
+                        >
+                        <span>A highly hackable and open-source chat application</span>
                     </div>
-                    <div class="footer-item gap-10">
-                        <img class="no-drag wide-img" src="/global/imgs/footer/Discord_Logo.png" alt="Discord Logo">
-                        <p>Öneri ve istekleriniz için <a class="link dark-blue-text" target="_blank" href="https://discord.gg/4ZyAb3sZVS">Discord</a> sunucumuza katılabilirsiniz!</p>
+                    <div class="project">
+                        <a target="_blank" href="https://unturnedworkshop.com"
+                        >Unturned Workshop</a
+                        >
+                        <span>A website dedicated for Unturned's modding community</span>
+                    </div>
+                    <div class="project">
+                        <a target="_blank" href="https://basakftr.com">Başak FTR</a>
+                        <span
+                        >Official website of Başak Physiotherapy Clinic located in Ankara,
+                        Türkiye</span
+                        >
+                    </div>
+                    </div>
+                    <div class="copyright-claimer">
+                    <span>&copy; 2024 Bizim Shop & Aydın Tech</span>
+                    <span>All rights reserved.</span>
                     </div>
                 </div>
-                <div class="footer-copyright medium-text">
-                    <p>© 2024 Bizim
-                    <span class="blue-text bold-text">Shop</span> tüm hakları saklıdır.</p>
-                </div>
-            </footer>
+                </footer>
         HTML;
 
         // Render the component on the page
         parent::render($body);
+    }
+
+    private function render_category_links()
+    {
+        $sub_categories = get_all_sub_categories();
+        $html = '';
+        foreach ($sub_categories as $sub_category) {
+            // Make sub_category url friendly
+            $sub_category['slug'] = urlencode(urlencode($sub_category['slug']));
+            $category_slug = urlencode(urlencode(get_category_slug($sub_category['cid'])));
+            $html .= "<li><a href='/products/{$category_slug}/{$sub_category['slug']}'>{$sub_category['name']}</a></li>";
+        }
+        return $html;
     }
 }
