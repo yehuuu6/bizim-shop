@@ -246,6 +246,18 @@ function get_category_name(?string $category_id)
     return $category_data[0];
 }
 
+function get_category_slug(?string $category_id)
+{
+    global $con;
+    $sql = "SELECT slug FROM categories WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $category_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $category_data = mysqli_fetch_row($res);
+    return $category_data[0];
+}
+
 function get_sub_category_name(?string $sub_category_id)
 {
     global $con;
