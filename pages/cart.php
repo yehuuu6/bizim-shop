@@ -44,32 +44,38 @@ new Navbar();
             new AddressForm($con);
         }
         ?>
-        <div class="cart-details">
-            <h4>Sipariş Özeti</h4>
-            <div class="cart-detail dynamic-content">
-                <span class="cart-detail-title">Ürünler:</span>
-                <span data-type="products" class="cart-detail-value">0.00 TL</span>
+        <div class="checkout flex-display flex-column gap-20">
+            <div class="cart-details">
+                <h4>Sipariş Özeti</h4>
+                <div class="cart-detail dynamic-content">
+                    <span class="cart-detail-title">Ürünler:</span>
+                    <span data-type="products" class="cart-detail-value">0.00 TL</span>
+                </div>
+                <div class="cart-detail dynamic-content">
+                    <span class="cart-detail-title">Kargo:</span>
+                    <span data-type="shipment" class="cart-detail-value">0.00 TL</span>
+                </div>
+                <div class="cart-detail dynamic-content">
+                    <span class="cart-detail-title">KDV:</span>
+                    <span data-type="fee" class="cart-detail-value">0.00 TL</span>
+                </div>
+                <div class="cart-detail dynamic-content">
+                    <span class="cart-detail-title">Genel Toplam:</span>
+                    <span data-type="total" class="cart-detail-value">0.00 TL</span>
+                </div>
+                <label id="confirm-address-box" for="confirm-address" class="dynamic-content">
+                    <span class="confirm-text">Adresin doğru olduğunu onaylıyorum.</span>
+                    <input type="checkbox" name="confirm-address" id="confirm-address">
+                    <span id="custom-box" class="confirm-checkbox"></span>
+                </label>
+                <div class="cart-detail">
+                    <button class="cart-detail-confirm">Sepeti onayla</button>
+                    <a class="return-shopping" href="/">Alışverişe devam et</a>
+                </div>
             </div>
-            <div class="cart-detail dynamic-content">
-                <span class="cart-detail-title">Kargo:</span>
-                <span data-type="shipment" class="cart-detail-value">0.00 TL</span>
-            </div>
-            <div class="cart-detail dynamic-content">
-                <span class="cart-detail-title">KDV:</span>
-                <span data-type="fee" class="cart-detail-value">0.00 TL</span>
-            </div>
-            <div class="cart-detail dynamic-content">
-                <span class="cart-detail-title">Genel Toplam:</span>
-                <span data-type="total" class="cart-detail-value">0.00 TL</span>
-            </div>
-            <label id="confirm-address-box" for="confirm-address" class="dynamic-content">
-                <span class="confirm-text">Adresin doğru olduğunu onaylıyorum.</span>
-                <input type="checkbox" name="confirm-address" id="confirm-address">
-                <span id="custom-box" class="confirm-checkbox"></span>
-            </label>
-            <div class="cart-detail">
-                <button class="cart-detail-confirm">Sepeti onayla</button>
-                <a class="return-shopping" href="/">Alışverişe devam et</a>
+            <div class="error-logger">
+                <span class="error-icon"><img src="/global/imgs/icons/error.png" alt=""></span>
+                <span class="error-text"></span>
             </div>
         </div>
     </div>
