@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2024 at 06:46 PM
+-- Generation Time: Mar 20, 2024 at 08:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1148,21 +1148,19 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
-(63, 9, 9),
-(90, 9, 7),
-(91, 9, 2),
-(93, 9, 50),
-(94, 9, 21),
-(98, 9, 8),
-(100, 9, 26),
 (101, 9, 28),
 (102, 9, 39),
 (103, 9, 45),
 (106, 9, 59),
-(109, 9, 11),
-(110, 9, 1),
 (111, 9, 3),
-(112, 9, 5);
+(112, 9, 5),
+(113, 9, 55),
+(117, 9, 70),
+(123, 9, 2),
+(124, 9, 50),
+(125, 9, 11),
+(137, 9, 64),
+(138, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -1213,7 +1211,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`, `status`, `root_name`, `tags`, `description`, `quality`, `shipment`, `featured`, `category`, `subcategory`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`) VALUES
-(1, 9, 'Sony Walkman', 259.99, 53.99, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı. Orijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 0, 0, 1, 31, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(1, 9, 'Sony Walkman', 259.99, 53.99, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 0, 0, 1, 31, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (2, 9, 'Bose SoundLink Speaker', 149.99, 29.99, 12.50, 1, 'bose_soundlink_speaker', 'bose soundlink bluetooth speaker', 'The Bose SoundLink speaker delivers clear, full-range sound and is designed to go wherever you do. It\\\'s rugged, water-resistant, and has a built-in microphone for hands-free calls.', 1, 1, 1, 31, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (3, 9, 'Audio-Technica Turntable', 299.99, 39.99, 17.50, 1, 'audio_technica_turntable', 'audio technica record player', 'The Audio-Technica turntable provides high-fidelity audio and is perfect for vinyl enthusiasts. It features a precision tonearm and a durable construction for long-lasting performance.', 2, 0, 1, 31, 55, '62872_audio_technica_turntable.jpg', '58208_audio_technica_turntable.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (5, 9, 'Pioneer DJ Controller', 499.99, 49.99, 25.00, 1, 'pioneer_dj_controller', 'pioneer dj mixing console', 'The Pioneer DJ Controller is a professional-grade mixing console for DJs. It offers precise control and a range of effects to enhance your mixing experience. Perfect for both beginners and seasoned DJs.', 2, 0, 1, 31, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1222,7 +1220,7 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (8, 9, 'Bowers & Wilkins Floorstanding Speaker', 1299.99, 69.99, 40.00, 1, 'bowers_&_wilkins_floorstanding_speaker', 'bowers wilkins floorstanding speaker', 'The Bowers & Wilkins Floorstanding Speaker delivers exceptional audio performance with its premium components and craftsmanship. It\\\'s a perfect choice for audiophiles seeking a truly immersive listening experience.', 0, 0, 1, 31, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (9, 9, 'Sony Noise-Canceling Headphones', 349.99, 25.99, 15.00, 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (10, 9, 'Apple AirPods Pro', 249.99, 19.99, 10.00, 1, 'apple_airpods_pro', 'apple airpods noise-cancellation', 'Experience seamless connectivity and immersive sound with Apple AirPods Pro. These wireless earbuds feature active noise cancellation and customizable fit for all-day comfort.', 1, 1, 1, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(11, 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 1, 1, 31, 54, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
+(11, 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television', 'Yeni Samsung 4K Akıllı TV ile ev eğlencesine yeni bir boyut kazandırın. Üstün görüntü kalitesi, zengin renkler ve akıllı özelliklerle donatılmış bu TV, size sinema salonu deneyimini evinize getiriyor.\\r\\n\\r\\nBu TV\\\'nin en çarpıcı özelliği kesinlikle 4K Ultra HD çözünürlüğüdür. Her bir pikselde inanılmaz detaylarla dolu, kristal berraklığında bir görüntü sunar. Hangi içeriği izlediğiniz önemli değil, her sahne canlı ve gerçekçi bir şekilde hayat bulur.', 2, 1, 1, 31, 54, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
 (12, 9, 'Canon EOS Rebel T7i DSLR Camera', 699.99, 39.99, 25.00, 1, 'canon_eos_rebel_t7i_dslr_camera', 'canon dslr camera', 'Capture life\\\'s moments in stunning detail with Canon EOS Rebel T7i DSLR Camera. It features a 24.2MP sensor and advanced autofocus for professional-quality photos and videos.', 2, 0, 1, 31, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (13, 9, 'GoPro Hero 9 Black', 449.99, 29.99, 15.00, 1, 'gopro_hero_9_black', 'gopro action camera', 'Record your adventures in crisp 4K resolution with GoPro Hero 9 Black. This rugged action camera is waterproof and features advanced stabilization for smooth footage.', 1, 1, 0, 31, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (14, 9, 'DJI Mavic Air 2 Drone', 799.99, 49.99, 30.00, 1, 'dji_mavic_air_2_drone', 'dji drone quadcopter', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. This compact quadcopter boasts intelligent features and a powerful camera for stunning results.', 2, 0, 1, 31, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1362,7 +1360,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `verified`, `membership`, `token`, `password`, `profile_image`, `last_submission`, `submissions`, `telephone`, `address`, `city`, `district`, `apartment`, `floor`, `door`) VALUES
-(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'nopp.png', 1710618424, 3, '5377670403', 'Topcu mah 1514. cadde', 6, 75, '32 Birlik', 2, 12);
+(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1710915542, 4, '5377670403', 'topcu', 15, 207, '21', 2, 12),
+(11, 'Harun', 'Aydın', 'haydin9876@gmail.com', 1, 0, '8638e50507553552f10ce761a04c1df101a2758456922cff5f75dd36d6b923294bc449a4228d93ba1915ce6577e4e75bdca9', '$2y$10$QRoERl0HStZtCQ2ZU85nxuFlSe6asGcjIdnDJIHVYbYP2A5fKOxX6', 'nopp.png', 1710914435, 2, '5054696240', '66', 16, 233, '32', 0, 2);
 
 --
 -- Indexes for dumped tables
@@ -1451,7 +1450,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1481,7 +1480,7 @@ ALTER TABLE `subcats`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
