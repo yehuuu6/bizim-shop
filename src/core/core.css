@@ -431,84 +431,187 @@ button {
 /*not found*/
 /* Footer */
 footer {
-  background: #eeeeee;
-  border-top: 1px solid #dadada;
-  padding: 3rem 5rem;
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.footer-row {
-  display: flex;
-  gap: 80px;
-  justify-content: center;
-}
-.footer-row ul {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.footer-row .footer-item {
-  text-align: center;
-}
-.footer-item li a {
-  font-size: 16px;
-  font-weight: 300;
-  color: #151515;
-  opacity: 0.75;
-  display: block;
-  transition: 0.3s;
-}
-.footer-item li a:hover {
-  opacity: 1;
-  padding-left: 9px;
-}
-.footer-title {
-  font-size: 18px;
-  color: #4c4c4c;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  font-weight: 500;
-  position: relative;
-}
-.footer-title:after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0px;
-  transform: translateX(-50%);
+  color: aliceblue;
   width: 100%;
-  height: 2px;
-  background-color: #538fff;
+  height: 30rem;
 }
-.footer-powered {
+
+footer .first-part {
+  background: #233d6e;
+}
+footer .middle-part {
+  background: #233d6e;
   display: flex;
+  padding: 2rem;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
-.footer-powered .footer-item {
+footer hr {
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: #3d4c92;
+}
+
+footer .last-part {
+  background: #09275e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer .middle-part {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  text-align: center;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 1.3rem;
 }
-.footer-item img {
-  object-fit: cover;
-  margin: 0.5rem 0 0.5rem 0;
+footer .middle-part .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
 }
-.footer-item .wide-img {
-  height: 32px;
-  width: 132px;
+footer .middle-part h3 {
+  font-size: 1.3rem;
+  color: aliceblue;
+  font-weight: 500;
 }
-.footer-item .narrow-img {
-  height: 42px;
-  width: 42px;
+footer .middle-part .logo img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
+
+footer .middle-part .category-links {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+footer .middle-part .category-links li {
+  list-style: none;
+}
+
+footer .middle-part .category-links li a {
+  text-decoration: none;
+  color: aliceblue;
+}
+
+footer .middle-part .category-links li a:hover {
+  text-decoration: underline;
+}
+footer .last-part {
+  padding: 1.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+footer .last-part .projects {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+
+footer .last-part .projects .project {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  flex-direction: column;
+  width: 25%;
+  text-decoration: none;
+}
+
+footer .last-part .projects .project a {
+  font-size: 1rem;
+  color: aliceblue;
+  font-weight: 560;
+  text-decoration: none;
+}
+
+footer .last-part .projects .project a:hover {
+  text-decoration: underline;
+}
+
+footer .last-part .projects .project span {
+  font-size: 0.8rem;
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+footer .last-part .copyright-claimer {
+  font-size: 0.9rem;
+  font-weight: 300;
+  opacity: 0.85;
+  text-align: center;
+  width: 70%;
+  line-height: 1.5;
+}
+
+footer .first-part {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10rem;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+footer .first-part .links {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+  flex-direction: column;
+}
+
+footer .first-part .links h3 {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+  color: aliceblue;
+}
+
+footer .first-part .links h3:after {
+  content: '';
+  display: block;
+  width: 125px;
+  height: 1px;
+  background: #3d4c92;
+  margin-top: 0.5rem;
+}
+
+footer .first-part .links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+footer .first-part .links ul li {
+  list-style: none;
+  text-align: center;
+}
+
+footer .first-part .links ul li a {
+  text-decoration: none;
+  color: aliceblue;
+  text-align: center;
+  transition: 0.25s ease-in-out;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+footer .first-part .links ul li a:hover {
+  opacity: 1;
+}
+
 .cookie-container p {
   margin: auto 5px;
   line-height: 1;
