@@ -51,12 +51,18 @@ mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);
 $sub_category_data = mysqli_fetch_row($res) ?? null;
 
-$title = $category_data[1] ?? 'Tüm Ürünler';
-$title = "{$title} - Bizim Shop";
+$title_text = $sub_category_data[1] ?? $category_data[1] ?? "Ürün bulunamadı";
+$title = "{$title_text} - Bizim Shop";
+
+$description = "Bizim Shop'ta {$title_text} kategorisindeki ürünleri inceleyin.";
+
+$keywords = "bizim shop, {$title_text}, ürünler, kategoriler";
 
 new Top([
     "title" => $title,
     "styles" => $styles,
+    "description" => $description,
+    "keywords" => $keywords
 ]);
 new TopBanner();
 new Navbar();
