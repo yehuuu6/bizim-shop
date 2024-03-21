@@ -9,6 +9,7 @@ use Components\Layout\Custom\Navbar;
 use Components\Layout\Custom\Footer;
 use Components\Utility\Banners\TopBanner;
 use Components\Categories\Links;
+use Components\Questions\AskInput;
 
 $name = isset($_GET['name']) ? get_safe_value($con, urldecode($_GET['name'])) : "";
 
@@ -228,9 +229,9 @@ function render_badges(array $product)
             </div>
             <div class="detail">
                 <div class="product-category">
-                    <a href="/products/<?= convert_link_name(get_category_name($product['category'])) ?>"><?= get_category_name($product['category']) ?></a>
+                    <a href="/products/<?= get_category_slug($product['category']) ?>"><?= get_category_name($product['category']) ?></a>
                     >
-                    <a href="/products/<?= convert_link_name(get_category_name($product['category'])) . '/' . convert_link_name(get_sub_category_name($product['subcategory'])) ?>"><?= get_sub_category_name($product['subcategory']) ?></a>
+                    <a href="/products/<?= get_category_slug($product['category']) . '/' . get_sub_category_slug($product['subcategory']) ?>"><?= get_sub_category_name($product['subcategory']) ?></a>
                 </div>
             </div>
             <div class="detail">
@@ -254,6 +255,43 @@ function render_badges(array $product)
                     <button class="add-wishlist">
                         <i class="fa-solid fa-heart"></i>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-header">
+        <h2>Soru & Cevap</h2>
+        <i class="fa-solid fa-comments"></i>
+    </div>
+    <div class="questions-answers">
+        <?php new AskInput(); ?>
+        <div class="questions-wrapper">
+            <div class="question">
+                <div class="question-content">
+                    <p>Ürünün durumu nasıl?</p>
+                    <div class="author">
+                        <div class="user-info">
+                            <h3>Eren Aydın</h3>
+                            <span>1 gün önce</span>
+                        </div>
+                        <div class="avatar">
+                            <img src="http://localhost/images/users/eren_aydin_avatar_xlorvt2vbd.jpg" alt="avatar">
+                        </div>
+                    </div>
+                </div>
+                <div class="answer">
+                    <div class="answer-content">
+                        <p>Ürünün durumu çok iyi. Çok az kullanıldı.</p>
+                    </div>
+                    <div class="author">
+                        <div class="avatar">
+                            <img src="http://localhost/global/imgs/nopp.png" alt="avatar">
+                        </div>
+                        <div class="user-info">
+                            <h3>Harun Aydın</h3>
+                            <span>1 gün önce</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
