@@ -16,6 +16,7 @@ $query = get_safe_value($con, $_POST['search_query']);
 $product_data = get_products($con, [
     'search' => $query,
     'limit' => '10',
+    'order_type' => 'id DESC',
 ]);
 
 $result = [];
