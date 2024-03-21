@@ -29,7 +29,7 @@ class Links extends Component
     {
         $body = "";
         foreach (get_categories() as $category) {
-            $link_name = convert_link_name($category['name']);
+            $link_name = get_category_slug($category['id']);
             $sub_categories = get_sub_categories($category['slug']);
             $body .= <<<HTML
                 <li class="category">

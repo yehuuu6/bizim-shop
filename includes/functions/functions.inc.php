@@ -270,13 +270,16 @@ function get_sub_category_name(?string $sub_category_id)
     return $sub_category_data[0];
 }
 
-function convert_link_name(string $str)
+function get_sub_category_slug(?string $sub_category_id)
 {
-    $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '_');
-    $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '-', '-');
-    $str = str_replace($search, $replace, $str);
-    $url_encoded_str = urlencode(urlencode($str));
-    return strtolower($url_encoded_str);
+    global $con;
+    $sql = "SELECT slug FROM subcats WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $sub_category_id);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    $sub_category_data = mysqli_fetch_row($res);
+    return $sub_category_data[0];
 }
 
 /**
