@@ -296,6 +296,12 @@ function render_badges(array $product)
             </div>
         </div>
     </div>
+    <div class="content-header">
+        <h2>Rastgele Ürünler</h2>
+        <i class="fa-solid fa-random"></i>
+    </div>
+    <div id="random-products" class="product-showcase dynamic-content">
+    </div>
 </section>
 <?php
 new Footer();
