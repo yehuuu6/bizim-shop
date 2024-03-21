@@ -414,14 +414,7 @@
 .shopping-cart .products .product-in-cart .remove-from-cart:hover {
   opacity: 1;
 }
-.product-showcase {
-  display: flex;
-  gap: 50px;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
+
 /* Media query for laptop screens */
 @media screen and (max-width: 1368px) {
   #cart {
