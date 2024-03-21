@@ -1,9 +1,10 @@
-import "./product.css";
-import { setAddToCartBtns } from "@/common/managers/shop/cartBtnsManager";
-import { setWishlistBtns } from "@/common/managers/shop/wishlistBtnsManager";
+import './product.css';
+import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
+import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
+import axios from 'axios';
 
 const products = document.querySelectorAll(
-  ".product-container"
+  '.product-container'
 ) as NodeListOf<HTMLDivElement>;
 
 setAddToCartBtns(products);
@@ -13,43 +14,74 @@ const currentProduct = products[0];
 
 const productId = currentProduct.dataset.id as string;
 // Save the product id in latest viewed products if id does not already exist
-if (!localStorage.getItem("lvp")?.includes(productId)) {
+if (!localStorage.getItem('lvp')?.includes(productId)) {
   localStorage.setItem(
-    "lvp",
+    'lvp',
     JSON.stringify([
       productId,
-      ...JSON.parse(localStorage.getItem("lvp") || "[]"),
+      ...JSON.parse(localStorage.getItem('lvp') || '[]'),
     ])
   );
 } else {
   // If product id already exists, move it to the front
-  const lvp = JSON.parse(localStorage.getItem("lvp") || "[]");
+  const lvp = JSON.parse(localStorage.getItem('lvp') || '[]');
   const index = lvp.indexOf(productId);
   lvp.splice(index, 1);
-  localStorage.setItem("lvp", JSON.stringify([productId, ...lvp]));
+  localStorage.setItem('lvp', JSON.stringify([productId, ...lvp]));
 }
 
 // if length of lvp is greater than 5, remove the last item
-if (JSON.parse(localStorage.getItem("lvp") || "[]").length > 5) {
-  const lvp = JSON.parse(localStorage.getItem("lvp") || "[]");
+if (JSON.parse(localStorage.getItem('lvp') || '[]').length > 5) {
+  const lvp = JSON.parse(localStorage.getItem('lvp') || '[]');
   lvp.pop();
-  localStorage.setItem("lvp", JSON.stringify(lvp));
+  localStorage.setItem('lvp', JSON.stringify(lvp));
 }
 
 // Control image showcase
 
 const showcaseImgs = document.querySelectorAll(
-  "img[data-img]"
+  'img[data-img]'
 ) as NodeListOf<HTMLImageElement>;
-const showcase = document.querySelector(".big-image") as HTMLDivElement;
+const showcase = document.querySelector('.big-image') as HTMLDivElement;
 
 showcaseImgs.forEach((img) => {
-  img.addEventListener("click", () => {
-    showcase.classList.add("dynamic-content");
-    const replace = showcase.querySelector("img") as HTMLImageElement;
+  img.addEventListener('click', () => {
+    showcase.classList.add('dynamic-content');
+    const replace = showcase.querySelector('img') as HTMLImageElement;
     replace.src = img.src;
     setTimeout(() => {
-      showcase.classList.remove("dynamic-content");
+      showcase.classList.remove('dynamic-content');
     }, 850);
   });
 });
+
+const randomProductWrapper = document.querySelector(
+  '#random-products'
+) as HTMLDivElement;
+
+const randomProducts = axios({
+  url: '/api/main/get-random-products.php',
+  method: 'POST',
+  data: {
+    id: productId,
+  },
+  headers: {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'multipart/form-data',
+  },
+});
+
+randomProducts
+  .then((res) => {
+    const products = res.data;
+    for (const product of products) {
+      randomProductWrapper.innerHTML += product;
+    }
+  })
+  .finally(() => {
+    const products = randomProductWrapper.querySelectorAll(
+      '.product'
+    ) as NodeListOf<HTMLDivElement>;
+    setAddToCartBtns(products);
+    setWishlistBtns(products);
+  });
