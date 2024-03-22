@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 08:56 PM
+-- Generation Time: Mar 22, 2024 at 02:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `store`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `answers`
+--
+
+CREATE TABLE `answers` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `qid` int(11) NOT NULL,
+  `answer` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1148,19 +1161,14 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
-(101, 9, 28),
-(102, 9, 39),
-(103, 9, 45),
-(106, 9, 59),
-(111, 9, 3),
 (112, 9, 5),
 (113, 9, 55),
 (117, 9, 70),
 (123, 9, 2),
 (124, 9, 50),
-(125, 9, 11),
 (137, 9, 64),
-(138, 9, 1);
+(139, 9, 66),
+(140, 11, 11);
 
 -- --------------------------------------------------------
 
@@ -1284,6 +1292,19 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `questions`
+--
+
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `question` text NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `site`
 --
 
@@ -1368,6 +1389,13 @@ INSERT INTO `users` (`id`, `name`, `surname`, `email`, `verified`, `membership`,
 --
 
 --
+-- Indexes for table `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `qid` (`qid`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -1405,6 +1433,12 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `questions`
+--
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `site`
 --
 ALTER TABLE `site`
@@ -1429,6 +1463,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -1450,7 +1490,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1463,6 +1503,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT for table `questions`
+--
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `site`
@@ -1485,6 +1531,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`qid`) REFERENCES `questions` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `districts`
