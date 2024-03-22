@@ -5,41 +5,70 @@
   flex-direction: column;
   gap: 2.5rem;
 }
+
 .questions-wrapper {
-  width: 50%;
-}
-.questions-answers {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
   width: 100%;
-}
-.questions-answers * {
   color: #131313;
+}
+
+.ask-question {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 40%;
+}
+
+.ask-question textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  resize: none;
+}
+
+.ask-question textarea:focus {
+  border-color: #538fff;
+}
+
+.ask-question button {
+  padding: 10px;
+  background-color: #538fff;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ask-question button:hover {
+  background-color: #1a60e3;
+}
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .question {
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
   flex-direction: column;
-  padding: 10px;
+  gap: 15px;
   background-color: #fff;
-  border: 1px solid #dadada;
+  padding: 20px;
   border-radius: 5px;
 }
-.answer {
+
+.author {
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
-  flex-direction: column;
-}
-.question .author {
-  display: flex;
-  width: 40%;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
 }
@@ -59,7 +88,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 .author .user-info h3 {
   font-size: 1rem;
@@ -70,93 +99,38 @@
   font-weight: 400;
   color: #363636;
 }
-.question-content {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-.question-content p {
-  font-size: 1rem;
-  font-weight: 400;
-  color: #363636;
-  padding: 1rem 2rem;
-  width: 100%;
-  border-radius: 50px;
-  background-color: #e4e4e4;
-}
 
-#ask-question {
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  justify-content: flex-start;
-  flex-direction: column;
-  width: 50%;
-}
-
-#ask-question .group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  position: relative;
-}
-
-#ask-question .group textarea {
-  width: 100%;
-  padding: 0.5rem 1rem;
-  font-family: 'Poppins', sans-serif;
-  border: 1px solid #dadada;
+.answer {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-left: 3px solid #538fff;
   border-radius: 5px;
-  outline: none;
-  font-size: 1rem;
-  font-weight: 400;
-  color: #363636;
-  resize: none;
 }
 
-#ask-question .group textarea:focus {
-  border: 1px solid #538fff;
-}
-
-#ask-question .group .character-counter {
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: #363636;
-  user-select: none;
-}
-
-#ask-question .group textarea::placeholder {
-  font-size: 1rem;
-  font-weight: 400;
-  color: #a6a6a6;
-}
-
-#ask-question .submit-question-btn {
-  background: #538fff;
+.load-more-questions {
+  padding: 10px;
+  background-color: #538fff;
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 500;
   width: 100%;
+  font-size: 1rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-#ask-question .submit-question-btn:hover {
-  background: #3f7ae0;
+.see-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 60%;
 }
 
-#ask-question .submit-question-btn:active {
-  transform: scale(1.1);
+.see-questions h3 {
+  font-weight: 500;
+}
+
+.load-more-questions:hover {
+  background-color: #1a60e3;
 }
 
 .product-container {
@@ -165,7 +139,6 @@
   padding: 20px;
   gap: 20px;
   background-color: #fff;
-  border: 1px solid #dadada;
 }
 .product-images {
   width: 50%;
@@ -326,7 +299,6 @@
   justify-content: center;
   align-items: center;
   font-size: 1rem;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
 .product-details hr {
@@ -335,12 +307,16 @@
   margin: 7px 0;
 }
 .product-details .detail .add-cart {
-  background: #538fff;
-  padding: 0.7rem;
-  font-weight: 600;
+  padding: 10px;
+  background-color: #538fff;
+  color: #fff;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .product-details .detail .add-cart:hover {
-  background: #3f7ae0;
+  background: #1a60e3;
 }
 .product-details .detail .in-cart {
   background: #538fff;
