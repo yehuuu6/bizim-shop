@@ -125,6 +125,15 @@ function convert_name(?string $str)
     return strtolower($str);
 }
 
+function convert_link_name(string $str)
+{
+    $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '_');
+    $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '-', '-');
+    $str = str_replace($search, $replace, $str);
+    $url_encoded_str = urlencode(urlencode($str));
+    return strtolower($url_encoded_str);
+}
+
 function get_categories()
 {
     global $con;
