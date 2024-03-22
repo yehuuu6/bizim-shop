@@ -71,7 +71,7 @@ if ($is_editing) {
 $validations = [
     ['Ürün adı', $name, 6, 40, 'product-name'],
     ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
-    ['Ürün açıklaması', $description, 50, 500, 'product-description']
+    ['Ürün açıklaması', $description, 50, 2000, 'product-description']
 ];
 
 foreach ($validations as list($field, $value, $min_length, $max_length, $field_name)) {
