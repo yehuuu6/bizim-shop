@@ -41,6 +41,7 @@ class Navbar extends Component
                     placeholder="Ürün aramaya başla..."
                     id="search-products"
                     value="{$this->query}"
+                    autocomplete="off"
                     />
                     <button class="search-btn" title="Ara">
                         <i class="fas fa-search"></i>
