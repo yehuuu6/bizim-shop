@@ -21,7 +21,7 @@ if (($_SESSION['verified'] == 1)) {
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="/dist/auth/rs5f0f0e1h08v35w6a2u3.css">
-  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="/global/imgs/logo.png" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
   <title>E-posta Onayı - Bizim Shop</title>
 </head>

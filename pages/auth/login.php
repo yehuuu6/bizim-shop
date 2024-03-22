@@ -11,7 +11,7 @@ if (isset($_SESSION['id'])) {
 
 <head>
   <meta charset="utf-8">
-  <link rel="shortcut icon" href="/global/imgs/favicon.svg" type="image/x-icon">
+  <link rel="shortcut icon" href="/global/imgs/logo.png" type="image/x-icon">
   <script src="/global/plugins/icons.js"></script>
   <link rel="stylesheet" href="/dist/auth/rs5f0f0e1h08v35w6a2u3.css">
   <title>Hesabınıza giriş yapın - Bizim Shop</title>
