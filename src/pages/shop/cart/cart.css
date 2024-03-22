@@ -47,6 +47,7 @@
 }
 .shopping-cart .checkout {
   width: 25%;
+  height: fit-content;
 }
 .shopping-cart .cart-details {
   display: flex;

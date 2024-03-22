@@ -34,11 +34,6 @@
   background-color: #538fff;
   border-radius: 5px;
 }
-.sticky {
-  position: sticky;
-  top: 20px;
-  z-index: 100;
-}
 
 .ask-question textarea ::-webkit-scrollbar-track {
   background-color: #f4f4f4;
@@ -194,13 +189,15 @@
   justify-content: space-between;
   padding: 20px;
   gap: 20px;
+  width: 100%;
   background-color: #fff;
 }
 .product-images {
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  height: min-content;
   gap: 15px;
 }
 .product-details {
