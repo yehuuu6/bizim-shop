@@ -1,6 +1,7 @@
 import './product.css';
 import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
 import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
+import { initQuestions } from './questions';
 import axios from 'axios';
 
 const products = document.querySelectorAll(
@@ -46,11 +47,11 @@ const showcase = document.querySelector('.big-image') as HTMLDivElement;
 
 showcaseImgs.forEach((img) => {
   img.addEventListener('click', () => {
-    showcase.classList.add('dynamic-content');
     const replace = showcase.querySelector('img') as HTMLImageElement;
+    replace.classList.add('dynamic-content');
     replace.src = img.src;
     setTimeout(() => {
-      showcase.classList.remove('dynamic-content');
+      replace.classList.remove('dynamic-content');
     }, 850);
   });
 });
@@ -85,3 +86,5 @@ randomProducts
     setAddToCartBtns(products);
     setWishlistBtns(products);
   });
+
+initQuestions();
