@@ -12,12 +12,21 @@ class AskInput extends Component
     public function __construct()
     {
         $body = <<<HTML
-            <form id='ask-question'>
-                <div class='group'>
-                    <span class='character-counter'>0/1000</span>
-                    <textarea placeholder='Ürün hakkında soru sor...' name='question' id='question' rows='5' required maxlength='1000'></textarea>
+            <form class="ask-question">
+                <h3>Satıcıya Soru Sor</h3>
+                <div style="position: relative;">
+                <span class="character-count">0/550</span>
+                <textarea
+                name="question"
+                id="question"
+                cols="30"
+                rows="5"
+                maxlength="550"
+                placeholder="Sorunuzu buraya yazın..."
+                required
+                ></textarea>
                 </div>
-                <button type='submit' class='submit-question-btn'>Soru sor</button>
+                <button>Gönder</button>
             </form>
 
         HTML;
