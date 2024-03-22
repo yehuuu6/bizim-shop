@@ -37,7 +37,9 @@ while ($questions_data = $result->fetch_assoc()) {
         'avatar' => $user_data['profile_image']
     ];
 
-    $question = new Question($questions_data['id'], $questions_data['question'], 'Henüz bir cevap verilmedi.', $questions_data['date'], $user);
+    $fixed_question = fix_strings($questions_data)['question'];
+
+    $question = new Question($questions_data['id'], $fixed_question, 'Henüz bir cevap verilmedi.', $questions_data['date'], $user);
     array_push($questions, $question->body);
 }
 
