@@ -11,24 +11,11 @@ if (!isset($_SESSION['id'])) {
     send_forbidden_response();
 }
 
-$product_id = get_safe_value($con, $_POST['id']);
-$question = get_safe_value($con, $_POST['question']);
+$question_id = get_safe_value($con, $_POST['id']);
 $user_id = $_SESSION['id'];
 
-if (!isset($product_id)) {
-    send_error_response('Product ID is required');
-}
-
-if (!isset($question)) {
-    send_error_response('Question is required');
-}
-
-if (strlen($question) < 10) {
-    send_error_response('Question must be at least 10 characters long');
-}
-
-if (strlen($question) > 550) {
-    send_error_response('Question must be at most 550 characters long');
+if (!isset($question_id)) {
+    send_error_response('Question ID is required');
 }
 
 $sql = "SELECT submissions, last_submission FROM users WHERE id = ?";
@@ -42,12 +29,12 @@ $last_sub = $row['last_submission'];
 
 $submissions = reset_submission_counts($con, $submissions, $last_sub, $user_id);
 
-$query = "INSERT INTO questions (pid, uid, question) VALUES (?, ?, ?)";
+$query = "DELETE FROM questions WHERE id = ? and uid = ?";
 
-if ($submissions < 99999) {
+if ($submissions < 9999) {
     try {
         $stmt = $con->prepare($query);
-        $stmt->bind_param('iis', $product_id, $user_id, $question);
+        $stmt->bind_param('ii', $question_id, $user_id);
         $stmt->execute();
         $stmt->close();
         $submissions++;
@@ -56,7 +43,7 @@ if ($submissions < 99999) {
         $stmt->bind_param('ii', $submissions, $user_id);
         $stmt->execute();
         $stmt->close();
-        send_success_response('Soru başarıyla gönderildi.');
+        send_success_response('Soru başarıyla silindi.');
     } catch (Exception $e) {
         send_error_response($e->getMessage());
     }
