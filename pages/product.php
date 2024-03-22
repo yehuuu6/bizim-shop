@@ -93,9 +93,20 @@ function render_showcase_items(array $product)
 
 function render_questions($connection, $product)
 {
-    // TODO: Implement question system for product
+    // Get the count of questions
+    $sql = "SELECT COUNT(*) as count FROM questions WHERE pid = ?";
+    try {
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('i', $product['id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $count = $row['count'];
+    } catch (Exception $e) {
+        $count = 0;
+    }
 
-    return "<div class='question-indicator'><i class='fa-regular fa-circle-question'></i> <strong>0</strong> Soru & Cevap</div>";
+    return "<div class='question-indicator'><i class='fa-regular fa-circle-question'></i> <strong>{$count}</strong> Soru & Cevap</div>";
 }
 
 function render_likes($connection, $product)
@@ -263,39 +274,17 @@ function render_badges(array $product)
         <h2>Soru & Cevap</h2>
         <i class="fa-solid fa-comments"></i>
     </div>
-    <div class="questions-answers">
+    <section class="questions-wrapper">
         <?php new AskInput(); ?>
-        <div class="questions-wrapper">
-            <div class="question">
-                <div class="question-content">
-                    <p>Ürünün durumu nasıl?</p>
-                    <div class="author">
-                        <div class="user-info">
-                            <h3>Eren Aydın</h3>
-                            <span>1 gün önce</span>
-                        </div>
-                        <div class="avatar">
-                            <img src="http://localhost/images/users/eren_aydin_avatar_xlorvt2vbd.jpg" alt="avatar">
-                        </div>
-                    </div>
-                </div>
-                <div class="answer">
-                    <div class="answer-content">
-                        <p>Ürünün durumu çok iyi. Çok az kullanıldı.</p>
-                    </div>
-                    <div class="author">
-                        <div class="avatar">
-                            <img src="http://localhost/global/imgs/nopp.png" alt="avatar">
-                        </div>
-                        <div class="user-info">
-                            <h3>Harun Aydın</h3>
-                            <span>1 gün önce</span>
-                        </div>
-                    </div>
+        <div class="see-questions dynamic-content">
+            <div class="questions">
+                <div class="question" id="no-question">
+                    <h3>Henüz hiç soru sorulmamış.</h3>
                 </div>
             </div>
+            <button style="display:none" class="load-more-questions">Daha fazla soru gör</button>
         </div>
-    </div>
+    </section>
     <div class="content-header">
         <h2>Rastgele Ürünler</h2>
         <i class="fa-solid fa-random"></i>
