@@ -88,3 +88,22 @@ randomProducts
   });
 
 initQuestions();
+
+// Sticky window for pictures
+window.addEventListener('scroll', () => {
+  const pContainer = document.querySelector(
+    '.product-container'
+  ) as HTMLDivElement;
+  const stickyElement = document.querySelector(
+    '.product-images'
+  ) as HTMLDivElement;
+  const stickyPoint = pContainer.offsetTop;
+  const bottomLimit = pContainer.offsetTop + pContainer.offsetHeight;
+
+  if (
+    window.scrollY >= stickyPoint &&
+    window.scrollY + stickyElement.offsetHeight < bottomLimit
+  ) {
+    stickyElement.classList.add('sticky');
+  }
+});
