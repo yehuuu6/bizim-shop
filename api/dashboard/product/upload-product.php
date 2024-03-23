@@ -69,13 +69,19 @@ if ($is_editing) {
 }
 
 $validations = [
-    ['Ürün adı', $name, 6, 40, 'product-name'],
+    ['Ürün adı', $name, 6, 100, 'product-name'],
     ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
     ['Ürün açıklaması', $description, 50, 2000, 'product-description']
 ];
 
+if ($sub_category <= 0) {
+    send_error_response('Lütfen geçerli bir alt kategori seçiniz.', 'product-sub-category');
+}
+
 foreach ($validations as list($field, $value, $min_length, $max_length, $field_name)) {
-    if (strlen($value) < $min_length) {
+    if (empty($value)) {
+        send_error_response("$field boş bırakılamaz.", $field_name);
+    } elseif (strlen($value) < $min_length) {
         send_error_response("$field çok kısa. Minimum uzunluk $min_length karakterdir.", $field_name);
     } elseif (strlen($value) > $max_length) {
         send_error_response("$field çok uzun. Maksimum uzunluk $max_length karakterdir.", $field_name);
@@ -179,8 +185,8 @@ function insert_product($con, $uid, $sub_category, $name, $description, $tags, $
 
     upload_images($ready_to_upload, $max_width, $max_height);
 
-    $sql = "INSERT INTO product (uid, category, subcategory name, root_name, description, tags, price, shipping_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO product (uid, category, subcategory, name, root_name, description, tags, price, shipping_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
