@@ -249,12 +249,11 @@ function get_all_sub_categories()
  */
 function place_order(mysqli $con, string $uid, string $pid)
 {
-    $date = time();
     $status = 0;
-    $sql = "INSERT INTO orders (uid, pid, date, status) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO orders (uid, pid, status) VALUES (?, ?, ?)";
     try {
         $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, 'ssss', $uid, $pid, $date, $status);
+        mysqli_stmt_bind_param($stmt, 'sss', $uid, $pid, $status);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return true;
