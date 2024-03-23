@@ -204,7 +204,6 @@ async function checkIfLoggedIn() {
   const response = await postRequest('/api/checkout/cart.php', {
     action: 'checkLogin',
   });
-  console.log(response.data);
   return response.data;
 }
 
