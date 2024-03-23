@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2024 at 06:14 PM
+-- Generation Time: Mar 23, 2024 at 11:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1165,17 +1165,15 @@ CREATE TABLE `likes` (
 --
 
 INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
-(112, 9, 5),
-(113, 9, 55),
-(117, 9, 70),
-(123, 9, 2),
-(124, 9, 50),
-(137, 9, 64),
-(139, 9, 66),
 (140, 11, 11),
-(146, 9, 36),
 (147, 11, 63),
-(148, 9, 11);
+(148, 9, 11),
+(149, 9, 27),
+(150, 9, 1),
+(151, 9, 15),
+(153, 9, 3),
+(154, 9, 61),
+(155, 9, 71);
 
 -- --------------------------------------------------------
 
@@ -1226,8 +1224,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`, `status`, `root_name`, `tags`, `description`, `quality`, `shipment`, `featured`, `category`, `subcategory`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`) VALUES
-(1, 9, 'Sony Walkman', 259.99, 53.99, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 0, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(2, 9, 'Bose SoundLink Speaker', 149.99, 29.99, 12.50, 1, 'bose_soundlink_speaker', 'bose soundlink bluetooth speaker', 'The Bose SoundLink speaker delivers clear, full-range sound and is designed to go wherever you do. It\\\'s rugged, water-resistant, and has a built-in microphone for hands-free calls.', 1, 1, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(1, 9, 'Sony Walkman', 195.99, 53.99, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\n\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (3, 9, 'Audio-Technica Turntable', 299.99, 39.99, 17.50, 1, 'audio_technica_turntable', 'audio technica record player', 'The Audio-Technica turntable provides high-fidelity audio and is perfect for vinyl enthusiasts. It features a precision tonearm and a durable construction for long-lasting performance.', 2, 0, 1, 48, 55, '62872_audio_technica_turntable.jpg', '58208_audio_technica_turntable.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (5, 9, 'Pioneer DJ Controller', 499.99, 49.99, 25.00, 1, 'pioneer_dj_controller', 'pioneer dj mixing console', 'The Pioneer DJ Controller is a professional-grade mixing console for DJs. It offers precise control and a range of effects to enhance your mixing experience. Perfect for both beginners and seasoned DJs.', 2, 0, 1, 48, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (6, 9, 'Fender Stratocaster Guitar', 899.99, 39.99, 30.00, 1, 'fender_stratocaster_guitar', 'fender electric guitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 47, 66, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1251,7 +1248,7 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (24, 9, 'Amazon Echo Show 10 (3rd Gen)', 249.99, 19.99, 10.00, 1, 'amazon_echo_show_10_(3rd_gen)', 'amazon smart display', 'Stay connected and organized with Amazon Echo Show 10 (3rd Gen). With its rotating display and built-in Alexa, this smart display is perfect for managing your day and staying entertained.', 1, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (25, 9, 'Garmin Fenix 6 Pro Smartwatch', 699.99, 29.99, 15.00, 1, 'garmin_fenix_6_pro_smartwatch', 'garmin fitness tracker', 'Track your fitness and conquer your goals with Garmin Fenix 6 Pro Smartwatch. With advanced GPS and health monitoring features, this smartwatch is built for adventure.', 2, 0, 1, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (26, 9, 'LG UltraGear 27GN950-B Gaming Monitor', 999.99, 49.99, 30.00, 1, 'lg_ultragear_27gn950_b_gaming_monitor', 'lg gaming monitor', 'Immerse yourself in your favorite games with LG UltraGear 27GN950-B Gaming Monitor. Featuring a 4K Nano IPS display and NVIDIA G-Sync compatibility, this monitor delivers smooth visuals and responsive gameplay.', 2, 1, 1, 49, 73, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(27, 9, 'Apple MacBook Pro (M1, 2021)', 1499.99, 59.99, 40.00, 1, 'apple_macbook_pro_(m1,_2021)', 'apple laptop computer', 'Experience blazing-fast performance with Apple MacBook Pro (M1, 2021). Featuring Apple\\\'s M1 chip and stunning Retina display, this laptop is perfect for professionals and creatives alike.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(27, 9, 'Apple MacBook Pro (M1, 2021)', 58512.99, 59.99, 40.00, 1, 'apple_macbook_pro_(m1,_2021)', 'apple laptop computer', 'MacBook Air akıcı bir şekilde çalışmanız ve oyun oynamanız için ihtiyacınız olan gücü sunuyor. Üstelik M3 çip dünyanın en popüler laptopuna şimdi daha da muhteşem beceriler katıyor. Ve 18 saate kadar pil ömrü1 sayesinde MacBook Air\\\'i dilediğiniz yere götürerek her şeyi hızlı bir şekilde yapabiliyorsunuz.\\r\\n\\r\\nSüper hafif ve inanılmaz ince MacBook Air hayatınızın her anında yanınızda olacak şekilde ve gezegenimiz düşünülerek tasarlandı. M3 çipli MacBook Air modellerinin üretiminde kullanılan geri dönüştürülmüş materyallerin oranı yüzde 50’ye ulaştı. Bu, Apple için bir ilk. Ayrıca tüm MacBook Air laptoplar da geri dönüştürülmüş alüminyumdan üretilen dayanıklı kasalara sahip.\\r\\n\\r\\n8 GB birleşik bellek\\r\\n512 GB SSD depolama\\r\\nTrue Tone özelliğine sahip 15.3 inç Liquid Retina ekran\\r\\n1080p FaceTime HD kamera\\r\\nMagSafe 3 şarj bağlantı noktası\\r\\nİki adet Thunderbolt / USB 4 bağlantı noktası\\r\\n35 W Çift USB‑C Bağlantı Noktalı Güç Adaptörü\\r\\nTouch ID özellikli ve arkadan aydınlatmalı Magic Keyboard - Türkçe Q', 2, 1, 1, 31, 74, '19641_apple_macbook_pro_(m1,_2021).jpg', '63627_apple_macbook_pro_(m1,_2021).jpg', '46214_apple_macbook_pro_(m1,_2021).jpg', '33105_apple_macbook_pro_(m1,_2021).jpg', '41884_apple_macbook_pro_(m1,_2021).jpg', 'noimg.jpg'),
 (28, 9, 'Sony Alpha a7 III Mirrorless Camera', 1999.99, 69.99, 40.00, 1, 'sony_alpha_a7_iii_mirrorless_camera', 'sony mirrorless camera', 'Capture life\\\'s moments with stunning clarity using Sony Alpha a7 III Mirrorless Camera. With its full-frame sensor and advanced autofocus system, this camera delivers professional-quality results.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (29, 9, 'Dell XPS 13 Laptop', 1299.99, 49.99, 30.00, 1, 'dell_xps_13_laptop', 'dell laptop computer', 'Stay productive on the go with Dell XPS 13 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for work and entertainment.', 2, 1, 0, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (30, 9, 'SteelSeries Arctis 7 Gaming Headset', 149.99, 9.99, 5.00, 1, 'steelseries_arctis_7_gaming_headset', 'steelseries gaming headset', 'Immerse yourself in your favorite games with SteelSeries Arctis 7 Wireless Gaming Headset. Featuring lag-free wireless audio and a retractable microphone, this headset offers comfort and performance for long gaming sessions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1294,7 +1291,8 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (67, 9, 'Nikon Z7 II Mirrorless Camera', 2999.99, 39.99, 25.00, 1, 'nikon_z7_ii_mirrorless_camera', 'nikon mirrorless camera', 'Capture every detail with the Nikon Z7 II Mirrorless Camera. Featuring dual EXPEED 6 processors and 45.7MP resolution, this camera delivers exceptional image quality and performance for professional photographers.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (68, 9, 'Sennheiser 3 Wireless Headphones', 399.99, 19.99, 10.00, 1, 'sennheiser_3_wireless_headphones', 'sennheiser wireless headphones', 'Experience premium sound quality and active noise cancellation with Sennheiser Momentum 3 Wireless Headphones. With genuine leather ear pads and intuitive controls, these headphones offer comfort and convenience for all-day listening.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (69, 9, 'Dell XPS 15 Laptop', 1999.99, 49.99, 30.00, 1, 'dell_xps_15_laptop', 'dell laptop', 'Power through your tasks with the Dell XPS 15 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for professionals and content creators.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(70, 9, 'Ultimate Ears Boom 3 Bluetooth Speaker', 149.99, 9.99, 5.00, 1, 'ultimate_ears_boom_3_bluetooth_speaker', 'ultimate ears portable speaker', 'Bring the party anywhere with Ultimate Ears Boom 3 Portable Bluetooth Speaker. Featuring 360-degree sound and waterproof construction, this speaker delivers immersive audio and durability for outdoor adventures.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg');
+(70, 9, 'Ultimate Ears Boom 3 Bluetooth Speaker', 149.99, 9.99, 5.00, 1, 'ultimate_ears_boom_3_bluetooth_speaker', 'ultimate ears portable speaker', 'Bring the party anywhere with Ultimate Ears Boom 3 Portable Bluetooth Speaker. Featuring 360-degree sound and waterproof construction, this speaker delivers immersive audio and durability for outdoor adventures.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(71, 9, 'GeForce RTX™ 4090 VENTUS 3X E 24G OC', 83307.68, 10.00, 0.00, 1, 'geforce_rtx™_4090_ventus_3x_e_24g_oc', 'msi, gpu, ekran karti, rtx, 4090', 'VENTUS, performans odaklı bir grafik kartı arayan kullanıcılara temelde sağlam bir deneyim sunuyor. TORX FAN 4.0 ve Hava Akışı Kontrolü ile güncellenmiş keskin bir tasarımı olan VENTUS, herhangi bir görevi kolayca halletmesini sağlıyor.\\r\\n\\r\\nDLSS 3 ile güçlendirilmiş yapay zeka destekli grafiklerle performans, verimlilik ve AI\\\'da büyük bir sıçrama sunuyor. Ultra yüksek performanslı oyun deneyimleyin, ışın izleme ile inanılmaz detaylı sanal dünyalar keşfedin, eşi benzeri görülmemiş verimlilik elde edin ve yeni yaratma yolları keşfedin. NVIDIA Ada Lovelace mimarisi tarafından desteklenmektedir ve oyuncular ve yaratıcılar için en üst düzey deneyimi sunmak için 24 GB G6X bellekle birlikte gelir.\\r\\n\\r\\nArtırılmış Saat Hızı / Bellek Hızı\\r\\n2550 MHz / 21 Gbps\\r\\n24GB GDDR6X\\r\\nDisplayPort x 2 (v1.4a)\\r\\nHDMI™ x 2 (4K@120Hz HDR, 8K@60Hz HDR ve HDMI™ 2.1a\\\'da belirtildiği gibi Değişken Yenileme Hızını destekler)\\r\\nÜçlü Fanlı Termal Tasarım\\r\\nTORX Fan 4.0: Ekip çalışmasının bir şaheseri, fan kanatları çiftler halinde çalışarak odaklanmış hava basıncı seviyeleri yaratır.\\r\\nHava Akışı Kontrolü: Endişelenmeyin, Hava Akışı Kontrolü havayı maksimum soğutma için tam olarak ihtiyaç duyulan yere yönlendirir.\\r\\nÇekirdek Borusu: Hassas şekilde işlenmiş ısı boruları GPU ile maksimum teması sağlar ve ısıyı soğutucunun tam uzunluğu boyunca yayılır.\\r\\nSıfır Don: Fanlar sıcaklıklar nispeten düşük olduğunda tamamen durur, böylece tüm gürültüyü ortadan kaldırır.\\r\\nMetal Arka Plaka\\r\\nSağlam akış-through metal arka plakanın altındaki termal pedler soğutma konusunda yardımcı olur.\\r\\nMSI Center\\r\\nÖzel MSI Center yazılımı ile MSI ürünlerini gerçek zamanlı olarak izleyebilir, ayarlayabilir ve optimize edebilirsiniz.', 0, 1, 1, 49, 72, '62839_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '50279_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54148_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '53915_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '70785_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54615_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg');
 
 -- --------------------------------------------------------
 
@@ -1316,7 +1314,8 @@ CREATE TABLE `questions` (
 
 INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`) VALUES
 (37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22'),
-(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22');
+(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22'),
+(59, 9, 71, 'abi gta 5 acar mi', '2024-03-23');
 
 -- --------------------------------------------------------
 
@@ -1414,7 +1413,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `verified`, `membership`, `token`, `password`, `profile_image`, `last_submission`, `submissions`, `telephone`, `address`, `city`, `district`, `apartment`, `floor`, `door`) VALUES
-(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711127167, 3, '5377670403', 'topcu', 15, 207, '21', 2, 12),
+(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711190160, 1, '5377670403', 'topcu', 17, 237, '21', 2, 12),
 (11, 'Harun', 'Aydın', 'haydin9876@gmail.com', 1, 0, '8638e50507553552f10ce761a04c1df101a2758456922cff5f75dd36d6b923294bc449a4228d93ba1915ce6577e4e75bdca9', '$2y$10$QRoERl0HStZtCQ2ZU85nxuFlSe6asGcjIdnDJIHVYbYP2A5fKOxX6', 'nopp.png', 1711124527, 4, '5054696240', '66', 16, 233, '32', 0, 2);
 
 --
@@ -1451,7 +1450,8 @@ ALTER TABLE `districts`
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pid` (`pid`);
 
 --
 -- Indexes for table `orders`
@@ -1506,7 +1506,7 @@ ALTER TABLE `answers`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `cities`
@@ -1524,7 +1524,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1536,13 +1536,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `site`
@@ -1577,6 +1577,12 @@ ALTER TABLE `answers`
 --
 ALTER TABLE `districts`
   ADD CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `likes`
+--
+ALTER TABLE `likes`
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `questions`
