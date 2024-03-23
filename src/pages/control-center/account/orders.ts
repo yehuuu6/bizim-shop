@@ -25,7 +25,7 @@ const orderRefresh = document.querySelector(
 ) as HTMLButtonElement;
 const searchInput = document.querySelector('#search-order') as HTMLInputElement;
 
-const ManageOrdersPage = new PanelClass(orderLoader);
+const MyOrdersPage = new PanelClass(orderLoader);
 
 function createOrderTable(order: IOrder) {
   // Create table row
@@ -38,7 +38,6 @@ function createOrderTable(order: IOrder) {
   });
   tr.innerHTML = `
             <td>${++rowNumberOrders.value}</td>
-            <td>${order.username}</td>
             <td>${order.product}</td>
             <td>₺${order.price}</td>
             <td>${setOrderStatus(order.status)}</td>
@@ -60,7 +59,7 @@ function createOrderTable(order: IOrder) {
       let order = currentOrders.value.find(
         (order: IOrder) => order['id'] == id
       );
-      ManageOrdersPage.showMessage([
+      MyOrdersPage.showMessage([
         'success',
         `${order?.id} isimli sipariş modalı yapılacak. (TODO)`,
         'none',
@@ -73,7 +72,7 @@ function createOrderTable(order: IOrder) {
       let order = currentOrders.value.find(
         (order: IOrder) => order['id'] == id
       );
-      ManageOrdersPage.showMessage([
+      MyOrdersPage.showMessage([
         'success',
         `${order?.id} isimli kullanıcı yasaklandı. (TODO)`,
         'none',
@@ -109,28 +108,28 @@ function getSearchOrder() {
   formData.append('offset', '0');
   formData.append('limit', orderLimit.toString());
 
-  ManageOrdersPage.sendApiRequest(
-    '/api/dashboard/orders/load-orders.php',
-    formData
-  ).then((response) => {
-    let orders = response;
-    if (orders === undefined || orders.length === 0) {
-      orderTable.innerHTML = '';
-      orderTable.innerHTML = `
-        <tr>
-          <td colspan="6">Sipariş bulunamadı.</td>
-        </tr>
-      `;
-      return;
-    }
-    rowNumberOrders.value = 0;
-    currentOrders.value = orders;
-    orderTable.innerHTML = '';
+  MyOrdersPage.sendApiRequest('/api/account/get-orders.php', formData).then(
+    (response) => {
+      const orders = response;
 
-    orders.forEach((order: IOrder) => {
-      orderTable.appendChild(createOrderTable(order));
-    });
-  });
+      if (orders === undefined || orders.length === 0) {
+        orderTable.innerHTML = `
+          <tr>
+            <td colspan="6">Sipariş bulunamadı.</td>
+          </tr>
+        `;
+        return;
+      }
+      rowNumberOrders.value = 0;
+      currentOrders.value = orders;
+      orderTable.innerHTML = '';
+
+      orders.forEach((order: IOrder) => {
+        currentOrders.value.push(order);
+        orderTable.appendChild(createOrderTable(order));
+      });
+    }
+  );
 }
 
 function debounce(callback: any, delay: number) {
@@ -177,8 +176,8 @@ async function loadFirstOrders() {
   const formData = new FormData();
   formData.append('offset', '0');
   formData.append('limit', orderLimit.toString());
-  const response = await ManageOrdersPage.sendApiRequest(
-    '/api/dashboard/orders/load-orders.php',
+  const response = await MyOrdersPage.sendApiRequest(
+    '/api/account/get-orders.php/',
     formData
   );
 
@@ -186,10 +185,10 @@ async function loadFirstOrders() {
 
   if (orders === undefined || orders.length === 0) {
     orderTable.innerHTML = `
-      <tr>
-        <td colspan="6">Sipariş bulunamadı.</td>
-      </tr>
-    `;
+          <tr>
+            <td colspan="6">Sipariş bulunamadı.</td>
+          </tr>
+        `;
     return;
   }
 
@@ -219,7 +218,7 @@ orderMore.addEventListener('click', function (e) {
   formData.append('search', searchInput.value.trim().toLowerCase());
   formData.append('offset', sqlOffset.toString());
   formData.append('limit', orderLimit.toString());
-  ManageOrdersPage.sendApiRequest(
+  MyOrdersPage.sendApiRequest(
     '/api/dashboard/orders/load-orders.php',
     formData
   ).then((response) => {
@@ -227,7 +226,7 @@ orderMore.addEventListener('click', function (e) {
     if (orders === undefined || orders.length === 0) {
       orderMore.classList.add('disabled');
       orderMore.disabled = true;
-      ManageOrdersPage.showMessage([
+      MyOrdersPage.showMessage([
         'error',
         'Daha fazla sipariş bulunamadı.',
         'none',
@@ -237,7 +236,7 @@ orderMore.addEventListener('click', function (e) {
         let order = orders[i];
         currentOrders.value.push(order);
         orderTable.append(createOrderTable(order));
-        ManageOrdersPage.showMessage([
+        MyOrdersPage.showMessage([
           'success',
           `${orderLimit} sipariş başarıyla yüklendi.`,
           'none',
