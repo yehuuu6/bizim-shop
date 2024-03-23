@@ -1,10 +1,10 @@
-import axios from "axios";
-import { setNavbarWishItemCount } from "@/common/managers/shop/wishlistBtnsManager";
-import { setNavbarCartItemCount } from "@/common/managers/shop/cartBtnsManager";
-import { searchProducts } from "@/pages/shop/home/searchProduct";
+import axios from 'axios';
+import { setNavbarWishItemCount } from '@/common/managers/shop/wishlistBtnsManager';
+import { setNavbarCartItemCount } from '@/common/managers/shop/cartBtnsManager';
+import { searchProducts } from '@/pages/shop/home/searchProduct';
 
-import "./core.css";
-import "./utils.css";
+import './core.css';
+import './utils.css';
 
 setNavbarWishItemCount();
 setNavbarCartItemCount();
@@ -14,29 +14,29 @@ searchProducts();
 // Cookie consent
 
 const cookieContainer = document.querySelector(
-  ".cookie-container"
+  '.cookie-container'
 ) as HTMLDivElement;
-const cookieButton = document.querySelector(".cookie-btn") as HTMLButtonElement;
+const cookieButton = document.querySelector('.cookie-btn') as HTMLButtonElement;
 const scrollPosition = parseInt(
-  sessionStorage.getItem("scrollPosition") || "0"
+  sessionStorage.getItem('scrollPosition') || '0'
 );
 
 // Hide cookie banner if user has already accepted cookies
-cookieButton.addEventListener("click", () => {
-  cookieContainer.classList.remove("active");
-  localStorage.setItem("cookies", "true");
+cookieButton.addEventListener('click', () => {
+  cookieContainer.classList.remove('active');
+  localStorage.setItem('cookies', 'true');
 });
 
 // Set cookie to active immediately if user is changing page
 if (!isNaN(scrollPosition)) {
-  if (!localStorage.getItem("cookies")) {
-    cookieContainer.classList.add("active");
+  if (!localStorage.getItem('cookies')) {
+    cookieContainer.classList.add('active');
   }
 } else {
   // Set cookie to active after 2 seconds if user loads page for the first time
   setTimeout(() => {
-    if (!localStorage.getItem("cookies")) {
-      cookieContainer.classList.add("active");
+    if (!localStorage.getItem('cookies')) {
+      cookieContainer.classList.add('active');
     }
   }, 2000);
 }
@@ -51,36 +51,70 @@ function isInViewport(element: HTMLElement) {
   );
 }
 
-window.addEventListener("scroll", function () {
+window.addEventListener('scroll', function () {
   const targetDiv = document.querySelector(
-    ".maintenance-info"
+    '.maintenance-info'
   ) as HTMLDivElement;
-  const placeHolder = document.querySelector(".placeholder") as HTMLDivElement;
+  const placeHolder = document.querySelector('.placeholder') as HTMLDivElement;
   if (placeHolder && targetDiv && !isInViewport(placeHolder)) {
-    targetDiv.classList.add("fixed");
-    targetDiv.style.display = "flex";
+    targetDiv.classList.add('fixed');
+    targetDiv.style.display = 'flex';
   }
   if (placeHolder && targetDiv && window.scrollY === 0) {
-    targetDiv.classList.remove("fixed");
-    targetDiv.style.display = "none";
+    targetDiv.classList.remove('fixed');
+    targetDiv.style.display = 'none';
   }
+});
+
+// Category selector events
+
+const categoryContainer = document.querySelector(
+  '.categories-container'
+) as HTMLDivElement;
+
+const categoryLinks = categoryContainer.querySelectorAll(
+  'a'
+) as NodeListOf<HTMLAnchorElement>;
+
+// On hover for each link, add active class to the link and remove it from the rest
+categoryLinks.forEach((link) => {
+  const linkParent = link.parentElement as HTMLLIElement;
+  const dropDownMenu = linkParent.querySelector(
+    '.sub-category-lister'
+  ) as HTMLUListElement;
+
+  link.addEventListener('mouseover', () => {
+    if (dropDownMenu) {
+      dropDownMenu.addEventListener('mouseover', () => {
+        link.classList.add('active');
+      });
+    }
+    categoryLinks.forEach((link) => {
+      link.classList.remove('active');
+    });
+    link.classList.add('active');
+  });
+
+  linkParent.addEventListener('mouseout', () => {
+    link.classList.remove('active');
+  });
 });
 
 // TEST ZONE
 
-const monitor = document.querySelector("#monitor") as HTMLDivElement;
+const monitor = document.querySelector('#monitor') as HTMLDivElement;
 const placeOrderBtn = document.querySelector(
-  "#place-order-btn"
+  '#place-order-btn'
 ) as HTMLButtonElement;
 
 if (placeOrderBtn) {
-  placeOrderBtn.addEventListener("click", () => {
+  placeOrderBtn.addEventListener('click', () => {
     const response = axios({
-      url: "/api/utility/place-order.php",
-      method: "post",
+      url: '/api/utility/place-order.php',
+      method: 'post',
       headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "multipart/form-data",
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'multipart/form-data',
       },
       data: {
         user_id: 9,
