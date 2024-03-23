@@ -78,3 +78,18 @@ filterForm.addEventListener('submit', function (e) {
 });
 
 setProducts(filterForm);
+window.addEventListener('scroll', () => {
+  const pContainer = document.querySelector(
+    '#product-lister'
+  ) as HTMLDivElement;
+  const stickyElement = document.querySelector('#filters') as HTMLDivElement;
+  const stickyPoint = pContainer.offsetTop;
+  const bottomLimit = pContainer.offsetTop + pContainer.offsetHeight;
+
+  if (
+    window.scrollY >= stickyPoint &&
+    window.scrollY + stickyElement.offsetHeight < bottomLimit
+  ) {
+    stickyElement.classList.add('sticky');
+  }
+});
