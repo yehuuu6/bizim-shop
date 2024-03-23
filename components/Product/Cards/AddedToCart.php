@@ -15,7 +15,7 @@ class AddedToCart extends Component
   public function __construct(array $product)
   {
     $product['shipment'] === '1' ? $shipping_cost = 0 : $shipping_cost = $product['shipping_cost'];
-    $shipping_cost = number_format($shipping_cost, 2);
+    $shipping_cost = number_format($shipping_cost, 2, '.', '');
 
     $short_desc = parent::shorten_string($product['description'], 100);
 
