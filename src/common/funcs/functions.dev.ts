@@ -4,7 +4,6 @@ import {
   isEditMode,
 } from '@/pages/control-center/dashboard';
 import { getSearchUser } from '@/pages/control-center/dashboard/users';
-import { getSearchOrder } from '@/pages/control-center/dashboard/orders';
 import { trimSentence } from './functions.usr';
 import axios from 'axios';
 
@@ -28,30 +27,6 @@ export function runSearchProducts(searchProductInput: HTMLInputElement) {
     'input',
     debounce(() => {
       getSearchProduct();
-    }, 300)
-  ); // Debounce the input event to trigger after the user stops typing
-}
-
-export function runSearchOrders(searchOrderInput: HTMLInputElement) {
-  let orderSearchInterval: any = null;
-  // Set interval on focus to search input and clear it when it's not focused
-  searchOrderInput.addEventListener('focus', () => {
-    if (!orderSearchInterval) {
-      orderSearchInterval = setInterval(() => {
-        getSearchOrder();
-      }, 300); // Throttle the calls to every 300 milliseconds
-    }
-  });
-
-  searchOrderInput.addEventListener('blur', () => {
-    clearInterval(orderSearchInterval);
-    orderSearchInterval = null; // Reset the interval variable
-  });
-
-  searchOrderInput.addEventListener(
-    'input',
-    debounce(() => {
-      getSearchOrder();
     }, 300)
   ); // Debounce the input event to trigger after the user stops typing
 }
@@ -86,42 +61,6 @@ function debounce(callback: any, delay: number) {
     clearTimeout(timer);
     timer = setTimeout(callback, delay);
   };
-}
-
-// 0 = Beklemede, 1 = Hazırlanıyor, 2 = Kargoya Verildi, 3 = Teslim Edildi, 4 = İptal Edildi, 5 = İade Edildi, 6 = Tamamlandı, 7 = Tamamlanmadı
-export function setOrderStatus(status: string) {
-  let statusText: string | undefined = 'Hata';
-
-  switch (status) {
-    case '0':
-      statusText = 'Beklemede';
-      break;
-    case '1':
-      statusText = 'Hazırlanıyor';
-      break;
-    case '2':
-      statusText = 'Kargoya Verildi';
-      break;
-    case '3':
-      statusText = 'Teslim Edildi';
-      break;
-    case '4':
-      statusText = 'İptal Edildi';
-      break;
-    case '5':
-      statusText = 'İade Edildi';
-      break;
-    case '6':
-      statusText = 'Tamamlandı';
-      break;
-    case '7':
-      statusText = 'Tamamlanmadı';
-      break;
-    default:
-      statusText = 'Hata';
-      break;
-  }
-  return statusText;
 }
 
 export function setStatus(status: string) {
