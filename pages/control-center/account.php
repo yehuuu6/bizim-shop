@@ -220,9 +220,10 @@ $door = $row['door'];
                         <thead>
                             <tr>
                                 <th width="1%">#</th>
-                                <th width="10%">Ürün</th>
+                                <th width="20%">Ürün</th>
                                 <th width="5%">Fiyat</th>
-                                <th width="3%">Durum</th>
+                                <th width="5%">Durum</th>
+                                <th width="5%">Tarih</th>
                                 <th width="10%">Eylemler</th>
                             </tr>
                         </thead>
