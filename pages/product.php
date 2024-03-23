@@ -31,7 +31,7 @@ if (!$products_data) {
 
 $title = "{$products_data[0]['name']} - Bizim Shop";
 $tags = "{$products_data[0]['tags']}";
-$description = "{$products_data[0]['description']}";
+$description = htmlspecialchars($products_data[0]['description']);
 $styles = [
     "/dist/shop/product/9k25c1l2zki6a0e1n7q6.css"
 ];
@@ -253,7 +253,7 @@ function render_badges(array $product)
             </div>
             <div class="detail">
                 <article class="product-description">
-                    <?= $product['description'] ?>
+                    <?= nl2br($description) ?>
                 </article>
             </div>
             <div class="detail badges">
@@ -280,6 +280,7 @@ function render_badges(array $product)
             <div class="questions">
                 <div class="question" id="no-question">
                     <h3>Henüz hiç soru sorulmamış.</h3>
+                    <p>İlk soruyu siz sorun!</p>
                 </div>
             </div>
             <button style="display:none" class="load-more-questions">Daha fazla soru gör</button>
