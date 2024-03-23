@@ -16,6 +16,7 @@ import IProduct from '@/common/interfaces/utility/IProduct';
 import router from './Router';
 import initStats from './init/InitStats';
 import initCategories from './init/InitCategory';
+import InitOrders from '@/pages/control-center/dashboard/orders';
 
 // CSS
 import '../dashboard.css';
@@ -417,6 +418,8 @@ maintenanceBtn.addEventListener('click', () => {
       maintenanceStatus === 'true' ? 'Bakım Modundan Çık' : 'Bakım Moduna Al';
   });
 });
+
+InitOrders();
 
 // Category controller
 
