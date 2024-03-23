@@ -490,7 +490,7 @@ $row = mysqli_fetch_assoc($res);
             <thead>
               <tr>
                 <th width="1%">#</th>
-                <th width="5%">Sipariş</th>
+                <th width="5%">Sipariş Veren</th>
                 <th width="20%">Ürün</th>
                 <th width="5%">Fiyat</th>
                 <th width="5%">Durum</th>
