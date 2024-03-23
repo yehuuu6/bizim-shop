@@ -42,6 +42,12 @@ $floor = get_safe_value($con, $_POST['floor']);
 $door = get_safe_value($con, $_POST['door']);
 $avatar = $_FILES['avatar-input'];
 
+foreach ($_POST as $key => $value) {
+    if (empty($value)) {
+        send_error_response('Lütfen tüm alanları doldurunuz.', $key);
+    }
+}
+
 $sql = "SELECT profile_image,submissions, last_submission FROM users WHERE id = '$id'";
 $res = mysqli_query($con, $sql);
 $row = mysqli_fetch_assoc($res);
@@ -98,6 +104,11 @@ if ($id != '') {
         $sql = "UPDATE users SET name='$name', surname='$surname', profile_image='$avatar_name', door='$door', apartment='$apartment',floor='$floor', city='$city', district='$district', submissions='$submissions', telephone='$telephone', address='$address' WHERE id='$id'";
         mysqli_query($con, $sql);
         send_success_response("Profil bilgileriniz başarıyla güncellendi.");
+        if ($_SESSION['name'] != $name || $_SESSION['surname'] != $surname) {
+            $_SESSION['name'] = $name;
+            $_SESSION['surname'] = $surname;
+            $_SESSION['username'] = $name . ' ' . $surname;
+        }
     } else {
         send_error_response('Çok fazla istek gönderdiniz. Lütfen 5 dakika sonra tekrar deneyin.');
     }
