@@ -13,6 +13,8 @@ class Question extends Component
 
     public function __construct(string $qid, string $question, string $answer, string $date, array $user)
     {
+        $question = htmlspecialchars($question);
+        $question = nl2br($question);
         $avatar = $this->get_image_src($user['avatar']);
         $this->body = <<<HTML
             <div class="question" data-id="{$qid}">
