@@ -10,9 +10,25 @@ if (!defined('FILE_ACCESS')) {
 function get_safe_value(mysqli $con, ?string $str)
 {
     if ($str != '') {
-        $str = trim($str);
+        $str = stripslashes($str);
         return mysqli_real_escape_string($con, $str);
     }
+}
+
+/**
+ * Create a function that converts /r/n to <br> tags for example.
+ * It must make the string fully readable in the textarea just like the user typed it.
+ * At the moment, we use ', " and line breaks on textarea but when we pull the data back,
+ * we see /'s and /"s and /r/n's. We need to convert them back to ', " and line breaks.
+ */
+function fix_strings(array $row)
+{
+    foreach ($row as $key => $value) {
+        $value = str_replace("\\r\\n", "\n", $value);
+        $value = stripslashes($value);
+        $row[$key] = $value;
+    }
+    return $row;
 }
 
 function get_date(string $raw)
@@ -119,6 +135,10 @@ function get_permission(int $perm)
  */
 function convert_name(?string $str)
 {
+    // if str is null, return empty string
+    if ($str == null) {
+        return '';
+    }
     $search = array('Ç', 'ç', 'Ğ', 'ğ', 'ı', 'İ', 'Ö', 'ö', 'Ş', 'ş', 'Ü', 'ü', ' ', '-');
     $replace = array('c', 'c', 'g', 'g', 'i', 'i', 'o', 'o', 's', 's', 'u', 'u', '_', '_');
     $str = str_replace($search, $replace, $str);
@@ -317,7 +337,7 @@ function send_success_response(string $log)
 function reset_submission_counts(mysqli $con, int $submissions, int $last_sub, int $id)
 {
     if (time() - $last_sub > 300) {
-        $submissions  = 0;
+        $submissions = 0;
         $sql = "UPDATE users SET submissions = 0, last_submission = " . time() . " WHERE id = ?";
         $stmt = mysqli_prepare($con, $sql);
         mysqli_stmt_bind_param($stmt, "i", $id);
@@ -326,21 +346,6 @@ function reset_submission_counts(mysqli $con, int $submissions, int $last_sub, i
     }
     return $submissions;
 }
-
-/**
- * Converts sql escaped strings to normal strings.
- */
-function fix_strings(array $row)
-{
-    $row['name'] = str_replace("\\'", "'", $row['name']);
-    $row['tags'] = str_replace("\\'", "'", $row['tags']);
-    $row['description'] = str_replace("\\'", "'", $row['description']);
-    $row['description'] = str_replace("\\r\\n", "<br>", $row['description']);
-    // Do the same for \\"
-    $row['description'] = str_replace('\\"', '"', $row['description']);
-    return $row;
-}
-
 
 /**
  * Gets products from the database based on the given parameters.
@@ -358,7 +363,7 @@ function fix_strings(array $row)
  * @param string $props['shipping'] The shipping status of the products.
  * @param string $props['min_price'] The minimum price of the products.
  * @param string $props['max_price'] The maximum price of the products.
- * 
+ *
  * @return array
  */
 
@@ -381,8 +386,24 @@ function get_products(mysqli $con, $props = [])
 
     $sql = "SELECT * ";
     $sql .= "FROM product WHERE (name LIKE '%$search%' OR root_name LIKE '%$search%' OR description LIKE '%$search%' OR tags LIKE '%$search%') ";
-    $sql .= "AND category LIKE '%$category%' AND subcategory LIKE '%$sub_category%' AND status LIKE '%$status%' ";
-    $sql .= "AND featured LIKE '%$featured%' AND price BETWEEN $min_price AND $max_price AND shipment LIKE '%$shipment%' ";
+
+    if ($category !== '') {
+        $sql .= "AND category = '$category' ";
+    }
+    if ($sub_category !== '') {
+        $sql .= "AND subcategory = '$sub_category' ";
+    }
+    if ($status !== '') {
+        $sql .= "AND status = '$status' ";
+    }
+    if ($featured !== '') {
+        $sql .= "AND featured = '$featured' ";
+    }
+    if ($shipment !== '') {
+        $sql .= "AND shipment = '$shipment' ";
+    }
+
+    $sql .= "AND price BETWEEN $min_price AND $max_price ";
 
     if ($id !== '') {
         $sql .= "AND id = $id ";
