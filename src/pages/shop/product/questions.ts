@@ -18,7 +18,7 @@ window.addEventListener('scroll', () => {
   const godWrapper = document.querySelector(
     '.questions-wrapper'
   ) as HTMLDivElement;
-  const stickyPoint = qWrapper.offsetTop;
+  const stickyPoint = godWrapper.offsetTop;
   const bottomLimit = godWrapper.offsetTop + godWrapper.offsetHeight;
 
   if (
@@ -26,8 +26,6 @@ window.addEventListener('scroll', () => {
     window.scrollY + qForm.offsetHeight < bottomLimit
   ) {
     qForm.classList.add('sticky');
-  } else {
-    qForm.classList.remove('sticky');
   }
 });
 
