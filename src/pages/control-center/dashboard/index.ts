@@ -102,36 +102,61 @@ deleteNotificationBtn.addEventListener('click', () => {
 
 // FUNCTIONS START
 
+let oldSearch = '';
+
 function getSearchProduct() {
-  rowNumberProducts.value = 0;
   const search = searchInput.value.trim().toLowerCase();
-  productTable.innerHTML = '';
-  if (search.length > 0) {
-    const matchingProducts = currentProducts.value.filter(
-      (product: IProduct) =>
-        product['name'].toLowerCase().includes(search) ||
-        product['tags'].toLowerCase().includes(search) ||
-        product['description'].toLowerCase().includes(search)
-    );
-    if (matchingProducts.length === 0) {
+
+  if (search === oldSearch) {
+    return;
+  } else if (search.length <= 0) {
+    loadFirstProducts();
+    oldSearch = search;
+    return;
+  }
+
+  productMore.classList.remove('disabled');
+  productMore.disabled = false;
+
+  sqlOffset = 0;
+
+  oldSearch = search;
+
+  const formData = new FormData();
+  formData.append('search', search);
+  formData.append('offset', '0');
+  formData.append('limit', productLimit.toString());
+
+  ManageProductsPage.sendApiRequest(
+    '/api/dashboard/product/load-products.php',
+    formData
+  ).then((response) => {
+    const products = response;
+    if (products === undefined || products.length === 0) {
+      productTable.innerHTML = '';
       productTable.innerHTML = `
         <tr>
           <td colspan="7">Hiçbir ürün bulunamadı</td>
         </tr>
       `;
-    } else {
-      matchingProducts.forEach((product) => {
-        productTable.appendChild(createProductTable(product));
-      });
+      return;
     }
-  } else {
-    currentProducts.value.forEach((product) => {
+
+    rowNumberProducts.value = 0;
+    currentProducts.value = [];
+    productTable.innerHTML = '';
+
+    products.forEach((product: IProduct) => {
+      currentProducts.value.push(product);
       productTable.appendChild(createProductTable(product));
     });
-  }
+  });
 }
 
 async function loadFirstProducts() {
+  sqlOffset = 0;
+  searchInput.value = '';
+  rowNumberProducts.value = 0;
   currentProducts.value = [];
   productMore.classList.remove('disabled');
   productMore.disabled = false;
@@ -146,7 +171,15 @@ async function loadFirstProducts() {
   );
 
   const products = response;
-
+  if (products === undefined || products.length === 0) {
+    productTable.innerHTML = '';
+    productTable.innerHTML = `
+      <tr>
+        <td colspan="7">Hiçbir ürün bulunamadı</td>
+      </tr>
+    `;
+    return;
+  }
   if (products !== undefined || products.length !== 0) {
     products.forEach((product: IProduct) => {
       currentProducts.value.push(product);
@@ -159,9 +192,6 @@ runSearchProducts(searchInput);
 
 function refreshProducts() {
   loadFirstProducts();
-  searchInput.value = '';
-  sqlOffset = 0;
-  rowNumberProducts.value = 0;
 }
 
 productRefreshBtn.addEventListener('click', () => {
@@ -183,11 +213,12 @@ productRefreshBtn.addEventListener('click', () => {
 
 loadFirstProducts();
 
-// Load 5 more products on click
+// Load 30 more products on click
 productMore.addEventListener('click', function (e) {
   e.preventDefault();
   sqlOffset += productLimit;
   const formData = new FormData();
+  formData.append('search', searchInput.value.trim().toLowerCase());
   formData.append('offset', sqlOffset.toString());
   formData.append('limit', productLimit.toString());
   ManageProductsPage.sendApiRequest(

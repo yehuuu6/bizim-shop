@@ -1,9 +1,9 @@
 import createUserTable, {
   UserInterface,
   rowNumberUsers,
-} from "./tables/UserTable";
-import PanelClass from "@/classes/PanelController";
-import { runSearchUsers } from "@/common/funcs/functions.dev";
+} from './tables/UserTable';
+import PanelClass from '@/classes/PanelController';
+import { runSearchUsers } from '@/common/funcs/functions.dev';
 
 // VARIABLES START
 
@@ -12,21 +12,22 @@ const currentUsers: { value: UserInterface[] } = {
   value: [],
 };
 
-let sqlOffset = 5;
+let sqlOffset = 0;
+let userLimit = 30;
 
 // Manage Users Page
 
 const userMore = document.querySelector(
-  "#load-more-users"
+  '#load-more-users'
 ) as HTMLButtonElement;
 const userTable = document.querySelector(
-  "#users-table tbody"
+  '#users-table tbody'
 ) as HTMLTableSectionElement;
-const userLoader = document.querySelector("#loader-users") as HTMLDivElement;
+const userLoader = document.querySelector('#loader-users') as HTMLDivElement;
 const userRefresh = document.querySelector(
-  "#refresh-users"
+  '#refresh-users'
 ) as HTMLButtonElement;
-const searchInput = document.querySelector("#search-user") as HTMLInputElement;
+const searchInput = document.querySelector('#search-user') as HTMLInputElement;
 
 const ManageUsersPage = new PanelClass(userLoader);
 
@@ -34,54 +35,85 @@ const ManageUsersPage = new PanelClass(userLoader);
 
 // FUNCTIONS START
 
+let oldSearch = '';
+
 function getSearchUser() {
-  rowNumberUsers.value = 0;
   const search = searchInput.value.trim().toLowerCase();
 
-  userTable.innerHTML = "";
+  if (search === oldSearch) {
+    return;
+  } else if (search.length <= 0) {
+    loadFirstUsers();
+    oldSearch = search;
+    return;
+  }
 
-  if (search.length > 0) {
-    const matchingUsers = currentUsers.value.filter(
-      (user: UserInterface) =>
-        user["userName"].toLowerCase().includes(search) ||
-        user["email"].toLowerCase().includes(search) ||
-        user["telephone"].toLowerCase().includes(search)
-    );
+  userMore.classList.add('disabled');
+  userMore.disabled = true;
 
-    if (matchingUsers.length === 0) {
+  sqlOffset = 0;
+
+  oldSearch = search;
+
+  const formData = new FormData();
+  formData.append('search', search);
+  formData.append('offset', '0');
+  formData.append('limit', userLimit.toString());
+
+  ManageUsersPage.sendApiRequest(
+    '/api/dashboard/users/load-users.php',
+    formData
+  ).then((response) => {
+    const users = response;
+    if (users === undefined || users.length === 0) {
+      userTable.innerHTML = '';
       userTable.innerHTML = `
         <tr>
-          <td colspan="7">Hiçbir kullanıcı bulunamadı.</td>
+          <td colspan="6" class="text-center">Kullanıcı bulunamadı.</td>
         </tr>
       `;
-    } else {
-      matchingUsers.forEach((user) => {
-        userTable.appendChild(createUserTable(user));
-      });
+      return;
     }
-  } else {
-    currentUsers.value.forEach((user) => {
+    rowNumberUsers.value = 0;
+    currentUsers.value = [];
+    userTable.innerHTML = '';
+
+    users.forEach((user: UserInterface) => {
+      currentUsers.value.push(user);
       userTable.appendChild(createUserTable(user));
     });
-  }
+  });
 }
 
 // FUNCTIONS END
 
 async function loadFirstUsers() {
+  sqlOffset = 0;
+  rowNumberUsers.value = 0;
+  searchInput.value = '';
   currentUsers.value = [];
-  userMore.classList.remove("disabled");
+  userMore.classList.remove('disabled');
   userMore.disabled = false;
-  userTable.innerHTML = "";
+  userTable.innerHTML = '';
 
   const formData = new FormData();
-  formData.append("start", "0");
+  formData.append('offset', '0');
+  formData.append('limit', userLimit.toString());
   const response = await ManageUsersPage.sendApiRequest(
-    "/api/dashboard/users/load-users.php",
+    '/api/dashboard/users/load-users.php',
     formData
   );
 
   const users = response;
+
+  if (users === undefined || users.length === 0) {
+    userTable.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-center">Kullanıcı bulunamadı.</td>
+      </tr>
+    `;
+    return;
+  }
 
   if (users !== undefined || users.length !== 0) {
     users.forEach((user: UserInterface) => {
@@ -95,40 +127,40 @@ runSearchUsers(searchInput);
 
 function refreshUsers() {
   loadFirstUsers();
-  ManageUsersPage.clearLogger();
-  searchInput.value = "";
-  sqlOffset = 5;
-  rowNumberUsers.value = 0;
 }
 
-userRefresh.addEventListener("click", () => {
+userRefresh.addEventListener('click', () => {
   refreshUsers();
 });
 
 (
   document.querySelector('div[data-name="users"]') as HTMLDivElement
-).addEventListener("click", () => {
+).addEventListener('click', () => {
   refreshUsers();
 });
 // Load first 5 users on page load
 loadFirstUsers();
 
-userMore.addEventListener("click", function (e) {
+userMore.addEventListener('click', function (e) {
   e.preventDefault();
+  sqlOffset += userLimit;
   const formData = new FormData();
-  formData.append("start", sqlOffset.toString());
+  formData.append('search', searchInput.value.trim().toLowerCase());
+  formData.append('offset', sqlOffset.toString());
+  formData.append('limit', userLimit.toString());
   ManageUsersPage.sendApiRequest(
-    "/api/dashboard/users/load-users.php",
+    '/api/dashboard/users/load-users.php',
     formData
   ).then((response) => {
     let users = response;
     if (users === undefined || users.length === 0) {
-      userMore.classList.add("disabled");
+      userMore.classList.add('disabled');
       userMore.disabled = true;
+      sqlOffset -= userLimit;
       ManageUsersPage.showMessage([
-        "error",
-        "Daha fazla kullanıcı bulunamadı.",
-        "none",
+        'error',
+        'Daha fazla kullanıcı bulunamadı.',
+        'none',
       ]);
     } else {
       for (let i = 0; i < users.length; i++) {
@@ -136,13 +168,12 @@ userMore.addEventListener("click", function (e) {
         currentUsers.value.push(user);
         userTable.append(createUserTable(user));
         ManageUsersPage.showMessage([
-          "success",
-          "5 ürün başarıyla yüklendi.",
-          "none",
+          'success',
+          `${userLimit} kullanıcı başarıyla yüklendi.`,
+          'none',
         ]);
       }
     }
-    sqlOffset += 5;
   });
 });
 
