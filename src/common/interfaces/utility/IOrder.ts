@@ -3,7 +3,8 @@ export interface IOrder {
   uid: string;
   pid: string;
   status: string;
-  user_name: string;
-  product_name: string;
-  product_price: string;
+  username: string;
+  product: string;
+  date: string;
+  price: string;
 }
