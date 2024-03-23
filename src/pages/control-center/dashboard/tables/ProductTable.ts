@@ -10,7 +10,6 @@ import {
   setStatus,
   addImageInput,
   quitEditMode,
-  setSubCategories,
 } from '@/common/funcs/functions.dev';
 import router from '@/pages/control-center/dashboard/Router';
 import { trimSentence } from '@/common/funcs/functions.usr';
@@ -27,6 +26,10 @@ export const rowNumberProducts = {
   value: 0,
 };
 
+const productsTable = document.querySelector(
+  '#products-table'
+) as HTMLTableElement;
+
 export function createProductTable(product: IProduct) {
   // Create table row
   const tr = document.createElement('tr');
@@ -40,7 +43,7 @@ export function createProductTable(product: IProduct) {
       <form class="table-form" data-id="${product.id}">
         <button data-action="status" class="dashboard-btn ${
           product.status === '1' ? 'status-btn' : 'success-btn'
-        }">${product.status === '1' ? 'Satıldı' : 'Satışta'}</button>
+        }">${product.status === '1' ? 'Arşivle' : 'Listele'}</button>
         <button data-action="edit" class="dashboard-btn edit-btn">Düzenle</button>
         <button data-action="delete" class="dashboard-btn delete-btn">Sil</button>
       </form>
@@ -76,7 +79,7 @@ export function createProductTable(product: IProduct) {
       if (response[0] === 'success') {
         product.status = newStatus;
         (e.target as HTMLElement).innerText =
-          newStatus === '1' ? 'Satıldı' : 'Satışta';
+          newStatus === '1' ? 'Arşivle' : 'Listele';
         (tr.querySelector("[data-mission='status']") as HTMLElement).innerText =
           setStatus(newStatus);
         (e.target as HTMLElement).className = `dashboard-btn ${
@@ -113,7 +116,7 @@ function deleteProduct(product: IProduct) {
           (p: IProduct) => p.id !== product.id
         );
 
-        const child = document.querySelector(`[data-id="${product.id}"]`);
+        const child = productsTable.querySelector(`[data-id="${product.id}"]`);
         if (child) {
           (
             (child.parentElement as HTMLElement).parentElement as HTMLElement
