@@ -128,10 +128,10 @@ export function setStatus(status: string) {
   let statusText = '';
   switch (status) {
     case '1':
-      statusText = 'Satılık';
+      statusText = 'Listeleniyor';
       break;
     case '0':
-      statusText = 'Satıldı';
+      statusText = 'Arşivlendi';
       break;
   }
   return statusText;
