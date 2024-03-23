@@ -22,16 +22,59 @@ if (isset($_POST['search'])) {
     $search = '';
 }
 
-$stmt = $con->prepare("SELECT * from orders LIMIT ? OFFSET ?");
-$stmt->bind_param("ii", $limit, $offset);
-$stmt->execute();
-$res = $stmt->get_result();
-$order_count = $res->num_rows;
-
-// Send order list to client
-if ($order_count > 0) {
-    while ($row = $res->fetch_assoc()) {
-        $result[] = $row;
-    }
+function get_product_data(mysqli $con, string $product_id)
+{
+    $sql = "SELECT name, price FROM product WHERE id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param('s', $product_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($name, $price);
+    $stmt->fetch();
+    $product = [
+        'name' => $name,
+        'price' => $price
+    ];
+    $stmt->close();
+    return $product;
 }
-echo json_encode($result);
+
+function get_user_data(mysqli $con, string $user_id)
+{
+    $sql = "SELECT name, surname FROM users WHERE id = ?";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param('s', $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($name, $surname);
+    $stmt->fetch();
+    $user = [
+        'name' => $name,
+        'surname' => $surname
+    ];
+    $stmt->close();
+    return $user;
+}
+
+try {
+    $sql = "SELECT * FROM orders LIMIT $limit OFFSET $offset";
+    $res = mysqli_query($con, $sql);
+    $orders = array();
+    while ($row = mysqli_fetch_assoc($res)) {
+        $product = get_product_data($con, $row['pid']);
+        $user = get_user_data($con, $row['uid']);
+        $order = [
+            'id' => $row['id'],
+            'username' => $user['name'] . ' ' . $user['surname'],
+            'product' => $product['name'],
+            'price' => $product['price'],
+            'date' => $row['date'],
+            'status' => $row['status']
+        ];
+        array_push($orders, $order);
+    }
+} catch (Exception $e) {
+    $orders = [$e->getMessage()];
+}
+
+echo json_encode($orders);
