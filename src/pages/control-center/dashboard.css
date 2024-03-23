@@ -865,7 +865,7 @@ input[type='file'] {
 }
 .form-content textarea {
   resize: none;
-  height: 125px;
+  height: 225px;
   padding: 10px;
   background-color: var(--input-bg-color);
   border-radius: 5px;
