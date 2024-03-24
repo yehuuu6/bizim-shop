@@ -69,7 +69,7 @@ if ($is_editing) {
 }
 
 $validations = [
-    ['Ürün adı', $name, 6, 100, 'product-name'],
+    ['Ürün adı', $name, 6, 250, 'product-name'],
     ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
     ['Ürün açıklaması', $description, 50, 2000, 'product-description']
 ];
