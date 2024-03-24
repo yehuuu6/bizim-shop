@@ -54,6 +54,14 @@ export function setOrderStatus(status: string) {
   return statusText;
 }
 
+export function debounce(callback: any, delay: number) {
+  let timer: any;
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(callback, delay);
+  };
+}
+
 export function clearAvatarInput() {
   const avatarInput: HTMLInputElement =
     document.querySelector('#avatar-input')!;

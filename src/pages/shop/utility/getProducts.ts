@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
-import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
+import { setWishlistBtns } from '@/pages/shop/wishlist/wishlistBtnsManager';
+import { setAddToCartBtns } from '@/pages/shop/cart/cartBtnsManager';
 
 // Get page number from url
 const url = new URL(window.location.href);

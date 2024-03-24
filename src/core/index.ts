@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { setNavbarWishItemCount } from '@/common/managers/shop/wishlistBtnsManager';
-import { setNavbarCartItemCount } from '@/common/managers/shop/cartBtnsManager';
+import { setNavbarWishItemCount } from '@/pages/shop/wishlist/wishlistBtnsManager';
+import { setNavbarCartItemCount } from '@/pages/shop/cart/cartBtnsManager';
 import { searchProducts } from '@/pages/shop/home/searchProduct';
 
 import './core.css';

@@ -5,16 +5,14 @@ import { getApiResponse, clearAvatarInput } from '@/common/funcs/functions.usr';
 import '@/pages/control-center/dashboard.css';
 import '@/core/utils.css';
 
-import InitOrders from '@/pages/control-center/account/orders';
+import InitOrders from '@/pages/control-center/account/init/orders/InitOrders';
+import InitMenuManager from '@/pages/control-center/menuManager';
+import InitThemeManager from '@/pages/control-center/themeManager';
 
 import ICity from '@/common/interfaces/utility/ICity';
 import IDistrict from '@/common/interfaces/utility/IDistrict';
 import IProfile from '@/common/interfaces/utility/IProfile';
 import { Router } from './Router';
-
-Router.initialize();
-
-InitOrders();
 
 const mainLoader = document.querySelector('#main-loader') as HTMLDivElement;
 
@@ -193,43 +191,6 @@ deleteNotificationBtn.addEventListener('click', () => {
   ProfilePage.clearLogger();
 });
 
-// Theme selector
-const themeItems = document.querySelectorAll(
-  '.theme-item'
-) as NodeListOf<HTMLDivElement>;
-
-themeItems.forEach((item) => {
-  item.addEventListener('click', () => {
-    mainLoader.style.display = 'flex';
-    // Remove active class from all theme items and add it to clicked item
-    themeItems.forEach((item) => {
-      item.classList.remove('active-theme');
-      item.querySelector('input')!.checked = false;
-    });
-    item.classList.add('active-theme');
-    item.querySelector('input')!.checked = true;
-    localStorage.setItem('theme', item.dataset.theme as string);
-    setTimeout(() => {
-      mainLoader.style.display = 'none';
-    }, 450);
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Remove active class from all theme items
-  themeItems.forEach((item) => {
-    item.classList.remove('active-theme');
-    item.querySelector('input')!.checked = false;
-  });
-  // Add active class to theme item that matches with localStorage theme
-  themeItems.forEach((item) => {
-    if (item.dataset.theme === localStorage.getItem('theme')) {
-      item.classList.add('active-theme');
-      item.querySelector('input')!.checked = true;
-    }
-  });
-});
-
 // Settings panel
 const settingsBtn = document.querySelector('#settings') as HTMLButtonElement;
 // Settings container
@@ -247,4 +208,11 @@ settingsContainer.addEventListener('click', (e) => {
 // If clicked settings button, display block
 settingsBtn.addEventListener('click', () => {
   settingsContainer.style.display = 'flex';
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  Router.initialize();
+  InitMenuManager();
+  InitThemeManager();
+  InitOrders();
 });

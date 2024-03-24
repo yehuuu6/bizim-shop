@@ -1,26 +1,23 @@
 import PanelClass from '@/classes/PanelController';
 import ConfirmationModal from '@/common/modals/confirmation';
 import {
-  createProductTable,
-  clearImageInputs,
-  rowNumberProducts,
-} from './tables/ProductTable';
-import {
   addImageInput,
-  runSearchProducts,
   quitEditMode,
   cleanForm,
-  setSubCategories,
 } from '@/common/funcs/functions.dev';
-import IProduct from '@/common/interfaces/utility/IProduct';
 import router from './Router';
-import initStats from './init/InitStats';
-import initCategories from './init/InitCategory';
-import InitOrders from '@/pages/control-center/dashboard/orders';
+import InitStats from './init/InitStats';
+import InitCategories from './init/InitCategory';
+import InitOrders from '@/pages/control-center/dashboard/init/orders/InitOrders';
+import InitMenuManager from '@/pages/control-center/menuManager';
+import InitThemeManager from '@/pages/control-center/themeManager';
+import InitProducts, { refreshProducts } from './init/products/InitProducts';
+import { setSubCategories } from '@/common/funcs/functions.dev';
 
 // CSS
 import '../dashboard.css';
 import '@/core/utils.css';
+import InitUsers from './init/users/InitUsers';
 
 // Settings panel
 const settingsBtn = document.querySelector('#settings') as HTMLButtonElement;
@@ -28,9 +25,6 @@ const settingsBtn = document.querySelector('#settings') as HTMLButtonElement;
 const settingsContainer = document.querySelector(
   '.settings-container'
 ) as HTMLDivElement;
-
-// Set subcategories
-setSubCategories();
 
 // If clicked something other than .settings, display none
 settingsContainer.addEventListener('click', (e) => {
@@ -46,18 +40,12 @@ settingsBtn.addEventListener('click', () => {
 
 const { modal, modalText, modalBtn } = ConfirmationModal();
 
-const currentProducts: { value: IProduct[] } = {
-  value: [],
-};
 const isEditMode = {
   value: false,
 };
 const imageCount = {
   value: 1,
 };
-
-let sqlOffset = 0;
-let productLimit = 30;
 
 const cleanProductForm = document.querySelector(
   '#clean-create-form'
@@ -100,160 +88,6 @@ deleteNotificationBtn.addEventListener('click', () => {
 });
 
 // VARIABLES END
-
-// FUNCTIONS START
-
-let oldSearch = '';
-
-function getSearchProduct() {
-  const search = searchInput.value.trim().toLowerCase();
-
-  if (search === oldSearch) {
-    return;
-  } else if (search.length <= 0) {
-    loadFirstProducts();
-    oldSearch = search;
-    return;
-  }
-
-  productMore.classList.remove('disabled');
-  productMore.disabled = false;
-
-  sqlOffset = 0;
-
-  oldSearch = search;
-
-  const formData = new FormData();
-  formData.append('search', search);
-  formData.append('offset', '0');
-  formData.append('limit', productLimit.toString());
-
-  ManageProductsPage.sendApiRequest(
-    '/api/dashboard/product/load-products.php',
-    formData
-  ).then((response) => {
-    const products = response;
-    if (products === undefined || products.length === 0) {
-      productTable.innerHTML = '';
-      productTable.innerHTML = `
-        <tr>
-          <td colspan="7">Hiçbir ürün bulunamadı</td>
-        </tr>
-      `;
-      return;
-    }
-
-    rowNumberProducts.value = 0;
-    currentProducts.value = [];
-    productTable.innerHTML = '';
-
-    products.forEach((product: IProduct) => {
-      currentProducts.value.push(product);
-      productTable.appendChild(createProductTable(product));
-    });
-  });
-}
-
-async function loadFirstProducts() {
-  sqlOffset = 0;
-  searchInput.value = '';
-  rowNumberProducts.value = 0;
-  currentProducts.value = [];
-  productMore.classList.remove('disabled');
-  productMore.disabled = false;
-  productTable.innerHTML = '';
-
-  const formData = new FormData();
-  formData.append('offset', '0');
-  formData.append('limit', productLimit.toString());
-  const response = await ManageProductsPage.sendApiRequest(
-    '/api/dashboard/product/load-products.php',
-    formData
-  );
-
-  const products = response;
-  if (products === undefined || products.length === 0) {
-    productTable.innerHTML = '';
-    productTable.innerHTML = `
-      <tr>
-        <td colspan="7">Hiçbir ürün bulunamadı</td>
-      </tr>
-    `;
-    return;
-  }
-  if (products !== undefined || products.length !== 0) {
-    products.forEach((product: IProduct) => {
-      currentProducts.value.push(product);
-      productTable.appendChild(createProductTable(product));
-    });
-  }
-}
-
-runSearchProducts(searchInput);
-
-function refreshProducts() {
-  loadFirstProducts();
-}
-
-productRefreshBtn.addEventListener('click', () => {
-  refreshProducts();
-});
-
-(
-  document.querySelector('div[data-name="products"]') as HTMLDivElement
-).addEventListener('click', () => {
-  refreshProducts();
-});
-(
-  document.querySelector('div[data-name="add-product"]') as HTMLDivElement
-).addEventListener('click', () => {
-  quitEditMode();
-  setSubCategories();
-  clearImageInputs();
-});
-
-loadFirstProducts();
-
-// Load 30 more products on click
-productMore.addEventListener('click', function (e) {
-  e.preventDefault();
-  sqlOffset += productLimit;
-  const formData = new FormData();
-  formData.append('search', searchInput.value.trim().toLowerCase());
-  formData.append('offset', sqlOffset.toString());
-  formData.append('limit', productLimit.toString());
-  ManageProductsPage.sendApiRequest(
-    '/api/dashboard/product/load-products.php',
-    formData
-  ).then((response) => {
-    let products = response;
-    if (products === undefined || products.length === 0) {
-      productMore.classList.add('disabled');
-      productMore.disabled = true;
-      sqlOffset -= productLimit;
-      ManageProductsPage.showMessage([
-        'error',
-        'Daha fazla ürün bulunamadı.',
-        'none',
-      ]);
-    } else {
-      for (let i = 0; i < products.length; i++) {
-        let product = products[i];
-        currentProducts.value.push(product);
-        productTable.append(createProductTable(product));
-        ManageProductsPage.showMessage([
-          'success',
-          `${productLimit} ürün başarıyla yüklendi.`,
-          'none',
-        ]);
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: 'smooth',
-        });
-      }
-    }
-  });
-});
 
 // Save product to database
 (document.getElementById('create-form') as HTMLFormElement).addEventListener(
@@ -375,7 +209,6 @@ addImageBtn.addEventListener('click', function (e) {
 addNewProduct.addEventListener('click', () => {
   const destination = document.querySelector('#add-product') as HTMLElement;
   router.loadPage('hash', destination.dataset.url!);
-  setSubCategories();
   quitEditMode();
 });
 
@@ -389,8 +222,14 @@ cleanProductForm.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  initStats();
-  initCategories();
+  setSubCategories(); // This is needed because at the first page load, if you edit a product, its sub category wont be selected without this.
+  InitStats();
+  InitCategories();
+  InitMenuManager();
+  InitThemeManager();
+  InitOrders();
+  InitProducts();
+  InitUsers();
 });
 
 // CREATE PRODUCT PAGE END
@@ -419,17 +258,8 @@ maintenanceBtn.addEventListener('click', () => {
   });
 });
 
-InitOrders();
-
 // Category controller
 
 // Exports
 
-export {
-  currentProducts,
-  isEditMode,
-  imageCount,
-  ManageProductsPage,
-  CreateProductPage,
-  getSearchProduct,
-};
+export { isEditMode, imageCount, ManageProductsPage, CreateProductPage };

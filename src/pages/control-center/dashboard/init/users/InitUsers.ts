@@ -1,9 +1,6 @@
-import createUserTable, {
-  UserInterface,
-  rowNumberUsers,
-} from './tables/UserTable';
+import createUserTable, { UserInterface, rowNumberUsers } from './UserTable';
 import PanelClass from '@/classes/PanelController';
-import { runSearchUsers } from '@/common/funcs/functions.dev';
+import { debounce } from '@/common/funcs/functions.usr';
 
 // VARIABLES START
 
@@ -34,6 +31,30 @@ const ManageUsersPage = new PanelClass(userLoader);
 // VARIABLES END
 
 // FUNCTIONS START
+
+function runSearchUsers(searchUserInput: HTMLInputElement) {
+  let userSearchInterval: any = null;
+  // Set interval on focus to search input and clear it when it's not focused
+  searchUserInput.addEventListener('focus', () => {
+    if (!userSearchInterval) {
+      userSearchInterval = setInterval(() => {
+        getSearchUser();
+      }, 300); // Throttle the calls to every 300 milliseconds
+    }
+  });
+
+  searchUserInput.addEventListener('blur', () => {
+    clearInterval(userSearchInterval);
+    userSearchInterval = null; // Reset the interval variable
+  });
+
+  searchUserInput.addEventListener(
+    'input',
+    debounce(() => {
+      getSearchUser();
+    }, 300)
+  ); // Debounce the input event to trigger after the user stops typing
+}
 
 let oldSearch = '';
 
@@ -66,7 +87,6 @@ function getSearchUser() {
   ).then((response) => {
     const users = response;
     if (users === undefined || users.length === 0) {
-      userTable.innerHTML = '';
       userTable.innerHTML = `
         <tr>
           <td colspan="6" class="text-center">Kullanıcı bulunamadı.</td>
@@ -123,8 +143,6 @@ async function loadFirstUsers() {
   }
 }
 
-runSearchUsers(searchInput);
-
 function refreshUsers() {
   loadFirstUsers();
 }
@@ -138,8 +156,6 @@ userRefresh.addEventListener('click', () => {
 ).addEventListener('click', () => {
   refreshUsers();
 });
-// Load first 5 users on page load
-loadFirstUsers();
 
 userMore.addEventListener('click', function (e) {
   e.preventDefault();
@@ -178,5 +194,10 @@ userMore.addEventListener('click', function (e) {
 });
 
 // Exports
+
+export default function InitUsers() {
+  runSearchUsers(searchInput);
+  loadFirstUsers();
+}
 
 export { currentUsers, getSearchUser, ManageUsersPage };

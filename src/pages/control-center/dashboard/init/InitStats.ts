@@ -1,25 +1,25 @@
-import axios from "axios";
-import IStats from "@/common/interfaces/utility/IStats";
+import axios from 'axios';
+import IStats from '@/common/interfaces/utility/IStats';
 
 /**
  * Initializes dashboard stats and renders them to the dom
  * @async
  * @returns void
  */
-const initStats = async () => {
+const InitStats = async () => {
   // Get data from api
   const { data }: IStats = await axios({
-    url: "/api/dashboard/stats.php",
-    method: "post",
+    url: '/api/dashboard/stats.php',
+    method: 'post',
     headers: {
-      "X-Requested-With": "XMLHttpRequest",
-      "Content-Type": "multipart/form-data",
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'multipart/form-data',
     },
   });
   // Get dom elements
-  const totalUsers = document.getElementById("total-users") as HTMLSpanElement;
+  const totalUsers = document.getElementById('total-users') as HTMLSpanElement;
   const totalOrders = document.getElementById(
-    "total-orders"
+    'total-orders'
   ) as HTMLSpanElement;
 
   const { total_users, total_orders } = data;
@@ -28,4 +28,4 @@ const initStats = async () => {
   totalOrders.innerText = total_orders.toString();
 };
 
-export default initStats;
+export default InitStats;

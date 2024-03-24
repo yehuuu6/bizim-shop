@@ -1,6 +1,6 @@
 import { getProductsById } from '@/pages/shop/utility/getProducts';
-import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
-import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
+import { setWishlistBtns } from '@/pages/shop/wishlist/wishlistBtnsManager';
+import { setAddToCartBtns } from '@/pages/shop/cart/cartBtnsManager';
 import { pullMyWishlist } from '@/common/funcs/functions.likes';
 
 const wishlistContainer = document.querySelector('.products') as HTMLDivElement;

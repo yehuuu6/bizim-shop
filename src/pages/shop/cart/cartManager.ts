@@ -1,5 +1,5 @@
 import { resetShowcases } from '.';
-import { setNavbarCartItemCount } from '@/common/managers/shop/cartBtnsManager';
+import { setNavbarCartItemCount } from '@/pages/shop/cart/cartBtnsManager';
 import { getProductsById } from '@/pages/shop/utility/getProducts';
 import axios from 'axios';
 

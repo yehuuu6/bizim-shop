@@ -18,7 +18,7 @@ const loaderSiteOptions = document.querySelector(
  * @async
  * @returns void
  */
-const initCategories = async () => {
+const InitCategories = async () => {
   loaderSiteOptions.style.display = 'flex';
   // Get data from api
   const categories_response = await axios({
@@ -120,7 +120,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
       const [type, message, cause] = response.data;
       if (type === 'success') {
         ManageProductsPage.showMessage(response.data);
-        initCategories();
+        InitCategories();
       } else {
         ManageProductsPage.showMessage(response.data);
       }
@@ -171,7 +171,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
       const [type, message, cause] = response.data;
       if (type === 'success') {
         ManageProductsPage.showMessage(response.data);
-        initCategories();
+        InitCategories();
       } else {
         ManageProductsPage.showMessage(response.data);
       }
@@ -299,7 +299,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
             const [type, message, cause] = response.data;
             if (type === 'success') {
               ManageProductsPage.showMessage(response.data);
-              initCategories();
+              InitCategories();
             } else {
               ManageProductsPage.showMessage(response.data);
             }
@@ -337,7 +337,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
               ManageProductsPage.showMessage(response.data);
               // Remove the category container from the dom
               subcategoryContainer.remove();
-              initCategories();
+              InitCategories();
             } else {
               ManageProductsPage.showMessage([
                 'error',
@@ -415,7 +415,7 @@ async function updateSubCategory(id: number, cid: number, name: string) {
   const [type, message, cause] = response.data;
   if (type === 'success') {
     ManageProductsPage.showMessage(response.data);
-    initCategories();
+    InitCategories();
   } else {
     ManageProductsPage.showMessage(response.data);
   }
@@ -445,10 +445,10 @@ addNewCategoryBtn.addEventListener('click', async () => {
   if (type === 'success') {
     ManageProductsPage.showMessage(response.data);
     newCategoryNameInput.value = '';
-    initCategories();
+    InitCategories();
   } else {
     ManageProductsPage.showMessage(response.data);
   }
 });
 
-export default initCategories;
+export default InitCategories;

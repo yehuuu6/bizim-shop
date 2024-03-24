@@ -1,67 +1,6 @@
-import {
-  getSearchProduct,
-  imageCount,
-  isEditMode,
-} from '@/pages/control-center/dashboard';
-import { getSearchUser } from '@/pages/control-center/dashboard/users';
-import { trimSentence } from './functions.usr';
+import { imageCount, isEditMode } from '@/pages/control-center/dashboard';
+import { trimSentence, debounce } from './functions.usr';
 import axios from 'axios';
-
-export function runSearchProducts(searchProductInput: HTMLInputElement) {
-  let productSearchInterval: any = null;
-  // Set interval on focus to search input and clear it when it's not focused
-  searchProductInput.addEventListener('focus', () => {
-    if (!productSearchInterval) {
-      productSearchInterval = setInterval(() => {
-        getSearchProduct();
-      }, 300); // Throttle the calls to every 300 milliseconds
-    }
-  });
-
-  searchProductInput.addEventListener('blur', () => {
-    clearInterval(productSearchInterval);
-    productSearchInterval = null; // Reset the interval variable
-  });
-
-  searchProductInput.addEventListener(
-    'input',
-    debounce(() => {
-      getSearchProduct();
-    }, 300)
-  ); // Debounce the input event to trigger after the user stops typing
-}
-
-export function runSearchUsers(searchUserInput: HTMLInputElement) {
-  let userSearchInterval: any = null;
-  // Set interval on focus to search input and clear it when it's not focused
-  searchUserInput.addEventListener('focus', () => {
-    if (!userSearchInterval) {
-      userSearchInterval = setInterval(() => {
-        getSearchUser();
-      }, 300); // Throttle the calls to every 300 milliseconds
-    }
-  });
-
-  searchUserInput.addEventListener('blur', () => {
-    clearInterval(userSearchInterval);
-    userSearchInterval = null; // Reset the interval variable
-  });
-
-  searchUserInput.addEventListener(
-    'input',
-    debounce(() => {
-      getSearchUser();
-    }, 300)
-  ); // Debounce the input event to trigger after the user stops typing
-}
-
-function debounce(callback: any, delay: number) {
-  let timer: any;
-  return function () {
-    clearTimeout(timer);
-    timer = setTimeout(callback, delay);
-  };
-}
 
 export function setStatus(status: string) {
   let statusText = '';

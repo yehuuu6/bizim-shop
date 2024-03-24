@@ -1,6 +1,6 @@
 import './product.css';
-import { setAddToCartBtns } from '@/common/managers/shop/cartBtnsManager';
-import { setWishlistBtns } from '@/common/managers/shop/wishlistBtnsManager';
+import { setAddToCartBtns } from '@/pages/shop/cart/cartBtnsManager';
+import { setWishlistBtns } from '@/pages/shop/wishlist/wishlistBtnsManager';
 import { initQuestions } from './questions';
 import axios from 'axios';
 

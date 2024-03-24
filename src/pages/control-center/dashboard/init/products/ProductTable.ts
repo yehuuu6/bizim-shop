@@ -1,10 +1,9 @@
 import {
-  currentProducts,
   CreateProductPage,
   ManageProductsPage,
   isEditMode,
   imageCount,
-} from '..'; // from index.ts
+} from '../..'; // from index.ts
 import ConfirmationModal from '@/common/modals/confirmation';
 import {
   setStatus,
@@ -13,6 +12,8 @@ import {
 } from '@/common/funcs/functions.dev';
 import router from '@/pages/control-center/dashboard/Router';
 import { trimSentence } from '@/common/funcs/functions.usr';
+
+import { currentProducts } from './InitProducts';
 
 import IProduct from '@/common/interfaces/utility/IProduct';
 
