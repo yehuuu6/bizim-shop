@@ -209,9 +209,9 @@ async function loadFirstQuestions() {
   }
 
   if (questions !== undefined || questions.length !== 0) {
-    questions.forEach((order: IQuestion) => {
-      currentQuestions.value.push(order);
-      questionTable.appendChild(createQuestionTable(order));
+    questions.forEach((question: IQuestion) => {
+      currentQuestions.value.push(question);
+      questionTable.appendChild(createQuestionTable(question));
     });
   }
 }
@@ -222,7 +222,7 @@ function refreshQuestions() {
 
 questionRefresh.addEventListener('click', refreshQuestions);
 (
-  document.querySelector('div[data-name="orders"]') as HTMLDivElement
+  document.querySelector('div[data-name="questions"]') as HTMLDivElement
 ).addEventListener('click', () => {
   refreshQuestions();
 });
