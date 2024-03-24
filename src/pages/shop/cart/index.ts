@@ -27,9 +27,8 @@ window.addEventListener('scroll', () => {
 /**
  * Updates product buttons in showcases.
  * @param productId ID of the product to be updated in showcases
- * @param type Type of the showcase to be updated (cart, wishlist)
  */
-export function resetShowcases(productId: string, type: string) {
+export function resetShowcases(productId: string) {
   const inCart = JSON.parse(localStorage.getItem('cart') || '[]');
   const showcases = document.querySelectorAll(
     '.product-showcase'
@@ -52,7 +51,7 @@ export function resetShowcases(productId: string, type: string) {
         btn.disabled = false;
       }
     }
-    if (productElement && type === 'cart') {
+    if (productElement) {
       updateCartBtns();
     }
   });

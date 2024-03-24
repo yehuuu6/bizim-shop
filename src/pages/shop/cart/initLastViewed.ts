@@ -48,19 +48,7 @@ export default function initLatestProducts() {
           const id = (btn.closest('.product') as HTMLDivElement).dataset
             .id as string;
           initShoppingCart();
-          resetShowcases(id, 'cart');
-        });
-      });
-
-      const wishlistBtns = lvpContainer.querySelectorAll(
-        "span[class^='add-wishlist']"
-      ) as NodeListOf<HTMLSpanElement>;
-
-      wishlistBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const id = (btn.closest('.product') as HTMLDivElement).dataset
-            .id as string;
-          resetShowcases(id, 'wishlist');
+          resetShowcases(id);
         });
       });
     });

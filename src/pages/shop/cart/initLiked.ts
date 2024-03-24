@@ -66,19 +66,7 @@ export default function initLikedProducts() {
             initShoppingCart();
             const id = (btn.closest('.product') as HTMLDivElement).dataset
               .id as string;
-            resetShowcases(id, 'cart');
-          });
-        });
-
-        const wishlistBtns = likedProductsContainer.querySelectorAll(
-          "span[class^='add-wishlist']"
-        ) as NodeListOf<HTMLSpanElement>;
-
-        wishlistBtns.forEach((btn) => {
-          btn.addEventListener('click', () => {
-            const id = (btn.closest('.product') as HTMLDivElement).dataset
-              .id as string;
-            resetShowcases(id, 'wishlist');
+            resetShowcases(id);
           });
         });
       });
