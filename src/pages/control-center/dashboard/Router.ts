@@ -11,6 +11,9 @@ const productPage = document.getElementById('manage-products') as HTMLElement;
 const createProduct = document.getElementById('add-product') as HTMLElement;
 const userPage = document.getElementById('manage-users') as HTMLElement;
 const ordersPage = document.getElementById('manage-orders') as HTMLElement;
+const questionsPage = document.getElementById(
+  'manage-questions'
+) as HTMLElement;
 
 let sections = [
   statPage,
@@ -19,6 +22,7 @@ let sections = [
   userPage,
   createProduct,
   ordersPage,
+  questionsPage,
 ];
 
 interface RouterInterface {
@@ -66,6 +70,9 @@ export class Router implements RouterInterface {
       case 'add-product':
         this.setPageContent(type, createProduct);
         setSubCategories();
+        break;
+      case 'questions':
+        this.setPageContent(type, questionsPage);
         break;
     }
   }
