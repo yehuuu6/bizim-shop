@@ -40,7 +40,9 @@ export function createProductTable(product: IProduct) {
   });
   tr.innerHTML = `
     <td>${++rowNumberProducts.value}</td>
-    <td>${product.name}</td>
+    <td><a href="http://localhost/product/${product.link}" target="_blank">${
+    product.name
+  }</a></td>
     <td>${product.sub_category_name}</td>
     <td>₺${readablePrice}</td>
     <td data-mission="status">${setStatus(product.status)}</td>
