@@ -112,34 +112,49 @@ export function calculateTotalPrice() {
     const type = element.dataset.type as string;
     switch (type) {
       case 'products':
+        let productText = totalProductPrice.toLocaleString('tr-TR', {
+          minimumFractionDigits: 2,
+        });
         element.innerHTML =
-          totalProductPrice.toFixed(2) +
-          ' <span class="product-currency">TL</span>';
+          productText + ' <span class="product-currency">TL</span>';
         break;
       case 'shipment':
         // Must return the old value if there is a discount, old value must be striked and red colored
         if (totalOldShippingPrice > 0) {
           const totalDiscount = totalOldShippingPrice + totalShippingPrice;
+          let discountText = totalDiscount.toLocaleString('tr-TR', {
+            minimumFractionDigits: 2,
+          });
+          let shippingText = totalShippingPrice.toLocaleString('tr-TR', {
+            minimumFractionDigits: 2,
+          });
           element.innerHTML =
             '<span title="Eski kargo fiyatı" class="old-price">' +
-            totalDiscount.toFixed(2) +
+            discountText +
             '</span> ' +
-            totalShippingPrice.toFixed(2) +
+            shippingText +
             ' <span class="product-currency">TL</span>';
         } else {
+          let shippingText = totalShippingPrice.toLocaleString('tr-TR', {
+            minimumFractionDigits: 2,
+          });
           element.innerHTML =
-            totalShippingPrice.toFixed(2) +
-            ' <span class="product-currency">TL</span>';
+            shippingText + ' <span class="product-currency">TL</span>';
         }
         break;
       case 'fee':
+        let feeText = totalFeePrice.toLocaleString('tr-TR', {
+          minimumFractionDigits: 2,
+        });
         element.innerHTML =
-          totalFeePrice.toFixed(2) +
-          ' <span class="product-currency">TL</span>';
+          feeText + ' <span class="product-currency">TL</span>';
         break;
       case 'total':
+        let totalPriceText = totalPrice.toLocaleString('tr-TR', {
+          minimumFractionDigits: 2,
+        });
         element.innerHTML =
-          totalPrice.toFixed(2) + ' <span class="product-currency">TL</span>';
+          totalPriceText + ' <span class="product-currency">TL</span>';
         break;
     }
   });
@@ -178,7 +193,7 @@ function removeFromLocalStorage(productId: string) {
 
   // Update the cart button
 
-  resetShowcases(productId, 'cart');
+  resetShowcases(productId);
 }
 
 function emptyShoppingCart() {

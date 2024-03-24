@@ -34,11 +34,15 @@ const productsTable = document.querySelector(
 export function createProductTable(product: IProduct) {
   // Create table row
   const tr = document.createElement('tr');
+  let price = parseFloat(product.price);
+  let readablePrice = price.toLocaleString('tr-TR', {
+    minimumFractionDigits: 2,
+  });
   tr.innerHTML = `
     <td>${++rowNumberProducts.value}</td>
     <td>${product.name}</td>
     <td>${product.sub_category_name}</td>
-    <td>₺${product.price}</td>
+    <td>₺${readablePrice}</td>
     <td data-mission="status">${setStatus(product.status)}</td>
     <td class="table-form-td">
       <form class="table-form" data-id="${product.id}">
