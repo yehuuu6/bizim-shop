@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2024 at 04:09 PM
+-- Generation Time: Mar 24, 2024 at 06:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1184,6 +1184,7 @@ INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
+  `orderid` varchar(255) NOT NULL,
   `uid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `date` date DEFAULT current_timestamp(),
@@ -1194,8 +1195,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `uid`, `pid`, `date`, `status`) VALUES
-(4, 9, 31, '2024-03-23', 0);
+INSERT INTO `orders` (`id`, `orderid`, `uid`, `pid`, `date`, `status`) VALUES
+(5, '5f38db52-2dea-4056-8066-59b900dd4601', 9, 31, '2024-03-24', 1),
+(6, 'daebc757-ae3e-4dd8-9b59-c8c5b6fe586e', 9, 31, '2024-03-24', 0),
+(7, 'fe980f7d-7a49-48fe-9630-d30107587d05', 9, 31, '2024-03-24', 0);
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1328,8 @@ CREATE TABLE `questions` (
 INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`, `status`) VALUES
 (37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22', 0),
 (38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22', 0),
-(67, 9, 27, 'Yazilim icin arkadasima hediye almayi dusunuyorum, uygun mudur', '2024-03-23', 0);
+(67, 9, 27, 'Yazilim icin arkadasima hediye almayi dusunuyorum, uygun mudur', '2024-03-23', 0),
+(71, 9, 71, 'Mining de kullanilir mi?', '2024-03-24', 0);
 
 -- --------------------------------------------------------
 
@@ -1427,7 +1431,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `verified`, `membership`, `token`, `password`, `profile_image`, `last_submission`, `submissions`, `telephone`, `address`, `city`, `district`, `apartment`, `floor`, `door`) VALUES
-(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711277127, 1, '5377670403', 'topcu', 17, 237, '21', 2, 12),
+(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711301824, 6, '5377670403', 'topcu', 17, 237, '21', 2, 12),
 (11, 'Harun', 'Aydın', 'haydin9876@gmail.com', 1, 0, '8638e50507553552f10ce761a04c1df101a2758456922cff5f75dd36d6b923294bc449a4228d93ba1915ce6577e4e75bdca9', '$2y$10$QRoERl0HStZtCQ2ZU85nxuFlSe6asGcjIdnDJIHVYbYP2A5fKOxX6', 'nopp.png', 1711124527, 4, '5054696240', '66', 16, 233, '32', 0, 2);
 
 --
@@ -1471,7 +1475,8 @@ ALTER TABLE `likes`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `orderid` (`orderid`);
 
 --
 -- Indexes for table `product`
@@ -1544,7 +1549,7 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -1556,7 +1561,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `site`
