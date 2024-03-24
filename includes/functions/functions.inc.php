@@ -262,6 +262,11 @@ function place_order(mysqli $con, string $uid, string $pid)
     }
 }
 
+function readable_num(string $num)
+{
+    return number_format($num, 2, ',', '.');
+}
+
 function get_category_name(?string $category_id)
 {
     global $con;
