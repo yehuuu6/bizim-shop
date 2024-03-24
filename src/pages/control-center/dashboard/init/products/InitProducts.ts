@@ -15,6 +15,22 @@ export const currentProducts: { value: IProduct[] } = {
 let sqlOffset = 0;
 let productLimit = 30;
 
+// Define product filter elements
+
+const filterContainer = document.querySelector(
+  '.filter-container'
+) as HTMLDivElement;
+const filterForm = document.querySelector('.filters') as HTMLFormElement;
+const closeFilters = document.querySelector(
+  '.close-filters'
+) as HTMLButtonElement;
+const clearFilters = document.querySelector(
+  '#clear-filters'
+) as HTMLButtonElement;
+const applyFilters = document.querySelector(
+  '#apply-filters'
+) as HTMLButtonElement;
+
 const productMore = document.querySelector(
   '#load-more-products'
 ) as HTMLButtonElement;
@@ -68,6 +84,7 @@ function getSearchProduct() {
     return;
   }
 
+  filterForm.reset();
   productMore.classList.remove('disabled');
   productMore.disabled = false;
 
@@ -139,7 +156,64 @@ async function loadFirstProducts() {
   }
 }
 
+// Filter stuff
+
+function getProductsByFilters() {
+  rowNumberProducts.value = 0;
+  currentProducts.value = [];
+  productTable.innerHTML = '';
+  sqlOffset = 0;
+  productMore.classList.remove('disabled');
+  productMore.disabled = false;
+  const formData = new FormData(filterForm);
+  formData.append('offset', '0');
+  formData.append('limit', productLimit.toString());
+  ManageProductsPage.sendApiRequest(
+    '/api/dashboard/product/load-products.php',
+    formData
+  ).then((response) => {
+    const products = response;
+    if (products === undefined || products.length === 0) {
+      productTable.innerHTML = `
+        <tr>
+          <td colspan="7">Hiçbir ürün bulunamadı</td>
+        </tr>
+      `;
+      return;
+    }
+
+    products.forEach((product: IProduct) => {
+      currentProducts.value.push(product);
+      productTable.appendChild(createProductTable(product));
+    });
+  });
+}
+
+filterContainer.addEventListener('click', (e) => {
+  if (e.target === filterContainer) {
+    filterContainer.style.display = 'none';
+  }
+});
+
+closeFilters.addEventListener('click', (e) => {
+  e.preventDefault();
+  filterContainer.style.display = 'none';
+});
+
+clearFilters.addEventListener('click', (e) => {
+  e.preventDefault();
+  filterForm.reset();
+});
+
+filterForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  searchInput.value = '';
+  filterContainer.style.display = 'none';
+  getProductsByFilters();
+});
+
 export function refreshProducts() {
+  filterForm.reset();
   loadFirstProducts();
 }
 
@@ -164,7 +238,7 @@ productRefreshBtn.addEventListener('click', () => {
 productMore.addEventListener('click', function (e) {
   e.preventDefault();
   sqlOffset += productLimit;
-  const formData = new FormData();
+  const formData = new FormData(filterForm);
   formData.append('search', searchInput.value.trim().toLowerCase());
   formData.append('offset', sqlOffset.toString());
   formData.append('limit', productLimit.toString());

@@ -301,11 +301,14 @@ $row = mysqli_fetch_assoc($res);
           <div class="item">
             <div class="controls">
               <div class="c-container">
-                <button title="Sayfanın en altına git" class="dashboard-btn add-image-btn small-btn" onclick="window.scrollTo(0, document.body.scrollHeight)">
+                <button title="Ürün Ekle" class="dashboard-btn add-image-btn small-btn" id="add-new-product">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button title="Sayfanın en altına git" class="dashboard-btn edit-btn small-btn" onclick="window.scrollTo(0, document.body.scrollHeight)">
                   <i class="fa-solid fa-arrow-down"></i>
                 </button>
-                <button title="Ürün Ekle" class="dashboard-btn edit-btn small-btn" id="add-new-product">
-                  <i class="fa-solid fa-plus"></i>
+                <button title="Filtreler" class="dashboard-btn status-btn small-btn" id="product-filters-btn" onclick="document.querySelector('.filter-container').style.display = 'flex'">
+                  <i class="fa-solid fa-filter"></i>
                 </button>
                 <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-products">
                   <i class="fa-solid fa-rotate-right"></i>
@@ -316,6 +319,77 @@ $row = mysqli_fetch_assoc($res);
           </div>
         </div>
         <div class="container">
+          <div class="filter-container">
+            <form class="filters">
+              <button class="close-filters">
+                <i class="fa-solid fa-times"></i>
+              </button>
+              <div class="filter-group">
+                <div class="filter-item">
+                  <label for="filter-sort">Sıralama</label>
+                  <select name="filter-sort" id="filter-sort">
+                    <option value="id ASC">En Eski</option>
+                    <option value="id DESC">En Yeni</option>
+                    <option value="price ASC">Fiyat (Artan)</option>
+                    <option value="price DESC">Fiyat (Azalan)</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label for="filter-category">Kategori</label>
+                  <select name="filter-category" id="filter-category">
+                    <option value="">Hepsi</option>
+                    <option value="0">Kategorisiz</option>
+                    <?php
+                    foreach ($sub_cats as $sub_cat) {
+                      echo "<option value='{$sub_cat['id']}'>{$sub_cat['name']}</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="filter-group">
+                <div class="filter-item">
+                  <label for="filter-featured">Öne Çıkan</label>
+                  <select name="filter-featured" id="filter-featured">
+                    <option value="">Hepsi</option>
+                    <option value="1">Evet</option>
+                    <option value="0">Hayır</option>
+                  </select>
+                </div>
+                <div class="filter-item">
+                  <label for="filter-shipment">Ücretsiz Kargo</label>
+                  <select name="filter-shipment" id="filter-shipment">
+                    <option value="">Hepsi</option>
+                    <option value="1">Evet</option>
+                    <option value="0">Hayır</option>
+                  </select>
+                </div>
+              </div>
+              <div class="filter-item">
+                <label for="filter-status">Durum</label>
+                <select name="filter-status" id="filter-status">
+                  <option value="">Hepsi</option>
+                  <option value="0">Arşivlenen</option>
+                  <option value="1">Listelenen</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="filter-price-min">Fiyat Aralığı</label>
+                <div class="filter-group">
+                  <input type="number" name="filter-price-min" id="filter-price-min" placeholder="Min" />
+                  <input type="number" name="filter-price-max" id="filter-price-max" placeholder="Max" />
+                </div>
+              </div>
+              <div class="filter-group">
+                <button class="dashboard-btn success-btn" id="apply-filters">
+                  Uygula
+                </button>
+                <button class="dashboard-btn edit-btn gap-5" id="clear-filters" title="Filtreleri Temizle">
+                  <i class="fa-solid fa-broom"></i> Temizle
+                </button>
+              </div>
+            </form>
+          </div>
           <table id="products-table">
             <thead>
               <tr>
