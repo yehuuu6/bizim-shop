@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2024 at 11:40 AM
+-- Generation Time: Mar 24, 2024 at 04:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1167,13 +1167,14 @@ CREATE TABLE `likes` (
 INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
 (140, 11, 11),
 (147, 11, 63),
-(148, 9, 11),
-(149, 9, 27),
 (150, 9, 1),
 (151, 9, 15),
-(153, 9, 3),
 (154, 9, 61),
-(155, 9, 71);
+(158, 9, 55),
+(159, 9, 14),
+(160, 9, 71),
+(161, 9, 27),
+(162, 9, 78);
 
 -- --------------------------------------------------------
 
@@ -1185,9 +1186,16 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` date DEFAULT current_timestamp(),
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `uid`, `pid`, `date`, `status`) VALUES
+(4, 9, 31, '2024-03-23', 0);
 
 -- --------------------------------------------------------
 
@@ -1224,15 +1232,15 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`, `status`, `root_name`, `tags`, `description`, `quality`, `shipment`, `featured`, `category`, `subcategory`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`) VALUES
-(1, 9, 'Sony Walkman', 195.99, 53.99, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\n\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(1, 9, 'Sony Walkman', 200.00, 100.00, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\n\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (3, 9, 'Audio-Technica Turntable', 299.99, 39.99, 17.50, 1, 'audio_technica_turntable', 'audio technica record player', 'The Audio-Technica turntable provides high-fidelity audio and is perfect for vinyl enthusiasts. It features a precision tonearm and a durable construction for long-lasting performance.', 2, 0, 1, 48, 55, '62872_audio_technica_turntable.jpg', '58208_audio_technica_turntable.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (5, 9, 'Pioneer DJ Controller', 499.99, 49.99, 25.00, 1, 'pioneer_dj_controller', 'pioneer dj mixing console', 'The Pioneer DJ Controller is a professional-grade mixing console for DJs. It offers precise control and a range of effects to enhance your mixing experience. Perfect for both beginners and seasoned DJs.', 2, 0, 1, 48, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(6, 9, 'Fender Stratocaster Guitar', 899.99, 39.99, 30.00, 1, 'fender_stratocaster_guitar', 'fender electric guitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 47, 66, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(6, 9, 'Fender Stratocaster Guitar', 900.00, 50.00, 30.00, 1, 'fender_stratocaster_guitar', 'fender electric guitar gitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 47, 66, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (7, 9, 'Yamaha Stage Piano', 799.99, 59.99, 20.00, 1, 'yamaha_stage_piano', 'yamaha digital piano', 'The Yamaha Stage Piano is a high-quality digital piano that emulates the sound and feel of an acoustic piano. It\\\'s ideal for both stage performances and studio recordings, offering a wide range of sounds and features. Walkman', 1, 1, 0, 47, 65, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (8, 9, 'Bowers & Wilkins Floorstanding Speaker', 1299.99, 69.99, 40.00, 1, 'bowers_&_wilkins_floorstanding_speaker', 'bowers wilkins floorstanding speaker', 'The Bowers & Wilkins Floorstanding Speaker delivers exceptional audio performance with its premium components and craftsmanship. It\\\'s a perfect choice for audiophiles seeking a truly immersive listening experience.', 0, 0, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (9, 9, 'Sony Noise-Canceling Headphones', 349.99, 25.99, 15.00, 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (10, 9, 'Apple AirPods Pro', 249.99, 19.99, 10.00, 1, 'apple_airpods_pro', 'apple airpods noise-cancellation', 'Experience seamless connectivity and immersive sound with Apple AirPods Pro. These wireless earbuds feature active noise cancellation and customizable fit for all-day comfort.', 1, 1, 1, 50, 79, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(11, 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television', 'Yeni Samsung 4K Akıllı TV ile ev eğlencesine yeni bir boyut kazandırın. Üstün görüntü kalitesi, zengin renkler ve akıllı özelliklerle donatılmış bu TV, size sinema salonu deneyimini evinize getiriyor.\\r\\n\\r\\nBu TV\\\'nin en çarpıcı özelliği kesinlikle 4K Ultra HD çözünürlüğüdür. Her bir pikselde inanılmaz detaylarla dolu, kristal berraklığında bir görüntü sunar. Hangi içeriği izlediğiniz önemli değil, her sahne canlı ve gerçekçi bir şekilde hayat bulur.', 2, 1, 1, 31, 81, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
+(11, 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television televizyon', 'Yeni Samsung 4K Akıllı Televizyon ile ev eğlencesine yeni bir boyut kazandırın. Üstün görüntü kalitesi, zengin renkler ve akıllı özelliklerle donatılmış bu TV, size sinema salonu deneyimini evinize getiriyor.\\r\\n\\r\\nBu TV\\\'nin en çarpıcı özelliği kesinlikle 4K Ultra HD çözünürlüğüdür. Her bir pikselde inanılmaz detaylarla dolu, kristal berraklığında bir görüntü sunar. Hangi içeriği izlediğiniz önemli değil, her sahne canlı ve gerçekçi bir şekilde hayat bulur.', 2, 1, 1, 31, 81, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
 (12, 9, 'Canon EOS Rebel T7i DSLR Camera', 699.99, 39.99, 25.00, 1, 'canon_eos_rebel_t7i_dslr_camera', 'canon dslr camera', 'Capture life\\\'s moments in stunning detail with Canon EOS Rebel T7i DSLR Camera. It features a 24.2MP sensor and advanced autofocus for professional-quality photos and videos.', 2, 0, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (13, 9, 'GoPro Hero 9 Black', 449.99, 29.99, 15.00, 1, 'gopro_hero_9_black', 'gopro action camera', 'Record your adventures in crisp 4K resolution with GoPro Hero 9 Black. This rugged action camera is waterproof and features advanced stabilization for smooth footage.', 1, 1, 0, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (14, 9, 'DJI Mavic Air 2 Drone', 799.99, 49.99, 30.00, 1, 'dji_mavic_air_2_drone', 'dji drone quadcopter', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. This compact quadcopter boasts intelligent features and a powerful camera for stunning results.', 2, 0, 1, 31, 83, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1248,7 +1256,7 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (24, 9, 'Amazon Echo Show 10 (3rd Gen)', 249.99, 19.99, 10.00, 1, 'amazon_echo_show_10_(3rd_gen)', 'amazon smart display', 'Stay connected and organized with Amazon Echo Show 10 (3rd Gen). With its rotating display and built-in Alexa, this smart display is perfect for managing your day and staying entertained.', 1, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (25, 9, 'Garmin Fenix 6 Pro Smartwatch', 699.99, 29.99, 15.00, 1, 'garmin_fenix_6_pro_smartwatch', 'garmin fitness tracker', 'Track your fitness and conquer your goals with Garmin Fenix 6 Pro Smartwatch. With advanced GPS and health monitoring features, this smartwatch is built for adventure.', 2, 0, 1, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (26, 9, 'LG UltraGear 27GN950-B Gaming Monitor', 999.99, 49.99, 30.00, 1, 'lg_ultragear_27gn950_b_gaming_monitor', 'lg gaming monitor', 'Immerse yourself in your favorite games with LG UltraGear 27GN950-B Gaming Monitor. Featuring a 4K Nano IPS display and NVIDIA G-Sync compatibility, this monitor delivers smooth visuals and responsive gameplay.', 2, 1, 1, 49, 73, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(27, 9, 'Apple MacBook Pro (M1, 2021)', 58512.99, 59.99, 40.00, 1, 'apple_macbook_pro_(m1,_2021)', 'apple laptop computer', 'MacBook Air akıcı bir şekilde çalışmanız ve oyun oynamanız için ihtiyacınız olan gücü sunuyor. Üstelik M3 çip dünyanın en popüler laptopuna şimdi daha da muhteşem beceriler katıyor. Ve 18 saate kadar pil ömrü1 sayesinde MacBook Air\\\'i dilediğiniz yere götürerek her şeyi hızlı bir şekilde yapabiliyorsunuz.\\r\\n\\r\\nSüper hafif ve inanılmaz ince MacBook Air hayatınızın her anında yanınızda olacak şekilde ve gezegenimiz düşünülerek tasarlandı. M3 çipli MacBook Air modellerinin üretiminde kullanılan geri dönüştürülmüş materyallerin oranı yüzde 50’ye ulaştı. Bu, Apple için bir ilk. Ayrıca tüm MacBook Air laptoplar da geri dönüştürülmüş alüminyumdan üretilen dayanıklı kasalara sahip.\\r\\n\\r\\n8 GB birleşik bellek\\r\\n512 GB SSD depolama\\r\\nTrue Tone özelliğine sahip 15.3 inç Liquid Retina ekran\\r\\n1080p FaceTime HD kamera\\r\\nMagSafe 3 şarj bağlantı noktası\\r\\nİki adet Thunderbolt / USB 4 bağlantı noktası\\r\\n35 W Çift USB‑C Bağlantı Noktalı Güç Adaptörü\\r\\nTouch ID özellikli ve arkadan aydınlatmalı Magic Keyboard - Türkçe Q', 2, 1, 1, 31, 74, '19641_apple_macbook_pro_(m1,_2021).jpg', '63627_apple_macbook_pro_(m1,_2021).jpg', '46214_apple_macbook_pro_(m1,_2021).jpg', '33105_apple_macbook_pro_(m1,_2021).jpg', '41884_apple_macbook_pro_(m1,_2021).jpg', 'noimg.jpg'),
+(27, 9, 'Apple MacBook Pro (M3, 2024)', 83945.00, 100.00, 40.00, 1, 'apple_macbook_pro_(m3,_2024)', 'apple laptop computer macbook mac', 'MacBook Air akıcı bir şekilde çalışmanız ve oyun oynamanız için ihtiyacınız olan gücü sunuyor. Üstelik M3 çip dünyanın en popüler laptopuna şimdi daha da muhteşem beceriler katıyor. Ve 18 saate kadar pil ömrü1 sayesinde MacBook Air\\\'i dilediğiniz yere götürerek her şeyi hızlı bir şekilde yapabiliyorsunuz.\\r\\n\\r\\nSüper hafif ve inanılmaz ince MacBook Air hayatınızın her anında yanınızda olacak şekilde ve gezegenimiz düşünülerek tasarlandı. M3 çipli MacBook Air modellerinin üretiminde kullanılan geri dönüştürülmüş materyallerin oranı yüzde 50’ye ulaştı. Bu, Apple için bir ilk. Ayrıca tüm MacBook Air laptoplar da geri dönüştürülmüş alüminyumdan üretilen dayanıklı kasalara sahip.\\r\\n\\r\\n8 GB birleşik bellek\\r\\n512 GB SSD depolama\\r\\nTrue Tone özelliğine sahip 15.3 inç Liquid Retina ekran\\r\\n1080p FaceTime HD kamera\\r\\nMagSafe 3 şarj bağlantı noktası\\r\\nİki adet Thunderbolt / USB 4 bağlantı noktası\\r\\n35 W Çift USB‑C Bağlantı Noktalı Güç Adaptörü\\r\\nTouch ID özellikli ve arkadan aydınlatmalı Magic Keyboard - Türkçe Q', 2, 1, 1, 31, 74, '19641_apple_macbook_pro_(m1,_2021).jpg', '63627_apple_macbook_pro_(m1,_2021).jpg', '46214_apple_macbook_pro_(m1,_2021).jpg', '33105_apple_macbook_pro_(m1,_2021).jpg', '41884_apple_macbook_pro_(m1,_2021).jpg', 'noimg.jpg'),
 (28, 9, 'Sony Alpha a7 III Mirrorless Camera', 1999.99, 69.99, 40.00, 1, 'sony_alpha_a7_iii_mirrorless_camera', 'sony mirrorless camera', 'Capture life\\\'s moments with stunning clarity using Sony Alpha a7 III Mirrorless Camera. With its full-frame sensor and advanced autofocus system, this camera delivers professional-quality results.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (29, 9, 'Dell XPS 13 Laptop', 1299.99, 49.99, 30.00, 1, 'dell_xps_13_laptop', 'dell laptop computer', 'Stay productive on the go with Dell XPS 13 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for work and entertainment.', 2, 1, 0, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (30, 9, 'SteelSeries Arctis 7 Gaming Headset', 149.99, 9.99, 5.00, 1, 'steelseries_arctis_7_gaming_headset', 'steelseries gaming headset', 'Immerse yourself in your favorite games with SteelSeries Arctis 7 Wireless Gaming Headset. Featuring lag-free wireless audio and a retractable microphone, this headset offers comfort and performance for long gaming sessions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1279,7 +1287,6 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (55, 9, 'Apple iPad Air (4th Gen)', 599.99, 19.99, 10.00, 1, 'apple_ipad_air_(4th_gen)', 'apple tablet computer', 'Unlock your creativity and productivity with Apple iPad Air (4th Gen). Featuring a stunning Liquid Retina display and powerful A14 Bionic chip, this tablet is perfect for work and entertainment.', 2, 1, 0, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (56, 9, 'Logitech G Pro X Gaming Headset', 129.99, 9.99, 5.00, 1, 'logitech_g_pro_x_gaming_headset', 'logitech gaming headset', 'Immerse yourself in your games with Logitech G Pro X Gaming Headset. Featuring Blue VO!CE technology and PRO-G 50mm drivers, this headset delivers professional-grade sound and comfort.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (57, 9, 'Samsung Galaxy Watch 4 Classic', 349.99, 19.99, 10.00, 1, 'samsung_galaxy_watch_4_classic', 'samsung smartwatch', 'Stay connected and track your fitness with Samsung Galaxy Watch 4 Classic. Featuring advanced health monitoring and stylish design, this smartwatch is your perfect companion for a healthy lifestyle.', 2, 1, 0, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(58, 9, 'Sony HT-Z9F Soundbar', 899.99, 39.99, 25.00, 1, 'sony_ht_z9f_soundbar', 'sony soundbar', 'Transform your home entertainment experience with Sony HT-Z9F Soundbar. Featuring Dolby Atmos and DTS:X support, this soundbar delivers immersive audio for movies, music, and games.', 2, 1, 1, 48, 55, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (59, 9, 'Google Pixel 6 Pro Smartphone', 899.99, 29.99, 20.00, 1, 'google_pixel_6_pro_smartphone', 'google android smartphone', 'Experience the power of Google Pixel 6 Pro Smartphone. Featuring advanced camera technology and 120Hz display, this smartphone delivers stunning photos and smooth performance.', 0, 1, 1, 31, 77, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (60, 9, 'JBL Quantum 800 Wireless Gaming Headset', 199.99, 14.99, 8.00, 1, 'jbl_quantum_800_wireless_gaming_headset', 'jbl gaming headset', 'Immerse yourself in your games with JBL Quantum 800 Wireless Gaming Headset. Featuring 50mm drivers and active noise cancellation, this headset delivers immersive sound and comfort for long gaming sessions.', 1, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (61, 9, 'Sony WH-1000XM4 Wireless Headphones', 349.99, 19.99, 10.00, 1, 'sony_wh_1000xm4_wireless_headphones', 'sony wireless headphones', 'Immerse yourself in your music with Sony WH-1000XM4 Wireless Noise-Canceling Headphones. Featuring industry-leading noise cancellation and high-resolution audio, these headphones offer a premium listening experience.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
@@ -1292,7 +1299,9 @@ INSERT INTO `product` (`id`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`
 (68, 9, 'Sennheiser 3 Wireless Headphones', 399.99, 19.99, 10.00, 1, 'sennheiser_3_wireless_headphones', 'sennheiser wireless headphones', 'Experience premium sound quality and active noise cancellation with Sennheiser Momentum 3 Wireless Headphones. With genuine leather ear pads and intuitive controls, these headphones offer comfort and convenience for all-day listening.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (69, 9, 'Dell XPS 15 Laptop', 1999.99, 49.99, 30.00, 1, 'dell_xps_15_laptop', 'dell laptop', 'Power through your tasks with the Dell XPS 15 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for professionals and content creators.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
 (70, 9, 'Ultimate Ears Boom 3 Bluetooth Speaker', 149.99, 9.99, 5.00, 1, 'ultimate_ears_boom_3_bluetooth_speaker', 'ultimate ears portable speaker', 'Bring the party anywhere with Ultimate Ears Boom 3 Portable Bluetooth Speaker. Featuring 360-degree sound and waterproof construction, this speaker delivers immersive audio and durability for outdoor adventures.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(71, 9, 'GeForce RTX™ 4090 VENTUS 3X E 24G OC', 83307.68, 10.00, 0.00, 1, 'geforce_rtx™_4090_ventus_3x_e_24g_oc', 'msi, gpu, ekran karti, rtx, 4090', 'VENTUS, performans odaklı bir grafik kartı arayan kullanıcılara temelde sağlam bir deneyim sunuyor. TORX FAN 4.0 ve Hava Akışı Kontrolü ile güncellenmiş keskin bir tasarımı olan VENTUS, herhangi bir görevi kolayca halletmesini sağlıyor.\\r\\n\\r\\nDLSS 3 ile güçlendirilmiş yapay zeka destekli grafiklerle performans, verimlilik ve AI\\\'da büyük bir sıçrama sunuyor. Ultra yüksek performanslı oyun deneyimleyin, ışın izleme ile inanılmaz detaylı sanal dünyalar keşfedin, eşi benzeri görülmemiş verimlilik elde edin ve yeni yaratma yolları keşfedin. NVIDIA Ada Lovelace mimarisi tarafından desteklenmektedir ve oyuncular ve yaratıcılar için en üst düzey deneyimi sunmak için 24 GB G6X bellekle birlikte gelir.\\r\\n\\r\\nArtırılmış Saat Hızı / Bellek Hızı\\r\\n2550 MHz / 21 Gbps\\r\\n24GB GDDR6X\\r\\nDisplayPort x 2 (v1.4a)\\r\\nHDMI™ x 2 (4K@120Hz HDR, 8K@60Hz HDR ve HDMI™ 2.1a\\\'da belirtildiği gibi Değişken Yenileme Hızını destekler)\\r\\nÜçlü Fanlı Termal Tasarım\\r\\nTORX Fan 4.0: Ekip çalışmasının bir şaheseri, fan kanatları çiftler halinde çalışarak odaklanmış hava basıncı seviyeleri yaratır.\\r\\nHava Akışı Kontrolü: Endişelenmeyin, Hava Akışı Kontrolü havayı maksimum soğutma için tam olarak ihtiyaç duyulan yere yönlendirir.\\r\\nÇekirdek Borusu: Hassas şekilde işlenmiş ısı boruları GPU ile maksimum teması sağlar ve ısıyı soğutucunun tam uzunluğu boyunca yayılır.\\r\\nSıfır Don: Fanlar sıcaklıklar nispeten düşük olduğunda tamamen durur, böylece tüm gürültüyü ortadan kaldırır.\\r\\nMetal Arka Plaka\\r\\nSağlam akış-through metal arka plakanın altındaki termal pedler soğutma konusunda yardımcı olur.\\r\\nMSI Center\\r\\nÖzel MSI Center yazılımı ile MSI ürünlerini gerçek zamanlı olarak izleyebilir, ayarlayabilir ve optimize edebilirsiniz.', 0, 1, 1, 49, 72, '62839_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '50279_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54148_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '53915_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '70785_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54615_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg');
+(71, 9, ' GeForce RTX™ 4090 VENTUS 3X E 24G OC', 63928.00, 250.00, 0.00, 1, '_geforce_rtx™_4090_ventus_3x_e_24g_oc', 'msi, gpu, ekran karti, rtx, 4090', 'VENTUS, performans odaklı bir grafik kartı arayan kullanıcılara temelde sağlam bir deneyim sunuyor. TORX FAN 4.0 ve Hava Akışı Kontrolü ile güncellenmiş keskin bir tasarımı olan VENTUS, herhangi bir görevi kolayca halletmesini sağlıyor.\\r\\n\\r\\nDLSS 3 ile güçlendirilmiş yapay zeka destekli grafiklerle performans, verimlilik ve AI\\\'da büyük bir sıçrama sunuyor. Ultra yüksek performanslı oyun deneyimleyin, ışın izleme ile inanılmaz detaylı sanal dünyalar keşfedin, eşi benzeri görülmemiş verimlilik elde edin ve yeni yaratma yolları keşfedin. NVIDIA Ada Lovelace mimarisi tarafından desteklenmektedir ve oyuncular ve yaratıcılar için en üst düzey deneyimi sunmak için 24 GB G6X bellekle birlikte gelir.\\r\\n\\r\\nArtırılmış Saat Hızı / Bellek Hızı\\r\\n2550 MHz / 21 Gbps\\r\\n24GB GDDR6X\\r\\nDisplayPort x 2 (v1.4a)\\r\\nHDMI™ x 2 (4K@120Hz HDR, 8K@60Hz HDR ve HDMI™ 2.1a\\\'da belirtildiği gibi Değişken Yenileme Hızını destekler)\\r\\nÜçlü Fanlı Termal Tasarım\\r\\nTORX Fan 4.0: Ekip çalışmasının bir şaheseri, fan kanatları çiftler halinde çalışarak odaklanmış hava basıncı seviyeleri yaratır.\\r\\nHava Akışı Kontrolü: Endişelenmeyin, Hava Akışı Kontrolü havayı maksimum soğutma için tam olarak ihtiyaç duyulan yere yönlendirir.\\r\\nÇekirdek Borusu: Hassas şekilde işlenmiş ısı boruları GPU ile maksimum teması sağlar ve ısıyı soğutucunun tam uzunluğu boyunca yayılır.\\r\\nSıfır Don: Fanlar sıcaklıklar nispeten düşük olduğunda tamamen durur, böylece tüm gürültüyü ortadan kaldırır.\\r\\nMetal Arka Plaka\\r\\nSağlam akış-through metal arka plakanın altındaki termal pedler soğutma konusunda yardımcı olur.\\r\\nMSI Center\\r\\nÖzel MSI Center yazılımı ile MSI ürünlerini gerçek zamanlı olarak izleyebilir, ayarlayabilir ve optimize edebilirsiniz.', 0, 1, 1, 49, 72, '62839_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '50279_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54148_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '53915_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '70785_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54615_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg'),
+(78, 9, 'Patriot Viper Steel Series 16 GB Ram (2x8) 3200 Mhz', 1659.00, 318.00, 0.00, 1, 'patriot_viper_steel_series_16_gb_ram_(2x8)_3200_mhz', 'ram, bellek, 16gb, 2x8gb, patriot viper', 'Kapasite: 16 GB (2 x 8 GB) DDR4\\r\\nBaz Frekansı: PC4-17000 (2133MHz); XMP 2.0 etkinken PC4-25600\\\'e (3200MHz) kadar\\r\\nTemel Zamanlamalar: 15-15-15-36; XMP 2.0 etkinken hız aşırtma zamanlaması Test Edilen Zamanlamalar: 16-18-18-16\\r\\nUYUMLULUK: En son Intel ve AMD platformlarında test edildi\\r\\nÖzel tasarım ve seri: Elmas kesim engerek logolu ve siyah üst kısmı olan tunç gri kenarlara sahip tüm alüminyum ısı kalkanı', 0, 0, 1, 49, 86, '20115_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '56484_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '54893_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '45007_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '60483_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '25831_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg'),
+(87, 9, 'Intel Core i9-14900K 24 Çekirdekli 6 GHz', 17301.00, 100.00, 0.00, 1, 'intel_core_i9_14900k_24_cekirdekli_6_ghz', 'i9 islemci intel core 14900k pc', 'Intel Core i9-14900K (14. Gen) masaüstü işlemci.\\r\\nIntel Thermal Speed Boost, Intel Turbo Boost Max Technology 3.0 ve PCIe 5.0 & 4.0 desteği, DDR5 ve DDR4 desteğine sahiptir.\\r\\nUnlocked 14th Gen Intel Core i9 masaüstü işlemciler hevesli oyuncular ve ciddi yaratıcılar için optimize edilmiştir ve yüksek performans sunmaya yardımcı olur.\\r\\nIntel 700 Serisi ve Intel 600 Serisi Chipset tabanlı anakartlarla uyumludur.\\r\\n125 W işlemci taban gücü.', 0, 1, 1, 49, 78, '76755_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '27850_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '98440_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '92646_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', 'noimg.jpg', 'noimg.jpg');
 
 -- --------------------------------------------------------
 
@@ -1305,17 +1314,18 @@ CREATE TABLE `questions` (
   `uid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `question` text NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`) VALUES
-(37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22'),
-(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22'),
-(59, 9, 71, 'abi gta 5 acar mi', '2024-03-23');
+INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`, `status`) VALUES
+(37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22', 0),
+(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22', 0),
+(67, 9, 27, 'Yazilim icin arkadasima hediye almayi dusunuyorum, uygun mudur', '2024-03-23', 0);
 
 -- --------------------------------------------------------
 
@@ -1379,7 +1389,11 @@ INSERT INTO `subcats` (`id`, `cid`, `name`, `slug`) VALUES
 (82, 49, 'Kamera', 'kamera'),
 (83, 31, 'Drone', 'drone'),
 (84, 31, 'Akıllı Saat', 'akilli-saat'),
-(85, 31, 'Konsol', 'konsol');
+(85, 31, 'Konsol', 'konsol'),
+(86, 49, 'Bellek (Ram)', 'bellek-%2528ram%2529'),
+(87, 49, 'SSD', 'ssd'),
+(88, 49, 'Harddisk', 'harddisk'),
+(89, 49, 'Anakart', 'anakart');
 
 -- --------------------------------------------------------
 
@@ -1413,7 +1427,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `email`, `verified`, `membership`, `token`, `password`, `profile_image`, `last_submission`, `submissions`, `telephone`, `address`, `city`, `district`, `apartment`, `floor`, `door`) VALUES
-(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711190160, 1, '5377670403', 'topcu', 17, 237, '21', 2, 12),
+(9, 'Eren', 'Aydın', 'therenaydin@gmail.com', 1, 1, 'f73fa97b8e0ddb0676c064f0f9b118185ea35440f138555972ef998525e622a9d5d11ba857cd76854c009b6a086c67605074', '$2y$10$04ZqHvqzooQV3EQj0XIvM.jtAAMGH8EKI614LuzashMJDpG/4n952', 'eren_aydin_avatar_xlorvt2vbd.jpg', 1711277127, 1, '5377670403', 'topcu', 17, 237, '21', 2, 12),
 (11, 'Harun', 'Aydın', 'haydin9876@gmail.com', 1, 0, '8638e50507553552f10ce761a04c1df101a2758456922cff5f75dd36d6b923294bc449a4228d93ba1915ce6577e4e75bdca9', '$2y$10$QRoERl0HStZtCQ2ZU85nxuFlSe6asGcjIdnDJIHVYbYP2A5fKOxX6', 'nopp.png', 1711124527, 4, '5054696240', '66', 16, 233, '32', 0, 2);
 
 --
@@ -1524,25 +1538,25 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `site`
@@ -1554,7 +1568,7 @@ ALTER TABLE `site`
 -- AUTO_INCREMENT for table `subcats`
 --
 ALTER TABLE `subcats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `users`
