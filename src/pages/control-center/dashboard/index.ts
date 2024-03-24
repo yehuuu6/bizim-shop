@@ -12,6 +12,7 @@ import InitOrders from '@/pages/control-center/dashboard/init/orders/InitOrders'
 import InitMenuManager from '@/pages/control-center/menuManager';
 import InitThemeManager from '@/pages/control-center/themeManager';
 import InitProducts, { refreshProducts } from './init/products/InitProducts';
+import InitQuestions from './init/questions/InitQuestions';
 import { setSubCategories } from '@/common/funcs/functions.dev';
 
 // CSS
@@ -221,6 +222,7 @@ cleanProductForm.addEventListener('click', () => {
   ]);
 });
 
+// Load every page's content
 document.addEventListener('DOMContentLoaded', () => {
   setSubCategories(); // This is needed because at the first page load, if you edit a product, its sub category wont be selected without this.
   InitStats();
@@ -230,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   InitOrders();
   InitProducts();
   InitUsers();
+  InitQuestions();
 });
 
 // CREATE PRODUCT PAGE END
