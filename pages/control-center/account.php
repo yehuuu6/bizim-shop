@@ -242,7 +242,7 @@ $door = $row['door'];
                     </div>
                     <div class="content">
                         <h3 class="title">Kişiselleştirme</h3>
-                        <p class="description">Yönetici panelinizin nasıl görüneceğini seçin.</p>
+                        <p class="description">Tema seçimi yaparak kontrol merkezinin temasını değiştirebilirsiniz.</p>
                         <div class="theme-container">
                             <div class="theme-item active-theme" data-theme="light">
                                 <div class="theme-img">
