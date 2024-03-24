@@ -47,6 +47,14 @@ new Navbar();
 
 $product = $products_data[0];
 
+$fee_cost = $product['price'] * 0.18;
+$fee_cost = number_format($fee_cost, 2, '.', '');
+
+$total_price = (float)$product['price'] + (float)$fee_cost;
+
+// Convert the total price to a readable number.
+$price = readable_num($total_price);
+
 $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
 
 function render_thumbnail(array $product)
@@ -247,8 +255,8 @@ function render_badges(array $product)
             </div>
             <div class="detail">
                 <div class="product-price">
-                    <span class="price"><?= readable_num($product['price']) ?> <span class="currency">TL</span>
-                        <span class="fee-cost">+ KDV</span></span>
+                    <span class="price"><?= $price ?> <span class="currency">TL</span>
+                        <span class="fee-cost">KDV dahil</span>
                 </div>
             </div>
             <div class="detail">
