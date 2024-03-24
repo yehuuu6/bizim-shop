@@ -43,38 +43,25 @@ function createOrderTable(order: IOrder) {
             <td>${setOrderStatus(order.status)}</td>
             <td>${date}</td>
             <td class="table-form-td">
-                <form class="table-form" data-id="${order.id}">
-                    <button data-action="upgrade" class="dashboard-btn status-btn">İncele</button>
+                <form class="table-form" data-id="${order.guid}">
+                    <button data-action="inspect" class="dashboard-btn status-btn">İncele</button>
                 </form>
             </td>
         `;
   const tableForm = tr.querySelector('.table-form') as HTMLElement;
   tableForm.addEventListener('click', (e) => {
     e.preventDefault();
-    if ((e.target as HTMLElement).dataset.action == 'upgrade') {
+    if ((e.target as HTMLElement).dataset.action == 'inspect') {
       // Get the id of the order
-      let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset
-        .id;
+      let guid = ((e.target as HTMLElement).parentElement as HTMLElement)
+        .dataset.id;
       // Get the order from the currentOrders array
       let order = currentOrders.value.find(
-        (order: IOrder) => order['id'] == id
+        (order: IOrder) => order['guid'] == guid
       );
       MyOrdersPage.showMessage([
         'success',
-        `${order?.id} isimli sipariş modalı yapılacak. (TODO)`,
-        'none',
-      ]);
-    } else if ((e.target as HTMLElement).dataset.action == 'ban') {
-      // Get the id of the order
-      let id = ((e.target as HTMLElement).parentElement as HTMLElement).dataset
-        .id;
-      // Get the plugin from the currentOrders array
-      let order = currentOrders.value.find(
-        (order: IOrder) => order['id'] == id
-      );
-      MyOrdersPage.showMessage([
-        'success',
-        `${order?.id} isimli kullanıcı yasaklandı. (TODO)`,
+        `${order?.guid} isimli sipariş modalı yapılacak. (TODO)`,
         'none',
       ]);
     }

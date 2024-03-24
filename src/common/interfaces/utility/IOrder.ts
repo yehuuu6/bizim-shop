@@ -1,5 +1,6 @@
 export interface IOrder {
   id: string;
+  guid: string;
   uid: string;
   pid: string;
   status: string;
