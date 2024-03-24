@@ -22,6 +22,12 @@ class InCart extends Component
 
     $total_price = (float)$product['price'] + (float)$shipping_cost + (float)$fee_cost;
 
+    // Convert the total price to a readable number.
+    $total_text = readable_num($total_price);
+    $fee_text = readable_num($fee_cost);
+    $shipping_text = readable_num($shipping_cost);
+    $price_text = readable_num($product['price']);
+
     $short_desc = parent::shorten_string($product['description'], 100);
 
     $slug = parent::get_slug($product['root_name']);
@@ -47,10 +53,10 @@ class InCart extends Component
                 {$short_desc}
               </p>
               <div class="price-calculation">
-                <span data-value="{$product['price']}" class="product-price">{$product['price']} <span class="product-currency">TL</span> Ürün</span> +
-                <span {$this->render_old_price($old_shipping_cost,$shipping_cost)} data-value="{$shipping_cost}" class="shipping-cost" {$this->render_indicator($product)}>{$shipping_cost} <span class="product-currency" {$this->render_indicator($product)}>TL</span> Kargo</span> + 
-                <span data-value="{$fee_cost}" class="fee-cost">{$fee_cost} <span class="product-currency">TL</span> KDV</span> =
-                <span id="total-cart-price" data-value="{$total_price}" class="total-price">{$total_price} <span class="product-currency">TL</span> Toplam</span>
+                <span data-value="{$product['price']}" class="product-price">{$price_text} <span class="product-currency">TL</span> Ürün</span> +
+                <span {$this->render_old_price($old_shipping_cost,$shipping_cost)} data-value="{$shipping_cost}" class="shipping-cost" {$this->render_indicator($product)}>{$shipping_text} <span class="product-currency" {$this->render_indicator($product)}>TL</span> Kargo</span> + 
+                <span data-value="{$fee_cost}" class="fee-cost">{$fee_text} <span class="product-currency">TL</span> KDV</span> =
+                <span id="total-cart-price" data-value="{$total_price}" class="total-price">{$total_text} <span class="product-currency">TL</span> Toplam</span>
               </div>
             </div>
             <span class="remove-from-cart" title="Ürünü Sepetten Kaldır">

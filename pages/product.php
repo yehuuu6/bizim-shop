@@ -247,7 +247,7 @@ function render_badges(array $product)
             </div>
             <div class="detail">
                 <div class="product-price">
-                    <span class="price"><?= $product['price'] ?> <span class="currency">TL</span>
+                    <span class="price"><?= readable_num($product['price']) ?> <span class="currency">TL</span>
                         <span class="fee-cost">+ KDV</span></span>
                 </div>
             </div>
@@ -290,7 +290,7 @@ function render_badges(array $product)
         <h2>Rastgele Ürünler</h2>
         <i class="fa-solid fa-random"></i>
     </div>
-    <div id="random-products" class="product-showcase dynamic-content">
+    <div id="random-products" class="product-showcase">
     </div>
 </section>
 <?php

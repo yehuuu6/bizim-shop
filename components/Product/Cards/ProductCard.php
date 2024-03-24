@@ -21,6 +21,8 @@ class ProductCard extends Component
         $slug = parent::get_slug($product['root_name']);
         $urlSlug = urlencode(urlencode($slug));
 
+        $price = readable_num($product['price']);
+
         $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">
         {$this->render_featured_badge($is_featured)}
@@ -31,7 +33,7 @@ class ProductCard extends Component
             </div>
             <div class="product-info">
                 <a title="{$product['name']}" href="/product/{$urlSlug}" class="product-title">{$product_title}</a>
-                <span class="product-price">{$product['price']} <span class="product-currency">TL</span></span>
+                <span class="product-price">{$price} <span class="product-currency">TL</span></span>
             </div>
             <button id="product-cart-btn" class="add-cart">Sepete Ekle</button>
         </div>
