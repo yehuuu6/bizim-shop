@@ -65,6 +65,7 @@ try {
         $user = get_user_data($con, $row['uid']);
         $order = [
             'id' => $row['id'],
+            'guid' => $row['orderid'],
             'username' => $user['name'] . ' ' . $user['surname'],
             'product' => $product['name'],
             'price' => $product['price'],

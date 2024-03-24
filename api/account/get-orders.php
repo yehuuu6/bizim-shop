@@ -56,6 +56,7 @@ try {
         $product = get_product_data($con, $row['pid']);
         $order = [
             'id' => $row['id'],
+            'guid' => $row['orderid'],
             'product' => $product['name'],
             'price' => $product['price'],
             'date' => $row['date'],
