@@ -4,6 +4,10 @@ if (!defined('FILE_ACCESS')) {
     send_forbidden_response();
 }
 
+require_once "{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php";
+
+use Ramsey\Uuid\Uuid;
+
 /**
  * Sanitizes the given string and returns it.
  */
@@ -154,6 +158,11 @@ function convert_link_name(string $str)
     return strtolower($url_encoded_str);
 }
 
+function generate_guid()
+{
+    return Uuid::uuid4()->toString();
+}
+
 function get_categories()
 {
     global $con;
@@ -250,10 +259,11 @@ function get_all_sub_categories()
 function place_order(mysqli $con, string $uid, string $pid)
 {
     $status = 0;
-    $sql = "INSERT INTO orders (uid, pid, status) VALUES (?, ?, ?)";
+    $guid = generate_guid();
+    $sql = "INSERT INTO orders (orderid, uid, pid, status) VALUES (?, ?, ?, ?)";
     try {
         $stmt = mysqli_prepare($con, $sql);
-        mysqli_stmt_bind_param($stmt, 'sss', $uid, $pid, $status);
+        mysqli_stmt_bind_param($stmt, 'ssss', $guid, $uid, $pid, $status);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         return true;
