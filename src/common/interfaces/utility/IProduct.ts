@@ -6,6 +6,7 @@ export default interface IProduct {
   subcategory: string;
   price: string;
   shipping_cost: string;
+  link: string;
   fee_cost: string;
   status: string;
   image1: string;
