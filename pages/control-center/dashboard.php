@@ -149,6 +149,11 @@ $row = mysqli_fetch_assoc($res);
             Siparişler <i class="fa-solid fa-truck"></i>
           </div>
         </li>
+        <li>
+          <div class="menu-btn" data-name="questions">
+            Sorular <i class="fa-solid fa-question"></i>
+          </div>
+        </li>
       </ul>
     </div>
     <div class="main-page">
@@ -182,7 +187,10 @@ $row = mysqli_fetch_assoc($res);
               </div>
               <div class="member">
                 <div class="member-image">
-                  <img src="/global/imgs/nopp.png" alt="Üye Resmi" />
+                  <?php
+                  $img_src = PRODUCT_USER_SITE_PATH . $row['profile_image'] . "?timestamp=" . time();
+                  ?>
+                  <img src="<?= $img_src ?>" alt="Üye Resmi" />
                 </div>
                 <div class="member-info">
                   <h3 class="member-name">Eren Aydın</h3>
@@ -503,6 +511,46 @@ $row = mysqli_fetch_assoc($res);
           </table>
         </div>
         <button class="dashboard-btn success-btn" name="load-more" id="load-more-orders" style="margin-top:10px;">
+          Daha fazla yükle
+        </button>
+      </section>
+      <section id="manage-questions" data-url="questions" data-title="Sorular" class="page-content narrow-page">
+        <div id="loader-questions" class="loader">
+          <?php new Loader(); ?>
+        </div>
+        <div class="content-header">
+          <div class="item">
+            <h2 class="header">Soruları Gözden Geçir</h2>
+            <p>Burada ürünlere gelen soruları görebilir ve yanıtlayabilirsiniz.</p>
+          </div>
+          <div class="item">
+            <div class="controls">
+              <div class="c-container">
+                <button title="Yenile" class="dashboard-btn success-btn small-btn" id="refresh-questions">
+                  <i class="fa-solid fa-rotate-right"></i>
+                </button>
+              </div>
+              <input autocomplete="off" type="text" placeholder="Soru ara" name="search-question" id="search-question" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <table id="questions-table">
+            <thead>
+              <tr>
+                <th width="1%">#</th>
+                <th width="8%">Soran</th>
+                <th width="10%">Ürün</th>
+                <th width="7%">Tarih</th>
+                <th width="7%">Durum</th>
+                <th width="10%">Eylemler</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <button class="dashboard-btn success-btn" name="load-more" id="load-more-questions" style="margin-top:10px;">
           Daha fazla yükle
         </button>
       </section>
