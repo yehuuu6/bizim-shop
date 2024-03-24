@@ -1051,12 +1051,6 @@ table td {
   text-align: center;
   padding: 10px;
 }
-.table-form-td {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
 table th {
   background: var(--secondary-theme-color);
   color: var(--text-color);
