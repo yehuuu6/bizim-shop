@@ -164,7 +164,7 @@ async function loadFirstOrders() {
   formData.append('offset', '0');
   formData.append('limit', orderLimit.toString());
   const response = await MyOrdersPage.sendApiRequest(
-    '/api/account/get-orders.php/',
+    '/api/account/get-orders.php',
     formData
   );
 
@@ -205,32 +205,31 @@ orderMore.addEventListener('click', function (e) {
   formData.append('search', searchInput.value.trim().toLowerCase());
   formData.append('offset', sqlOffset.toString());
   formData.append('limit', orderLimit.toString());
-  MyOrdersPage.sendApiRequest(
-    '/api/dashboard/orders/load-orders.php',
-    formData
-  ).then((response) => {
-    let orders = response;
-    if (orders === undefined || orders.length === 0) {
-      orderMore.classList.add('disabled');
-      orderMore.disabled = true;
-      MyOrdersPage.showMessage([
-        'error',
-        'Daha fazla sipariş bulunamadı.',
-        'none',
-      ]);
-    } else {
-      for (let i = 0; i < orders.length; i++) {
-        let order = orders[i];
-        currentOrders.value.push(order);
-        orderTable.append(createOrderTable(order));
+  MyOrdersPage.sendApiRequest('/api/account/get-orders.php', formData).then(
+    (response) => {
+      let orders = response;
+      if (orders === undefined || orders.length === 0) {
+        orderMore.classList.add('disabled');
+        orderMore.disabled = true;
         MyOrdersPage.showMessage([
-          'success',
-          `${orderLimit} sipariş başarıyla yüklendi.`,
+          'error',
+          'Daha fazla sipariş bulunamadı.',
           'none',
         ]);
+      } else {
+        for (let i = 0; i < orders.length; i++) {
+          let order = orders[i];
+          currentOrders.value.push(order);
+          orderTable.append(createOrderTable(order));
+          MyOrdersPage.showMessage([
+            'success',
+            `${orderLimit} sipariş başarıyla yüklendi.`,
+            'none',
+          ]);
+        }
       }
     }
-  });
+  );
 });
 
 export default function InitOrders() {
