@@ -322,7 +322,7 @@ $row = mysqli_fetch_assoc($res);
                 <th width="1%">#</th>
                 <th width="7%">Ad</th>
                 <th width="5%">Kategori</th>
-                <th width="5%">Fiyat</th>
+                <th width="5%">Fiyat <small>(KDV dahil)</small></th>
                 <th width="5%">Durum</th>
                 <th width="5%">Eylemler</th>
               </tr>
