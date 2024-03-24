@@ -559,8 +559,6 @@ $row = mysqli_fetch_assoc($res);
     </div>
   </div>
   <script src="/dist/control-center/dashboard/p2w4z9o5y8v3q6i1r7.js"></script>
-  <script src="/dist/control-center/managers/2j4k6s8o9t1a3v5w7y0u.js"></script>
-  <script src="/dist/control-center/managers/4s9k5f7p3o8t2a0v1w6u.js"></script>
 </body>
 
 </html>

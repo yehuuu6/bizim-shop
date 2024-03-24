@@ -290,8 +290,6 @@ $door = $row['door'];
         </div>
     </div>
     <script src="/dist/control-center/account/k7u4h0g3t5s9e1c6q2.js"></script>
-    <script src="/dist/control-center/managers/2j4k6s8o9t1a3v5w7y0u.js"></script>
-    <script src="/dist/control-center/managers/4s9k5f7p3o8t2a0v1w6u.js"></script>
 </body>
 
 </html>
