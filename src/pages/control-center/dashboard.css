@@ -1051,6 +1051,12 @@ table td {
   text-align: center;
   padding: 10px;
 }
+table tbody tr td a {
+  color: var(--text-color);
+}
+table tbody tr td a:hover {
+  text-decoration: underline;
+}
 table th {
   background: var(--secondary-theme-color);
   color: var(--text-color);

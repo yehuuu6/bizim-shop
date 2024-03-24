@@ -409,7 +409,7 @@
   border: 1px solid #dadada;
   border-radius: 5px;
   place-items: center;
-  z-index: 999;
+  z-index: 2;
   cursor: pointer;
 }
 .shopping-cart .products .product-in-cart .remove-from-cart:hover {
