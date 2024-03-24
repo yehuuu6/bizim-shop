@@ -31,7 +31,7 @@ function pull_my_liked_products()
 {
     global $con;
 
-    $query = "SELECT * FROM likes WHERE uid = ?";
+    $query = "SELECT * FROM likes WHERE uid = ? ORDER BY id DESC";
     $stmt = mysqli_prepare($con, $query);
     try {
         mysqli_stmt_bind_param($stmt, 'i', $_SESSION['id']);
