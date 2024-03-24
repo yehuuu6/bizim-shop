@@ -32,7 +32,7 @@ document.querySelector('#profile-form')!.addEventListener('submit', (e) => {
   e.preventDefault();
   getApiResponse(
     ProfilePage,
-    '/api/dashboard/users/edit-profile.php',
+    '/api/account/edit-profile.php',
     new FormData(document.querySelector('#profile-form') as HTMLFormElement)
   );
 });
@@ -41,7 +41,7 @@ document.querySelector('#password-reset')!.addEventListener('click', (e) => {
   e.preventDefault();
   getApiResponse(
     ProfilePage,
-    '/api/dashboard/users/reset-password.php',
+    '/api/account/reset-password.php',
     new FormData()
   );
 });
@@ -58,7 +58,7 @@ let myDistrict: string;
 let myCity: string;
 
 ProfilePage.sendApiRequest(
-  '/api/dashboard/users/get-profile.php',
+  '/api/account/address/get-profile.php',
   new FormData()
 ).then((profile: IProfile) => {
   const profileImage = profile.profile_image;
@@ -102,7 +102,7 @@ removeBtn.addEventListener('click', (e) => {
   modalBtn.addEventListener('click', function () {
     getApiResponse(
       ProfilePage,
-      '/api/dashboard/users/delete-avatar.php',
+      '/api/account/delete-avatar.php',
       new FormData()
     );
     modalText.innerText = '';
@@ -125,7 +125,7 @@ let cities: Array<ICity> = [];
 let districts: Array<IDistrict> = [];
 
 ProfilePage.sendApiRequest(
-  '/api/dashboard/users/get-cities.php',
+  '/api/account/address/get-cities.php',
   new FormData()
 ).then((_cities: Array<ICity>) => {
   cities = _cities;
@@ -141,7 +141,7 @@ ProfilePage.sendApiRequest(
 });
 
 ProfilePage.sendApiRequest(
-  '/api/dashboard/users/get-districts.php',
+  '/api/account/address/get-districts.php',
   new FormData()
 ).then((_districts: Array<IDistrict>) => {
   districts = _districts;
