@@ -21,7 +21,13 @@ class ProductCard extends Component
         $slug = parent::get_slug($product['root_name']);
         $urlSlug = urlencode(urlencode($slug));
 
-        $price = readable_num($product['price']);
+        $fee_cost = $product['price'] * 0.18;
+        $fee_cost = number_format($fee_cost, 2, '.', '');
+
+        $total_price = (float)$product['price'] + (float)$fee_cost;
+
+        // Convert the total price to a readable number.
+        $price = readable_num($total_price);
 
         $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">

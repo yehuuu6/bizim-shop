@@ -20,6 +20,14 @@ class InSearch extends Component
 
     $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
 
+    $fee_cost = $product['price'] * 0.18;
+    $fee_cost = number_format($fee_cost, 2, '.', '');
+
+    $total_price = (float)$product['price'] + (float)$fee_cost;
+
+    // Convert the total price to a readable number.
+    $price = readable_num($total_price);
+
     $this->body = <<<HTML
         <div class="product-in-search dynamic-content" data-id="{$product['id']}">
             <div class="product-image">
@@ -33,7 +41,7 @@ class InSearch extends Component
             <div class="product-info">
               <a href="/product/{$slug}" class="product-title">{$product['name']}</a>
               <div class="price-calculation">
-                <span data-value="{$product['price']}" class="product-price">{$product['price']} <span class="product-currency">TL</span></span>
+                <span class="product-price">{$price} <span class="product-currency">TL</span></span>
               </div>
             </div>
           </div>

@@ -17,6 +17,14 @@ class AddedToCart extends Component
     $product['shipment'] === '1' ? $shipping_cost = 0 : $shipping_cost = $product['shipping_cost'];
     $shipping_cost = number_format($shipping_cost, 2, '.', '');
 
+    $fee_cost = $product['price'] * 0.18;
+    $fee_cost = number_format($fee_cost, 2, '.', '');
+
+    $total_price = (float)$product['price'] + (float)$fee_cost;
+
+    // Convert the total price to a readable number.
+    $price = readable_num($total_price);
+
     $short_desc = parent::shorten_string($product['description'], 100);
 
     $slug = parent::get_slug($product['root_name']);
@@ -42,9 +50,8 @@ class AddedToCart extends Component
                 {$short_desc}
               </p>
               <div class="price-calculation">
-                <span class="product-price">{$product['price']} <span class="product-currency">TL</span> Ürün</span> +
-                <span class="shipping-cost">{$shipping_cost} <span class="product-currency">TL</span> Kargo</span> + 
-                <span class="fee-cost">KDV
+                <span class="product-price">{$price} <span class="product-currency">TL</span> Ürün</span> +
+                <span class="shipping-cost">{$shipping_cost} <span class="product-currency">TL</span> Kargo</span>
               </div>
             </div>
           </div>
