@@ -27,6 +27,7 @@ export default function initShoppingCart() {
   formData.append('product-type', 'in-cart');
   getProductsById(formData)
     .then((products) => {
+      console.log(products);
       if (products.length < 1) {
         confirmShoppingCartBtn.disabled = true;
         cartContainer.innerHTML +=
@@ -38,6 +39,15 @@ export default function initShoppingCart() {
       }
     })
     .finally(() => {
+      // Check if the localStorage has a product that is not in the database, if so remove it from the cart
+      inCartIds.forEach((id: string) => {
+        const product = cartContainer.querySelector(
+          `[data-id="${id}"]`
+        ) as HTMLDivElement;
+        if (!product) {
+          removeFromLocalStorage(id);
+        }
+      });
       calculateTotalPrice();
       setRemoveFromCartBtns();
       setTimeout(() => {
