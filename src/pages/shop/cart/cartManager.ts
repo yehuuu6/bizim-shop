@@ -46,6 +46,7 @@ export default function initShoppingCart() {
         ) as HTMLDivElement;
         if (!product) {
           removeFromLocalStorage(id);
+          displayError('Sepetinizde bulunan bir ürün artık mevcut değil.');
         }
       });
       calculateTotalPrice();
@@ -245,6 +246,10 @@ function showErrorAndRedirect(errorMessage: string, redirectUrl: string) {
 function displayError(errorMessage: string) {
   logger.style.display = 'flex';
   loggerText.innerText = errorMessage;
+  setTimeout(() => {
+    logger.style.display = 'none';
+    loggerText.innerText = '';
+  }, 4000);
 }
 
 function indicateError(input: HTMLInputElement) {
