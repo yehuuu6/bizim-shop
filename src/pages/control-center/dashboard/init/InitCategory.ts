@@ -53,6 +53,10 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
   categoryContainer.classList.add('category-container');
   categoryContainer.dataset.id = category_data.id.toString();
 
+  const subCategoryScroller = document.createElement('div');
+  subCategoryScroller.classList.add('sub-category-container');
+  subCategoryScroller.dataset.id = category_data.id.toString();
+
   const categoryTitleContainer = document.createElement('div');
   categoryTitleContainer.classList.add('category-title');
 
@@ -135,7 +139,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
     const subCategoryNameInput = document.createElement('input');
     subCategoryNameInput.type = 'text';
     subCategoryNameInput.className = 'dashboard-input';
-    subCategoryNameInput.placeholder = 'Yeni Alt Kategori';
+    subCategoryNameInput.placeholder = 'Yeni Alt Kategori Adı';
     subCategoryNameInput.id = 'new-subcategory-name';
 
     const newSubCatCreator = document.createElement('div');
@@ -153,10 +157,17 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
     newSubCatCreator.appendChild(confirmBtn);
     newSubCatCreator.appendChild(cancelBtn);
 
-    categoryContainer.appendChild(newSubCatCreator);
+    // Append the new subcategory creator to the category container first child
+    subCategoryScroller.insertBefore(
+      newSubCatCreator,
+      subCategoryScroller.firstChild
+    );
+
+    subCategoryNameInput.focus();
 
     confirmBtn.addEventListener('click', async () => {
       const formData = new FormData();
+      console.log(subCategoryNameInput.value, category_data);
       formData.append('name', subCategoryNameInput.value);
       formData.append('cid', category_data.id.toString());
       const response = await axios({
@@ -220,6 +231,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
 
   categoryContainer.appendChild(categoryTitleContainer);
   categoryContainer.appendChild(seperator);
+  categoryContainer.appendChild(subCategoryScroller);
 
   if (
     subcategories.filter(
@@ -228,7 +240,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
   ) {
     const noSubcategoriesMessage = document.createElement('p');
     noSubcategoriesMessage.innerText = 'Alt kategori yok.';
-    categoryContainer.appendChild(noSubcategoriesMessage);
+    subCategoryScroller.appendChild(noSubcategoriesMessage);
   } else {
     // Add subcategories to the category container if there are any
     for (const subcategory of subcategories) {
@@ -313,7 +325,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
         const subcategoryDeleteBtn = document.createElement('button');
         subcategoryDeleteBtn.className = 'dashboard-btn small-btn delete-btn';
         subcategoryDeleteBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-        subcategoryDeleteBtn.title = 'Alt Kategoriyi Kaldır';
+        subcategoryDeleteBtn.title = 'Alt Kategoriyi Sil';
         subcategoryDeleteBtn.id = 'delete-sub-btn';
 
         subcategoryDeleteBtn.addEventListener('click', async () => {
@@ -353,7 +365,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
         subcategoryBtnContainer.appendChild(subcategoryDeleteBtn);
         subcategoryContainer.appendChild(subcategoryBtnContainer);
 
-        categoryContainer.appendChild(subcategoryContainer);
+        subCategoryScroller.appendChild(subcategoryContainer);
       }
     }
   }
@@ -383,7 +395,7 @@ const createCategoryContainer = (category_data: any, subcategories: any) => {
     ) as HTMLDivElement;
     if (draggedSubcategory) {
       // Append the dragged subcategory to the new category container
-      categoryContainer.appendChild(draggedSubcategory);
+      subCategoryScroller.appendChild(draggedSubcategory);
       if (draggedSubcategory.dataset.catId !== category_data.id.toString()) {
         // Update the subcategory's cid
         updateSubCategory(
@@ -441,6 +453,7 @@ addNewCategoryBtn.addEventListener('click', async () => {
     },
     data: formData,
   });
+  console.log(response.data);
   const [type, message, cause] = response.data;
   if (type === 'success') {
     ManageProductsPage.showMessage(response.data);
