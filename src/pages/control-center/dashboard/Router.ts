@@ -7,6 +7,9 @@ const menuBtns: NodeListOf<HTMLButtonElement> =
 
 const statPage = document.getElementById('statistics') as HTMLElement;
 const manageSite = document.getElementById('manage-site') as HTMLElement;
+const categoriesPage = document.getElementById(
+  'manage-categories'
+) as HTMLElement;
 const productPage = document.getElementById('manage-products') as HTMLElement;
 const createProduct = document.getElementById('add-product') as HTMLElement;
 const userPage = document.getElementById('manage-users') as HTMLElement;
@@ -18,6 +21,7 @@ const questionsPage = document.getElementById(
 let sections = [
   statPage,
   manageSite,
+  categoriesPage,
   productPage,
   userPage,
   createProduct,
@@ -57,6 +61,9 @@ export class Router implements RouterInterface {
         break;
       case 'manage-site':
         this.setPageContent(type, manageSite);
+        break;
+      case 'manage-categories':
+        this.setPageContent(type, categoriesPage);
         break;
       case 'products':
         this.setPageContent(type, productPage);

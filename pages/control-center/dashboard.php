@@ -130,6 +130,11 @@ $row = mysqli_fetch_assoc($res);
           </div>
         </li>
         <li>
+          <div class="menu-btn" data-name="manage-categories">
+            Kategoriler <i class="fa-solid fa-list"></i>
+          </div>
+        </li>
+        <li>
           <div class="menu-btn" data-name="add-product">
             Ürün Ekle <i class="fa-solid fa-plus"></i>
           </div>
@@ -251,7 +256,7 @@ $row = mysqli_fetch_assoc($res);
         <div class="content-header">
           <div class="item">
             <h2 class="header">Mağazayı Yönet</h2>
-            <p>Burada sitenizde bulunan kategorileri düzenleyebilir, siteyi bakıma alabilir veya daha fazla ayar yapabilirsiniz.</p>
+            <p>Burada siteyi bakıma alabilir veya daha fazla ayar yapabilirsiniz.</p>
           </div>
           <div class="item">
             <div class="controls">
@@ -268,20 +273,36 @@ $row = mysqli_fetch_assoc($res);
           </div>
         </div>
         <div class="container">
+          <h1>test</h1>
+        </div>
+      </section>
+      <section id="manage-categories" data-title="Kategorileri Yönet" data-url="manage-categories" class="page-content narrow-page">
+        <div id="loader-categories" class="loader">
+          <?php new Loader(); ?>
+        </div>
+        <div class="content-header">
+          <div class="item">
+            <h2 class="header">Kategoriler</h2>
+            <p>Burada sitenizde bulunan kategorileri kontrol edebilir ve düzenleyebilirsiniz.</p>
+          </div>
+          <div class="item">
+
+            <div class="controls">
+              <input type="text" placeholder="Yeni kategori oluştur" name="new-category-name" id="new-category-name" spellcheck="false" autocomplete="off" required maxlength="20" />
+              <div class="c-container">
+                <button title="Kategori oluştur" class="dashboard-btn success-btn small-btn" id="add-category-btn">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
           <div class="form-content">
-            <h3 class="bottom-header" style="margin: 0;">Kategorileri Yönet</h3>
+            <h3 class="bottom-header" style="margin: 0;">Mevcut Kategoriler</h3>
             <hr style="margin: 0;">
             <div class="item-wrapper">
               <div class="form-item">
-                <input type="text" placeholder="Kategori Adı" name="new-category-name" id="new-category-name" spellcheck="false" autocomplete="off" maxlength="20" />
-              </div>
-              <div class="form-item">
-                <button id="add-category-btn" title="Kategori Ekle" class="dashboard-btn success-btn small-btn"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="form-item">
-                <label>Mevcut Kategoriler</label>
                 <div class="category-wrapper">
                 </div>
               </div>
@@ -642,7 +663,7 @@ $row = mysqli_fetch_assoc($res);
       </span>
       <p>{message}</p>
       <button id="close-logger">
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-times"></i>
       </button>
     </div>
     <div id="main-loader" class="loader" style="display:flex;">
