@@ -38,7 +38,7 @@ class InSearch extends Component
                 loading="lazy"
               />
             </div>
-            <div class="product-info">
+            <div class="product-info" style="align-items:flex-start;">
               <a href="/product/{$slug}" class="product-title">{$product['name']}</a>
               <div class="price-calculation">
                 <span class="product-price">{$price} <span class="product-currency">TL</span></span>

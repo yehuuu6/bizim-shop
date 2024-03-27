@@ -47,7 +47,7 @@ class InCart extends Component
                 loading="lazy"
               />
             </div>
-            <div class="product-info">
+            <div class="product-info" style="align-items:flex-start;">
               <a href="/product/{$slug}" class="product-title">{$product['name']}</a>
               <p class="product-desc">
                 {$short_desc}
