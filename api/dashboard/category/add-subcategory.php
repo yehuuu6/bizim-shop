@@ -15,10 +15,10 @@ $result = array();
 
 $cat_id = get_safe_value($con, $_POST['cid']);
 $sub_name = get_safe_value($con, $_POST['name']);
-$slug = convert_link_name($sub_name);
 
 // Send category list to client
 if ($sub_name != '' && $cat_id != '') {
+    $slug = convert_link_name($sub_name);
     $sql = "INSERT INTO subcats (cid, name, slug) VALUES (?, ?, ?)";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param($stmt, 'iss', $cat_id, $sub_name, $slug);
