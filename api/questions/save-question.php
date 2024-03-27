@@ -44,7 +44,7 @@ $submissions = reset_submission_counts($con, $submissions, $last_sub, $user_id);
 
 $query = "INSERT INTO questions (pid, uid, question) VALUES (?, ?, ?)";
 
-if ($submissions < 99999) {
+if ($submissions < 8) {
     try {
         $stmt = $con->prepare($query);
         $stmt->bind_param('iis', $product_id, $user_id, $question);

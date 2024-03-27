@@ -31,7 +31,7 @@ $submissions = reset_submission_counts($con, $submissions, $last_sub, $user_id);
 
 $query = "DELETE FROM questions WHERE id = ? and uid = ?";
 
-if ($submissions < 9999) {
+if ($submissions < 8) {
     try {
         $stmt = $con->prepare($query);
         $stmt->bind_param('ii', $question_id, $user_id);
