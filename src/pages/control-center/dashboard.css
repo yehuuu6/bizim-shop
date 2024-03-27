@@ -1240,6 +1240,20 @@ table tr:hover td a i.active:hover {
   border: 1px solid var(--border-color);
   padding: 10px;
   align-items: center;
+  height: 400px;
+}
+.sub-category-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+  background: var(--main-theme-color);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
 }
 .category-btn-container {
   display: flex;
@@ -1271,7 +1285,7 @@ table tr:hover td a i.active:hover {
   font-size: 1rem;
   font-weight: 500;
   opacity: 0.8;
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 .category-title {
   display: flex;
