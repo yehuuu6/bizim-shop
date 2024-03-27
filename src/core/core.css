@@ -677,6 +677,9 @@ footer .first-part .links ul li a:hover {
   gap: 10px;
   height: 330px;
 }
+.product:hover {
+  box-shadow: 0 0 30px #0000002d;
+}
 .product-image {
   width: 100%;
   position: relative;
@@ -737,12 +740,13 @@ footer .first-part .links ul li a:hover {
 }
 .product-info {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 5px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 .product .product-info .product-title {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #363636;
   text-decoration: none;
