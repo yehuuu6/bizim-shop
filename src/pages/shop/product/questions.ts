@@ -61,6 +61,8 @@ async function listenFormToSaveQuestion() {
       console.log(message);
       offset = 0;
       getQuestions();
+      loadMoreBtn.disabled = false;
+      loadMoreBtn.innerText = 'Daha fazla soru gör';
     }
     (qForm.querySelector('textarea') as HTMLTextAreaElement).value = '';
     charCounter.textContent = '0/550';
@@ -76,7 +78,8 @@ async function getQuestions(reset_old_html: boolean = true) {
   const questions = response.data;
   if (questions.length === 0) {
     noQuestions.style.display = 'flex';
-    loadMoreBtn.style.display = 'none'; // Hide the button if no questions are returned
+    loadMoreBtn.disabled = true;
+    loadMoreBtn.innerText = 'Daha fazla soru yok';
   } else {
     noQuestions.style.display = 'none';
     loadMoreBtn.style.display = 'block';
