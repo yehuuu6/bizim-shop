@@ -31,7 +31,7 @@
 }
 
 .ask-question textarea ::-webkit-scrollbar-thumb {
-  background-color: #538fff;
+  background-color: #1a60e3;
   border-radius: 5px;
 }
 
@@ -69,21 +69,24 @@
 }
 
 .ask-question textarea:focus {
-  border-color: #538fff;
+  border-color: #1a60e3;
 }
 
-.ask-question button {
+.ask-question button,
+.load-more-questions {
   padding: 10px;
-  background-color: #538fff;
-  color: #fff;
-  border: none;
+  background-color: transparent;
+  color: #1a60e3;
+  border: 1px solid #1a60e3;
   font-size: 1rem;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.ask-question button:hover {
+.ask-question button:hover,
+.load-more-questions:hover {
   background-color: #1a60e3;
+  color: aliceblue;
+  border: 1px solid aliceblue;
 }
 .questions {
   display: flex;
@@ -158,17 +161,6 @@
   border-radius: 5px;
 }
 
-.load-more-questions {
-  padding: 10px;
-  background-color: #538fff;
-  color: #fff;
-  border: none;
-  width: 100%;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .see-questions {
   display: flex;
   flex-direction: column;
@@ -180,14 +172,11 @@
   font-weight: 500;
 }
 
-.load-more-questions:hover {
-  background-color: #1a60e3;
-}
-
 .load-more-questions:disabled {
   background-color: #c5c5c5;
   opacity: 0.5;
   cursor: not-allowed;
+  border: none;
   color: #131313;
 }
 
@@ -372,20 +361,23 @@
 }
 .product-details .detail .add-cart {
   padding: 10px;
-  background-color: #538fff;
-  color: #fff;
-  border: none;
+  background-color: transparent;
+  color: #1a60e3;
+  border: 1px solid #1a60e3;
   width: 100%;
-  border-radius: 5px;
   cursor: pointer;
 }
 .product-details .detail .add-cart:hover {
   background: #1a60e3;
+  color: aliceblue;
+  border: 1px solid aliceblue;
 }
 .product-details .detail .in-cart {
-  background: #538fff;
+  background: transparent;
   opacity: 0.5;
   padding: 0.7rem;
+  color: #1a60e3;
+  border: 1px solid #1a60e3;
   cursor: not-allowed;
 }
 

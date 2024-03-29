@@ -771,19 +771,20 @@ footer .first-part .links ul li a:hover {
 }
 .product .add-cart,
 .product .in-cart {
-  background: #538fff;
-  color: #fff;
-  border: none;
+  border: 1px solid #1a60e3;
+  color: #1a60e3;
   font-weight: 400;
   padding: 0.5rem 1rem;
   margin: 0 3.5rem;
-  border-radius: 5px;
+  background-color: transparent;
   font-size: 1rem;
   cursor: pointer;
 }
 
 .product .add-cart:hover {
   background: #1a60e3;
+  border: 1px solid aliceblue;
+  color: aliceblue;
 }
 
 .product .in-cart {
@@ -1121,6 +1122,7 @@ footer .first-part .links ul li a:hover {
   text-align: left;
   width: 100%;
   font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .cart-modal {
@@ -1173,19 +1175,20 @@ footer .first-part .links ul li a:hover {
   opacity: 1;
 }
 .cart-modal-btn {
-  background: #538fff;
-  color: #fff;
-  border: none;
+  border: 1px solid #1a60e3;
+  color: #1a60e3;
+  font-weight: 400;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  width: 100%;
+  margin: 0;
+  background-color: transparent;
+  font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s ease-in-out;
+  width: 100%;
 }
 .cart-modal-btn:hover {
-  background: #2b75ff;
+  background: #1a60e3;
+  border: 1px solid aliceblue;
+  color: aliceblue;
 }
 
 .cart-modal .product-in-modal {

@@ -71,7 +71,7 @@ body {
 }
 .link {
   text-decoration: none;
-  color: #5a44ff;
+  color: #1a60e3;
 }
 .link:hover {
   text-decoration: underline;
@@ -110,12 +110,15 @@ body {
   padding: 0 5px;
 }
 .superiorBtn {
-  background: linear-gradient(to right, #1c6bff, #5a44ff);
-  opacity: 0.85;
-  transition: opacity 0.2s ease-in-out;
+  background: transparent;
+  border: 1px solid #1a60e3 !important;
+  border-radius: 5px;
+  color: #1a60e3;
 }
 .superiorBtn:hover {
-  opacity: 1;
+  background: #1a60e3;
+  color: aliceblue;
+  border: 1px solid aliceblue;
 }
 .header {
   font-size: 18px;
@@ -123,7 +126,7 @@ body {
   margin-bottom: 10px;
 }
 .primary-color {
-  color: #5a44ff;
+  color: #1a60e3;
 }
 .formGroup {
   display: flex;
@@ -149,14 +152,12 @@ body {
   outline: none;
 }
 .formGroup input:focus {
-  border: 1px solid #5a44ff;
+  border: 1px solid #1a60e3;
 }
 .formGroup button {
   padding: 10px;
   border: none;
   margin-top: 15px;
-  border-radius: 5px;
-  color: aliceblue;
   font-size: 17px;
   font-weight: 600;
   cursor: pointer;
