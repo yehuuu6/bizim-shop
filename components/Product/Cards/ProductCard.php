@@ -32,11 +32,11 @@ class ProductCard extends Component
         $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">
         {$this->render_featured_badge($is_featured)}
-            <a href="/product/{$urlSlug}" class="product-image">
+            <div class="product-image">
                 <span class="add-wishlist" title="Favorilere Ekle"><i class="fa-regular fa-heart"></i></span>
                 {$this->render_image_element($product)}
                 {$this->render_shipment_element($product)}
-            </a>
+            </div>
             <div class="product-info">
                 <a title="{$product['name']}" href="/product/{$urlSlug}" class="product-title">{$product_title}</a>
                 <span class="product-price">{$price} <span class="product-currency">TL</span></span>
