@@ -19,6 +19,7 @@ import { setSubCategories } from '@/common/funcs/functions.dev';
 import '../dashboard.css';
 import '@/core/utils.css';
 import InitUsers from './init/users/InitUsers';
+import { clearImageInputs } from './init/products/ProductTable';
 
 // Settings panel
 const settingsBtn = document.querySelector('#settings') as HTMLButtonElement;
@@ -54,19 +55,9 @@ const cleanProductForm = document.querySelector(
 const addNewProduct = document.querySelector(
   '#add-new-product'
 ) as HTMLButtonElement;
-const productRefreshBtn = document.querySelector(
-  '#refresh-products'
-) as HTMLButtonElement;
 const productLoad = document.querySelector(
   '#loader-products'
 ) as HTMLDivElement;
-const productMore = document.querySelector(
-  '#load-more-products'
-) as HTMLButtonElement;
-const productTable = document.querySelector(
-  '#products-table tbody'
-) as HTMLTableSectionElement;
-const searchInput = document.querySelector('#search-pr') as HTMLInputElement;
 
 const createLoad = document.querySelector('#loader-create') as HTMLDivElement;
 
@@ -110,6 +101,7 @@ deleteNotificationBtn.addEventListener('click', () => {
           document.querySelector('#manage-products') as HTMLElement
         );
         refreshProducts();
+        clearImageInputs();
       }
     });
   }
@@ -211,6 +203,7 @@ addNewProduct.addEventListener('click', () => {
   const destination = document.querySelector('#add-product') as HTMLElement;
   router.loadPage('hash', destination.dataset.url!);
   quitEditMode();
+  clearImageInputs();
 });
 
 cleanProductForm.addEventListener('click', () => {
@@ -221,21 +214,6 @@ cleanProductForm.addEventListener('click', () => {
     'none',
   ]);
 });
-
-// Load every page's content
-document.addEventListener('DOMContentLoaded', () => {
-  setSubCategories(); // This is needed because at the first page load, if you edit a product, its sub category wont be selected without this.
-  InitStats();
-  InitCategories();
-  InitMenuManager();
-  InitThemeManager();
-  InitOrders();
-  InitProducts();
-  InitUsers();
-  InitQuestions();
-});
-
-// CREATE PRODUCT PAGE END
 
 // Maintenance mode controller
 
@@ -261,7 +239,18 @@ maintenanceBtn.addEventListener('click', () => {
   });
 });
 
-// Category controller
+// Load every page's content
+document.addEventListener('DOMContentLoaded', () => {
+  setSubCategories(); // This is needed because at the first page load, if you edit a product, its sub category wont be selected without this.
+  InitStats();
+  InitCategories();
+  InitMenuManager();
+  InitThemeManager();
+  InitOrders();
+  InitProducts();
+  InitUsers();
+  InitQuestions();
+});
 
 // Exports
 
