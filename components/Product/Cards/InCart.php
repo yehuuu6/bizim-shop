@@ -30,11 +30,9 @@ class InCart extends Component
 
     $short_desc = parent::shorten_string($product['description'], 100);
 
-    $slug = parent::get_slug($product['root_name']);
-
-    $slug = urlencode(urlencode($slug));
-
     $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
+
+    $guid = $product['guid'];
 
     $this->body = <<<HTML
         <div class="product-in-cart" data-id="{$product['id']}">
@@ -48,7 +46,7 @@ class InCart extends Component
               />
             </div>
             <div class="product-info" style="align-items:flex-start;">
-              <a href="/product/{$slug}" class="product-title">{$product['name']}</a>
+              <a href="/product/{$guid}" class="product-title">{$product['name']}</a>
               <p class="product-desc">
                 {$short_desc}
               </p>

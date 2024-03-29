@@ -185,12 +185,15 @@ function insert_product($con, $uid, $sub_category, $name, $description, $tags, $
 
     upload_images($ready_to_upload, $max_width, $max_height);
 
-    $sql = "INSERT INTO product (uid, category, subcategory, name, root_name, description, tags, price, shipping_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $guid = generate_guid();
+
+    $sql = "INSERT INTO product (guid, uid, category, subcategory, name, root_name, description, tags, price, shipping_cost, status, shipment, featured, quality, image1, image2, image3, image4, image5, image6)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($con, $sql);
     mysqli_stmt_bind_param(
         $stmt,
-        "iiissssddiiissssss",
+        "siiissssddiiissssss",
+        $guid,
         $uid,
         $category,
         $sub_category,

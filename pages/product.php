@@ -11,17 +11,15 @@ use Components\Utility\Banners\TopBanner;
 use Components\Categories\Links;
 use Components\Questions\AskInput;
 
-$name = isset($_GET['name']) ? get_safe_value($con, urldecode($_GET['name'])) : "";
+$guid = isset($_GET['id']) ? get_safe_value($con, urldecode($_GET['id'])) : "";
 
-if (!$name) {
+if (!$guid) {
     header("HTTP/1.1 404 Not Found");
     include($_SERVER['DOCUMENT_ROOT'] . '/errors/404.php');
     exit;
 }
 
-$name = convert_name($name);
-
-$products_data = get_products($con, ['slug' => $name]);
+$products_data = get_products($con, ['guid' => $guid]);
 
 if (!$products_data) {
     header("HTTP/1.1 404 Not Found");

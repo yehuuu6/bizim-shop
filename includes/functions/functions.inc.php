@@ -385,6 +385,7 @@ function reset_submission_counts(mysqli $con, int $submissions, int $last_sub, i
 function get_products(mysqli $con, $props = [])
 {
     $id = $props['id'] ?? '';
+    $guid = $props['guid'] ?? '';
     $search = $props['search'] ?? '';
     $slug = $props['slug'] ?? '';
     $category = $props['category'] ?? '';
@@ -423,6 +424,8 @@ function get_products(mysqli $con, $props = [])
         $sql .= "AND id = $id ";
     } elseif ($slug !== '') {
         $sql .= "AND root_name = '$slug' ";
+    } elseif ($guid !== '') {
+        $sql .= "AND guid = '$guid' ";
     }
 
     $sql .= "ORDER BY $order_type LIMIT $limit OFFSET $offset";

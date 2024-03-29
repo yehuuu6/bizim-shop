@@ -18,9 +18,6 @@ class ProductCard extends Component
 
         $is_featured = $product['featured'] == '1' ? true : false;
 
-        $slug = parent::get_slug($product['root_name']);
-        $urlSlug = urlencode(urlencode($slug));
-
         $fee_cost = $product['price'] * 0.18;
         $fee_cost = number_format($fee_cost, 2, '.', '');
 
@@ -28,6 +25,8 @@ class ProductCard extends Component
 
         // Convert the total price to a readable number.
         $price = readable_num($total_price);
+
+        $guid = $product['guid'];
 
         $this->body = <<<HTML
         <div class="product" data-id="{$product['id']}">
@@ -38,7 +37,7 @@ class ProductCard extends Component
                 {$this->render_shipment_element($product)}
             </div>
             <div class="product-info">
-                <a title="{$product['name']}" href="/product/{$urlSlug}" class="product-title">{$product_title}</a>
+                <a title="{$product['name']}" href="/product/{$guid}" class="product-title">{$product_title}</a>
                 <span class="product-price">{$price} <span class="product-currency">TL</span></span>
             </div>
             <button id="product-cart-btn" class="add-cart">Sepete Ekle</button>
