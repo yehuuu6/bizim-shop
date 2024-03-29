@@ -88,8 +88,7 @@ new Navbar();
     <div class="product-container">
         <div class="products">
         </div>
-        <div class="page-numbers">
-        </div>
+        <button class="see-more-products">Daha fazla ürün gör</button>
     </div>
 </section>
 <?php
