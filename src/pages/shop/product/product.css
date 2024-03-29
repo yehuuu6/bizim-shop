@@ -184,6 +184,17 @@
   background-color: #1a60e3;
 }
 
+.load-more-questions:disabled {
+  background-color: #c5c5c5;
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #131313;
+}
+
+.load-more-questions:disabled:hover {
+  background-color: #c5c5c5;
+}
+
 .product-container {
   display: flex;
   justify-content: space-between;
