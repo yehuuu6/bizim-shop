@@ -4,6 +4,10 @@ import './products.css';
 
 // Get products
 
+const loadMoreProductsBtn = document.querySelector(
+  '.see-more-products'
+) as HTMLButtonElement;
+
 const filterForm = document.querySelector('#filters') as HTMLFormElement;
 
 const productsContainer = document.querySelector('.products') as HTMLDivElement;
@@ -13,6 +17,10 @@ const router = document.querySelector('.router') as HTMLDivElement;
 const subCatSelector = filterForm.querySelector(
   '#p-sub-category'
 ) as HTMLSelectElement;
+
+loadMoreProductsBtn.addEventListener('click', function () {
+  setProducts(filterForm);
+});
 
 function updateRouter() {
   // Reset router text
@@ -52,8 +60,8 @@ updateRouter();
  */
 filterForm.addEventListener('submit', function (e) {
   e.preventDefault();
+  loadMoreProductsBtn.disabled = false;
   sqlOffset.value = 0;
-  // Remove page number from url
   const url = new URL(window.location.href);
   const pathName = url.pathname.split('/').slice(0, 3).join('/');
   const subCatSlug = subCatSelector.options[subCatSelector.selectedIndex]
@@ -66,7 +74,6 @@ filterForm.addEventListener('submit', function (e) {
   } else {
     url.pathname = `${pathName}`;
   }
-  url.searchParams.delete('page');
   window.history.replaceState({}, '', url.href);
   productsContainer.classList.add('dynamic-content');
   productsContainer.innerHTML = '';
