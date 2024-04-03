@@ -32,18 +32,22 @@
   font-size: 1rem;
   cursor: pointer;
 }
-.see-more-products:disabled {
-  background-color: #c5c5c5;
-  cursor: not-allowed;
-}
-.see-more-products:disabled:hover {
-  background-color: #c5c5c5;
-}
 .see-more-products:hover {
   background-color: #1a60e3;
   color: aliceblue;
   border: 1px solid aliceblue;
 }
+.see-more-products:disabled {
+  background-color: #c5c5c5;
+  opacity: 0.5;
+  cursor: not-allowed;
+  border: none;
+  color: #131313;
+}
+.see-more-products:disabled:hover {
+  background-color: #c5c5c5;
+}
+
 .router {
   font-weight: 500;
   color: #363636;
