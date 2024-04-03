@@ -27,7 +27,6 @@ export default function initShoppingCart() {
   formData.append('product-type', 'in-cart');
   getProductsById(formData)
     .then((products) => {
-      console.log(products);
       if (products.length < 1) {
         confirmShoppingCartBtn.disabled = true;
         cartContainer.innerHTML +=
@@ -36,6 +35,8 @@ export default function initShoppingCart() {
         products.forEach((product: string) => {
           cartContainer.innerHTML += product;
         });
+        // Scroll to the container after the products are loaded
+        container.scrollIntoView({ behavior: 'smooth' });
       }
     })
     .finally(() => {
