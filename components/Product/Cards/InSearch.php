@@ -18,7 +18,7 @@ class InSearch extends Component
 
     $error_src = PRODUCT_IMAGE_SITE_PATH . "noimg.jpg";
 
-    $fee_cost = $product['price'] * 0.18;
+    $fee_cost = $product['price'] * KDV;
     $fee_cost = number_format($fee_cost, 2, '.', '');
 
     $total_price = (float)$product['price'] + (float)$fee_cost;

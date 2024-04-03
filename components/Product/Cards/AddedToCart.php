@@ -17,7 +17,7 @@ class AddedToCart extends Component
     $product['shipment'] === '1' ? $shipping_cost = 0 : $shipping_cost = $product['shipping_cost'];
     $shipping_cost = number_format($shipping_cost, 2, '.', '');
 
-    $fee_cost = $product['price'] * 0.18;
+    $fee_cost = $product['price'] * KDV;
     $fee_cost = number_format($fee_cost, 2, '.', '');
 
     $total_price = (float)$product['price'] + (float)$fee_cost;

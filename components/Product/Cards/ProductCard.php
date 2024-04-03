@@ -18,7 +18,7 @@ class ProductCard extends Component
 
         $is_featured = $product['featured'] == '1' ? true : false;
 
-        $fee_cost = $product['price'] * 0.18;
+        $fee_cost = $product['price'] * KDV;
         $fee_cost = number_format($fee_cost, 2, '.', '');
 
         $total_price = (float)$product['price'] + (float)$fee_cost;
