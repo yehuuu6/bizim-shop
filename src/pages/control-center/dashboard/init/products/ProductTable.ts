@@ -36,7 +36,7 @@ export function createProductTable(product: IProduct) {
   const tr = document.createElement('tr');
   let price = parseFloat(product.price);
   // Calculate KDV and add it to the price
-  price += price * 0.18;
+  price += price * 0.2;
   let readablePrice = price.toLocaleString('tr-TR', {
     minimumFractionDigits: 2,
   });
