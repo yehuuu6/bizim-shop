@@ -450,9 +450,7 @@ function get_products(mysqli $con, $props = [])
     while ($row = mysqli_fetch_assoc($result)) {
         $row['sub_category_name'] = $subCategoryNames[$row['subcategory']] ?? '';
         $row = fix_strings($row);
-        $link = str_replace('_', '-', $row['root_name']);
-        $link = urlencode(urlencode($link));
-        $row['link'] = $link;
+        $row['link'] = $row['guid'];
         $products[] = $row;
     }
 
