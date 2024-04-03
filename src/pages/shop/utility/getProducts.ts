@@ -38,7 +38,6 @@ export function setProducts(form: HTMLFormElement) {
   formData.append('limit', productLimit.value.toString());
   getProducts(formData)
     .then((products) => {
-      console.log(sqlOffset.value, products.length);
       if (products.length == 0) {
         if (sqlOffset.value != 0) {
           loadMore.disabled = true;
@@ -58,16 +57,15 @@ export function setProducts(form: HTMLFormElement) {
         products.forEach((product: string) => {
           productsContainer.innerHTML += product;
         });
+        const productElements = productsContainer.querySelectorAll(
+          '.product'
+        ) as NodeListOf<HTMLDivElement>;
+
+        setWishlistBtns(productElements);
+        setAddToCartBtns(productElements);
       }
     })
     .finally(() => {
-      const productElements = productsContainer.querySelectorAll(
-        '.product'
-      ) as NodeListOf<HTMLDivElement>;
-
-      setWishlistBtns(productElements);
-      setAddToCartBtns(productElements);
-
       setTimeout(() => {
         productsContainer.classList.remove('dynamic-content');
       }, 850);
