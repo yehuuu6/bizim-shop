@@ -24,18 +24,16 @@ if (isset($_POST['search'])) {
 
 function get_product_data(mysqli $con, string $product_id)
 {
-    $sql = "SELECT name, root_name FROM product WHERE id = ?";
+    $sql = "SELECT name, guid FROM product WHERE id = ?";
     $stmt = $con->prepare($sql);
     $stmt->bind_param('s', $product_id);
     $stmt->execute();
     $stmt->store_result();
-    $stmt->bind_result($name, $root_name);
+    $stmt->bind_result($name, $guid);
     $stmt->fetch();
-    $link = str_replace('_', '-', $root_name);
-    $link = urlencode(urlencode($link));
     $product = [
         'name' => $name,
-        'link' => $link
+        'link' => $guid
     ];
     $stmt->close();
     return $product;
