@@ -70,8 +70,8 @@ if ($is_editing) {
 
 $validations = [
     ['Ürün adı', $name, 6, 250, 'product-name'],
-    ['Ürün etiketleri', $tags, 5, 50, 'product-tags'],
-    ['Ürün açıklaması', $description, 50, 2000, 'product-description']
+    ['Ürün etiketleri', $tags, 5, 200, 'product-tags'],
+    ['Ürün açıklaması', $description, 50, 4000, 'product-description']
 ];
 
 if ($sub_category <= 0) {
