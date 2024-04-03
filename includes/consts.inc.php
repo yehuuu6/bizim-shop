@@ -31,3 +31,6 @@ define('PRODUCT_IMAGE_SERVER_PATH', SERVER_PATH . 'product/');
 define('PRODUCT_USER_SERVER_PATH', SERVER_PATH . 'users/');
 define('PRODUCT_USER_SITE_PATH', SITE_PATH . 'users/');
 define('PRODUCT_IMAGE_SITE_PATH', SITE_PATH . 'product/');
+
+// Turkey
+const KDV = 0.20;
