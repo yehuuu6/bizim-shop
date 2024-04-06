@@ -117,8 +117,8 @@ class Navbar extends Component
                     <div class="a-content">
                         <span>Hoş geldin, {$_SESSION['name']}</span>
                         <span
-                        ><a href="/control-center/account">Hesabım</a> |
-                        <a href="/control-center/dashboard">Panel</a></span
+                        ><a href="/control-center/account">Hesabım</a>
+                        {$this->render_panel_link()}</span
                         >
                     </div>
                 </div>
@@ -126,5 +126,12 @@ class Navbar extends Component
         }
 
         return $body;
+    }
+
+    private function render_panel_link()
+    {
+        if (isset($_SESSION['id']) && $_SESSION['membership'] == '1') {
+            return " | <a href='/control-center/dashboard'>Panel</a>";
+        }
     }
 }
