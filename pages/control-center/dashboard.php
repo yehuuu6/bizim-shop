@@ -273,7 +273,13 @@ $row = mysqli_fetch_assoc($res);
           </div>
         </div>
         <div class="container">
-          <h1>test</h1>
+          <div class="form-content">
+            <h3 class="bottom-header" style="margin: 0;">Panolar</h3>
+            <hr style="margin: 0;">
+          </div>
+          <div class="banners">
+
+          </div>
         </div>
       </section>
       <section id="manage-categories" data-title="Kategorileri Yönet" data-url="manage-categories" class="page-content narrow-page">
