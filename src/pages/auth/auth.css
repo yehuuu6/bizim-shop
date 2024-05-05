@@ -18,7 +18,7 @@ body {
   align-items: center;
   height: 100dvh;
   width: 100%;
-  background-color: #141414ed;
+  background-color: #14141438;
   z-index: 9999;
 }
 .loader svg {
