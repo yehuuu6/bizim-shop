@@ -24,6 +24,11 @@ function confirm_shopping_cart(mysqli $con, array $products, bool $did_confirm_a
         send_error_response('Adresinizi onaylamadan ödeme yapamazsınız.', 'custom-box');
     }
     if (validate_address()) {
+        try {
+            place_orders($con, $products);
+        } catch (Exception $e) {
+            // Do nothing
+        }
         send_success_response('Ödemeniz başarıyla alındı. Teşekkür ederiz.');
     }
 }
@@ -36,6 +41,16 @@ if (!validate_action($action)) {
 
 $products = isset($_POST['products']) ? json_decode($_POST['products']) : [];
 $did_confirm_address = isset($_POST['confirm-address']) ? get_safe_value($con, $_POST['confirm-address']) : false;
+
+function place_orders(mysqli $con, array $products)
+{
+    // For each product in the cart, place an order using place_order function
+    foreach ($products as $product) {
+        $user_id = $_SESSION['id'];
+        $product_id = $product;
+        place_order($con, $user_id, $product_id);
+    }
+}
 
 switch ($action) {
     case 'checkLogin':
