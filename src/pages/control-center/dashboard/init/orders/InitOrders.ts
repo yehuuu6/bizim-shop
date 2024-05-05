@@ -36,11 +36,17 @@ function createOrderTable(order: IOrder) {
     month: 'long',
     year: 'numeric',
   });
+  let price = parseFloat(order.price);
+  // Calculate KDV and add it to the price
+  price += price * 0.2;
+  let readablePrice = price.toLocaleString('tr-TR', {
+    minimumFractionDigits: 2,
+  });
   tr.innerHTML = `
             <td>${++rowNumberOrders.value}</td>
             <td>${order.username}</td>
             <td>${order.product}</td>
-            <td>₺${order.price}</td>
+            <td>₺${readablePrice}</td>
             <td>${setOrderStatus(order.status)}</td>
             <td>${date}</td>
             <td class="table-form-td">
