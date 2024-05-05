@@ -320,6 +320,8 @@ confirmShoppingCartBtn.addEventListener('click', async () => {
     if (status === 'success') {
       displayError(message);
       window.location.href = `/checkout?message=${encodeURIComponent(message)}`;
+      // Clear the cart
+      localStorage.removeItem('cart');
     } else {
       displayError(message);
       if (cause !== '') {
