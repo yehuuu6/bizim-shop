@@ -43,7 +43,7 @@ class Footer extends Component
                     <ul>
                         <li><a href="/sell-us">Bize Sat</a></li>
                         <li><a href="/fix-my-product">Tamirat</a></li>
-                        <li><a href="/feedbacks">Referanslar</a></li>
+                        <li><a href="/feedbacks">Yorumlar</a></li>
                         <li><a href="/sponsorship">Sponsorluk</a></li>
                     </ul>
                     </div>

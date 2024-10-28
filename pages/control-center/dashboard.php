@@ -5,6 +5,7 @@ require_once("{$_SERVER['DOCUMENT_ROOT']}/vendor/autoload.php");
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
 use Components\Utility\Loader;
+use Components\Product\OrderDetails;
 
 if (!isset($_SESSION['id'])) {
   header('location: ' . DOMAIN . '/auth/login');
@@ -95,7 +96,7 @@ $row = mysqli_fetch_assoc($res);
             <p class="user-role"><?= $perm_content ?></p>
           </div>
           <div class="user-image-container">
-            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
+            <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://bizimshop.test/global/imgs/nopp.png'" />
           </div>
         </div>
       </div>
@@ -272,13 +273,84 @@ $row = mysqli_fetch_assoc($res);
             </div>
           </div>
         </div>
+        <div class="edit-promotion-modal-container" style="display: none;">
+          <form class="edit-promotion" id="edit-promotion">
+            <button class="close-edit-promotion">
+              <i class="fa-solid fa-times"></i>
+            </button>
+            <h3 style="margin: 0; color:var(--text-color)">Promosyonu Düzenle</h3>
+            <div class="edit-promotion-content">
+              <div class="group">
+                <input type="text" name="promotion-title" id="promotion-title" placeholder="Başlık" />
+              </div>
+              <div class="group">
+                <input type="text" name="promotion-desc" id="promotion-desc" placeholder="Açıklama" />
+              </div>
+              <div class="group">
+                <label for="promotion-image" class="dashboard-btn add-image-btn">
+                  Resim Ekle
+                </label>
+                <input hidden type="file" name="promotion-image" id="promotion-image" accept="image/*" />
+              </div>
+            </div>
+            <div class="edit-promotion-content">
+              <div class="group" style="width: 100%;">
+                <input type="text" name="promotion-redirect-first" id="promotion-redirect-first" placeholder="Ana hedef" />
+              </div>
+              <div class="group" style="width: 100%;">
+                <input type="text" name="promotion-redirect-second" id="promotion-redirect-second" placeholder="İkincil hedef" />
+              </div>
+            </div>
+            <div class="group-hor">
+              <button class="dashboard-btn success-btn" id="save-promotion">
+                Kaydet
+              </button>
+              <button class="dashboard-btn status-btn" id="delete-promotion">
+                Önizleme
+              </button>
+            </div>
+          </form>
+        </div>
         <div class="container">
+          <div class="form-content">
+            <h3 class="bottom-header" style="margin: 0;">Promosyonlar</h3>
+            <hr style="margin: 0;">
+            <div class="control-promotions">
+              <div class="promotion dynamic content">
+                <div class="promotion-image" style="background-image: radial-gradient(circle farthest-corner at 10% 20%,rgba(166, 239, 253, 1) 0%,rgba(97, 186, 255, 1) 90.1%);">
+                  <img src="/global/imgs/promotions/showcase-product.png" alt="Promosyon" />
+                </div>
+                <div class="promotion-info">
+                  <h3 class="promotion-title">WH-1000XM3</h3>
+                  <p class="promotion-description">Sony Gürültü Önleyici Kulaklık</p>
+                  <button data-num="1" class="dashboard-btn edit-btn">Düzenle</button>
+                </div>
+              </div>
+              <div class="promotion dynamic content">
+                <div class="promotion-image" style="background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);">
+                  <img src="/global/imgs/promotions/fixing.png" alt="Promosyon" />
+                </div>
+                <div class="promotion-info">
+                  <h3 class="promotion-title">Yardım mı lazım?</h3>
+                  <p class="promotion-description">Bozuk Cihazınızı Tamir Edebiliriz!</p>
+                  <button data-num="2" class="dashboard-btn edit-btn">Düzenle</button>
+                </div>
+              </div>
+              <div class="promotion dynamic content">
+                <div class="promotion-image" style="background-image: linear-gradient(90.5deg, rgba(255, 207, 139, 0.5) 1.1%, rgba(255, 207, 139, 1) 81.3%)">
+                  <img src="/global/imgs/promotions/buying.png" alt="Promosyon" />
+                </div>
+                <div class="promotion-info">
+                  <h3 class="promotion-title">Kullanmadığınız cihaz mı var?</h3>
+                  <p class="promotion-description">Onları Bize Satın!</p>
+                  <button data-num="3" class="dashboard-btn edit-btn">Düzenle</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="form-content">
             <h3 class="bottom-header" style="margin: 0;">Panolar</h3>
             <hr style="margin: 0;">
-          </div>
-          <div class="banners">
-
           </div>
         </div>
       </section>
@@ -292,7 +364,6 @@ $row = mysqli_fetch_assoc($res);
             <p>Burada sitenizde bulunan kategorileri kontrol edebilir ve düzenleyebilirsiniz.</p>
           </div>
           <div class="item">
-
             <div class="controls">
               <input type="text" placeholder="Yeni kategori oluştur" name="new-category-name" id="new-category-name" spellcheck="false" autocomplete="off" required maxlength="20" />
               <div class="c-container">
@@ -599,9 +670,9 @@ $row = mysqli_fetch_assoc($res);
             <thead>
               <tr>
                 <th width="1%">#</th>
-                <th width="5%">Sipariş Veren</th>
+                <th width="5%">Alıcı</th>
                 <th width="20%">Ürün</th>
-                <th width="5%">Fiyat</th>
+                <th width="5%">Tutar</th>
                 <th width="5%">Durum</th>
                 <th width="5%">Tarih</th>
                 <th width="10%">Eylemler</th>

@@ -1,9 +1,8 @@
 <?php
 if (!defined('FILE_ACCESS')) {
-	header("HTTP/1.1 403 Forbidden");
-	include($_SERVER['DOCUMENT_ROOT'] . '/errors/403.php');
-	exit;
+	send_forbidden_response();
 }
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/auth.inc.php';
 
@@ -48,7 +47,7 @@ function send_verification_mail(string $userEmail, string $token)
 					<tr>
 					<td style="padding: 25px 0; text-align: center">
 						<a
-						href="http://localhost/main/"
+						href="http://bizimshop.test/main/"
 						style="
 							color: #6200ff;
 							text-decoration: none;
@@ -91,7 +90,7 @@ function send_verification_mail(string $userEmail, string $token)
 							</p>
 							<p>
 								<a
-								href="http://localhost/auth/verify?token={$token}"
+								href="http://bizimshop.test/auth/verify?token={$token}"
 								style="
 									color: #fff;
 									text-decoration: none;
@@ -110,8 +109,8 @@ function send_verification_mail(string $userEmail, string $token)
 								aşağıdaki linki tarayıcınızda açınız.
 							</p>
 							<a
-								href="http://localhost/auth/verify?token={$token}"
-								>http://localhost/auth/verify?token={$token}</a
+								href="http://bizimshop.test/auth/verify?token={$token}"
+								>http://bizimshop.test/auth/verify?token={$token}</a
 							>
 							</td>
 						</tr>
@@ -176,7 +175,7 @@ function send_password_reset_link(string $userEmail, string $token)
 					<tr>
 					<td style="padding: 25px 0; text-align: center">
 						<a
-						href="http://localhost/main/"
+						href="http://bizimshop.test/main/"
 						style="
 							color: #6200ff;
 							text-decoration: none;
@@ -221,7 +220,7 @@ function send_password_reset_link(string $userEmail, string $token)
 							</p>
 							<p>
 								<a
-								href="http://localhost/auth/reset-password?password-token={$token}"
+								href="http://bizimshop.test/auth/reset-password?password-token={$token}"
 								style="
 									color: #fff;
 									text-decoration: none;
@@ -240,8 +239,8 @@ function send_password_reset_link(string $userEmail, string $token)
 								açınız.
 							</p>
 							<a
-								href="http://localhost/auth/reset-password?password-token={$token}"
-								>http://localhost/auth/reset-password?password-token={$token}</a
+								href="http://bizimshop.test/auth/reset-password?password-token={$token}"
+								>http://bizimshop.test/auth/reset-password?password-token={$token}</a
 							>
 							<br />
 							<small>

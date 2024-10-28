@@ -68,6 +68,7 @@ try {
             'guid' => $row['orderid'],
             'username' => $user['name'] . ' ' . $user['surname'],
             'product' => $product['name'],
+            'productid' => $row['pid'],
             'price' => $product['price'],
             'date' => $row['date'],
             'status' => $row['status']

@@ -83,7 +83,7 @@ $door = $row['door'];
                         <p class="user-role"><?= $perm_content ?></p>
                     </div>
                     <div class="user-image-container">
-                        <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
+                        <img class="user-avatar" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://bizimshop.test/global/imgs/nopp.png'" />
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@ $door = $row['door'];
                             <div class="item-wrapper">
                                 <div class="first-item">
                                     <div class="image-container">
-                                        <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'" />
+                                        <img class="profile-image" id="profile-image" src="<?= PRODUCT_USER_SITE_PATH . $row['profile_image'] ?>?timestamp=<?= time() ?>" alt="Profil Resmi" onerror="this.src='http://bizimshop.test/global/imgs/nopp.png'" />
                                     </div>
                                     <label id="avatar-label" class="dashboard-btn edit-btn" for="avatar-input">Profil Resmi Yükle</label>
                                     <p id="avatar-input-displayer" class="display-file">Dosya seçilmedi.</p>

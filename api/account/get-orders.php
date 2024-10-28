@@ -58,6 +58,7 @@ try {
             'id' => $row['id'],
             'guid' => $row['orderid'],
             'product' => $product['name'],
+            'productid' => $row['pid'],
             'price' => $product['price'],
             'date' => $row['date'],
             'status' => $row['status']

@@ -51,7 +51,7 @@ function createOrderTable(order: IOrder) {
             <td>${date}</td>
             <td class="table-form-td">
                 <form class="table-form" data-id="${order.guid}">
-                    <button data-action="inspect" class="dashboard-btn status-btn">İncele</button>
+                    <button data-action="inspect" class="dashboard-btn status-btn">Sipariş Detayı</button>
                 </form>
             </td>
         `;
@@ -66,15 +66,122 @@ function createOrderTable(order: IOrder) {
       let order = currentOrders.value.find(
         (order: IOrder) => order['guid'] == guid
       );
-      ManageOrdersPage.showMessage([
-        'success',
-        `${order?.guid} ID'li sipariş modalı yapılacak. (TODO)`,
-        'none',
-      ]);
+      // If the order is found, render the order details
+      if (order !== undefined) {
+        renderOrderDetails(order);
+      } else {
+        ManageOrdersPage.showMessage([
+          'error',
+          'Sipariş detayları yüklenirken bir hata oluştu.',
+          'none',
+        ]);
+      }
     }
   });
 
   return tr;
+}
+
+function updateOrderStatusElement(
+  status: string,
+  statusContainer: HTMLDivElement
+) {
+  const formData = new FormData();
+  formData.append('status', status);
+  ManageOrdersPage.sendApiRequest(
+    '/api/dashboard/orders/get-status-element.php',
+    formData
+  ).then((response) => {
+    const icon = response[0];
+    const text = response[1];
+
+    statusContainer.innerHTML = '';
+    statusContainer.innerHTML += icon;
+    statusContainer.innerHTML += text;
+
+    updateNodes(status);
+  });
+}
+
+function updateNodes(status: string) {
+  const firstNode = document.querySelector('#node-1') as HTMLDivElement;
+  const secondNode = document.querySelector('#node-2') as HTMLDivElement;
+  const thirdNode = document.querySelector('#node-3') as HTMLDivElement;
+
+  // Add completed class to nodes based on the order status
+
+  if (status <= '1') {
+    firstNode.classList.add('completed');
+    secondNode.classList.remove('completed');
+    thirdNode.classList.remove('completed');
+  } else if (status <= '3') {
+    firstNode.classList.add('completed');
+    secondNode.classList.add('completed');
+    thirdNode.classList.remove('completed');
+  } else if (status === '4') {
+    firstNode.classList.add('completed');
+    secondNode.classList.add('completed');
+    thirdNode.classList.add('completed');
+  } else {
+    firstNode.classList.remove('completed');
+    secondNode.classList.remove('completed');
+    thirdNode.classList.remove('completed');
+    firstNode.classList.add('completed');
+  }
+}
+
+function renderOrderDetails(order: IOrder) {
+  const formData = new FormData();
+  formData.append('order_id', order.guid);
+  formData.append('product_id', order.productid);
+  console.log(order.guid);
+  console.log(order.productid);
+  // Send api request and receive the OrderDetails component as HTML and append it to the body.
+  ManageOrdersPage.sendApiRequest(
+    '/api/checkout/getOrderComponent.php',
+    formData
+  ).then((response) => {
+    const orderDetailElement = document.createElement('div');
+    orderDetailElement.classList.add('order-wrapper');
+    orderDetailElement.innerHTML = response;
+    document.body.appendChild(orderDetailElement);
+
+    const orderStatBtnContainer = orderDetailElement.querySelector(
+      '.buttons'
+    ) as HTMLDivElement;
+
+    const orderStatBtns = orderStatBtnContainer.querySelectorAll(
+      'button'
+    ) as NodeListOf<HTMLButtonElement>;
+
+    updateNodes(order.status);
+
+    orderStatBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const status = btn.dataset.val as string;
+        console.log(status);
+        const orderId = orderStatBtnContainer.dataset.id as string;
+        const formData = new FormData();
+        formData.append('order_id', orderId);
+        formData.append('status', status);
+        ManageOrdersPage.sendApiRequest(
+          '/api/dashboard/orders/update-order-stat.php',
+          formData
+        ).then((response) => {
+          const [result, message, cause] = response;
+          const statusContainerElement = orderDetailElement.querySelector(
+            '.shipment'
+          ) as HTMLDivElement;
+          ManageOrdersPage.showMessage(response);
+          if (result === 'success') {
+            order.status = status;
+            loadFirstOrders();
+            updateOrderStatusElement(status, statusContainerElement);
+          }
+        });
+      });
+    });
+  });
 }
 
 let oldSearch = '';

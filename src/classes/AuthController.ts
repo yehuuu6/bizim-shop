@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-import IAuthController from "@/common/interfaces/controllers/IAuthController";
+import IAuthController from '@/common/interfaces/controllers/IAuthController';
 
 export class AuthController implements IAuthController {
   form: HTMLFormElement;
@@ -34,29 +34,29 @@ export class AuthController implements IAuthController {
   showMessage(message: string, messageType: string, cause: string) {
     clearTimeout(this.timer);
 
-    const iconPath = messageType === "success" ? "success.png" : "error.png";
+    const iconPath = messageType === 'success' ? 'success.png' : 'error.png';
     const className = `logger ${messageType}`;
     const imageTag = `<span><img src='/global/imgs/icons/${iconPath}'/></span>`;
 
     this.logger.className = className;
     this.logger.innerHTML = `${imageTag} ${message}`;
 
-    if (cause !== "none") {
+    if (cause !== 'none') {
       clearTimeout(this.timer2);
 
       const element =
         (document.querySelector(`[name=${cause}]`) as HTMLElement) ||
         (document.querySelector(`[id=${cause}]`) as HTMLElement);
-      element.style.border = "1px solid red";
+      element.style.border = '1px solid red';
 
       this.timer2 = setTimeout(() => {
-        element.style.border = "1px solid #dadada";
+        element.style.border = '1px solid #dadada';
       }, 2000);
     }
 
     this.timer = setTimeout(() => {
-      this.logger.className = "logger";
-      this.logger.innerHTML = "";
+      this.logger.className = 'logger';
+      this.logger.innerHTML = '';
     }, 8000);
   }
 
@@ -73,23 +73,23 @@ export class AuthController implements IAuthController {
   }
 
   sendApiRequest() {
-    this.loader.style.display = "flex";
+    this.loader.style.display = 'flex';
 
     axios({
       url: this.url,
-      method: "post",
+      method: 'post',
       data: new FormData(this.form),
       headers: {
-        "X-Requested-With": "XMLHttpRequest",
+        'X-Requested-With': 'XMLHttpRequest',
       },
     })
       .then((response) => {
         //console.log(response); Enable this when error occurs
-        this.loader.style.display = "none";
+        this.loader.style.display = 'none';
         const [status, message, cause] = response.data;
         this.showMessage(message, status, cause);
 
-        if (status === "success") {
+        if (status === 'success') {
           this.oldLoggerText === undefined ? this.showCountdown() : null;
           setTimeout(() => {
             window.location.href = this.returnUrl;
@@ -98,7 +98,7 @@ export class AuthController implements IAuthController {
       })
       .catch((error) => {
         // Handle error here DANGER Security issue
-        this.showMessage(error.message, "error", "none");
+        this.showMessage(error.message, 'error', 'none');
       });
   }
 }
@@ -123,7 +123,7 @@ export class SpecialAuthController extends AuthController {
     clearTimeout(this.timer);
 
     this.timer = setTimeout(() => {
-      this.logger.className = "logger warning";
+      this.logger.className = 'logger warning';
       this.logger.innerHTML = this.oldLoggerText!;
     }, 8000);
   }

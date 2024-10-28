@@ -16,7 +16,7 @@ class Card3 extends Component
             <section class="promotion" id="theme-3">
                 <div class="promotion-details dynamic-content">
                     <div class="thumbnail" style="border-radius: 99999px;">
-                        <img src="http://localhost/global/imgs/promotions/buying.png" alt="showcased product">
+                        <img src="http://bizimshop.test/global/imgs/promotions/buying.png" alt="showcased product">
                     </div>
                     <div class="content">
                         <div class="info">

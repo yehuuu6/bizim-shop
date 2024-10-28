@@ -28,11 +28,11 @@ class Navbar extends Component
             <nav class="navbar">
                 <div class="flex-item site-name">
                     <img
-                    src="http://localhost/global/imgs/logo.png"
+                    src="http://bizimshop.test/global/imgs/logo.png"
                     class="logo"
                     alt=""
                     />
-                    <a href="http://localhost">Bizim <span>Shop</span></a>
+                    <a href="http://bizimshop.test">Bizim <span>Shop</span></a>
                 </div>
                 <div class="flex-item search-box">
                     <input
@@ -80,7 +80,7 @@ class Navbar extends Component
     private function get_img_src()
     {
         if ($_SESSION['profile_image'] === 'nopp.png') {
-            return "http://localhost/global/imgs/nopp.png";
+            return "http://bizimshop.test/global/imgs/nopp.png";
         } else {
             return PRODUCT_USER_SITE_PATH . $_SESSION['profile_image'] . "?timestamp=" . time();
         }
@@ -96,7 +96,7 @@ class Navbar extends Component
             $body = <<<HTML
                 <div class="account">
                     <div class="user-img">
-                        <img src="http://localhost/global/imgs/nopp.png" alt="Profil resmi" />
+                        <img src="http://bizimshop.test/global/imgs/nopp.png" alt="Profil resmi" />
                     </div>
                     <div class="a-content">
                         <span>Hesabım</span>
@@ -112,7 +112,7 @@ class Navbar extends Component
             $body = <<<HTML
                 <div class="account">
                     <div class="user-img">
-                        <img src="{$src}" alt="Profil resmi" onerror="this.src='http://localhost/global/imgs/nopp.png'"/>
+                        <img src="{$src}" alt="Profil resmi" onerror="this.src='http://bizimshop.test/global/imgs/nopp.png'"/>
                     </div>
                     <div class="a-content">
                         <span>Hoş geldin, {$_SESSION['name']}</span>

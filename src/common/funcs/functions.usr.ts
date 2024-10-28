@@ -33,22 +33,19 @@ export function setOrderStatus(status: string) {
       statusText = 'Kargoya Verildi';
       break;
     case '3':
-      statusText = 'Teslim Edildi';
+      statusText = 'Dağıtımda';
       break;
     case '4':
-      statusText = 'İptal Edildi';
+      statusText = 'Teslim Edildi';
       break;
     case '5':
-      statusText = 'İade Edildi';
+      statusText = 'İptal Edildi';
       break;
     case '6':
-      statusText = 'Tamamlandı';
-      break;
-    case '7':
-      statusText = 'Tamamlanmadı';
+      statusText = 'İade Edildi';
       break;
     default:
-      statusText = 'Hata';
+      statusText = 'Bilinmeyen Durum';
       break;
   }
   return statusText;

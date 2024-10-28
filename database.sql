@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 03, 2024 at 06:18 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Jul 26, 2024 at 10:22 PM
+-- Server version: 8.0.30
+-- PHP Version: 8.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `answers` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `qid` int(11) NOT NULL,
-  `answer` text NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp()
+  `id` int NOT NULL,
+  `uid` int NOT NULL,
+  `qid` int NOT NULL,
+  `answer` text COLLATE utf8mb4_general_ci NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,10 +42,10 @@ CREATE TABLE `answers` (
 --
 
 CREATE TABLE `banner` (
-  `id` int(11) NOT NULL,
-  `text` text NOT NULL,
-  `background` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `text` text COLLATE utf8mb4_general_ci NOT NULL,
+  `background` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `link` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -55,9 +55,9 @@ CREATE TABLE `banner` (
 --
 
 CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -70,7 +70,8 @@ INSERT INTO `categories` (`id`, `name`, `slug`) VALUES
 (47, 'Enstrüman', 'enstruman'),
 (48, 'Müzik Setleri', 'muzik-setleri'),
 (49, 'Donanım', 'donanim'),
-(50, 'Kulaklıklar', 'kulakliklar');
+(50, 'Kulaklıklar', 'kulakliklar'),
+(61, '3D Baskı', '3d-baski');
 
 -- --------------------------------------------------------
 
@@ -79,8 +80,8 @@ INSERT INTO `categories` (`id`, `name`, `slug`) VALUES
 --
 
 CREATE TABLE `cities` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -177,9 +178,9 @@ INSERT INTO `cities` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `districts` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `city_id` int(11) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `city_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1168,9 +1169,9 @@ INSERT INTO `districts` (`id`, `name`, `city_id`) VALUES
 --
 
 CREATE TABLE `likes` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL
+  `id` int NOT NULL,
+  `uid` int NOT NULL,
+  `pid` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1182,7 +1183,8 @@ INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
 (147, 11, 63),
 (173, 9, 3),
 (174, 9, 71),
-(175, 9, 89);
+(175, 9, 89),
+(224, 9, 78);
 
 -- --------------------------------------------------------
 
@@ -1191,22 +1193,28 @@ INSERT INTO `likes` (`id`, `uid`, `pid`) VALUES
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `orderid` varchar(255) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `date` date DEFAULT current_timestamp(),
-  `status` int(11) NOT NULL
+  `id` int NOT NULL,
+  `orderid` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `uid` int NOT NULL,
+  `pid` int NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderid`, `uid`, `pid`, `date`, `status`) VALUES
-(5, '5f38db52-2dea-4056-8066-59b900dd4601', 9, 31, '2024-03-24', 1),
-(6, 'daebc757-ae3e-4dd8-9b59-c8c5b6fe586e', 9, 31, '2024-03-24', 0),
-(7, 'fe980f7d-7a49-48fe-9630-d30107587d05', 9, 31, '2024-03-24', 0);
+INSERT INTO `orders` (`id`, `orderid`, `uid`, `pid`, `date`, `last_update`, `status`) VALUES
+(11, '013cf541-a8e3-4801-a8bf-5f606457db63', 9, 71, '2024-05-05 00:00:00', '2024-07-08 00:00:00', 2),
+(12, 'f7966f39-48dc-4511-b85d-b3b929fc004a', 9, 3, '2024-05-05 00:00:00', '2024-06-26 00:00:00', 4),
+(13, 'f73c10cb-570f-440d-8657-25bdea8210d6', 11, 6, '2024-05-05 00:00:00', '2024-07-24 00:00:00', 2),
+(14, 'dba9c591-e9d6-485b-8302-931e80de5ce6', 9, 89, '2024-05-16 00:00:00', '2024-07-08 00:00:00', 4),
+(15, 'b4e6a63f-e243-4c77-8501-b7e7ad462de1', 9, 27, '2024-05-16 00:00:00', '2024-06-27 00:00:00', 6),
+(16, '9290d348-60b3-4ab8-a092-3f4b78fea6d4', 9, 78, '2024-05-16 00:00:00', '2024-06-27 00:00:00', 4),
+(17, '9ca078d1-f7c4-4a49-b82e-bd0d0ae54d02', 9, 71, '2024-07-08 00:00:00', '2024-07-08 00:00:00', 0),
+(18, '21381211-cdd2-4d32-8dae-54e3b73958ec', 9, 11, '2024-07-24 00:00:00', '2024-07-24 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1215,28 +1223,28 @@ INSERT INTO `orders` (`id`, `orderid`, `uid`, `pid`, `date`, `status`) VALUES
 --
 
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
-  `guid` varchar(255) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `id` int NOT NULL,
+  `guid` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `uid` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `shipping_cost` decimal(10,2) NOT NULL,
   `fee_cost` decimal(10,2) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `root_name` varchar(255) NOT NULL,
-  `tags` text NOT NULL,
-  `description` text NOT NULL,
-  `quality` int(11) NOT NULL DEFAULT 0,
-  `shipment` int(11) NOT NULL DEFAULT 0,
-  `featured` int(11) NOT NULL DEFAULT 0,
-  `category` int(11) NOT NULL DEFAULT 0,
-  `subcategory` int(11) NOT NULL DEFAULT 0,
-  `image1` varchar(255) NOT NULL,
-  `image2` varchar(255) NOT NULL,
-  `image3` varchar(255) NOT NULL,
-  `image4` varchar(255) NOT NULL,
-  `image5` varchar(255) NOT NULL,
-  `image6` varchar(255) NOT NULL
+  `status` int NOT NULL DEFAULT '1',
+  `root_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `tags` text COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `quality` int NOT NULL DEFAULT '0',
+  `shipment` int NOT NULL DEFAULT '0',
+  `featured` int NOT NULL DEFAULT '0',
+  `category` int NOT NULL DEFAULT '0',
+  `subcategory` int NOT NULL DEFAULT '0',
+  `image1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image2` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image3` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image4` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image5` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `image6` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1244,76 +1252,101 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `guid`, `uid`, `name`, `price`, `shipping_cost`, `fee_cost`, `status`, `root_name`, `tags`, `description`, `quality`, `shipment`, `featured`, `category`, `subcategory`, `image1`, `image2`, `image3`, `image4`, `image5`, `image6`) VALUES
-(1, 'acee4eae-823c-46f5-b59b-000a4dda816a', 9, 'Sony Walkman', 200.00, 100.00, 19.92, 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\n\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(3, '1d593635-0a8f-4eab-b18a-91141b7d7a97', 9, 'Audio-Technica Turntable', 299.99, 39.99, 17.50, 1, 'audio_technica_turntable', 'audio technica record player', 'The Audio-Technica turntable provides high-fidelity audio and is perfect for vinyl enthusiasts. It features a precision tonearm and a durable construction for long-lasting performance.', 2, 0, 1, 48, 55, '62872_audio_technica_turntable.jpg', '58208_audio_technica_turntable.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(5, '2d134f44-e663-451b-bf64-67117959b048', 9, 'Pioneer DJ Controller', 499.99, 49.99, 25.00, 1, 'pioneer_dj_controller', 'pioneer dj mixing console', 'The Pioneer DJ Controller is a professional-grade mixing console for DJs. It offers precise control and a range of effects to enhance your mixing experience. Perfect for both beginners and seasoned DJs.', 2, 0, 1, 48, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(6, 'bdc9dfee-bf97-495f-9e8e-be64313d278b', 9, 'Fender Stratocaster Guitar', 900.00, 50.00, 30.00, 1, 'fender_stratocaster_guitar', 'fender electric guitar gitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 47, 66, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(7, '34dc04c7-57e2-4840-9acb-76997a632196', 9, 'Yamaha Stage Piano', 799.99, 59.99, 20.00, 1, 'yamaha_stage_piano', 'yamaha digital piano', 'The Yamaha Stage Piano is a high-quality digital piano that emulates the sound and feel of an acoustic piano. It\\\'s ideal for both stage performances and studio recordings, offering a wide range of sounds and features. Walkman', 1, 1, 0, 47, 65, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(8, '3c84e722-6c9d-4f57-9962-571576349b8f', 9, 'Bowers & Wilkins Floorstanding Speaker', 1299.99, 69.99, 40.00, 1, 'bowers_&_wilkins_floorstanding_speaker', 'bowers wilkins floorstanding speaker', 'The Bowers & Wilkins Floorstanding Speaker delivers exceptional audio performance with its premium components and craftsmanship. It\\\'s a perfect choice for audiophiles seeking a truly immersive listening experience.', 0, 0, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(9, '30d910c7-4132-4c47-8403-29e403647697', 9, 'Sony Noise-Canceling Headphones', 349.99, 25.99, 15.00, 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(11, '3d9635c8-3b44-4f62-b970-163223d2171a', 9, 'Samsung 4K Smart TV', 999.99, 79.99, 50.00, 1, 'samsung_4k_smart_tv', 'samsung smart television televizyon', 'Yeni Samsung 4K Akıllı Televizyon ile ev eğlencesine yeni bir boyut kazandırın. Üstün görüntü kalitesi, zengin renkler ve akıllı özelliklerle donatılmış bu TV, size sinema salonu deneyimini evinize getiriyor.\\r\\n\\r\\nBu TV\\\'nin en çarpıcı özelliği kesinlikle 4K Ultra HD çözünürlüğüdür. Her bir pikselde inanılmaz detaylarla dolu, kristal berraklığında bir görüntü sunar. Hangi içeriği izlediğiniz önemli değil, her sahne canlı ve gerçekçi bir şekilde hayat bulur.', 2, 1, 1, 31, 81, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
-(12, '44162867-affc-4ba7-89fa-c3bb5e1d847a', 9, 'Canon EOS Rebel T7i DSLR Camera', 699.99, 39.99, 25.00, 1, 'canon_eos_rebel_t7i_dslr_camera', 'canon dslr camera', 'Capture life\\\'s moments in stunning detail with Canon EOS Rebel T7i DSLR Camera. It features a 24.2MP sensor and advanced autofocus for professional-quality photos and videos.', 2, 0, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(13, '89dd2840-cd7c-4a67-905e-483c2bfc255f', 9, 'GoPro Hero 9 Black', 449.99, 29.99, 15.00, 1, 'gopro_hero_9_black', 'gopro action camera', 'Record your adventures in crisp 4K resolution with GoPro Hero 9 Black. This rugged action camera is waterproof and features advanced stabilization for smooth footage.', 1, 1, 0, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(14, 'f694f4b1-e017-4fdd-82f4-f1460fae6ebd', 9, 'DJI Mavic Air 2 Drone', 799.99, 49.99, 30.00, 1, 'dji_mavic_air_2_drone', 'dji drone quadcopter', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. This compact quadcopter boasts intelligent features and a powerful camera for stunning results.', 2, 0, 1, 31, 83, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(15, 'bd947dd0-309e-44c1-9ca4-431c3464f994', 9, 'Nintendo Switch Console', 299.99, 19.99, 10.00, 1, 'nintendo_switch_console', 'nintendo gaming console', 'Enter the world of gaming with Nintendo Switch Console. Play at home or on the go with its versatile design and expansive library of games.', 1, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(16, '756ead38-75a4-408b-8bd3-11baa876c8b0', 9, 'Logitech MX Master 3 Mouse', 99.99, 9.99, 5.00, 1, 'logitech_mx_master_3_mouse', 'logitech wireless mouse', 'Enhance your productivity with Logitech MX Master 3 Mouse. This ergonomic wireless mouse offers precision control and customizable buttons for seamless workflow.', 0, 0, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(17, '2e8728d8-71d8-4c62-9ad3-e01ed224b7f6', 9, 'Microsoft Surface Laptop 4', 1299.99, 59.99, 40.00, 1, 'microsoft_surface_laptop_4', 'microsoft laptop computer', 'Experience performance and style with Microsoft Surface Laptop 4. This sleek laptop boasts powerful internals and a vibrant touchscreen display for all-day productivity.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(18, 'ab3aa9a7-db1a-4819-ab29-fdf0f6c5aeaf', 9, 'Fitbit Versa 3 Smartwatch', 229.99, 14.99, 8.00, 1, 'fitbit_versa_3_smartwatch', 'fitbit fitness tracker', 'Stay active and connected with Fitbit Versa 3 Smartwatch. Track your workouts, monitor your health, and receive notifications on your wrist with this versatile wearable.', 1, 1, 0, 47, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(19, '9c6e963f-df01-403d-bd81-d5287742df4e', 9, 'Anker PowerCore 20000 Portable Charger', 49.99, 7.99, 4.00, 1, 'anker_powercore_20000_portable_charger', 'anker portable power bank', 'Never run out of battery with Anker PowerCore 20000 Portable Charger. This high-capacity power bank keeps your devices charged on the go, so you can stay connected wherever you are.', 0, 0, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(20, '5cf9dccf-c3af-489e-bd64-7196ac603c58', 9, 'Sony PlayStation 5 Console', 499.99, 29.99, 20.00, 1, 'sony_playstation_5_console', 'sony gaming console', 'Experience the next generation of gaming with Sony PlayStation 5 Console. Enjoy stunning visuals, lightning-fast load times, and immersive gameplay with this powerful gaming console.', 2, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(21, '1c08c92c-60ed-4be1-9b5c-2e6840c38e04', 9, 'Razer BlackWidow Elite Keyboard', 169.99, 14.99, 8.00, 1, 'razer_blackwidow_elite_keyboard', 'razer gaming keyboard', 'Dominate your gaming sessions with Razer BlackWidow Elite Mechanical Keyboard. Featuring Razer\\\'s proprietary switches and customizable RGB lighting, this keyboard offers precision and style.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(22, '82710d0a-d1db-4600-9981-e0690d7b1b9b', 9, 'Samsung Galaxy Tab S7 Tablet', 849.99, 39.99, 25.00, 1, 'samsung_galaxy_tab_s7_tablet', 'samsung android tablet', 'Unleash your creativity and productivity with Samsung Galaxy Tab S7+ Tablet. With its stunning AMOLED display and S Pen support, this tablet is perfect for work and entertainment.', 2, 0, 1, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(23, '117236a2-e453-40c9-9840-c598d9dc53e8', 9, 'Bose QuietComfort 45 Wireless Headphones', 329.99, 25.99, 15.00, 1, 'bose_quietcomfort_45_wireless_headphones', 'bose headphones noise-cancellation', 'Immerse yourself in your music with Bose QuietComfort 45 Wireless Headphones. Enjoy superior sound quality and active noise cancellation for a truly immersive listening experience.', 0, 0, 0, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(24, '13281918-6fcb-47ae-bd2d-1f2d5263d3af', 9, 'Amazon Echo Show 10 (3rd Gen)', 249.99, 19.99, 10.00, 1, 'amazon_echo_show_10_(3rd_gen)', 'amazon smart display', 'Stay connected and organized with Amazon Echo Show 10 (3rd Gen). With its rotating display and built-in Alexa, this smart display is perfect for managing your day and staying entertained.', 1, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(25, '28a1313a-dcef-42eb-b563-442d1abb723f', 9, 'Garmin Fenix 6 Pro Smartwatch', 699.99, 29.99, 15.00, 1, 'garmin_fenix_6_pro_smartwatch', 'garmin fitness tracker', 'Track your fitness and conquer your goals with Garmin Fenix 6 Pro Smartwatch. With advanced GPS and health monitoring features, this smartwatch is built for adventure.', 2, 0, 1, 47, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(26, '637e04e8-f4f8-4bf3-a97a-1dd2de9e7f1d', 9, 'LG UltraGear 27GN950-B Gaming Monitor', 999.99, 49.99, 30.00, 1, 'lg_ultragear_27gn950_b_gaming_monitor', 'lg gaming monitor', 'Immerse yourself in your favorite games with LG UltraGear 27GN950-B Gaming Monitor. Featuring a 4K Nano IPS display and NVIDIA G-Sync compatibility, this monitor delivers smooth visuals and responsive gameplay.', 2, 1, 1, 49, 73, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(27, '9c29585c-4ae6-4853-adaf-9c9265aa1fd5', 9, 'Apple MacBook Pro (M3, 2024)', 83945.00, 100.00, 40.00, 1, 'apple_macbook_pro_(m3,_2024)', 'apple laptop computer macbook mac', 'MacBook Air akıcı bir şekilde çalışmanız ve oyun oynamanız için ihtiyacınız olan gücü sunuyor. Üstelik M3 çip dünyanın en popüler laptopuna şimdi daha da muhteşem beceriler katıyor. Ve 18 saate kadar pil ömrü1 sayesinde MacBook Air\\\'i dilediğiniz yere götürerek her şeyi hızlı bir şekilde yapabiliyorsunuz.\\r\\n\\r\\nSüper hafif ve inanılmaz ince MacBook Air hayatınızın her anında yanınızda olacak şekilde ve gezegenimiz düşünülerek tasarlandı. M3 çipli MacBook Air modellerinin üretiminde kullanılan geri dönüştürülmüş materyallerin oranı yüzde 50’ye ulaştı. Bu, Apple için bir ilk. Ayrıca tüm MacBook Air laptoplar da geri dönüştürülmüş alüminyumdan üretilen dayanıklı kasalara sahip.\\r\\n\\r\\n8 GB birleşik bellek\\r\\n512 GB SSD depolama\\r\\nTrue Tone özelliğine sahip 15.3 inç Liquid Retina ekran\\r\\n1080p FaceTime HD kamera\\r\\nMagSafe 3 şarj bağlantı noktası\\r\\nİki adet Thunderbolt / USB 4 bağlantı noktası\\r\\n35 W Çift USB‑C Bağlantı Noktalı Güç Adaptörü\\r\\nTouch ID özellikli ve arkadan aydınlatmalı Magic Keyboard - Türkçe Q', 2, 1, 1, 31, 74, '19641_apple_macbook_pro_(m1,_2021).jpg', '63627_apple_macbook_pro_(m1,_2021).jpg', '46214_apple_macbook_pro_(m1,_2021).jpg', '33105_apple_macbook_pro_(m1,_2021).jpg', '41884_apple_macbook_pro_(m1,_2021).jpg', 'noimg.jpg'),
-(28, '6dcc4f8a-4df0-4abd-93ac-4ab06e7cf3d2', 9, 'Sony Alpha a7 III Mirrorless Camera', 1999.99, 69.99, 40.00, 1, 'sony_alpha_a7_iii_mirrorless_camera', 'sony mirrorless camera', 'Capture life\\\'s moments with stunning clarity using Sony Alpha a7 III Mirrorless Camera. With its full-frame sensor and advanced autofocus system, this camera delivers professional-quality results.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(29, '705e7529-9490-4907-b7c0-36728a59f0cb', 9, 'Dell XPS 13 Laptop', 1299.99, 49.99, 30.00, 1, 'dell_xps_13_laptop', 'dell laptop computer', 'Stay productive on the go with Dell XPS 13 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for work and entertainment.', 2, 1, 0, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(30, '858fcebb-e61f-43e7-adef-ffb698fda478', 9, 'SteelSeries Arctis 7 Gaming Headset', 149.99, 9.99, 5.00, 1, 'steelseries_arctis_7_gaming_headset', 'steelseries gaming headset', 'Immerse yourself in your favorite games with SteelSeries Arctis 7 Wireless Gaming Headset. Featuring lag-free wireless audio and a retractable microphone, this headset offers comfort and performance for long gaming sessions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(31, '4eca7766-face-43e5-90b1-9edf028c81ee', 9, 'Sony WH-1000XM4 Wireless Headphones', 349.99, 25.99, 15.00, 1, 'sony_wh_1000xm4_wireless_headphones', 'sony headphones noise-cancellation', 'Experience premium sound quality and active noise cancellation with Sony WH-1000XM4 Wireless Headphones. Perfect for music lovers and travelers seeking immersive audio.', 0, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(32, 'e733c5ec-d5ce-46a7-b40c-4edb9245c511', 9, 'Logitech G Pro X Wireless Gaming Mouse', 149.99, 9.99, 5.00, 1, 'logitech_g_pro_x_wireless_gaming_mouse', 'logitech gaming mouse', 'Gain a competitive edge with Logitech G Pro X Wireless Gaming Mouse. Featuring advanced sensor technology and customizable buttons, this mouse delivers precision and performance for gamers.', 1, 1, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(33, '63d4f6ff-b90c-4ad6-ad08-d5f03efa5a1e', 9, 'Apple Watch Series 7', 399.99, 19.99, 10.00, 1, 'apple_watch_series_7', 'apple smartwatch', 'Stay connected and active with Apple Watch Series 7. With its advanced health tracking features and vibrant display, this smartwatch is your perfect everyday companion.', 2, 1, 0, 47, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(34, 'cca83d86-04bc-4b6e-8e7b-9227c99230be', 9, 'Microsoft Xbox Series X Console', 599.99, 29.99, 20.00, 1, 'microsoft_xbox_series_x_console', 'microsoft gaming console', 'Immerse yourself in the ultimate gaming experience with Microsoft Xbox Series X Console. With powerful hardware and lightning-fast load times, this console delivers smooth and responsive gameplay.', 2, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(35, '3bea9ed6-d813-4f0a-bf3b-50929e56c98a', 9, 'Samsung Odyssey G7 Gaming Monitor', 699.99, 39.99, 25.00, 1, 'samsung_odyssey_g7_gaming_monitor', 'samsung gaming monitor', 'Elevate your gaming setup with Samsung Odyssey G7 Gaming Monitor. Featuring a curved QLED display and rapid refresh rate, this monitor delivers immersive visuals and smooth gameplay.', 2, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(36, '76b8dd59-3767-488a-b303-21f4e8d3c63d', 9, 'Sony WH-CH710N Wireless Headphones', 199.99, 14.99, 8.00, 1, 'sony_wh_ch710n_wireless_headphones', 'sony wireless headphones', 'Enjoy clear sound and all-day comfort with Sony WH-CH710N Wireless Headphones. With built-in noise cancellation and long battery life, these headphones are perfect for everyday use.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(37, '7b16638b-6e7e-4dc5-8a8d-3fc43b030c71', 9, 'LG OLED C1 Series 4K TV', 1999.99, 69.99, 40.00, 1, 'lg_oled_c1_series_4k_tv', 'lg oled television', 'Experience breathtaking visuals with LG OLED C1 Series 4K TV. Featuring OLED technology and AI-enhanced picture quality, this TV delivers stunning realism and vibrant colors.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(38, '7de9d5d7-95d3-4312-800a-29cded05a431', 9, 'Canon EOS R5 Mirrorless Camera', 3899.99, 79.99, 50.00, 1, 'canon_eos_r5_mirrorless_camera', 'canon mirrorless camera', 'Unlock your creative potential with Canon EOS R5 Mirrorless Camera. With its high-resolution sensor and advanced autofocus, this camera delivers professional-quality photos and videos.', 2, 0, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(39, 'e5c5dfd3-ad20-4f9b-96cb-00d0772725d7', 9, 'Nintendo Switch Pro Controller', 69.99, 9.99, 5.00, 1, 'nintendo_switch_pro_controller', 'nintendo gaming controller', 'Enhance your gaming experience with Nintendo Switch Pro Controller. Featuring ergonomic design and motion controls, this controller offers precise and comfortable gameplay.', 1, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(40, 'bdc288c6-a189-48e1-9bd3-5b16d384a382', 9, 'Bose Frames Audio Sunglasses', 249.99, 19.99, 10.00, 1, 'bose_frames_audio_sunglasses', 'bose audio sunglasses', 'Listen to your favorite music in style with Bose Frames Audio Sunglasses. With built-in speakers and premium lenses, these sunglasses deliver immersive sound without compromising on fashion.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(41, '60f8ad56-5144-4a9d-9b14-580b7b716565', 9, 'GoPro HERO10 Black Action Camera', 499.99, 29.99, 20.00, 1, 'gopro_hero10_black_action_camera', 'gopro action camera', 'Capture stunning action shots with the GoPro HERO10 Black Action Camera. Featuring HyperSmooth stabilization and 5.3K video recording, this camera delivers smooth and high-quality footage.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(42, '41942901-87ed-40e5-8022-4bf724e7d1eb', 9, 'Anker Soundcore Liberty Air 2 Pro Earbuds', 129.99, 9.99, 5.00, 1, 'anker_soundcore_liberty_air_2_pro_earbuds', 'anker wireless earbuds', 'Immerse yourself in your music with Anker Soundcore Liberty Air 2 Pro Earbuds. Featuring targeted active noise cancellation and personalized sound profiles, these earbuds offer a truly customized listening experience.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(43, '22d190f2-b8f7-49a4-9dbb-e5dbbf8e90e1', 9, 'DJI Mavic Air 2 Drone', 799.99, 39.99, 25.00, 1, 'dji_mavic_air_2_drone', 'dji drone', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. With intelligent shooting modes and obstacle avoidance technology, this drone is perfect for both beginners and experienced pilots.', 2, 1, 1, 31, 83, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(44, '77718d27-1527-40d0-b058-14a2cdb3bbbe', 9, 'Samsung Galaxy Buds Pro Earbuds', 199.99, 14.99, 8.00, 1, 'samsung_galaxy_buds_pro_earbuds', 'samsung wireless earbuds', 'Enjoy crystal-clear sound and intelligent ANC with Samsung Galaxy Buds Pro Earbuds. With 360 Audio and IPX7 water resistance, these earbuds are perfect for immersive listening anywhere.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(45, 'd1e06e01-7261-40d3-b18d-419265b0b6e1', 9, 'Sony A8H OLED 4K TV', 2499.99, 69.99, 40.00, 1, 'sony_a8h_oled_4k_tv', 'sony oled television', 'Experience stunning visuals and immersive sound with Sony A8H OLED 4K TV. Featuring Acoustic Surface Audio and Dolby Vision HDR, this TV delivers cinematic entertainment in the comfort of your home.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(46, '5dcf4631-2ede-4819-929e-37f86eb304ff', 9, 'Corsair K95 RGB Platinum XT Keyboard', 199.99, 14.99, 8.00, 1, 'corsair_k95_rgb_platinum_xt_keyboard', 'corsair gaming keyboard', 'Dominate your gaming sessions with Corsair K95 RGB Platinum XT Mechanical Keyboard. Featuring Cherry MX switches and customizable RGB lighting, this keyboard offers precision and style.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(47, '8c8236b2-f3e8-4b91-abc7-6fbc744e51e5', 9, 'Apple AirPods Max Wireless Headphones', 549.99, 25.99, 15.00, 1, 'apple_airpods_max_wireless_headphones', 'apple wireless headphones', 'Experience high-fidelity audio and adaptive EQ with Apple AirPods Max Wireless Headphones. With active noise cancellation and spatial audio, these headphones deliver a truly immersive listening experience.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(48, '5ede4482-6aa9-4682-865b-a62c4d3c18be', 9, 'Microsoft Surface Pro 8 Tablet', 1099.99, 49.99, 30.00, 1, 'microsoft_surface_pro_8_tablet', 'microsoft windows tablet', 'Stay productive on the go with Microsoft Surface Pro 8 Tablet. Featuring a vibrant PixelSense display and powerful performance, this tablet is perfect for work and creativity.', 2, 1, 0, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(49, 'd5031ae7-4a1b-4db0-b585-de2ed10b8930', 9, 'Logitech C920 HD Pro Webcam', 79.99, 9.99, 5.00, 1, 'logitech_c920_hd_pro_webcam', 'logitech webcam', 'Stay connected with crystal-clear video quality using Logitech C920 HD Pro Webcam. With full HD 1080p resolution and autofocus, this webcam delivers professional-quality video calls and streaming.', 1, 1, 0, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(50, '4872603c-92fc-477c-bda6-28882867e4eb', 9, 'JBL Flip 5 Portable Bluetooth Speaker', 119.99, 9.99, 5.00, 1, 'jbl_flip_5_portable_bluetooth_speaker', 'jbl portable speaker', 'Take your music anywhere with JBL Flip 5 Portable Bluetooth Speaker. Featuring powerful bass and IPX7 waterproof rating, this speaker is perfect for outdoor adventures and parties.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(51, '3285d40e-1b8c-4914-afb2-a2121b86a116', 9, 'Sennheiser HD 660 S Open-Back Headphones', 499.99, 25.99, 15.00, 1, 'sennheiser_hd_660_s_open-back_headphones', 'sennheiser open-back headphones', 'Experience audiophile-grade sound quality with Sennheiser HD 660 S Open-Back Headphones. Featuring high-resolution drivers and open-back design, these headphones deliver natural and spacious sound.', 2, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(52, 'bed20078-82d1-4813-9283-beb2fbb5c9e1', 9, 'Sony Xperia 1 III Smartphone', 1299.99, 29.99, 20.00, 1, 'sony_xperia_1_iii_smartphone', 'sony android smartphone', 'Experience photography and entertainment like never before with Sony Xperia 1 III Smartphone. Featuring a 4K OLED display and professional-grade camera system, this smartphone is perfect for multimedia enthusiasts.', 2, 1, 1, 31, 77, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(53, 'acbf8033-adf3-4042-98e9-7584e1c68213', 9, 'Razer DeathAdder V2 Gaming Mouse', 69.99, 9.99, 5.00, 1, 'razer_deathadder_v2_gaming_mouse', 'razer gaming mouse', 'Dominate your gaming sessions with Razer DeathAdder V2 Gaming Mouse. Featuring Razer Optical Switches and 20K DPI sensor, this mouse offers precision and speed for competitive gaming.', 1, 1, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(54, 'b5edb459-e25d-4b80-acba-bf548a58bf41', 9, 'Bose SoundLink Color Bluetooth Speaker II', 129.99, 9.99, 5.00, 1, 'bose_soundlink_color_bluetooth_speaker_ii', 'bose portable speaker', 'Enjoy your favorite music on the go with Bose SoundLink Color Bluetooth Speaker II. With rugged design and bold sound, this speaker is perfect for outdoor adventures and parties.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(55, 'd6c3eabb-8394-48be-a4b9-130e5c15c405', 9, 'Apple iPad Air (4th Gen)', 599.99, 19.99, 10.00, 1, 'apple_ipad_air_(4th_gen)', 'apple tablet computer', 'Unlock your creativity and productivity with Apple iPad Air (4th Gen). Featuring a stunning Liquid Retina display and powerful A14 Bionic chip, this tablet is perfect for work and entertainment.', 2, 1, 0, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(56, 'fc0575ea-d4fb-47a2-ad57-d79006410136', 9, 'Logitech G Pro X Gaming Headset', 129.99, 9.99, 5.00, 1, 'logitech_g_pro_x_gaming_headset', 'logitech gaming headset', 'Immerse yourself in your games with Logitech G Pro X Gaming Headset. Featuring Blue VO!CE technology and PRO-G 50mm drivers, this headset delivers professional-grade sound and comfort.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(57, 'c60066ce-3f1c-4ba8-97eb-203bd2872cab', 9, 'Samsung Galaxy Watch 4 Classic', 349.99, 19.99, 10.00, 1, 'samsung_galaxy_watch_4_classic', 'samsung smartwatch', 'Stay connected and track your fitness with Samsung Galaxy Watch 4 Classic. Featuring advanced health monitoring and stylish design, this smartwatch is your perfect companion for a healthy lifestyle.', 2, 1, 0, 47, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(59, 'ef9ccd81-c11d-401a-beec-33cb49ec7427', 9, 'Google Pixel 6 Pro Smartphone', 899.99, 29.99, 20.00, 1, 'google_pixel_6_pro_smartphone', 'google android smartphone', 'Experience the power of Google Pixel 6 Pro Smartphone. Featuring advanced camera technology and 120Hz display, this smartphone delivers stunning photos and smooth performance.', 0, 1, 1, 31, 77, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(60, '5bc66a66-e248-40dc-b7a8-02f5dbe2e247', 9, 'JBL Quantum 800 Wireless Gaming Headset', 199.99, 14.99, 8.00, 1, 'jbl_quantum_800_wireless_gaming_headset', 'jbl gaming headset', 'Immerse yourself in your games with JBL Quantum 800 Wireless Gaming Headset. Featuring 50mm drivers and active noise cancellation, this headset delivers immersive sound and comfort for long gaming sessions.', 1, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(61, '183ce616-63c0-4ee6-8e02-c90c638c3ab7', 9, 'Sony WH-1000XM4 Wireless Headphones', 349.99, 19.99, 10.00, 1, 'sony_wh_1000xm4_wireless_headphones', 'sony wireless headphones', 'Immerse yourself in your music with Sony WH-1000XM4 Wireless Noise-Canceling Headphones. Featuring industry-leading noise cancellation and high-resolution audio, these headphones offer a premium listening experience.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(62, '3eef620c-237e-4961-a0e9-9c01ff18a7e2', 9, 'Canon EOS R5 Mirrorless Camera', 3899.99, 49.99, 30.00, 1, 'canon_eos_r5_mirrorless_camera', 'canon mirrorless camera', 'Capture stunning images and 8K videos with the Canon EOS R5 Mirrorless Camera. With advanced autofocus and in-body image stabilization, this camera delivers professional-quality results for both photography and videography.', 2, 1, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(63, '0d84a8f6-1768-433d-a01a-364e3734321a', 9, 'Bose QuietComfort Earbuds', 279.99, 14.99, 8.00, 1, 'bose_quietcomfort_earbuds', 'bose wireless earbuds', 'Enjoy peace and quiet wherever you go with Bose QuietComfort Earbuds. With active noise cancellation and comfortable ear tips, these earbuds let you focus on your music or calls without distractions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(64, '0bd5de67-df7f-4d36-9fb9-c781492d8ea3', 9, 'LG OLED C1 4K TV', 1999.99, 69.99, 40.00, 1, 'lg_oled_c1_4k_tv', 'lg oled television', 'Experience cinematic entertainment at home with LG OLED C1 4K TV. Featuring self-lit pixels and Dolby Atmos sound, this TV delivers lifelike visuals and immersive audio for an unparalleled viewing experience.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(65, 'eff8d8d8-1390-42d0-93e3-fcf9bd29bd9a', 9, 'Razer BlackWidow V3 Gaming Keyboard', 139.99, 14.99, 8.00, 1, 'razer_blackwidow_v3_gaming_keyboard', 'razer gaming keyboard', 'Enhance your gaming setup with Razer BlackWidow V3 Mechanical Gaming Keyboard. Featuring Razer Green switches and customizable Chroma RGB lighting, this keyboard offers tactile feedback and personalization options for immersive gaming experiences.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(66, 'ed75e5d6-48d2-4b97-b79d-145ba4c27a9e', 9, 'Apple iPad Pro (5th Generation)', 899.99, 49.99, 30.00, 1, 'apple_ipad_pro_(5th_generation)', 'apple ipad', 'Unleash your creativity and productivity with the Apple iPad Pro (5th Generation). Featuring the M1 chip and ProMotion technology, this iPad offers power and versatility for work, entertainment, and creativity.', 2, 1, 1, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(67, '223341a4-c418-428f-a0a5-d76e71d5851d', 9, 'Nikon Z7 II Mirrorless Camera', 2999.99, 39.99, 25.00, 1, 'nikon_z7_ii_mirrorless_camera', 'nikon mirrorless camera', 'Capture every detail with the Nikon Z7 II Mirrorless Camera. Featuring dual EXPEED 6 processors and 45.7MP resolution, this camera delivers exceptional image quality and performance for professional photographers.', 2, 1, 1, 49, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(68, '159f3419-8492-48dc-a25e-e9cf3fbb8153', 9, 'Sennheiser 3 Wireless Headphones', 399.99, 19.99, 10.00, 1, 'sennheiser_3_wireless_headphones', 'sennheiser wireless headphones', 'Experience premium sound quality and active noise cancellation with Sennheiser Momentum 3 Wireless Headphones. With genuine leather ear pads and intuitive controls, these headphones offer comfort and convenience for all-day listening.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(69, '6c2b2be1-a18a-4f88-a555-7a5d62d16ca5', 9, 'Dell XPS 15 Laptop', 1999.99, 49.99, 30.00, 1, 'dell_xps_15_laptop', 'dell laptop', 'Power through your tasks with the Dell XPS 15 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for professionals and content creators.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(70, '5d028445-489e-43ff-897b-4bfe98198b75', 9, 'Ultimate Ears Boom 3 Bluetooth Speaker', 149.99, 9.99, 5.00, 1, 'ultimate_ears_boom_3_bluetooth_speaker', 'ultimate ears portable speaker', 'Bring the party anywhere with Ultimate Ears Boom 3 Portable Bluetooth Speaker. Featuring 360-degree sound and waterproof construction, this speaker delivers immersive audio and durability for outdoor adventures.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
-(71, 'adbebcdf-1c9f-4ce5-9e88-b75eae6780cb', 9, ' GeForce RTX™ 4090 VENTUS 3X E 24G OC', 72189.00, 250.00, 0.00, 1, '_geforce_rtx™_4090_ventus_3x_e_24g_oc', 'msi, gpu, ekran karti, rtx, 4090', 'VENTUS, performans odaklı bir grafik kartı arayan kullanıcılara temelde sağlam bir deneyim sunuyor. TORX FAN 4.0 ve Hava Akışı Kontrolü ile güncellenmiş keskin bir tasarımı olan VENTUS, herhangi bir görevi kolayca halletmesini sağlıyor.\\r\\n\\r\\nDLSS 3 ile güçlendirilmiş yapay zeka destekli grafiklerle performans, verimlilik ve AI\\\'da büyük bir sıçrama sunuyor. Ultra yüksek performanslı oyun deneyimleyin, ışın izleme ile inanılmaz detaylı sanal dünyalar keşfedin, eşi benzeri görülmemiş verimlilik elde edin ve yeni yaratma yolları keşfedin. NVIDIA Ada Lovelace mimarisi tarafından desteklenmektedir ve oyuncular ve yaratıcılar için en üst düzey deneyimi sunmak için 24 GB G6X bellekle birlikte gelir.\\r\\n\\r\\nArtırılmış Saat Hızı / Bellek Hızı\\r\\n2550 MHz / 21 Gbps\\r\\n24GB GDDR6X\\r\\nDisplayPort x 2 (v1.4a)\\r\\nHDMI™ x 2 (4K@120Hz HDR, 8K@60Hz HDR ve HDMI™ 2.1a\\\'da belirtildiği gibi Değişken Yenileme Hızını destekler)\\r\\nÜçlü Fanlı Termal Tasarım\\r\\nTORX Fan 4.0: Ekip çalışmasının bir şaheseri, fan kanatları çiftler halinde çalışarak odaklanmış hava basıncı seviyeleri yaratır.\\r\\nHava Akışı Kontrolü: Endişelenmeyin, Hava Akışı Kontrolü havayı maksimum soğutma için tam olarak ihtiyaç duyulan yere yönlendirir.\\r\\nÇekirdek Borusu: Hassas şekilde işlenmiş ısı boruları GPU ile maksimum teması sağlar ve ısıyı soğutucunun tam uzunluğu boyunca yayılır.\\r\\nSıfır Don: Fanlar sıcaklıklar nispeten düşük olduğunda tamamen durur, böylece tüm gürültüyü ortadan kaldırır.\\r\\nMetal Arka Plaka\\r\\nSağlam akış-through metal arka plakanın altındaki termal pedler soğutma konusunda yardımcı olur.\\r\\nMSI Center\\r\\nÖzel MSI Center yazılımı ile MSI ürünlerini gerçek zamanlı olarak izleyebilir, ayarlayabilir ve optimize edebilirsiniz.', 0, 1, 1, 49, 72, '62839_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '50279_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54148_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '53915_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '70785_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54615_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg'),
-(78, '1240ee1d-9b47-45c5-b3bc-7bcc44462938', 9, 'Patriot Viper 16 GB Ram (2x8) 3200 Mhz', 1659.00, 318.00, 0.00, 1, 'patriot_viper_16_gb_ram_(2x8)_3200_mhz', 'ram, bellek, 16gb, 2x8gb, patriot viper', 'Kapasite: 16 GB (2 x 8 GB) DDR4\\r\\nBaz Frekansı: PC4-17000 (2133MHz); XMP 2.0 etkinken PC4-25600\\\'e (3200MHz) kadar\\r\\nTemel Zamanlamalar: 15-15-15-36; XMP 2.0 etkinken hız aşırtma zamanlaması Test Edilen Zamanlamalar: 16-18-18-16\\r\\nUYUMLULUK: En son Intel ve AMD platformlarında test edildi\\r\\nÖzel tasarım ve seri: Elmas kesim engerek logolu ve siyah üst kısmı olan tunç gri kenarlara sahip tüm alüminyum ısı kalkanı', 0, 0, 1, 49, 86, '20115_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '56484_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '54893_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '45007_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '60483_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '25831_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg'),
-(87, '49b3eebf-ddda-44dd-b531-b96021efd9c0', 9, 'Intel Core i9-14900K 24 Çekirdek 6 GHz', 19901.79, 100.00, 0.00, 1, 'intel_core_i9_14900k_24_cekirdek_6_ghz', 'i9 islemci intel core 14900k pc', 'Intel Core i9-14900K (14. Gen) masaüstü işlemci.\\r\\nIntel Thermal Speed Boost, Intel Turbo Boost Max Technology 3.0 ve PCIe 5.0 & 4.0 desteği, DDR5 ve DDR4 desteğine sahiptir.\\r\\nUnlocked 14th Gen Intel Core i9 masaüstü işlemciler hevesli oyuncular ve ciddi yaratıcılar için optimize edilmiştir ve yüksek performans sunmaya yardımcı olur.\\r\\nIntel 700 Serisi ve Intel 600 Serisi Chipset tabanlı anakartlarla uyumludur.\\r\\n125 W işlemci taban gücü.', 0, 1, 1, 49, 78, '76755_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '27850_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '98440_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '92646_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', 'noimg.jpg', 'noimg.jpg'),
-(89, 'abe6b8da-dc91-4a80-be7f-bb84757f4596', 9, 'AirPods Pro (2. nesil) ve MagSafe Şarj Kutusu (USB-C)', 7790.83, 1.00, 0.00, 1, 'airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c)', 'Kulaklık Kablosuz Bluetooth Gürültü engelleme Aktif Siri Hassasiyet Şarj kutusu Tasarım Su direnci Mikrofon Pil ömrü', 'Değişimin sesi\\r\\nEtrafınızda olup bitenlerle bağlantıda kalmanızı sağlayan Şeffaf mod ve bulunduğunuz ortama göre dinamik olarak gürültü denetimi yapan yepyeni Adaptif Ses özelliğiyle USB‑C özellikli AirPods Pro (2. nesil), önceki nesle¹ kıyasla 2 kat daha fazla Aktif Gürültü Engelleme sunuyor.¹⁶ Sohbet Farkındalığı, dinlediğiniz medyanın sesini kısıp başkalarıyla etkileşime geçtiğinizde karşınızdan gelen sesleri daha net duymanıza imkan tanıyor.¹⁶ Tek şarj, 6 saate kadar pil ömrü sağlıyor.⁷ Dokunmatik denetim, tek bir kaydırma hareketiyle sesi ayarlamanızı sağlıyor. Ve MagSafe Şarj Kutusu; Tam Konum Bulma¹⁵ özelliği, yerleşik hoparlörü ve askısıyla˄ başlı başına muhteşem.\\r\\n\\r\\nÜstün ses kalitesi\\r\\nYeni nesil H2 çip, daha akıllı gürültü engelleme özelliğine ve üç boyutlu seslere güç sağlıyor. Adaptif EQ, müziği gerçek zamanlı olarak kulağınızın şekline göre ayarlayarak yüksek notaları temiz ve net, basları ise derin, zengin ve olağanüstü berraklıkta veriyor.\\r\\n\\r\\nAkıllı ses\\r\\nAktif Gürültü Engelleme özelliği, istenmeyen gürültüleri iki kat daha fazla engelliyor. Bu sayede, işe gidip gelirken ve odaklanmanız gerektiğinde hiçbir şey, dinleme deneyiminizi kesintiye uğratamıyor.¹ Şeffaf mod, gürültü yoğunluğunu saniyede 48.000 kez azaltıp ayarlıyor, böylece etrafınızda olup bitenleri rahatça duyabiliyorsunuz. Şeffaf ve Aktif Gürültü Engelleme modlarını dinamik olarak birleştiren Adaptif Ses¹⁶, bulunduğunuz her ortamda en iyi dinleme deneyimini sunuyor.\\r\\n\\r\\nKişiselleştirilmiş dinleme deneyimi\\r\\nTamamen size özel bir dinleme deneyimi. İdeal bir akustik yalıtım ve kulağınızla mükemmel uyum için dört farklı boydaki (XS, S, M, L) esnek silikon kulaklık uçlarından dilediğinizi seçin. Kişiselleştirilmiş Ses Yüksekliği, zaman içerisindeki dinleme tercihlerinize ve bulunduğunuz farklı ortamlara göre sesi ayarlıyor.¹⁶ Konuşma Farkındalığı, çalan içeriğin ses düzeyini kısıyor, önünüzden gelen sesleri yükseltiyor ve arka plan gürültüsünü azaltıyor.¹⁶ Dinamik kafa izleme özellikli Kişiselleştirilmiş Uzamsal Ses, ses unsurlarını etrafınıza hassas bir şekilde yerleştirerek dinleme deneyimini daha da kişisel hale getiriyor.º Adaptif EQ, müziği kulağınızın şekline göre ayarlayarak sesleri her zaman aynı şekilde, ayrıntılı olarak duymanızı mümkün kılıyor.\\r\\n\\r\\nDaha fazla pil ömrü\\r\\nTek şarjla 6 saate kadar, MagSafe Şarj Kutusu ile toplamda 30 saate kadar dinleme süresinin keyfini çıkarın.¹⁰ MagSafe Şarj Kutusu’nu Apple Watch şarj aygıtıyla veya MagSafe şarj aygıtıyla şarj edin. Dilerseniz bir USB-C konnektörü veya Qi sertifikalı şarj aygıtı da kullanabiliyorsunuz.\\r\\n\\r\\nHer zamankinden daha sihirli\\r\\nAirPods Pro (2. nesil) ve MagSafe Şarj Kutusu (USB-C), ilk modele kıyasla daha da rahat bir deneyim sunuyor. Dokunmatik Denetim sayesinde çalma işlevlerini kulaklığın alt ucundan rahatça kontrol edin ve ses düzeyini parmağınızı hafifçe yukarı veya aşağı kaydırarak ayarlayın. Siri, Bildirimleri Seslendir özelliğini kullanarak önemli mesajları ve uyarıları, geldikleri an size okusun.³ Ses Paylaşımı özelliğiyle iki çift AirPods üzerinden herhangi bir şarkıyı veya TV programını kolayca paylaşın.⁴ Ayrıca her zaman olduğu gibi AirPods Pro, iPhone’unuza veya Apple Watch’unuza sihirli bir şekilde bağlanıyor ve bir Apple aygıtından diğerine geçtiğinizde ses de kusursuz bir şekilde yeni aygıta geçiyor.', 0, 1, 0, 50, 79, '25624_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '17983_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '77042_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '38786_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '80656_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '29936_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg');
+(1, 'acee4eae-823c-46f5-b59b-000a4dda816a', 9, 'Sony Walkman', '200.00', '100.00', '19.92', 1, 'sony_walkman', 'sony walkman music player', 'İlk Sony Walkman modeli TPS-L2, 1979 yılında piyasaya sürüldü ve büyük bir başarıya imza attı.\\r\\n\\r\\nOrijinal Walkman alüminyumdan yapılmıştı ve daha sonraki modeller plastikten üretildi. Şaşırtıcı bir şekilde, Walkman, kaset bandından çok daha büyük değildi! Ve sadece çalıcı değil, kulaklık da küçüktü.', 2, 0, 1, 48, 53, '87761_sony_walkman.jpg', '50117_sony_walkman.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(3, '1d593635-0a8f-4eab-b18a-91141b7d7a97', 9, 'Audio-Technica Turntable', '299.99', '39.99', '17.50', 1, 'audio_technica_turntable', 'audio technica record player', 'The Audio-Technica turntable provides high-fidelity audio and is perfect for vinyl enthusiasts. It features a precision tonearm and a durable construction for long-lasting performance.', 2, 0, 1, 48, 55, '62872_audio_technica_turntable.jpg', '58208_audio_technica_turntable.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(5, '2d134f44-e663-451b-bf64-67117959b048', 9, 'Pioneer DJ Controller', '499.99', '49.99', '25.00', 1, 'pioneer_dj_controller', 'pioneer dj mixing console', 'The Pioneer DJ Controller is a professional-grade mixing console for DJs. It offers precise control and a range of effects to enhance your mixing experience. Perfect for both beginners and seasoned DJs.', 2, 0, 1, 48, 53, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(6, 'bdc9dfee-bf97-495f-9e8e-be64313d278b', 9, 'Fender Stratocaster Guitar', '900.00', '50.00', '30.00', 1, 'fender_stratocaster_guitar', 'fender electric guitar gitar', 'The Fender Stratocaster is an iconic electric guitar known for its versatile sound and sleek design. It\\\'s a favorite among musicians in various genres, from rock to blues to pop.', 0, 1, 1, 47, 66, '98741_fender_stratocaster_guitar.jpg', '93596_fender_stratocaster_guitar.jpg', '89261_fender_stratocaster_guitar.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(7, '34dc04c7-57e2-4840-9acb-76997a632196', 9, 'Yamaha Stage Piano', '799.99', '59.99', '20.00', 1, 'yamaha_stage_piano', 'yamaha digital piano', 'The Yamaha Stage Piano is a high-quality digital piano that emulates the sound and feel of an acoustic piano. It\\\'s ideal for both stage performances and studio recordings, offering a wide range of sounds and features. Walkman', 1, 1, 0, 47, 65, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(8, '3c84e722-6c9d-4f57-9962-571576349b8f', 9, 'Bowers & Wilkins Floorstanding Speaker', '1299.99', '69.99', '40.00', 1, 'bowers_&_wilkins_floorstanding_speaker', 'bowers wilkins floorstanding speaker', 'The Bowers & Wilkins Floorstanding Speaker delivers exceptional audio performance with its premium components and craftsmanship. It\\\'s a perfect choice for audiophiles seeking a truly immersive listening experience.', 0, 0, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(9, '30d910c7-4132-4c47-8403-29e403647697', 9, 'Sony Noise-Canceling Headphones', '349.99', '25.99', '15.00', 1, 'sony_noise_canceling_headphones', 'sony headphones noise-cancellation', 'Immerse yourself in your favorite music with Sony\\\'s Noise-Canceling Headphones. Enjoy crystal-clear sound and block out unwanted noise for a superior listening experience on the go.', 0, 0, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(11, '3d9635c8-3b44-4f62-b970-163223d2171a', 9, 'Samsung 4K Smart TV', '999.99', '79.99', '50.00', 1, 'samsung_4k_smart_tv', 'samsung smart television televizyon', 'Yeni Samsung 4K Akıllı Televizyon ile ev eğlencesine yeni bir boyut kazandırın. Üstün görüntü kalitesi, zengin renkler ve akıllı özelliklerle donatılmış bu TV, size sinema salonu deneyimini evinize getiriyor.\\r\\n\\r\\nBu TV\\\'nin en çarpıcı özelliği kesinlikle 4K Ultra HD çözünürlüğüdür. Her bir pikselde inanılmaz detaylarla dolu, kristal berraklığında bir görüntü sunar. Hangi içeriği izlediğiniz önemli değil, her sahne canlı ve gerçekçi bir şekilde hayat bulur.', 2, 1, 1, 31, 81, '93821_samsung_4k_smart_tv.jpg', '81524_samsung_4k_smart_tv.jpg', '83017_samsung_4k_smart_tv.jpg', '13017_samsung_4k_smart_tv.jpg', '74843_samsung_4k_smart_tv.jpg', '96116_samsung_4k_smart_tv.jpg'),
+(12, '44162867-affc-4ba7-89fa-c3bb5e1d847a', 9, 'Canon EOS Rebel T7i DSLR Camera', '699.99', '39.99', '25.00', 1, 'canon_eos_rebel_t7i_dslr_camera', 'canon dslr camera', 'Capture life\\\'s moments in stunning detail with Canon EOS Rebel T7i DSLR Camera. It features a 24.2MP sensor and advanced autofocus for professional-quality photos and videos.', 2, 0, 1, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(13, '89dd2840-cd7c-4a67-905e-483c2bfc255f', 9, 'GoPro Hero 9 Black', '449.99', '29.99', '15.00', 1, 'gopro_hero_9_black', 'gopro action camera', 'Record your adventures in crisp 4K resolution with GoPro Hero 9 Black. This rugged action camera is waterproof and features advanced stabilization for smooth footage.', 1, 1, 0, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(14, 'f694f4b1-e017-4fdd-82f4-f1460fae6ebd', 9, 'DJI Mavic Air 2 Drone', '799.99', '49.99', '30.00', 1, 'dji_mavic_air_2_drone', 'dji drone quadcopter', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. This compact quadcopter boasts intelligent features and a powerful camera for stunning results.', 2, 0, 1, 31, 83, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(15, 'bd947dd0-309e-44c1-9ca4-431c3464f994', 9, 'Nintendo Switch Console', '299.99', '19.99', '10.00', 1, 'nintendo_switch_console', 'nintendo gaming console', 'Enter the world of gaming with Nintendo Switch Console. Play at home or on the go with its versatile design and expansive library of games.', 1, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(16, '756ead38-75a4-408b-8bd3-11baa876c8b0', 9, 'Logitech MX Master 3 Mouse', '99.99', '9.99', '5.00', 1, 'logitech_mx_master_3_mouse', 'logitech wireless mouse', 'Enhance your productivity with Logitech MX Master 3 Mouse. This ergonomic wireless mouse offers precision control and customizable buttons for seamless workflow.', 0, 0, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(17, '2e8728d8-71d8-4c62-9ad3-e01ed224b7f6', 9, 'Microsoft Surface Laptop 4', '1299.99', '59.99', '40.00', 1, 'microsoft_surface_laptop_4', 'microsoft laptop computer', 'Experience performance and style with Microsoft Surface Laptop 4. This sleek laptop boasts powerful internals and a vibrant touchscreen display for all-day productivity.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(18, 'ab3aa9a7-db1a-4819-ab29-fdf0f6c5aeaf', 9, 'Fitbit Versa 3 Smartwatch', '229.99', '14.99', '8.00', 1, 'fitbit_versa_3_smartwatch', 'fitbit fitness tracker', 'Stay active and connected with Fitbit Versa 3 Smartwatch. Track your workouts, monitor your health, and receive notifications on your wrist with this versatile wearable.', 1, 1, 0, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(19, '9c6e963f-df01-403d-bd81-d5287742df4e', 9, 'Anker PowerCore 20000 Portable Charger', '49.99', '7.99', '4.00', 1, 'anker_powercore_20000_portable_charger', 'anker portable power bank', 'Never run out of battery with Anker PowerCore 20000 Portable Charger. This high-capacity power bank keeps your devices charged on the go, so you can stay connected wherever you are.', 0, 0, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(20, '5cf9dccf-c3af-489e-bd64-7196ac603c58', 9, 'Sony PlayStation 5 Console', '499.99', '29.99', '20.00', 1, 'sony_playstation_5_console', 'sony gaming console', 'Experience the next generation of gaming with Sony PlayStation 5 Console. Enjoy stunning visuals, lightning-fast load times, and immersive gameplay with this powerful gaming console.', 2, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(21, '1c08c92c-60ed-4be1-9b5c-2e6840c38e04', 9, 'Razer BlackWidow Elite Keyboard', '169.99', '14.99', '8.00', 1, 'razer_blackwidow_elite_keyboard', 'razer gaming keyboard', 'Dominate your gaming sessions with Razer BlackWidow Elite Mechanical Keyboard. Featuring Razer\\\'s proprietary switches and customizable RGB lighting, this keyboard offers precision and style.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(22, '82710d0a-d1db-4600-9981-e0690d7b1b9b', 9, 'Samsung Galaxy Tab S7 Tablet', '849.99', '39.99', '25.00', 1, 'samsung_galaxy_tab_s7_tablet', 'samsung android tablet', 'Unleash your creativity and productivity with Samsung Galaxy Tab S7+ Tablet. With its stunning AMOLED display and S Pen support, this tablet is perfect for work and entertainment.', 2, 0, 1, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(23, '117236a2-e453-40c9-9840-c598d9dc53e8', 9, 'Bose QuietComfort 45 Wireless Headphones', '329.99', '25.99', '15.00', 1, 'bose_quietcomfort_45_wireless_headphones', 'bose headphones noise-cancellation', 'Immerse yourself in your music with Bose QuietComfort 45 Wireless Headphones. Enjoy superior sound quality and active noise cancellation for a truly immersive listening experience.', 0, 0, 0, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(24, '13281918-6fcb-47ae-bd2d-1f2d5263d3af', 9, 'Amazon Echo Show 10 (3rd Gen)', '249.99', '19.99', '10.00', 1, 'amazon_echo_show_10_(3rd_gen)', 'amazon smart display', 'Stay connected and organized with Amazon Echo Show 10 (3rd Gen). With its rotating display and built-in Alexa, this smart display is perfect for managing your day and staying entertained.', 1, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(25, '28a1313a-dcef-42eb-b563-442d1abb723f', 9, 'Garmin Fenix 6 Pro Smartwatch', '699.99', '29.99', '15.00', 1, 'garmin_fenix_6_pro_smartwatch', 'garmin fitness tracker', 'Track your fitness and conquer your goals with Garmin Fenix 6 Pro Smartwatch. With advanced GPS and health monitoring features, this smartwatch is built for adventure.', 2, 0, 1, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(26, '637e04e8-f4f8-4bf3-a97a-1dd2de9e7f1d', 9, 'LG UltraGear 27GN950-B Gaming Monitor', '999.99', '49.99', '30.00', 1, 'lg_ultragear_27gn950_b_gaming_monitor', 'lg gaming monitor', 'Immerse yourself in your favorite games with LG UltraGear 27GN950-B Gaming Monitor. Featuring a 4K Nano IPS display and NVIDIA G-Sync compatibility, this monitor delivers smooth visuals and responsive gameplay.', 2, 1, 1, 49, 73, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(27, '9c29585c-4ae6-4853-adaf-9c9265aa1fd5', 9, 'Apple MacBook Pro (M3, 2024)', '135249.17', '100.00', '40.00', 1, 'apple_macbook_pro_(m3,_2024)', 'apple laptop computer macbook mac', 'MacBook Air akıcı bir şekilde çalışmanız ve oyun oynamanız için ihtiyacınız olan gücü sunuyor. Üstelik M3 çip dünyanın en popüler laptopuna şimdi daha da muhteşem beceriler katıyor. Ve 18 saate kadar pil ömrü1 sayesinde MacBook Air\\\'i dilediğiniz yere götürerek her şeyi hızlı bir şekilde yapabiliyorsunuz.\\r\\n\\r\\nSüper hafif ve inanılmaz ince MacBook Air hayatınızın her anında yanınızda olacak şekilde ve gezegenimiz düşünülerek tasarlandı. M3 çipli MacBook Air modellerinin üretiminde kullanılan geri dönüştürülmüş materyallerin oranı yüzde 50’ye ulaştı. Bu, Apple için bir ilk. Ayrıca tüm MacBook Air laptoplar da geri dönüştürülmüş alüminyumdan üretilen dayanıklı kasalara sahip.\\r\\n\\r\\n8 GB birleşik bellek\\r\\n512 GB SSD depolama\\r\\nTrue Tone özelliğine sahip 15.3 inç Liquid Retina ekran\\r\\n1080p FaceTime HD kamera\\r\\nMagSafe 3 şarj bağlantı noktası\\r\\nİki adet Thunderbolt / USB 4 bağlantı noktası\\r\\n35 W Çift USB‑C Bağlantı Noktalı Güç Adaptörü\\r\\nTouch ID özellikli ve arkadan aydınlatmalı Magic Keyboard - Türkçe Q', 2, 1, 1, 31, 74, '19641_apple_macbook_pro_(m1,_2021).jpg', '63627_apple_macbook_pro_(m1,_2021).jpg', '46214_apple_macbook_pro_(m1,_2021).jpg', '33105_apple_macbook_pro_(m1,_2021).jpg', '41884_apple_macbook_pro_(m1,_2021).jpg', 'noimg.jpg'),
+(28, '6dcc4f8a-4df0-4abd-93ac-4ab06e7cf3d2', 9, 'Sony Alpha a7 III Mirrorless Camera', '1999.99', '69.99', '40.00', 1, 'sony_alpha_a7_iii_mirrorless_camera', 'sony mirrorless camera', 'Capture life\\\'s moments with stunning clarity using Sony Alpha a7 III Mirrorless Camera. With its full-frame sensor and advanced autofocus system, this camera delivers professional-quality results.', 2, 1, 1, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(29, '705e7529-9490-4907-b7c0-36728a59f0cb', 9, 'Dell XPS 13 Laptop', '1299.99', '49.99', '30.00', 1, 'dell_xps_13_laptop', 'dell laptop computer', 'Stay productive on the go with Dell XPS 13 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for work and entertainment.', 2, 1, 0, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(30, '858fcebb-e61f-43e7-adef-ffb698fda478', 9, 'SteelSeries Arctis 7 Gaming Headset', '149.99', '9.99', '5.00', 1, 'steelseries_arctis_7_gaming_headset', 'steelseries gaming headset', 'Immerse yourself in your favorite games with SteelSeries Arctis 7 Wireless Gaming Headset. Featuring lag-free wireless audio and a retractable microphone, this headset offers comfort and performance for long gaming sessions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(31, '4eca7766-face-43e5-90b1-9edf028c81ee', 9, 'Sony WH-1000XM4 Wireless Headphones', '349.99', '25.99', '15.00', 1, 'sony_wh_1000xm4_wireless_headphones', 'sony headphones noise-cancellation', 'Experience premium sound quality and active noise cancellation with Sony WH-1000XM4 Wireless Headphones. Perfect for music lovers and travelers seeking immersive audio.', 0, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(32, 'e733c5ec-d5ce-46a7-b40c-4edb9245c511', 9, 'Logitech G Pro X Wireless Gaming Mouse', '149.99', '9.99', '5.00', 1, 'logitech_g_pro_x_wireless_gaming_mouse', 'logitech gaming mouse', 'Gain a competitive edge with Logitech G Pro X Wireless Gaming Mouse. Featuring advanced sensor technology and customizable buttons, this mouse delivers precision and performance for gamers.', 1, 1, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(33, '63d4f6ff-b90c-4ad6-ad08-d5f03efa5a1e', 9, 'Apple Watch Series 7', '399.99', '19.99', '10.00', 1, 'apple_watch_series_7', 'apple smartwatch', 'Stay connected and active with Apple Watch Series 7. With its advanced health tracking features and vibrant display, this smartwatch is your perfect everyday companion.', 2, 1, 0, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(34, 'cca83d86-04bc-4b6e-8e7b-9227c99230be', 9, 'Microsoft Xbox Series X Console', '599.99', '29.99', '20.00', 1, 'microsoft_xbox_series_x_console', 'microsoft gaming console', 'Immerse yourself in the ultimate gaming experience with Microsoft Xbox Series X Console. With powerful hardware and lightning-fast load times, this console delivers smooth and responsive gameplay.', 2, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(35, '3bea9ed6-d813-4f0a-bf3b-50929e56c98a', 9, 'Samsung Odyssey G7 Gaming Monitor', '699.99', '39.99', '25.00', 1, 'samsung_odyssey_g7_gaming_monitor', 'samsung gaming monitor', 'Elevate your gaming setup with Samsung Odyssey G7 Gaming Monitor. Featuring a curved QLED display and rapid refresh rate, this monitor delivers immersive visuals and smooth gameplay.', 2, 1, 1, 48, 59, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(36, '76b8dd59-3767-488a-b303-21f4e8d3c63d', 9, 'Sony WH-CH710N Wireless Headphones', '199.99', '14.99', '8.00', 1, 'sony_wh_ch710n_wireless_headphones', 'sony wireless headphones', 'Enjoy clear sound and all-day comfort with Sony WH-CH710N Wireless Headphones. With built-in noise cancellation and long battery life, these headphones are perfect for everyday use.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(37, '7b16638b-6e7e-4dc5-8a8d-3fc43b030c71', 9, 'LG OLED C1 Series 4K TV', '1999.99', '69.99', '40.00', 1, 'lg_oled_c1_series_4k_tv', 'lg oled television', 'Experience breathtaking visuals with LG OLED C1 Series 4K TV. Featuring OLED technology and AI-enhanced picture quality, this TV delivers stunning realism and vibrant colors.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(38, '7de9d5d7-95d3-4312-800a-29cded05a431', 9, 'Canon EOS R5 Mirrorless Camera', '3899.99', '79.99', '50.00', 1, 'canon_eos_r5_mirrorless_camera', 'canon mirrorless camera', 'Unlock your creative potential with Canon EOS R5 Mirrorless Camera. With its high-resolution sensor and advanced autofocus, this camera delivers professional-quality photos and videos.', 2, 0, 1, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(39, 'e5c5dfd3-ad20-4f9b-96cb-00d0772725d7', 9, 'Nintendo Switch Pro Controller', '69.99', '9.99', '5.00', 1, 'nintendo_switch_pro_controller', 'nintendo gaming controller', 'Enhance your gaming experience with Nintendo Switch Pro Controller. Featuring ergonomic design and motion controls, this controller offers precise and comfortable gameplay.', 1, 1, 1, 31, 85, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(40, 'bdc288c6-a189-48e1-9bd3-5b16d384a382', 9, 'Bose Frames Audio Sunglasses', '249.99', '19.99', '10.00', 1, 'bose_frames_audio_sunglasses', 'bose audio sunglasses', 'Listen to your favorite music in style with Bose Frames Audio Sunglasses. With built-in speakers and premium lenses, these sunglasses deliver immersive sound without compromising on fashion.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(41, '60f8ad56-5144-4a9d-9b14-580b7b716565', 9, 'GoPro HERO10 Black Action Camera', '499.99', '29.99', '20.00', 1, 'gopro_hero10_black_action_camera', 'gopro action camera', 'Capture stunning action shots with the GoPro HERO10 Black Action Camera. Featuring HyperSmooth stabilization and 5.3K video recording, this camera delivers smooth and high-quality footage.', 2, 1, 1, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(42, '41942901-87ed-40e5-8022-4bf724e7d1eb', 9, 'Anker Soundcore Liberty Air 2 Pro Earbuds', '129.99', '9.99', '5.00', 1, 'anker_soundcore_liberty_air_2_pro_earbuds', 'anker wireless earbuds', 'Immerse yourself in your music with Anker Soundcore Liberty Air 2 Pro Earbuds. Featuring targeted active noise cancellation and personalized sound profiles, these earbuds offer a truly customized listening experience.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(43, '22d190f2-b8f7-49a4-9dbb-e5dbbf8e90e1', 9, 'DJI Mavic Air 2 Drone', '799.99', '39.99', '25.00', 1, 'dji_mavic_air_2_drone', 'dji drone', 'Explore the skies and capture breathtaking aerial footage with DJI Mavic Air 2 Drone. With intelligent shooting modes and obstacle avoidance technology, this drone is perfect for both beginners and experienced pilots.', 2, 1, 1, 31, 83, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(44, '77718d27-1527-40d0-b058-14a2cdb3bbbe', 9, 'Samsung Galaxy Buds Pro Earbuds', '199.99', '14.99', '8.00', 1, 'samsung_galaxy_buds_pro_earbuds', 'samsung wireless earbuds', 'Enjoy crystal-clear sound and intelligent ANC with Samsung Galaxy Buds Pro Earbuds. With 360 Audio and IPX7 water resistance, these earbuds are perfect for immersive listening anywhere.', 1, 1, 0, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(45, 'd1e06e01-7261-40d3-b18d-419265b0b6e1', 9, 'Sony A8H OLED 4K TV', '2499.99', '69.99', '40.00', 1, 'sony_a8h_oled_4k_tv', 'sony oled television', 'Experience stunning visuals and immersive sound with Sony A8H OLED 4K TV. Featuring Acoustic Surface Audio and Dolby Vision HDR, this TV delivers cinematic entertainment in the comfort of your home.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(46, '5dcf4631-2ede-4819-929e-37f86eb304ff', 9, 'Corsair K95 RGB Platinum XT Keyboard', '199.99', '14.99', '8.00', 1, 'corsair_k95_rgb_platinum_xt_keyboard', 'corsair gaming keyboard', 'Dominate your gaming sessions with Corsair K95 RGB Platinum XT Mechanical Keyboard. Featuring Cherry MX switches and customizable RGB lighting, this keyboard offers precision and style.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(47, '8c8236b2-f3e8-4b91-abc7-6fbc744e51e5', 9, 'Apple AirPods Max Wireless Headphones', '549.99', '25.99', '15.00', 1, 'apple_airpods_max_wireless_headphones', 'apple wireless headphones', 'Experience high-fidelity audio and adaptive EQ with Apple AirPods Max Wireless Headphones. With active noise cancellation and spatial audio, these headphones deliver a truly immersive listening experience.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(48, '5ede4482-6aa9-4682-865b-a62c4d3c18be', 9, 'Microsoft Surface Pro 8 Tablet', '1099.99', '49.99', '30.00', 1, 'microsoft_surface_pro_8_tablet', 'microsoft windows tablet', 'Stay productive on the go with Microsoft Surface Pro 8 Tablet. Featuring a vibrant PixelSense display and powerful performance, this tablet is perfect for work and creativity.', 2, 1, 0, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(49, 'd5031ae7-4a1b-4db0-b585-de2ed10b8930', 9, 'Logitech C920 HD Pro Webcam', '79.99', '9.99', '5.00', 1, 'logitech_c920_hd_pro_webcam', 'logitech webcam', 'Stay connected with crystal-clear video quality using Logitech C920 HD Pro Webcam. With full HD 1080p resolution and autofocus, this webcam delivers professional-quality video calls and streaming.', 1, 1, 0, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(50, '4872603c-92fc-477c-bda6-28882867e4eb', 9, 'JBL Flip 5 Portable Bluetooth Speaker', '119.99', '9.99', '5.00', 1, 'jbl_flip_5_portable_bluetooth_speaker', 'jbl portable speaker', 'Take your music anywhere with JBL Flip 5 Portable Bluetooth Speaker. Featuring powerful bass and IPX7 waterproof rating, this speaker is perfect for outdoor adventures and parties.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(51, '3285d40e-1b8c-4914-afb2-a2121b86a116', 9, 'Sennheiser HD 660 S Open-Back Headphones', '499.99', '25.99', '15.00', 1, 'sennheiser_hd_660_s_open-back_headphones', 'sennheiser open-back headphones', 'Experience audiophile-grade sound quality with Sennheiser HD 660 S Open-Back Headphones. Featuring high-resolution drivers and open-back design, these headphones deliver natural and spacious sound.', 2, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(52, 'bed20078-82d1-4813-9283-beb2fbb5c9e1', 9, 'Sony Xperia 1 III Smartphone', '1299.99', '29.99', '20.00', 1, 'sony_xperia_1_iii_smartphone', 'sony android smartphone', 'Experience photography and entertainment like never before with Sony Xperia 1 III Smartphone. Featuring a 4K OLED display and professional-grade camera system, this smartphone is perfect for multimedia enthusiasts.', 2, 1, 1, 31, 77, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(53, 'acbf8033-adf3-4042-98e9-7584e1c68213', 9, 'Razer DeathAdder V2 Gaming Mouse', '69.99', '9.99', '5.00', 1, 'razer_deathadder_v2_gaming_mouse', 'razer gaming mouse', 'Dominate your gaming sessions with Razer DeathAdder V2 Gaming Mouse. Featuring Razer Optical Switches and 20K DPI sensor, this mouse offers precision and speed for competitive gaming.', 1, 1, 1, 49, 69, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(54, 'b5edb459-e25d-4b80-acba-bf548a58bf41', 9, 'Bose SoundLink Color Bluetooth Speaker II', '129.99', '9.99', '5.00', 1, 'bose_soundlink_color_bluetooth_speaker_ii', 'bose portable speaker', 'Enjoy your favorite music on the go with Bose SoundLink Color Bluetooth Speaker II. With rugged design and bold sound, this speaker is perfect for outdoor adventures and parties.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(55, 'd6c3eabb-8394-48be-a4b9-130e5c15c405', 9, 'Apple iPad Air (4th Gen)', '599.99', '19.99', '10.00', 1, 'apple_ipad_air_(4th_gen)', 'apple tablet computer', 'Unlock your creativity and productivity with Apple iPad Air (4th Gen). Featuring a stunning Liquid Retina display and powerful A14 Bionic chip, this tablet is perfect for work and entertainment.', 2, 1, 0, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(56, 'fc0575ea-d4fb-47a2-ad57-d79006410136', 9, 'Logitech G Pro X Gaming Headset', '129.99', '9.99', '5.00', 1, 'logitech_g_pro_x_gaming_headset', 'logitech gaming headset', 'Immerse yourself in your games with Logitech G Pro X Gaming Headset. Featuring Blue VO!CE technology and PRO-G 50mm drivers, this headset delivers professional-grade sound and comfort.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(57, 'c60066ce-3f1c-4ba8-97eb-203bd2872cab', 9, 'Samsung Galaxy Watch 4 Classic', '349.99', '19.99', '10.00', 1, 'samsung_galaxy_watch_4_classic', 'samsung smartwatch', 'Stay connected and track your fitness with Samsung Galaxy Watch 4 Classic. Featuring advanced health monitoring and stylish design, this smartwatch is your perfect companion for a healthy lifestyle.', 2, 1, 0, 31, 84, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(59, 'ef9ccd81-c11d-401a-beec-33cb49ec7427', 9, 'Google Pixel 6 Pro Smartphone', '899.99', '29.99', '20.00', 1, 'google_pixel_6_pro_smartphone', 'google android smartphone', 'Experience the power of Google Pixel 6 Pro Smartphone. Featuring advanced camera technology and 120Hz display, this smartphone delivers stunning photos and smooth performance.', 0, 1, 1, 31, 77, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(60, '5bc66a66-e248-40dc-b7a8-02f5dbe2e247', 9, 'JBL Quantum 800 Wireless Gaming Headset', '199.99', '14.99', '8.00', 1, 'jbl_quantum_800_wireless_gaming_headset', 'jbl gaming headset', 'Immerse yourself in your games with JBL Quantum 800 Wireless Gaming Headset. Featuring 50mm drivers and active noise cancellation, this headset delivers immersive sound and comfort for long gaming sessions.', 1, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(61, '183ce616-63c0-4ee6-8e02-c90c638c3ab7', 9, 'Sony WH-1000XM4 Wireless Headphones', '349.99', '19.99', '10.00', 1, 'sony_wh_1000xm4_wireless_headphones', 'sony wireless headphones', 'Immerse yourself in your music with Sony WH-1000XM4 Wireless Noise-Canceling Headphones. Featuring industry-leading noise cancellation and high-resolution audio, these headphones offer a premium listening experience.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(62, '3eef620c-237e-4961-a0e9-9c01ff18a7e2', 9, 'Canon EOS R5 Mirrorless Camera', '3899.99', '49.99', '30.00', 1, 'canon_eos_r5_mirrorless_camera', 'canon mirrorless camera', 'Capture stunning images and 8K videos with the Canon EOS R5 Mirrorless Camera. With advanced autofocus and in-body image stabilization, this camera delivers professional-quality results for both photography and videography.', 2, 1, 1, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(63, '0d84a8f6-1768-433d-a01a-364e3734321a', 9, 'Bose QuietComfort Earbuds', '279.99', '14.99', '8.00', 1, 'bose_quietcomfort_earbuds', 'bose wireless earbuds', 'Enjoy peace and quiet wherever you go with Bose QuietComfort Earbuds. With active noise cancellation and comfortable ear tips, these earbuds let you focus on your music or calls without distractions.', 1, 1, 1, 50, 60, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(64, '0bd5de67-df7f-4d36-9fb9-c781492d8ea3', 9, 'LG OLED C1 4K TV', '1999.99', '69.99', '40.00', 1, 'lg_oled_c1_4k_tv', 'lg oled television', 'Experience cinematic entertainment at home with LG OLED C1 4K TV. Featuring self-lit pixels and Dolby Atmos sound, this TV delivers lifelike visuals and immersive audio for an unparalleled viewing experience.', 2, 1, 1, 31, 81, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(65, 'eff8d8d8-1390-42d0-93e3-fcf9bd29bd9a', 9, 'Razer BlackWidow V3 Gaming Keyboard', '139.99', '14.99', '8.00', 1, 'razer_blackwidow_v3_gaming_keyboard', 'razer gaming keyboard', 'Enhance your gaming setup with Razer BlackWidow V3 Mechanical Gaming Keyboard. Featuring Razer Green switches and customizable Chroma RGB lighting, this keyboard offers tactile feedback and personalization options for immersive gaming experiences.', 1, 1, 1, 49, 68, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(66, 'ed75e5d6-48d2-4b97-b79d-145ba4c27a9e', 9, 'Apple iPad Pro (5th Generation)', '899.99', '49.99', '30.00', 1, 'apple_ipad_pro_(5th_generation)', 'apple ipad', 'Unleash your creativity and productivity with the Apple iPad Pro (5th Generation). Featuring the M1 chip and ProMotion technology, this iPad offers power and versatility for work, entertainment, and creativity.', 2, 1, 1, 31, 75, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(67, '223341a4-c418-428f-a0a5-d76e71d5851d', 9, 'Nikon Z7 II Mirrorless Camera', '2999.99', '39.99', '25.00', 1, 'nikon_z7_ii_mirrorless_camera', 'nikon mirrorless camera', 'Capture every detail with the Nikon Z7 II Mirrorless Camera. Featuring dual EXPEED 6 processors and 45.7MP resolution, this camera delivers exceptional image quality and performance for professional photographers.', 2, 1, 1, 31, 82, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(68, '159f3419-8492-48dc-a25e-e9cf3fbb8153', 9, 'Sennheiser 3 Wireless Headphones', '399.99', '19.99', '10.00', 1, 'sennheiser_3_wireless_headphones', 'sennheiser wireless headphones', 'Experience premium sound quality and active noise cancellation with Sennheiser Momentum 3 Wireless Headphones. With genuine leather ear pads and intuitive controls, these headphones offer comfort and convenience for all-day listening.', 2, 1, 1, 50, 80, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(69, '6c2b2be1-a18a-4f88-a555-7a5d62d16ca5', 9, 'Dell XPS 15 Laptop', '1999.99', '49.99', '30.00', 1, 'dell_xps_15_laptop', 'dell laptop', 'Power through your tasks with the Dell XPS 15 Laptop. Featuring a stunning InfinityEdge display and powerful performance, this laptop is perfect for professionals and content creators.', 2, 1, 1, 31, 74, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(70, '5d028445-489e-43ff-897b-4bfe98198b75', 9, 'Ultimate Ears Boom 3 Bluetooth Speaker', '149.99', '9.99', '5.00', 1, 'ultimate_ears_boom_3_bluetooth_speaker', 'ultimate ears portable speaker', 'Bring the party anywhere with Ultimate Ears Boom 3 Portable Bluetooth Speaker. Featuring 360-degree sound and waterproof construction, this speaker delivers immersive audio and durability for outdoor adventures.', 1, 1, 0, 48, 54, 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg', 'noimg.jpg'),
+(71, 'adbebcdf-1c9f-4ce5-9e88-b75eae6780cb', 9, ' GeForce RTX™ 4090 VENTUS 3X E 24G OC', '72189.00', '250.00', '0.00', 1, '_geforce_rtx™_4090_ventus_3x_e_24g_oc', 'msi, gpu, ekran karti, rtx, 4090', 'VENTUS, performans odaklı bir grafik kartı arayan kullanıcılara temelde sağlam bir deneyim sunuyor. TORX FAN 4.0 ve Hava Akışı Kontrolü ile güncellenmiş keskin bir tasarımı olan VENTUS, herhangi bir görevi kolayca halletmesini sağlıyor.\\r\\n\\r\\nDLSS 3 ile güçlendirilmiş yapay zeka destekli grafiklerle performans, verimlilik ve AI\\\'da büyük bir sıçrama sunuyor. Ultra yüksek performanslı oyun deneyimleyin, ışın izleme ile inanılmaz detaylı sanal dünyalar keşfedin, eşi benzeri görülmemiş verimlilik elde edin ve yeni yaratma yolları keşfedin. NVIDIA Ada Lovelace mimarisi tarafından desteklenmektedir ve oyuncular ve yaratıcılar için en üst düzey deneyimi sunmak için 24 GB G6X bellekle birlikte gelir.\\r\\n\\r\\nArtırılmış Saat Hızı / Bellek Hızı\\r\\n2550 MHz / 21 Gbps\\r\\n24GB GDDR6X\\r\\nDisplayPort x 2 (v1.4a)\\r\\nHDMI™ x 2 (4K@120Hz HDR, 8K@60Hz HDR ve HDMI™ 2.1a\\\'da belirtildiği gibi Değişken Yenileme Hızını destekler)\\r\\nÜçlü Fanlı Termal Tasarım\\r\\nTORX Fan 4.0: Ekip çalışmasının bir şaheseri, fan kanatları çiftler halinde çalışarak odaklanmış hava basıncı seviyeleri yaratır.\\r\\nHava Akışı Kontrolü: Endişelenmeyin, Hava Akışı Kontrolü havayı maksimum soğutma için tam olarak ihtiyaç duyulan yere yönlendirir.\\r\\nÇekirdek Borusu: Hassas şekilde işlenmiş ısı boruları GPU ile maksimum teması sağlar ve ısıyı soğutucunun tam uzunluğu boyunca yayılır.\\r\\nSıfır Don: Fanlar sıcaklıklar nispeten düşük olduğunda tamamen durur, böylece tüm gürültüyü ortadan kaldırır.\\r\\nMetal Arka Plaka\\r\\nSağlam akış-through metal arka plakanın altındaki termal pedler soğutma konusunda yardımcı olur.\\r\\nMSI Center\\r\\nÖzel MSI Center yazılımı ile MSI ürünlerini gerçek zamanlı olarak izleyebilir, ayarlayabilir ve optimize edebilirsiniz.', 0, 1, 1, 49, 72, '62839_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '50279_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54148_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '53915_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '70785_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg', '54615_geforce_rtx™_4090_ventus_3x_e_24g_oc.jpg'),
+(78, '1240ee1d-9b47-45c5-b3bc-7bcc44462938', 9, 'Patriot Viper 16 GB Ram (2x8) 3200 Mhz', '1659.00', '318.00', '0.00', 1, 'patriot_viper_16_gb_ram_(2x8)_3200_mhz', 'ram, bellek, 16gb, 2x8gb, patriot viper', 'Kapasite: 16 GB (2 x 8 GB) DDR4\\r\\nBaz Frekansı: PC4-17000 (2133MHz); XMP 2.0 etkinken PC4-25600\\\'e (3200MHz) kadar\\r\\nTemel Zamanlamalar: 15-15-15-36; XMP 2.0 etkinken hız aşırtma zamanlaması Test Edilen Zamanlamalar: 16-18-18-16\\r\\nUYUMLULUK: En son Intel ve AMD platformlarında test edildi\\r\\nÖzel tasarım ve seri: Elmas kesim engerek logolu ve siyah üst kısmı olan tunç gri kenarlara sahip tüm alüminyum ısı kalkanı', 0, 0, 1, 49, 86, '20115_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '56484_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '54893_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '45007_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '60483_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg', '25831_patriot_viper_steel_series_ddr4_16gb_(2_x_8gb)_3200mhz.jpg'),
+(87, '49b3eebf-ddda-44dd-b531-b96021efd9c0', 9, 'Intel Core i9-14900K 24 Çekirdek 6 GHz', '19901.79', '100.00', '0.00', 1, 'intel_core_i9_14900k_24_cekirdek_6_ghz', 'i9 islemci intel core 14900k pc', 'Intel Core i9-14900K (14. Gen) masaüstü işlemci.\\r\\nIntel Thermal Speed Boost, Intel Turbo Boost Max Technology 3.0 ve PCIe 5.0 & 4.0 desteği, DDR5 ve DDR4 desteğine sahiptir.\\r\\nUnlocked 14th Gen Intel Core i9 masaüstü işlemciler hevesli oyuncular ve ciddi yaratıcılar için optimize edilmiştir ve yüksek performans sunmaya yardımcı olur.\\r\\nIntel 700 Serisi ve Intel 600 Serisi Chipset tabanlı anakartlarla uyumludur.\\r\\n125 W işlemci taban gücü.', 0, 1, 1, 49, 78, '76755_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '27850_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '98440_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', '92646_intel®_core™_i9_14900k_masaustu_islemci_24_cekirdekli_(8_p_cekirdekli_+_16_e_cekirdek)_6.0_ghz.jpg', 'noimg.jpg', 'noimg.jpg'),
+(89, 'abe6b8da-dc91-4a80-be7f-bb84757f4596', 9, 'AirPods Pro (2. nesil) ve MagSafe Şarj Kutusu (USB-C)', '7790.83', '1.00', '0.00', 1, 'airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c)', 'Kulaklık Kablosuz Bluetooth Gürültü engelleme Aktif Siri Hassasiyet Şarj kutusu Tasarım Su direnci Mikrofon Pil ömrü', 'Değişimin sesi\\r\\nEtrafınızda olup bitenlerle bağlantıda kalmanızı sağlayan Şeffaf mod ve bulunduğunuz ortama göre dinamik olarak gürültü denetimi yapan yepyeni Adaptif Ses özelliğiyle USB‑C özellikli AirPods Pro (2. nesil), önceki nesle¹ kıyasla 2 kat daha fazla Aktif Gürültü Engelleme sunuyor.¹⁶ Sohbet Farkındalığı, dinlediğiniz medyanın sesini kısıp başkalarıyla etkileşime geçtiğinizde karşınızdan gelen sesleri daha net duymanıza imkan tanıyor.¹⁶ Tek şarj, 6 saate kadar pil ömrü sağlıyor.⁷ Dokunmatik denetim, tek bir kaydırma hareketiyle sesi ayarlamanızı sağlıyor. Ve MagSafe Şarj Kutusu; Tam Konum Bulma¹⁵ özelliği, yerleşik hoparlörü ve askısıyla˄ başlı başına muhteşem.\\r\\n\\r\\nÜstün ses kalitesi\\r\\nYeni nesil H2 çip, daha akıllı gürültü engelleme özelliğine ve üç boyutlu seslere güç sağlıyor. Adaptif EQ, müziği gerçek zamanlı olarak kulağınızın şekline göre ayarlayarak yüksek notaları temiz ve net, basları ise derin, zengin ve olağanüstü berraklıkta veriyor.\\r\\n\\r\\nAkıllı ses\\r\\nAktif Gürültü Engelleme özelliği, istenmeyen gürültüleri iki kat daha fazla engelliyor. Bu sayede, işe gidip gelirken ve odaklanmanız gerektiğinde hiçbir şey, dinleme deneyiminizi kesintiye uğratamıyor.¹ Şeffaf mod, gürültü yoğunluğunu saniyede 48.000 kez azaltıp ayarlıyor, böylece etrafınızda olup bitenleri rahatça duyabiliyorsunuz. Şeffaf ve Aktif Gürültü Engelleme modlarını dinamik olarak birleştiren Adaptif Ses¹⁶, bulunduğunuz her ortamda en iyi dinleme deneyimini sunuyor.\\r\\n\\r\\nKişiselleştirilmiş dinleme deneyimi\\r\\nTamamen size özel bir dinleme deneyimi. İdeal bir akustik yalıtım ve kulağınızla mükemmel uyum için dört farklı boydaki (XS, S, M, L) esnek silikon kulaklık uçlarından dilediğinizi seçin. Kişiselleştirilmiş Ses Yüksekliği, zaman içerisindeki dinleme tercihlerinize ve bulunduğunuz farklı ortamlara göre sesi ayarlıyor.¹⁶ Konuşma Farkındalığı, çalan içeriğin ses düzeyini kısıyor, önünüzden gelen sesleri yükseltiyor ve arka plan gürültüsünü azaltıyor.¹⁶ Dinamik kafa izleme özellikli Kişiselleştirilmiş Uzamsal Ses, ses unsurlarını etrafınıza hassas bir şekilde yerleştirerek dinleme deneyimini daha da kişisel hale getiriyor.º Adaptif EQ, müziği kulağınızın şekline göre ayarlayarak sesleri her zaman aynı şekilde, ayrıntılı olarak duymanızı mümkün kılıyor.\\r\\n\\r\\nDaha fazla pil ömrü\\r\\nTek şarjla 6 saate kadar, MagSafe Şarj Kutusu ile toplamda 30 saate kadar dinleme süresinin keyfini çıkarın.¹⁰ MagSafe Şarj Kutusu’nu Apple Watch şarj aygıtıyla veya MagSafe şarj aygıtıyla şarj edin. Dilerseniz bir USB-C konnektörü veya Qi sertifikalı şarj aygıtı da kullanabiliyorsunuz.\\r\\n\\r\\nHer zamankinden daha sihirli\\r\\nAirPods Pro (2. nesil) ve MagSafe Şarj Kutusu (USB-C), ilk modele kıyasla daha da rahat bir deneyim sunuyor. Dokunmatik Denetim sayesinde çalma işlevlerini kulaklığın alt ucundan rahatça kontrol edin ve ses düzeyini parmağınızı hafifçe yukarı veya aşağı kaydırarak ayarlayın. Siri, Bildirimleri Seslendir özelliğini kullanarak önemli mesajları ve uyarıları, geldikleri an size okusun.³ Ses Paylaşımı özelliğiyle iki çift AirPods üzerinden herhangi bir şarkıyı veya TV programını kolayca paylaşın.⁴ Ayrıca her zaman olduğu gibi AirPods Pro, iPhone’unuza veya Apple Watch’unuza sihirli bir şekilde bağlanıyor ve bir Apple aygıtından diğerine geçtiğinizde ses de kusursuz bir şekilde yeni aygıta geçiyor.', 0, 1, 0, 50, 79, '25624_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '17983_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '77042_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '38786_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '80656_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg', '29936_airpods_pro_(2._nesil)_ve_magsafe_sarj_kutusu_(usb_c).jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `promotions`
+--
+
+CREATE TABLE `promotions` (
+  `id` int NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `vector` int NOT NULL DEFAULT '0',
+  `mainTarget` text COLLATE utf8mb4_general_ci NOT NULL,
+  `secondTarget` text COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `promotions`
+--
+
+INSERT INTO `promotions` (`id`, `title`, `description`, `image`, `vector`, `mainTarget`, `secondTarget`) VALUES
+(1, 'WH-1453XM3', 'Sony Gürültü Önleyici Kulaklık', 'showcase-product.png', 0, 'http://localhost/product/30d910c7-4132-4c47-8403-29e403647697', 'http://localhost/products/elektronik/kulaklik'),
+(2, 'Yardım mı lazım?', 'Bozuk Cihazınızı Tamir Edebiliriz!', 'fixing.png', 0, '', ''),
+(3, 'Kullanmadığınız cihaz mı var?', 'Onları Bize Satın!', 'buying.png', 1, '', '');
 
 -- --------------------------------------------------------
 
@@ -1322,12 +1355,12 @@ INSERT INTO `product` (`id`, `guid`, `uid`, `name`, `price`, `shipping_cost`, `f
 --
 
 CREATE TABLE `questions` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `question` text NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp(),
-  `status` int(11) NOT NULL DEFAULT 0
+  `id` int NOT NULL,
+  `uid` int NOT NULL,
+  `pid` int NOT NULL,
+  `question` text COLLATE utf8mb4_general_ci NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1335,12 +1368,12 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`, `status`) VALUES
-(37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22', 0),
-(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22', 0),
-(67, 9, 27, 'Yazilim icin arkadasima hediye almayi dusunuyorum, uygun mudur', '2024-03-23', 0),
-(71, 9, 71, 'Mining de kullanilir mi?', '2024-03-24', 0),
-(72, 11, 71, 'GTA 5 acar mi abi', '2024-03-27', 0),
-(76, 9, 27, 'deneme sorusu', '2024-04-03', 0);
+(37, 11, 11, 'Merhaba, bu urunun yaninda kumandasi ve uydusu geliyor mu acaba?', '2024-03-22 00:00:00', 0),
+(38, 9, 11, 'Ikinci el mi bu urun', '2024-03-22 00:00:00', 0),
+(67, 9, 27, 'Yazilim icin arkadasima hediye almayi dusunuyorum, uygun mudur', '2024-03-23 00:00:00', 0),
+(71, 9, 71, 'Mining de kullanilir mi?', '2024-03-24 00:00:00', 0),
+(72, 11, 71, 'GTA 5 acar mi abi', '2024-03-27 00:00:00', 0),
+(76, 9, 27, 'deneme sorusu', '2024-04-03 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -1349,9 +1382,9 @@ INSERT INTO `questions` (`id`, `uid`, `pid`, `question`, `date`, `status`) VALUE
 --
 
 CREATE TABLE `site` (
-  `id` int(11) NOT NULL,
-  `keyword` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL DEFAULT 'false'
+  `id` int NOT NULL,
+  `keyword` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `value` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'false'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1368,10 +1401,10 @@ INSERT INTO `site` (`id`, `keyword`, `value`) VALUES
 --
 
 CREATE TABLE `subcats` (
-  `id` int(11) NOT NULL,
-  `cid` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `cid` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1400,15 +1433,16 @@ INSERT INTO `subcats` (`id`, `cid`, `name`, `slug`) VALUES
 (79, 50, 'Bluetooth Kulaklık', 'bluetooth-kulaklik'),
 (80, 50, 'Kablosuz Kulaklık', 'kablosuz-kulaklik'),
 (81, 31, 'Televizyon', 'televizyon'),
-(82, 49, 'Kamera', 'kamera'),
+(82, 31, 'Kamera', 'kamera'),
 (83, 31, 'Drone', 'drone'),
-(84, 47, 'Akıllı Saat', 'akilli-saat'),
-(85, 31, 'Konsol', 'konsol'),
+(84, 31, 'Akıllı Saat', 'akilli-saat'),
+(85, 31, 'Oyun Konsolu', 'oyun-konsolu'),
 (86, 49, 'Bellek (Ram)', 'bellek-%2528ram%2529'),
 (87, 49, 'SSD', 'ssd'),
 (88, 49, 'Harddisk', 'harddisk'),
 (89, 49, 'Anakart', 'anakart'),
-(91, 47, 'Bateri', 'bateri');
+(91, 47, 'Bateri', 'bateri'),
+(95, 61, 'Oyuncak', 'oyuncak');
 
 -- --------------------------------------------------------
 
@@ -1417,24 +1451,24 @@ INSERT INTO `subcats` (`id`, `cid`, `name`, `slug`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `surname` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `verified` int(11) NOT NULL DEFAULT 0,
-  `membership` int(11) NOT NULL DEFAULT 0,
-  `token` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `profile_image` varchar(255) NOT NULL DEFAULT 'nopp.png',
-  `last_submission` int(11) NOT NULL,
-  `submissions` int(11) NOT NULL,
-  `telephone` varchar(255) NOT NULL,
-  `address` text NOT NULL,
-  `city` int(11) NOT NULL,
-  `district` int(11) NOT NULL,
-  `apartment` varchar(255) NOT NULL,
-  `floor` int(11) NOT NULL,
-  `door` int(11) NOT NULL
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `surname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `verified` int NOT NULL DEFAULT '0',
+  `membership` int NOT NULL DEFAULT '0',
+  `token` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `profile_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'nopp.png',
+  `last_submission` int NOT NULL DEFAULT '0',
+  `submissions` int NOT NULL DEFAULT '0',
+  `telephone` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `address` text COLLATE utf8mb4_general_ci NOT NULL,
+  `city` int NOT NULL DEFAULT '1',
+  `district` int NOT NULL DEFAULT '1',
+  `apartment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `floor` int NOT NULL DEFAULT '0',
+  `door` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1502,6 +1536,12 @@ ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `promotions`
+--
+ALTER TABLE `promotions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
@@ -1536,73 +1576,79 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `answers`
 --
 ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `banner`
 --
 ALTER TABLE `banner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `districts`
 --
 ALTER TABLE `districts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=974;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=974;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=176;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+
+--
+-- AUTO_INCREMENT for table `promotions`
+--
+ALTER TABLE `promotions`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `site`
 --
 ALTER TABLE `site`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subcats`
 --
 ALTER TABLE `subcats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -1618,7 +1664,7 @@ ALTER TABLE `answers`
 -- Constraints for table `districts`
 --
 ALTER TABLE `districts`
-  ADD CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `districts_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `likes`
@@ -1636,7 +1682,7 @@ ALTER TABLE `questions`
 -- Constraints for table `subcats`
 --
 ALTER TABLE `subcats`
-  ADD CONSTRAINT `subcats_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `subcats_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

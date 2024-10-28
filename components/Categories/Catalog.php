@@ -13,7 +13,7 @@ class Catalog extends Component
         <<<HTML
             <div class="category-card">
                 <div class="category-image dynamic-content">
-                    <img src="http://localhost/global/imgs/categories/electronic.jpg" alt="category" loading="lazy">
+                    <img src="http://bizimshop.test/global/imgs/categories/electronic.jpg" alt="category" loading="lazy">
                 </div>
                 <a href="/products/elektronik">Elektronik</a>
             </div>
@@ -21,7 +21,7 @@ class Catalog extends Component
         <<<HTML
             <div class="category-card">
                     <div class="category-image dynamic-content">
-                        <img src="http://localhost/global/imgs/categories/instrument.jpg" alt="category" loading="lazy">
+                        <img src="http://bizimshop.test/global/imgs/categories/instrument.jpg" alt="category" loading="lazy">
                     </div>
                     <a href="/products/enstruman">Enstrüman</a>
                 </div>
@@ -29,7 +29,7 @@ class Catalog extends Component
         <<<HTML
             <div class="category-card">
                     <div class="category-image dynamic-content">
-                        <img src="http://localhost/global/imgs/categories/sneakers.jpg" alt="category" loading="lazy">
+                        <img src="http://bizimshop.test/global/imgs/categories/sneakers.jpg" alt="category" loading="lazy">
                     </div>
                     <a href="/products/moda">Moda</a>
                 </div>
@@ -37,7 +37,7 @@ class Catalog extends Component
         <<<HTML
             <div class="category-card">
                     <div class="category-image dynamic-content">
-                        <img src="http://localhost/global/imgs/categories/pets.jpg" alt="category" loading="lazy">
+                        <img src="http://bizimshop.test/global/imgs/categories/pets.jpg" alt="category" loading="lazy">
                     </div>
                     <a href="/products/evcil-hayvan">Evcil Hayvan</a>
                 </div>

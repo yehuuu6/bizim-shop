@@ -8,15 +8,11 @@ ini_set('session.name', 'bss_i');
 ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 session_set_cookie_params([
     'lifetime' => 86400,
-    'domain' => 'localhost',
+    'domain' => 'bizimshop.test',
     'path' => '/',
-    'secure' => true,
+    //'secure' => true, IDK why but it doesn't work on laragon. Gives new session on every request.
     'httponly' => true
 ]);
 
@@ -45,7 +41,7 @@ $_SESSION['maintenance'] = $site['value'];
 if (isset($_GET['logout'])) {
     session_destroy();
     session_unset();
-    header("location: http://localhost/auth/login");
+    header("location: http://bizimshop.test/auth/login");
     die();
 }
 
@@ -114,7 +110,7 @@ function verify_user($token)
             $_SESSION['email'] = $user['email'];
             $_SESSION['verified'] = 1;
             $_SESSION['token'] = $newToken;
-            header('location: http://localhost/');
+            header('location: http://bizimshop.test');
             die();
         }
     } else {

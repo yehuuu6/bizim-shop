@@ -239,6 +239,75 @@ maintenanceBtn.addEventListener('click', () => {
   });
 });
 
+// Promotions editor
+
+const promotionsContainer = document.querySelector(
+  '.control-promotions'
+) as HTMLDivElement;
+
+const promotionEditBtns = promotionsContainer.querySelectorAll(
+  'button'
+) as NodeListOf<HTMLButtonElement>;
+
+const promoEditForm = document.querySelector(
+  '#edit-promotion'
+) as HTMLFormElement;
+
+const closePromoEdit = document.querySelector(
+  '.close-edit-promotion'
+) as HTMLButtonElement;
+
+// Input fields
+
+const promoTitle = promoEditForm.querySelector(
+  '#promotion-title'
+) as HTMLInputElement;
+const promoDesc = promoEditForm.querySelector(
+  '#promotion-desc'
+) as HTMLInputElement;
+const promoImage = promoEditForm.querySelector(
+  '#promotion-image'
+) as HTMLInputElement;
+const promoLink = promoEditForm.querySelector(
+  '#promotion-redirect-first'
+) as HTMLInputElement;
+const promoLinkSecond = promoEditForm.querySelector(
+  '#promotion-redirect-second'
+) as HTMLInputElement;
+
+function getPromotionById(id: string) {
+  const formData = new FormData();
+  formData.append('id', id);
+  ManageProductsPage.sendApiRequest(
+    '/api/dashboard/promotions.php',
+    formData
+  ).then((data) => {
+    const promotion = data;
+    promoTitle.value = promotion.title;
+    promoDesc.value = promotion.description;
+    promoLink.value = promotion.mainTarget;
+    promoLinkSecond.value = promotion.secondTarget;
+  });
+}
+
+promotionEditBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    promoEditForm.parentElement!.style.display = 'flex';
+    const promotionId = btn.dataset.num as string;
+    getPromotionById(promotionId);
+  });
+});
+
+closePromoEdit.addEventListener('click', () => {
+  promoEditForm.parentElement!.style.display = 'none';
+  promoEditForm.reset();
+});
+
+promoEditForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  console.log('submit');
+});
+
 // Load every page's content
 document.addEventListener('DOMContentLoaded', () => {
   setSubCategories(); // This is needed because at the first page load, if you edit a product, its sub category wont be selected without this.

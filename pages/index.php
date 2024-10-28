@@ -31,21 +31,55 @@ new Navbar();
     </ul>
 </div>
 <?php
-
 ?>
-
+<section class="page-content" id="landing-page">
+    <div class="circle dynamic-content">
+        <img class="note-img" src="/global/imgs/icons/note.svg" alt="">
+        <h1 class="hero-text">YATA YATA MÜZİK İÇİN</h1>
+        <button onclick="scrollToCategories()" class="hero-btn">Alışveriş Yap</button>
+        <img class="hero-img" src="/global/imgs/astronaut.svg" alt="">
+    </div>
+</section>
+<section class="page-content" id="info">
+    <div class="cont">
+        <div class="info-box">
+            <div class="icon"><img src="/global/imgs/icons/truck.svg" alt=""></div>
+            <h1>Hızlı Teslimat</h1>
+            <p>Adresinize en kısa sürede teslim garantisi ile!</p>
+        </div>
+        <div class="info-box">
+            <div class="icon"><img src="/global/imgs/icons/fix.svg" alt=""></div>
+            <h1>Bakım ve Onarım</h1>
+            <p>Elinizdeki ürünlerin bakım ve onarımı için bize ulaşın!</p>
+        </div>
+        <div class="info-box">
+            <div class="icon"><img src="/global/imgs/icons/discount.svg" alt=""></div>
+            <h1>Düzenli İndirimler</h1>
+            <p>Ürünlerimizde düzenli olarak indirimler yapmaktayız!</p>
+        </div>
+        <div class="info-box">
+            <div class="icon"><img src="/global/imgs/icons/trade.svg" alt=""></div>
+            <h1>Bize Satın</h1>
+            <p>Kullanmadığınız ürünleri bize satabilirsiniz!</p>
+        </div>
+    </div>
+</section>
 <?php new Slider([
-    new Card1(),
-    new Card2(),
+    new Card1($con),
+    new Card2($con),
     new Card3()
 ]);
 new Catalog();
-?>
-<?php
 new Footer();
 ?>
 <script>
+    function scrollToCategories() {
+        document.getElementById('categories').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
     document.addEventListener("DOMContentLoaded", function() {
+
         let e = 1,
             t;
 

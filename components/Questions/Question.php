@@ -85,9 +85,9 @@ class Question extends Component
     private function get_image_src($image)
     {
         if ($image == 'nopp.png') {
-            return 'http://localhost/global/imgs/nopp.png';
+            return 'http://bizimshop.test/global/imgs/nopp.png';
         } else {
-            return "http://localhost/images/users/{$image}";
+            return "http://bizimshop.test/images/users/{$image}";
         }
     }
 }
