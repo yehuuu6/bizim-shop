@@ -2,6 +2,8 @@
 
 🛍️ An e-commerce project aimed at supporting my father's business venture.
 
+! DISCONTINUED, Created with pure PHP, no frameworks, no tailwind, no nothin. That was a mistake. In the future I will create something similar using the TALL stack (Tailwind & AlpineJS & Laravel & Livewire) Atleast the frontend is ready.
+
 ## TO-DOs
 
 - 🌟 Crafting Brand Identity
